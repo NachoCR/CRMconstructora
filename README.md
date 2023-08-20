@@ -4,6 +4,9 @@ Proyecto CRM
 Integrantes:
 
 Anthony Fajardo Villachica
+
 Oscar Navarro Lopez
+
 Daniel Paniagua Flores
+
 George Ulecia Chamorro
