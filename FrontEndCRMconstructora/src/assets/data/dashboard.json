@@ -1,0 +1,17 @@
+{
+  "dashboard": [
+    {
+      "type": "Total de compras",
+      "amount": 180200,
+      "progress": 50,
+      "date": 1427207139000
+    },
+    {
+      "type": "Ganancias",
+      "amount": 70205,
+      "progress": 70,
+      "date": 1427412725000
+    }
+
+  ]
+}
