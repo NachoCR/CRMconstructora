@@ -14,9 +14,9 @@ namespace BackendCRMconstructora.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly ConnectionSQLServer _context;
+        private readonly ConstructoraContext _context;
 
-        public UserController(ConnectionSQLServer context)
+        public UserController(ConstructoraContext context)
         {
             _context = context;
         }
@@ -25,22 +25,22 @@ namespace BackendCRMconstructora.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetUser()
         {
-          if (_context.User == null)
-          {
-              return NotFound();
-          }
-            return await _context.User.ToListAsync();
+            if (_context.Users == null)
+            {
+                return NotFound();
+            }
+            return await _context.Users.ToListAsync();
         }
 
         // GET: api/User/5
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetUser(int id)
         {
-          if (_context.User == null)
-          {
-              return NotFound();
-          }
-            var user = await _context.User.FindAsync(id);
+            if (_context.Users == null)
+            {
+                return NotFound();
+            }
+            var user = await _context.Users.FindAsync(id);
 
             if (user == null)
             {
@@ -55,7 +55,7 @@ namespace BackendCRMconstructora.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutUser(int id, User user)
         {
-            if (id != user.UserID)
+            if (id != user.UserId)
             {
                 return BadRequest();
             }
@@ -86,31 +86,31 @@ namespace BackendCRMconstructora.Controllers
         [HttpPost]
         public async Task<ActionResult<User>> PostUser(User user)
         {
-          if (_context.User == null)
-          {
-              return Problem("Entity set 'ConnectionSQLServer.User'  is null.");
-          }
-            _context.User.Add(user);
+            if (_context.Users == null)
+            {
+                return Problem("Entity set 'ConnectionSQLServer.User'  is null.");
+            }
+            _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetUser", new { id = user.UserID }, user);
+            return CreatedAtAction("GetUser", new { id = user.UserId }, user);
         }
 
         // DELETE: api/User/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(int id)
         {
-            if (_context.User == null)
+            if (_context.Users == null)
             {
                 return NotFound();
             }
-            var user = await _context.User.FindAsync(id);
+            var user = await _context.Users.FindAsync(id);
             if (user == null)
             {
                 return NotFound();
             }
 
-            _context.User.Remove(user);
+            _context.Users.Remove(user);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -118,7 +118,7 @@ namespace BackendCRMconstructora.Controllers
 
         private bool UserExists(int id)
         {
-            return (_context.User?.Any(e => e.UserID == id)).GetValueOrDefault();
+            return (_context.Users?.Any(e => e.UserId == id)).GetValueOrDefault();
         }
     }
 }

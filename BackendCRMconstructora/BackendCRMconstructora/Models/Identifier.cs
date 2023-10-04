@@ -1,8 +1,11 @@
-﻿namespace BackendCRMconstructora.Models
+﻿using System;
+using System.Collections.Generic;
+
+namespace BackendCRMconstructora.Models
 {
-    public class Identifier
+    public partial class Identifier
     {
-        public int IdentifierID { get; set; }
-        public string IdentifierName { get; set; }
+        public int IdentifierId { get; set; }
+        public string? IdentifierName { get; set; }
     }
 }

@@ -1,17 +1,20 @@
-﻿using System.Data;
+﻿using System;
+using System.Collections.Generic;
 
 namespace BackendCRMconstructora.Models
 {
-    public class User
+    public partial class User
     {
-        public int UserID { get; set; }
-        public string Password { get; set; }
-        public int RoleID { get; set; }
-        public int IdentifierID { get; set; }
-        public string Identification { get; set; }
+        public int UserId { get; set; }
+        public int IdentifierId { get; set; }
+        public string Identification { get; set; } = null!;
+        public string Email { get; set; } = null!;
+        public string Password { get; set; } = null!;
+        public int? EmployeeId { get; set; }
+        public int? ClientId { get; set; }
+        public int RoleId { get; set; }
 
-        public int Role { get; set; }
-        public int Identifier { get; set; }
+        public virtual Client? Client { get; set; }
+        public virtual Employee? Employee { get; set; }
     }
-
 }

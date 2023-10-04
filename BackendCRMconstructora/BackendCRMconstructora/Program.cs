@@ -14,7 +14,7 @@ builder.Services.AddSwaggerGen();
 // JWT Bearer
 
 // Conexion a la base de datos
-builder.Services.AddDbContext<ConnectionSQLServer>(options =>
+builder.Services.AddDbContext<ConstructoraContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("connection"));
 });

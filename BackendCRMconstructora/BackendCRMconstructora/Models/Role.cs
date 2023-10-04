@@ -1,9 +1,11 @@
-﻿namespace BackendCRMconstructora.Models
-{
-    public class Role
-    {
-        public int RoleID { get; set; }
-        public string RoleName { get; set; }
-    }
+﻿using System;
+using System.Collections.Generic;
 
+namespace BackendCRMconstructora.Models
+{
+    public partial class Role
+    {
+        public int RoleId { get; set; }
+        public string? RoleName { get; set; }
+    }
 }

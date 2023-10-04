@@ -14,53 +14,53 @@ namespace BackendCRMconstructora.Controllers
     [ApiController]
     public class IdentifierController : ControllerBase
     {
-        private readonly ConnectionSQLServer _context;
+        private readonly ConstructoraContext _context;
 
-        public IdentifierController(ConnectionSQLServer context)
+        public IdentifierController(ConstructoraContext context)
         {
             _context = context;
         }
 
-        // GET: api/Identifier
+        // GET: api/Identifiers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Identifier>>> GetIdentifier()
         {
-          if (_context.Identifier == null)
-          {
-              return NotFound();
-          }
-            return await _context.Identifier.ToListAsync();
+            if (_context.Identifiers == null)
+            {
+                return NotFound();
+            }
+            return await _context.Identifiers.ToListAsync();
         }
 
-        // GET: api/Identifier/5
+        // GET: api/Identifiers/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Identifier>> GetIdentifier(int id)
         {
-          if (_context.Identifier == null)
-          {
-              return NotFound();
-          }
-            var identifier = await _context.Identifier.FindAsync(id);
+            if (_context.Identifiers == null)
+            {
+                return NotFound();
+            }
+            var Identifiers = await _context.Identifiers.FindAsync(id);
 
-            if (identifier == null)
+            if (Identifiers == null)
             {
                 return NotFound();
             }
 
-            return identifier;
+            return Identifiers;
         }
 
-        // PUT: api/Identifier/5
+        // PUT: api/Identifiers/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutIdentifier(int id, Identifier identifier)
+        public async Task<IActionResult> PutIdentifier(int id, Identifier Identifiers)
         {
-            if (id != identifier.IdentifierID)
+            if (id != Identifiers.IdentifierId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(identifier).State = EntityState.Modified;
+            _context.Entry(Identifiers).State = EntityState.Modified;
 
             try
             {
@@ -81,36 +81,36 @@ namespace BackendCRMconstructora.Controllers
             return NoContent();
         }
 
-        // POST: api/Identifier
+        // POST: api/Identifiers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Identifier>> PostIdentifier(Identifier identifier)
+        public async Task<ActionResult<Identifier>> PostIdentifier(Identifier Identifiers)
         {
-          if (_context.Identifier == null)
-          {
-              return Problem("Entity set 'ConnectionSQLServer.Identifier'  is null.");
-          }
-            _context.Identifier.Add(identifier);
+            if (_context.Identifiers == null)
+            {
+                return Problem("Entity set 'ConnectionSQLServer.Identifiers'  is null.");
+            }
+            _context.Identifiers.Add(Identifiers);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetIdentifier", new { id = identifier.IdentifierID }, identifier);
+            return CreatedAtAction("GetIdentifier", new { id = Identifiers.IdentifierId }, Identifiers);
         }
 
-        // DELETE: api/Identifier/5
+        // DELETE: api/Identifiers/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteIdentifier(int id)
         {
-            if (_context.Identifier == null)
+            if (_context.Identifiers == null)
             {
                 return NotFound();
             }
-            var identifier = await _context.Identifier.FindAsync(id);
-            if (identifier == null)
+            var Identifiers = await _context.Identifiers.FindAsync(id);
+            if (Identifiers == null)
             {
                 return NotFound();
             }
 
-            _context.Identifier.Remove(identifier);
+            _context.Identifiers.Remove(Identifiers);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -118,7 +118,7 @@ namespace BackendCRMconstructora.Controllers
 
         private bool IdentifierExists(int id)
         {
-            return (_context.Identifier?.Any(e => e.IdentifierID == id)).GetValueOrDefault();
+            return (_context.Identifiers?.Any(e => e.IdentifierId == id)).GetValueOrDefault();
         }
     }
 }
