@@ -524,7 +524,3 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
-
-/BackendCRMconstructora/.vs
-/BackendCRMconstructora/BackendCRMconstructora/*
-/BackendCRMconstructora/BackendCRMconstructora/bin/Debug/net6.0
