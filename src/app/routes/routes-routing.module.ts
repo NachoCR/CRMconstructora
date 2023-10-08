@@ -11,13 +11,29 @@ import { Error403Component } from './sessions/403.component';
 import { Error404Component } from './sessions/404.component';
 import { Error500Component } from './sessions/500.component';
 import { LandingComponent } from '../landing/landing.component';
+import { UsuariosComponent } from 'app/usuarios/usuarios.component';
 import { authGuard } from '@core/authentication';
+import { ProyectosComponent } from 'app/proyectos/proyectos.component';
+import { ProveedoresComponent } from 'app/proveedores/proveedores.component';
+import { CatalogoProveedorComponent } from 'app/catalogo-proveedor/catalogo-proveedor.component';
+import { EliminarUsuarioComponent } from 'app/eliminar-usuario/eliminar-usuario.component';
+import { OrdenesCompraComponent } from 'app/ordenes-compra/ordenes-compra.component';
 
 const routes: Routes = [
-  {
-    path: '',
-    component: LandingComponent,
+  { path: '#', component: DashboardComponent },
+  { path: '', component: LandingComponent },
+  { path: 'usuarios', component: UsuariosComponent
+  // children: 
+  // [
+  //   { path: 'crearUsuario', component: CrearUsuarioComponent },
+  //   { path: 'eliminarUsuario', component: EliminarUsuarioComponent }
+  // ]
   },
+  { path: 'proyectos', component: ProyectosComponent },
+  { path: 'proveedores', component: ProveedoresComponent},
+  { path: 'catalogoProveedor', component: CatalogoProveedorComponent},
+  { path: 'ordenesCompra', component: OrdenesCompraComponent }
+ ,
 
   {
     path: 'dashboard',

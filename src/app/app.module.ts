@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
+import { Router, RouterModule } from '@angular/router';
 
 import { CoreModule } from '@core/core.module';
 import { ThemeModule } from '@theme/theme.module';
@@ -14,17 +15,30 @@ import { NgxPermissionsModule } from 'ngx-permissions';
 import { ToastrModule } from 'ngx-toastr';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDividerModule } from '@angular/material/divider';
 
 import { environment } from '@env/environment';
 import { BASE_URL, httpInterceptorProviders, appInitializerProviders } from '@core';
 
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemDataService } from '@shared/in-mem/in-mem-data.service';
+import { ProveedoresComponent } from './proveedores/proveedores.component';
+import { CatalogoProveedorComponent } from './catalogo-proveedor/catalogo-proveedor.component';
+import { LandingComponent } from './landing/landing.component';
+import { LoginComponent } from './auth/login/login.component';
+import { UsuariosComponent } from './usuarios/usuarios.component';
+import { ProyectosComponent } from './proyectos/proyectos.component';
+import { OrdenesCompraComponent } from './ordenes-compra/ordenes-compra.component';
 
 // Required for AOT compilation
 export function TranslateHttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
+
 
 @NgModule({
   declarations: [AppComponent],
@@ -35,7 +49,13 @@ export function TranslateHttpLoaderFactory(http: HttpClient) {
     CoreModule,
     ThemeModule,
     RoutesModule,
+    RouterModule, 
     SharedModule,
+    MatToolbarModule,
+    MatDividerModule,
+    MatSidenavModule,
+    MatButtonModule,
+    MatIconModule,
     FormlyConfigModule.forRoot(),
     NgxPermissionsModule.forRoot(),
     ToastrModule.forRoot(),

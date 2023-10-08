@@ -1,0 +1,40 @@
+
+<h1 mat-dialog-title>Creación Usuarios</h1>
+<div mat-dialog-content>
+  <p>Nombre</p>
+  <mat-form-field>
+    <input matInput [(ngModel)]="data.Name">
+  </mat-form-field>
+  <p>Primer Apellido</p>
+  <mat-form-field>
+    <input matInput [(ngModel)]="data.Lastname">
+  </mat-form-field>
+  <p>Segundo Apellido</p>
+  <mat-form-field>
+    <input matInput [(ngModel)]="data.SecondLastname">
+  </mat-form-field>
+  <p>Identificación</p>
+  <mat-form-field>
+    <input matInput [(ngModel)]="data.Identification">
+  </mat-form-field>
+  <p>Tipo Identificación</p>
+  <mat-form-field>
+    <input matInput [(ngModel)]="data.IdentifierID">
+  </mat-form-field>
+  <p>Correo</p>
+  <mat-form-field>
+    <input matInput [(ngModel)]="data.Email">
+  </mat-form-field>
+  <p>Contraseña</p>
+  <mat-form-field>
+    <input matInput [(ngModel)]="data.Password">
+  </mat-form-field>
+  <p>Rol</p>
+  <mat-form-field>
+    <input matInput [(ngModel)]="data.RoleID">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancelar</button>
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
+</div>
