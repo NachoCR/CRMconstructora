@@ -18,22 +18,25 @@ import { ProveedoresComponent } from 'app/proveedores/proveedores.component';
 import { CatalogoProveedorComponent } from 'app/catalogo-proveedor/catalogo-proveedor.component';
 import { EliminarUsuarioComponent } from 'app/eliminar-usuario/eliminar-usuario.component';
 import { OrdenesCompraComponent } from 'app/ordenes-compra/ordenes-compra.component';
+import { CrearUsuarioComponent } from 'app/crear-usuario/crear-usuario.component';
 
 const routes: Routes = [
   { path: '#', component: DashboardComponent },
   { path: '', component: LandingComponent },
-  { path: 'usuarios', component: UsuariosComponent
-  // children: 
-  // [
-  //   { path: 'crearUsuario', component: CrearUsuarioComponent },
-  //   { path: 'eliminarUsuario', component: EliminarUsuarioComponent }
-  // ]
+  {
+    path: 'usuarios', component: UsuariosComponent
+    // children:
+    // [
+    //   { path: 'crearUsuario', component: CrearUsuarioComponent },
+    //   { path: 'eliminarUsuario', component: EliminarUsuarioComponent }
+    // ]
   },
+  { path: 'crearUsuario', component: CrearUsuarioComponent },
   { path: 'proyectos', component: ProyectosComponent },
-  { path: 'proveedores', component: ProveedoresComponent},
-  { path: 'catalogoProveedor', component: CatalogoProveedorComponent},
+  { path: 'proveedores', component: ProveedoresComponent },
+  { path: 'catalogoProveedor', component: CatalogoProveedorComponent },
   { path: 'ordenesCompra', component: OrdenesCompraComponent }
- ,
+  ,
 
   {
     path: 'dashboard',
@@ -99,4 +102,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule],
 })
-export class RoutesRoutingModule {}
+export class RoutesRoutingModule { }

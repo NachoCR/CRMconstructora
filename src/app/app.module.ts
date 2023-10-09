@@ -33,6 +33,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { ProyectosComponent } from './proyectos/proyectos.component';
 import { OrdenesCompraComponent } from './ordenes-compra/ordenes-compra.component';
+import { CrearUsuarioComponent } from './crear-usuario/crear-usuario.component';
 
 // Required for AOT compilation
 export function TranslateHttpLoaderFactory(http: HttpClient) {
@@ -41,7 +42,7 @@ export function TranslateHttpLoaderFactory(http: HttpClient) {
 
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, CrearUsuarioComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -49,7 +50,7 @@ export function TranslateHttpLoaderFactory(http: HttpClient) {
     CoreModule,
     ThemeModule,
     RoutesModule,
-    RouterModule, 
+    RouterModule,
     SharedModule,
     MatToolbarModule,
     MatDividerModule,
@@ -79,4 +80,4 @@ export function TranslateHttpLoaderFactory(http: HttpClient) {
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

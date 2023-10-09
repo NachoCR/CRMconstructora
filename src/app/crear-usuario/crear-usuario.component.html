@@ -1,40 +1,42 @@
-<!-- 
-<h1 mat-dialog-title>Creación Usuarios</h1>
-<div mat-dialog-content>
-  <p>Nombre</p>
-  <mat-form-field>
-    <input matInput [(ngModel)]="data.Name">
-  </mat-form-field>
-  <p>Primer Apellido</p>
-  <mat-form-field>
-    <input matInput [(ngModel)]="data.Lastname">
-  </mat-form-field>
-  <p>Segundo Apellido</p>
-  <mat-form-field>
-    <input matInput [(ngModel)]="data.SecondLastname">
-  </mat-form-field>
-  <p>Identificación</p>
-  <mat-form-field>
-    <input matInput [(ngModel)]="data.Identification">
-  </mat-form-field>
-  <p>Tipo Identificación</p>
-  <mat-form-field>
-    <input matInput [(ngModel)]="data.IdentifierID">
-  </mat-form-field>
-  <p>Correo</p>
-  <mat-form-field>
-    <input matInput [(ngModel)]="data.Email">
-  </mat-form-field>
-  <p>Contraseña</p>
-  <mat-form-field>
-    <input matInput [(ngModel)]="data.Password">
-  </mat-form-field>
-  <p>Rol</p>
-  <mat-form-field>
-    <input matInput [(ngModel)]="data.RoleID">
-  </mat-form-field>
-</div>
-<div mat-dialog-actions>
+<mat-dialog-content class="custom-dialog-content">
+  <h1 mat-dialog-title>Creación Usuarios</h1>
+
+  <div class="input-container">
+    <mat-form-field class="input-field">
+      <input matInput placeholder="Nombre" [(ngModel)]="data.Name">
+    </mat-form-field>
+    <mat-form-field class="input-field">
+      <input matInput placeholder="Primer Apellido" [(ngModel)]="data.Lastname">
+    </mat-form-field>
+    <mat-form-field class="input-field">
+      <input matInput placeholder="Segundo Apellido" [(ngModel)]="data.SecondLastname">
+    </mat-form-field>
+    <mat-form-field class="input-field">
+      <input matInput placeholder="Identificación" [(ngModel)]="data.Identification">
+    </mat-form-field>
+    <mat-form-field class="input-field">
+      <mat-select placeholder="Tipo Identificación" [(ngModel)]="data.IdentifierID">
+        <mat-option value="1">Cedula</mat-option>
+        <mat-option value="2">Pasaporte</mat-option>
+        <mat-option value="2">Cedula Juridica</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="input-field">
+      <input matInput placeholder="Correo" [(ngModel)]="data.Email">
+    </mat-form-field>
+    <mat-form-field class="input-field">
+      <input matInput type="password" placeholder="Contraseña" [(ngModel)]="data.Password">
+    </mat-form-field>
+    <mat-form-field class="input-field">
+      <mat-select placeholder="Rol" [(ngModel)]="data.RoleID">
+        <mat-option value="1">Cliente</mat-option>
+        <mat-option value="2">Empleado</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions class="custom-dialog-actions">
   <button mat-button (click)="onNoClick()">Cancelar</button>
   <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
-</div> -->
+</mat-dialog-actions>

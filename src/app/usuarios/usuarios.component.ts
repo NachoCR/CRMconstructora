@@ -1,5 +1,5 @@
-import { Component, OnInit , Inject } from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
+import { Component, OnInit, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { Router } from "@angular/router";
 import { CrearUsuarioComponent } from 'app/crear-usuario/crear-usuario.component';
 import { UsuarioData } from 'app/interfaces/usuario.interface';
@@ -9,25 +9,25 @@ import { UsuarioData } from 'app/interfaces/usuario.interface';
   templateUrl: './usuarios.component.html',
   styleUrls: ['./usuarios.component.scss']
 })
-export class UsuariosComponent  {
+export class UsuariosComponent {
 
-  usuario?: UsuarioData;  
+  usuario?: UsuarioData;
 
-  constructor(public dialog: MatDialog) {}
+  constructor(public dialog: MatDialog) { }
 
   openDialog(): void {
     const dialogRef = this.dialog.open(CrearUsuarioComponent, {
-      width: '250px',
-      data: {usuario: this.usuario}
+      width: '80%',
+      data: { usuario: this.usuario }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      console.log('The dialog was closed', result);
       this.usuario = result;
     });
   }
 
-  }
+}
 
 
 
