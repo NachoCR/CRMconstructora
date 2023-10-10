@@ -8,23 +8,23 @@
     <mat-card-content>
       <form class="form-field-full" [formGroup]="loginForm">
         <mat-form-field appearance="outline">
-          <mat-label>{{'Nombre de usuario' | translate}}: admin</mat-label>
-          <input matInput placeholder="Nombre de usuario admin" formControlName="username" required>
+          <mat-label>{{'Nombre de usuario' | translate}}: ng-matero</mat-label>
+          <input matInput placeholder="Nombre de usuario ng-matero" formControlName="username" required>
           <mat-error *ngIf="username.invalid">
             <span *ngIf="username.errors?.required">{{'please_enter' | translate}}
-              <strong>admin</strong>
+              <strong>ng-matero</strong>
             </span>
             <span *ngIf="username.errors?.remote">{{ username.errors?.remote }}</span>
           </mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>{{'Contraseña' | translate}}: admin</mat-label>
-          <input matInput placeholder="admin" type="password"
+          <mat-label>{{'Contraseña' | translate}}: ng-matero</mat-label>
+          <input matInput placeholder="ng-matero" type="password"
                  formControlName="password" required>
           <mat-error *ngIf="password.invalid">
             <span *ngIf="password.errors?.required">{{'please_enter' | translate}}
-              <strong>admin</strong>
+              <strong>ng-matero</strong>
             </span>
             <span *ngIf="password.errors?.remote">{{ password.errors?.remote }}</span>
           </mat-error>

@@ -11,41 +11,13 @@ import { Error403Component } from './sessions/403.component';
 import { Error404Component } from './sessions/404.component';
 import { Error500Component } from './sessions/500.component';
 import { LandingComponent } from '../landing/landing.component';
-import { UsuariosComponent } from 'app/usuarios/usuarios.component';
 import { authGuard } from '@core/authentication';
-import { ProyectosComponent } from 'app/proyectos/proyectos.component';
-import { ProveedoresComponent } from 'app/proveedores/proveedores.component';
-import { CatalogoProveedorComponent } from 'app/catalogo-proveedor/catalogo-proveedor.component';
-import { OrdenesCompraComponent } from 'app/ordenes-compra/ordenes-compra.component';
-import { CrearUsuarioComponent } from 'app/crear-usuario/crear-usuario.component';
-import { CrearProveedorComponent } from 'app/crear-proveedor/crear-proveedor.component';
-import { CrearProyectoComponent } from 'app/crear-proyecto/crear-proyecto.component';
-import { TareasComponent } from 'app/tareas/tareas.component';
-import { CrearTareaComponent } from 'app/crear-tarea/crear-tarea.component';
-import { EditarTareaComponent } from 'app/editar-tarea/editar-tarea.component';
 
 const routes: Routes = [
-  { path: '#', component: DashboardComponent },
-  { path: '', component: LandingComponent },
   {
-    path: 'usuarios', component: UsuariosComponent
-    // children:
-    // [
-    //   { path: 'crearUsuario', component: CrearUsuarioComponent },
-    //   { path: 'eliminarUsuario', component: EliminarUsuarioComponent }
-    // ]
+    path: '',
+    component: LandingComponent,
   },
-  { path: 'crearUsuario', component: CrearUsuarioComponent },
-  { path: 'proyectos', component: ProyectosComponent },
-  { path: 'proveedores', component: ProveedoresComponent },
-  { path: 'crearProvedor', component: CrearProveedorComponent },
-  { path: 'crearProyecto', component: CrearProyectoComponent},
-  { path: 'tareas', component: TareasComponent},
-  { path: 'crearTarea', component: CrearTareaComponent},
-  { path: 'editarTarea', component: EditarTareaComponent},
-  { path: 'catalogoProveedor', component: CatalogoProveedorComponent },
-  { path: 'ordenesCompra', component: OrdenesCompraComponent }
-  ,
 
   {
     path: 'dashboard',
@@ -56,7 +28,40 @@ const routes: Routes = [
       { path: '', component: DashboardComponent },
       { path: '403', component: Error403Component },
       { path: '404', component: Error404Component },
-      { path: '500', component: Error500Component }
+      { path: '500', component: Error500Component },
+      {
+        path: 'design',
+        loadChildren: () => import('./design/design.module').then(m => m.DesignModule),
+      },
+      {
+        path: 'material',
+        loadChildren: () => import('./material/material.module').then(m => m.MaterialModule),
+      },
+      {
+        path: 'media',
+        loadChildren: () => import('./media/media.module').then(m => m.MediaModule),
+      },
+      {
+        path: 'forms',
+        loadChildren: () => import('./forms/forms.module').then(m => m.FormsModule),
+      },
+      {
+        path: 'tables',
+        loadChildren: () => import('./tables/tables.module').then(m => m.TablesModule),
+      },
+      {
+        path: 'profile',
+        loadChildren: () => import('./profile/profile.module').then(m => m.ProfileModule),
+      },
+      {
+        path: 'permissions',
+        loadChildren: () =>
+          import('./permissions/permissions.module').then(m => m.PermissionsModule),
+      },
+      {
+        path: 'utilities',
+        loadChildren: () => import('./utilities/utilities.module').then(m => m.UtilitiesModule),
+      },
     ],
   },
   {
@@ -78,4 +83,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule],
 })
-export class RoutesRoutingModule { }
+export class RoutesRoutingModule {}
