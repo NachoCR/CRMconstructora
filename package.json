@@ -48,12 +48,8 @@
     "@ngx-translate/core": "^15.0.0",
     "@ngx-translate/http-loader": "^8.0.0",
     "angular-in-memory-web-api": "~0.16.0",
-<<<<<<< HEAD
     "apexcharts": "^3.41.0",
     "bootstrap-icons": "^1.11.1",
-=======
-    "apexcharts": "^3.43.0",
->>>>>>> aab4674b925f4ff159d927bb2ef721a4b06f11d8
     "moment": "^2.29.4",
     "moment-timezone": "^0.5.43",
     "ngx-permissions": "^15.0.1",
