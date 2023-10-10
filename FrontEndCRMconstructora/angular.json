@@ -40,6 +40,7 @@
             ],
             "scripts": [
               "node_modules/apexcharts/dist/apexcharts.min.js",
+              "src/assets/js/scriptsLanding.js"
             ]
           },
           "configurations": {

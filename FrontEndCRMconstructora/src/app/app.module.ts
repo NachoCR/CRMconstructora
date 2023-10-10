@@ -20,6 +20,7 @@ import { BASE_URL, httpInterceptorProviders, appInitializerProviders } from '@co
 
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemDataService } from '@shared/in-mem/in-mem-data.service';
+import { ApiAuthService } from '@core/authentication/api-auth.service';
 
 // Required for AOT compilation
 export function TranslateHttpLoaderFactory(http: HttpClient) {

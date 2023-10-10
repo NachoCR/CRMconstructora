@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, iif, merge, of } from 'rxjs';
+import { BehaviorSubject, Observable, iif, merge, of } from 'rxjs';
 import { catchError, map, share, switchMap, tap } from 'rxjs/operators';
 import { filterObject, isEmptyObject } from './helpers';
 import { User } from './interface';
 import { LoginService } from './login.service';
 import { TokenService } from './token.service';
+import { ApiAuthService } from './api-auth.service';
 
 @Injectable({
   providedIn: 'root',
@@ -21,7 +22,8 @@ export class AuthService {
 
   constructor(
     private loginService: LoginService,
-    private tokenService: TokenService
+    private tokenService: TokenService,
+    private apiAuthService: ApiAuthService
   ) {}
 
   init() {
@@ -36,15 +38,31 @@ export class AuthService {
     return this.tokenService.valid();
   }
 
+  /*
   login(username: string, password: string, rememberMe = false) {
     return this.loginService.login(username, password, rememberMe).pipe(
       tap(token => this.tokenService.set(token)),
       map(() => this.check())
     );
   }
+  */
+
+  login(username: string, password: string, rememberMe = false) {
+    return this.apiAuthService.login(username, password).pipe(
+      tap(token => {
+        this.tokenService.set(token.tokenData);
+        this.user$.next(token.userData);
+      }),
+      map(() => this.check()),
+      catchError(error => {
+        //console.error("Error en la solicitud de inicio de sesión:", error);
+        throw error;
+      })
+    );
+  }
 
   refresh() {
-    return this.loginService
+    return this.apiAuthService
       .refresh(filterObject({ refresh_token: this.tokenService.getRefreshToken() }))
       .pipe(
         catchError(() => of(undefined)),
@@ -54,7 +72,7 @@ export class AuthService {
   }
 
   logout() {
-    return this.loginService.logout().pipe(
+    return this.apiAuthService.logout().pipe(
       tap(() => this.tokenService.clear()),
       map(() => !this.check())
     );
@@ -65,7 +83,7 @@ export class AuthService {
   }
 
   menu() {
-    return iif(() => this.check(), this.loginService.menu(), of([]));
+    return iif(() => this.check(), this.apiAuthService.menu(), of([]));
   }
 
   private assignUser() {
@@ -77,6 +95,6 @@ export class AuthService {
       return of(this.user$.getValue());
     }
 
-    return this.loginService.me().pipe(tap(user => this.user$.next(user)));
+    return this.apiAuthService.me().pipe(tap(user => this.user$.next(user)));
   }
 }
