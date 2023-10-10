@@ -52,7 +52,8 @@ $(document).ready(function(){
 					</div>
 					<div class="col-sm-6">
 						<button type="button" (click)="openDialog()" class="btn btn-success"><i class="material-icons">&#xE147;</i> <span>Agregar nuevo usuario</span></button>
-						<a href="#exampleModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Eliminar</span></a>						
+						
+				
 					</div>
 				</div>
 			</div>
@@ -95,7 +96,7 @@ $(document).ready(function(){
                         <td>1</td>
 						<td>
 							<button type="button" (click)="openDialogEditar({user})" class="edit" data-toggle="modal" style="background-color: transparent; border: none; margin: auto;"><i class="material-icons" data-toggle="tooltip" style="color: orange;" title="Edit">&#xE254;</i></button>
-							<a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+							<button type="button" (click)="openEliminar({user})" class="delete" data-toggle="modal" style="background-color: transparent; border: none; margin: auto;"><i class="material-icons" data-toggle="tooltip" style="color: red;" title="Delete">&#xE872;</i></button>
 						</td>
 					</tr>
 			
