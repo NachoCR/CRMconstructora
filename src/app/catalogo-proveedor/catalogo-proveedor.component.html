@@ -44,8 +44,9 @@ $(document).ready(function(){
 						<h2>Catálogo de <b>Productos</b></h2>
 					</div>
 					<div class="col-sm-6">
-						<a href="#" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Agregar nuevo producto</span></a>
-						<a href="#" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Eliminar</span></a>						
+						<button type="button" (click)="openDialog()" class="btn btn-success"><i class="material-icons"></i><span>Agregar nuevo producto</span></button>
+			<!-- <a href="#" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Agregar nuevo proveedor</span></a> -->
+			<a href="#" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Eliminar</span></a>				
 					</div>
 				</div>
 			</div>
@@ -82,7 +83,7 @@ $(document).ready(function(){
                         <td>kg</td>
                         <td>1</td>
 						<td>
-							<a href="#" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Editar">&#xE254;</i></a>
+							<button type="button" (click)="openDialogEditar()" class="edit" data-toggle="modal" style="background-color: transparent; border: none; margin: auto;"><i class="material-icons" data-toggle="tooltip" style="color: orange;" title="Edit">&#xE254;</i></button>
 							<a href="#" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Eliminar">&#xE872;</i></a>
 						</td>
 					</tr>

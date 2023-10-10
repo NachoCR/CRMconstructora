@@ -34,6 +34,15 @@ import { UsuariosComponent } from './usuarios/usuarios.component';
 import { ProyectosComponent } from './proyectos/proyectos.component';
 import { OrdenesCompraComponent } from './ordenes-compra/ordenes-compra.component';
 import { CrearUsuarioComponent } from './crear-usuario/crear-usuario.component';
+import { CrearProveedorComponent } from './crear-proveedor/crear-proveedor.component';
+import { EditarProveedorComponent } from './editar-proveedor/editar-proveedor.component';
+import { EditarUsuarioComponent } from './editar-usuario/editar-usuario.component';
+import { CrearProyectoComponent } from './crear-proyecto/crear-proyecto.component';
+import { TareasComponent } from './tareas/tareas.component';
+import { CrearTareaComponent } from './crear-tarea/crear-tarea.component';
+import { EditarTareaComponent } from './editar-tarea/editar-tarea.component';
+import { CrearProductoCatalogoComponent } from './crear-producto-catalogo/crear-producto-catalogo.component';
+import { EditarProductoCatalogoComponent } from './editar-producto-catalogo/editar-producto-catalogo.component';
 
 // Required for AOT compilation
 export function TranslateHttpLoaderFactory(http: HttpClient) {
@@ -42,7 +51,7 @@ export function TranslateHttpLoaderFactory(http: HttpClient) {
 
 
 @NgModule({
-  declarations: [AppComponent, CrearUsuarioComponent],
+  declarations: [AppComponent, CrearUsuarioComponent, EditarUsuarioComponent, CrearProveedorComponent, EditarProveedorComponent, CrearProductoCatalogoComponent, EditarProductoCatalogoComponent, CrearProyectoComponent, TareasComponent, CrearTareaComponent, EditarTareaComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

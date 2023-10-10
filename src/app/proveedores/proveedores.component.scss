@@ -23,6 +23,13 @@ body{margin-top:20px;
         border: 0 solid transparent;
         border-radius: .25rem;
     }
+    .material-symbols-outlined {
+        font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24
+      }
     .card-body {
         flex: 1 1 auto;
         padding: 1.25rem;

@@ -1,0 +1,46 @@
+<mat-dialog-content class="custom-dialog-content">
+    <h1 mat-dialog-title>Edición Usuarios</h1>
+  
+    <div class="input-container">
+      <mat-form-field class="input-field">
+        <input matInput placeholder="Nombre" [(ngModel)]="data.Name">
+      </mat-form-field>
+      <mat-form-field class="input-field">
+        <input matInput placeholder="Primer Apellido" [(ngModel)]="data.Lastname">
+      </mat-form-field>
+      <mat-form-field class="input-field">
+        <input matInput placeholder="Segundo Apellido" [(ngModel)]="data.SecondLastname">
+      </mat-form-field>
+      <mat-form-field class="input-field">
+        <input matInput placeholder="Identificación" [(ngModel)]="data.Identification" readonly>
+      </mat-form-field>
+      <mat-form-field class="input-field">
+        <input matInput placeholder="Correo" [(ngModel)]="data.Email">
+      </mat-form-field>
+      <mat-form-field class="input-field">
+        <input matInput type="password" placeholder="Contraseña" [(ngModel)]="data.Password">
+      </mat-form-field>
+      <mat-form-field class="input-field">
+        <mat-select placeholder="Rol" [(ngModel)]="data.RoleID">
+          <mat-option value="1">Cliente</mat-option>
+          <mat-option value="2">Empleado</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="input-field" *ngIf="data.RoleID==2">
+        <input matInput placeholder="ID Empleado" [(ngModel)]="data.EmployeeID">
+      </mat-form-field>
+      <mat-form-field class="input-field" *ngIf="data.RoleID==2">
+        <input matInput placeholder="Posición" [(ngModel)]="data.Position">
+      </mat-form-field>
+      <mat-form-field class="input-field" *ngIf="data.RoleID==2">
+        <input matInput placeholder="Proyecto a Asignar" [(ngModel)]="data.Assigned_Project">
+      </mat-form-field>
+    </div>
+  </mat-dialog-content>
+  
+  <mat-dialog-actions class="custom-dialog-actions">
+    
+    <button mat-button (click)="onNoClick()" class="btn btn-primary">Cancelar</button>
+    <button mat-button [mat-dialog-close]="data" cdkFocusInitial class="btn btn-success">Guardar</button>
+  </mat-dialog-actions>
+  

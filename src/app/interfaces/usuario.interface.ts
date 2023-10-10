@@ -8,6 +8,8 @@ export interface UsuarioData {
     Email: string;
     Password: string;
     EmployeeID?: number;
+    Position: string;
+    Assigned_Project?: number;
     ClientID?: number;
     RoleID: number;
   }

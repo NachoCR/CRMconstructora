@@ -48,10 +48,10 @@ $(document).ready(function(){
 			<div class="table-title">
 				<div class="row">
 					<div class="col-sm-6">
-						<h2>Mantenimiento de <b>Usuarios</b></h2>
+						<h2>Mantenimiento de <b>Tareas</b></h2>
 					</div>
 					<div class="col-sm-6">
-						<button type="button" (click)="openDialog()" class="btn btn-success"><i class="material-icons">&#xE147;</i> <span>Agregar nuevo usuario</span></button>
+						<button type="button" (click)="openDialog()" class="btn btn-success"><i class="material-icons">&#xE147;</i> <span>Agregar nueva tarea</span></button>
 						<a href="#exampleModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Eliminar</span></a>						
 					</div>
 				</div>
@@ -65,14 +65,13 @@ $(document).ready(function(){
 								<label for="selectAll"></label>
 							</span>
 						</th>
-						<th>Nombre</th>
-						<th>Correo</th>
-						<th>Cedula</th>
-						<th>Teléfono</th>
-                        <th>Contraseña</th>
-                        <th>IDEmpleado</th>
-                        <th>IDCliente</th>
-                        <th>Rol</th>
+						<th># Tarea</th>
+						<th>Descripción</th>
+						<th>Fecha Limite</th>
+						<th>Prioridad</th>
+                        <th>Estado</th>
+                        <th>ID Proyecto</th>
+                        <th>ID Empleado</th>
 						<th>Acciones</th>
 					</tr>
 				</thead>
@@ -84,14 +83,13 @@ $(document).ready(function(){
 								<label for="checkbox1"></label>
 							</span>
 						</td>
-						<td>Thomas Hardy</td>
-						<td>thomashardy@mail.com</td>
-						<td>89 Chiaroscuro Rd, Portland, USA</td>
-						<td>(171) 555-2222</td>
-                        <td>*******</td>
-                        <td>1</td>
-                        <td>null</td>
-                        <td>1</td>
+						<td>1</td>
+						<td>Pintar las paredes de la cocina de color</td>
+						<td>24/10/2023</td>
+						<td>1</td>
+                        <td>2</td>
+                        <td>11</td>
+                        <td>118050439</td>
 						<td>
 							<button type="button" (click)="openDialogEditar()" class="edit" data-toggle="modal" style="background-color: transparent; border: none; margin: auto;"><i class="material-icons" data-toggle="tooltip" style="color: orange;" title="Edit">&#xE254;</i></button>
 							<a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
@@ -101,15 +99,15 @@ $(document).ready(function(){
 				</tbody>
 			</table>
 			<div class="clearfix">
-				<div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
+				<div class="hint-text">Mostrando <b>5</b> de <b>25</b> registros</div>
 				<ul class="pagination">
-					<li class="page-item disabled"><a href="#">Previous</a></li>
+					<li class="page-item disabled"><a href="#">Anterior</a></li>
 					<li class="page-item"><a href="#" class="page-link">1</a></li>
 					<li class="page-item"><a href="#" class="page-link">2</a></li>
 					<li class="page-item active"><a href="#" class="page-link">3</a></li>
 					<li class="page-item"><a href="#" class="page-link">4</a></li>
 					<li class="page-item"><a href="#" class="page-link">5</a></li>
-					<li class="page-item"><a href="#" class="page-link">Next</a></li>
+					<li class="page-item"><a href="#" class="page-link">Siguiente</a></li>
 				</ul>
 			</div>
 		</div>

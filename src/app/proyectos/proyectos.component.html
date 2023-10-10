@@ -1,13 +1,11 @@
-<p>proyectos works!</p>
 <div class="container p-0">
 
 	<div class="row">
 		<div class="col-sm-6">
-			<h2>Lista de <b>Proyectos</b></h2>
+			<h2>Mantenimiento de <b>Proyectos</b></h2>
 		</div>
 		<div class="col-sm-6">
-			<a href="#" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Crear un nuevo proyecto</span></a>
-									
+			<button type="button" (click)="openDialog()" class="btn btn-success"><i class="material-icons"></i><span>Agregar nuevo proyecto</span></button>					
 		</div>
 	</div>
 	<br>
@@ -16,7 +14,7 @@
 		<div class="col-12 col-md-6 col-lg-3">
 			<div class="card">
 
-				<img class="card-img-top" src="../../assets/images/" alt="Project 1">
+				<img class="card-img-top" src="../../assets/images/inspecciones/inspeccion1.jpg" alt="Project 1">
 				<div class="card-header px-6 pt-4">
 					<div class="card-actions float-right">
 						<div class="dropdown show">
@@ -33,6 +31,11 @@
 					</div>
 					<h5 class="card-title mb-0"><a>Casa Amanecer</a></h5>
 					<div class="badge bg-warning my-2">En Progreso</div>
+					<p>
+						<a href="/tareas" class="" data-toggle="modal"><i class="material-icons" style="color: black;"><span class="material-symbols-outlined">add</span></i></a>
+						<button type="button" (click)="openDialogEditar()" class="edit" data-toggle="modal" style="background-color: white; border: none;"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></button>
+						<a href="#" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" style="color: black;" title="Delete">&#xE872;</i></a>
+					</p>
 				</div>
 				<div class="card-body px-4 pt-2">
 					<p style="font-size: smaller;"> Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque
@@ -56,7 +59,7 @@
 		<div class="col-12 col-md-6 col-lg-3">
 			<div class="card">
 
-				<img class="card-img-top" src="../../assets/images/" alt="Project 2">
+				<img class="card-img-top" src="../../assets/images/casas/aserri.jpg" alt="Project 2">
 				<div class="card-header px-6 pt-4">
 					<div class="card-actions float-right">
 						<div class="dropdown show">
@@ -73,7 +76,13 @@
 					</div>
 					<h5 class="card-title mb-0"><a>Casa 3</a></h5>
 					<div class="badge btn-danger my-2">Por empezar</div>
+					<p>
+						<a href="/tareas" class="" data-toggle="modal"><i class="material-icons" style="color: black;"><span class="material-symbols-outlined">add</span></i></a>
+						<button type="button" (click)="openDialogEditar()" class="edit" data-toggle="modal" style="background-color: white; border: none;"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></button>
+						<a href="#" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" style="color: black;" title="Delete">&#xE872;</i></a>
+					</p>
 				</div>
+
 				<div class="card-body px-4 pt-2">
 					<p style="font-size: smaller;"> Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque
 						sed ipsum.</p>
@@ -97,7 +106,7 @@
 		<div class="col-12 col-md-6 col-lg-3">
 			<div class="card">
 
-				<img class="card-img-top" src="../../assets/images/" alt="Project 3">
+				<img class="card-img-top" src="../../assets/images/casas/santa.jpg" alt="Project 3">
 				<div class="card-header px-6 pt-4">
 					<div class="card-actions float-right">
 						<div class="dropdown show">
@@ -114,7 +123,13 @@
 					</div>
 					<h5 class="card-title mb-0"><a>Casa 2</a></h5>
 					<div class="badge bg-sucess my-2">Finalizada</div>
+					<p>
+						<a href="/tareas" class="" data-toggle="modal"><i class="material-icons" style="color: black;"><span class="material-symbols-outlined">add</span></i></a>
+						<button type="button" (click)="openDialogEditar()" class="edit" data-toggle="modal" style="background-color: white; border: none;"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></button>
+						<a href="#" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" style="color: black;" title="Delete">&#xE872;</i></a>
+					</p>
 				</div>
+
 				<div class="card-body px-4 pt-2">
 					<p style="font-size: smaller;"> Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque
 						sed ipsum.</p>
