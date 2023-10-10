@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { filter } from 'rxjs/operators';
 import { AuthService } from '@core/authentication';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -22,7 +23,8 @@ export class LoginComponent {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private auth: AuthService
+    private auth: AuthService,
+    private toastr: ToastrService,
   ) {}
 
   get username() {
@@ -39,12 +41,14 @@ export class LoginComponent {
 
   login() {
     this.isSubmitting = true;
-
     this.auth
       .login(this.username.value, this.password.value, this.rememberMe.value)
       .pipe(filter(authenticated => authenticated))
       .subscribe({
-        next: () => this.router.navigateByUrl('/dashboard'),
+        next: () => {
+          this.toastr.success('Login successful', 'Success');
+          this.router.navigateByUrl('/dashboard');
+        },
         error: (errorRes: HttpErrorResponse) => {
           if (errorRes.status === 422) {
             const form = this.loginForm;
@@ -57,6 +61,6 @@ export class LoginComponent {
           }
           this.isSubmitting = false;
         },
-      });
-  }
+      });    
+  }  
 }
