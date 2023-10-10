@@ -2,38 +2,39 @@
     <h1 mat-dialog-title>Edición Usuarios</h1>
   
     <div class="input-container">
+      
       <mat-form-field class="input-field">
-        <input matInput placeholder="Nombre" [(ngModel)]="data.Name">
+        <input matInput placeholder="Nombre" [(ngModel)]="data.user.name" name="name">
       </mat-form-field>
       <mat-form-field class="input-field">
-        <input matInput placeholder="Primer Apellido" [(ngModel)]="data.Lastname">
+        <input matInput placeholder="Primer Apellido" [(ngModel)]="data.user.lastname">
       </mat-form-field>
       <mat-form-field class="input-field">
-        <input matInput placeholder="Segundo Apellido" [(ngModel)]="data.SecondLastname">
+        <input matInput placeholder="Segundo Apellido" [(ngModel)]="data.user.secondLastname">
       </mat-form-field>
       <mat-form-field class="input-field">
-        <input matInput placeholder="Identificación" [(ngModel)]="data.Identification" readonly>
+        <input matInput placeholder="Identificación" [(ngModel)]="data.user.identification" readonly>
       </mat-form-field>
       <mat-form-field class="input-field">
-        <input matInput placeholder="Correo" [(ngModel)]="data.Email">
+        <input matInput placeholder="Correo" [(ngModel)]="data.user.email">
       </mat-form-field>
       <mat-form-field class="input-field">
-        <input matInput type="password" placeholder="Contraseña" [(ngModel)]="data.Password">
+        <input matInput type="password" placeholder="Contraseña" [(ngModel)]="data.user.password">
       </mat-form-field>
       <mat-form-field class="input-field">
-        <mat-select placeholder="Rol" [(ngModel)]="data.RoleID">
-          <mat-option value="1">Cliente</mat-option>
-          <mat-option value="2">Empleado</mat-option>
+        <mat-select placeholder="Rol" [(ngModel)]="data.user.roleId">
+          <mat-option [value]=1>Empleado</mat-option>
+          <mat-option [value]=2>Cliente</mat-option>
         </mat-select>
       </mat-form-field>
-      <mat-form-field class="input-field" *ngIf="data.RoleID==2">
-        <input matInput placeholder="ID Empleado" [(ngModel)]="data.EmployeeID">
+      <mat-form-field class="input-field" *ngIf="data.user.roleId==1">
+        <input matInput placeholder="ID Empleado" [(ngModel)]="data.user.employeeId">
       </mat-form-field>
-      <mat-form-field class="input-field" *ngIf="data.RoleID==2">
-        <input matInput placeholder="Posición" [(ngModel)]="data.Position">
+      <mat-form-field class="input-field" *ngIf="data.user.roleId==1">
+        <input matInput placeholder="Posición" [(ngModel)]="data.user.position">
       </mat-form-field>
-      <mat-form-field class="input-field" *ngIf="data.RoleID==2">
-        <input matInput placeholder="Proyecto a Asignar" [(ngModel)]="data.Assigned_Project">
+      <mat-form-field class="input-field" *ngIf="data.user.roleId==1">
+        <input matInput placeholder="Proyecto a Asignar" [(ngModel)]="data.user.assignedProject">
       </mat-form-field>
     </div>
   </mat-dialog-content>

@@ -1,7 +1,7 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { PreloaderService, SettingsService } from '@core';
 import { AngularWaitBarrier } from 'blocking-proxy/built/lib/angular_wait_barrier';
-import { PostService } from './services/PostService';
+import { UsuarioService } from './services/usuario.service';
 import { response } from 'express';
 
 @Component({
@@ -10,7 +10,7 @@ import { response } from 'express';
 })
 export class AppComponent implements OnInit, AfterViewInit {
   posts:any;
-  constructor(private preloader: PreloaderService, private settings: SettingsService, private service:PostService) {}
+  constructor(private preloader: PreloaderService, private settings: SettingsService, private service:UsuarioService) {}
 
   ngOnInit() {
     this.settings.setDirection();

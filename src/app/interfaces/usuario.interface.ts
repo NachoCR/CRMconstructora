@@ -1,15 +1,16 @@
 export interface UsuarioData {
-    UserID?: number;
-    IdentifierID: number;
-    Identification: number;
-    Name: string;
-    Lastname: string;
-    SecondLastname: string;
-    Email: string;
-    Password: string;
-    EmployeeID?: number;
-    Position: string;
-    Assigned_Project?: number;
-    ClientID?: number;
-    RoleID: number;
+    userId?: number;
+    identifierId: number;
+    identification: number;
+    name: string;
+    lastname: string;
+    secondLastname: string;
+    phone : string;
+    email: string;
+    password: string;
+    employeeId?: number;
+    position: string;
+    assignedProject?: number;
+    clientId?: number;
+    roleId: number;
   }

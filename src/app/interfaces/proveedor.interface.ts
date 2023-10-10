@@ -1,6 +1,6 @@
 export interface ProveedorData {
-    ProviderID?: number;
-    IdentifierID: number;
+    ProviderId?: number;
+    IdentifierId: number;
     Identifier: number;
     Name: string;
     Email: string;

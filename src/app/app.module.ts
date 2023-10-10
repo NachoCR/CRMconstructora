@@ -52,7 +52,7 @@ export function TranslateHttpLoaderFactory(http: HttpClient) {
 
 
 @NgModule({
-  declarations: [AppComponent, CrearUsuarioComponent, EditarUsuarioComponent, CrearProveedorComponent, EditarProveedorComponent, CrearProductoCatalogoComponent, EditarProductoCatalogoComponent, CrearProyectoComponent, TareasComponent, CrearTareaComponent, EditarTareaComponent],
+  declarations: [AppComponent, UsuariosComponent, CrearUsuarioComponent, EditarUsuarioComponent, CrearProveedorComponent, EditarProveedorComponent, CrearProductoCatalogoComponent, EditarProductoCatalogoComponent, CrearProyectoComponent, TareasComponent, CrearTareaComponent, EditarTareaComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

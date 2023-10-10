@@ -1,8 +1,8 @@
 export interface catalogoProveedorData {
-    ItemID?: number;
+    ItemId?: number;
     Name: string;
     Details: string;
     Price: number;
-    ProviderID?: string;
-    UnitID: number;
+    ProviderId?: string;
+    UnitId: number;
   }

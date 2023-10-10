@@ -1,9 +1,9 @@
 export interface TareasData {
-    TaskID?: number;
+    TaskId?: number;
     Description: string;
     Date_Due: Date;
-    PriorityID: number;
-    StatusID?: number;
-    ProjectID?: number;
-    EmployeeID?: number;
+    PriorityId: number;
+    StatusId?: number;
+    ProjectId?: number;
+    EmployeeId?: number;
   }
