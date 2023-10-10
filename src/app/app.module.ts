@@ -21,10 +21,8 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
-
 import { environment } from '@env/environment';
 import { BASE_URL, httpInterceptorProviders, appInitializerProviders } from '@core';
-
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemDataService } from '@shared/in-mem/in-mem-data.service';
 import { ProveedoresComponent } from './proveedores/proveedores.component';
@@ -44,6 +42,8 @@ import { CrearTareaComponent } from './crear-tarea/crear-tarea.component';
 import { EditarTareaComponent } from './editar-tarea/editar-tarea.component';
 import { CrearProductoCatalogoComponent } from './crear-producto-catalogo/crear-producto-catalogo.component';
 import { EditarProductoCatalogoComponent } from './editar-producto-catalogo/editar-producto-catalogo.component';
+import { ApiAuthService } from '@core/authentication/api-auth.service';
+
 
 // Required for AOT compilation
 export function TranslateHttpLoaderFactory(http: HttpClient) {
