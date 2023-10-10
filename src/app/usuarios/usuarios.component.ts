@@ -21,10 +21,14 @@ export class UsuariosComponent implements OnInit {
   constructor(public dialog: MatDialog, private usuarioService: UsuarioService, private router: Router, private activatedRoute: ActivatedRoute) {}
 
   ngOnInit(): void {
+this.getUsuariosList();
+  }
+
+
+  getUsuariosList(): void {
     this.usuarioService.getUserList().subscribe((result: any) => {
       this.usuariosList = result;
     });
-
   }
 
   openDialog(): void {
@@ -35,7 +39,7 @@ export class UsuariosComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
       this.usuarioService.addUsuario(result);
-      this.router.navigate([this.router.url]);
+      this.getUsuariosList();
     });
   }
 
@@ -48,11 +52,19 @@ export class UsuariosComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
       return this.usuarioService.updateUsuario(result.user);
+      this.getUsuariosList();
     });
   }
 
   openEliminar(user: any): void {
   this.usuarioService.deleteUsuario(user.user);
+  let updatedUsers = this.usuariosList.filter(function(u) {
+    if (u.userId != user.user.userId) {
+    return u;
+    }
+    return null;
+  })
+  this.usuariosList = updatedUsers;
   this.router.navigate([this.router.url]);
   }
 
