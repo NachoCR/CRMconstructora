@@ -1,0 +1,35 @@
+<mat-dialog-content class="custom-dialog-content">
+    <h1 mat-dialog-title>Editar tarea</h1>
+  
+    <div class="input-container">
+
+        <mat-form-field class="input-field">
+            <input matInput placeholder="ID Tarea" [(ngModel)]="data.TaskId" readonly>
+          </mat-form-field>
+      <mat-form-field class="input-field">
+        <input matInput placeholder="Descripción" [(ngModel)]="data.Description">
+      </mat-form-field>
+      <mat-form-field class="input-field">
+        <input matInput type="date" placeholder="Fecha estimada" [(ngModel)]="data.Date_Due">
+      </mat-form-field>
+      <mat-form-field class="input-field">
+        <input matInput placeholder="Prioridad" [(ngModel)]="data.PriorityId">
+      </mat-form-field>
+      <mat-form-field class="input-field">
+        <input matInput placeholder="Estado" [(ngModel)]="data.StatusId">
+      </mat-form-field>
+      <mat-form-field class="input-field">
+        <input matInput placeholder="ID Proyecto" [(ngModel)]="data.ProjectId">
+      </mat-form-field>
+      <mat-form-field class="input-field">
+        <input matInput type="text" placeholder="ID Empleado" [(ngModel)]="data.EmployeeId">
+      </mat-form-field>
+    </div>
+  </mat-dialog-content>
+  
+  <mat-dialog-actions class="custom-dialog-actions">
+    
+    <button mat-button (click)="onNoClick()" class="btn btn-primary">Cancelar</button>
+    <button mat-button [mat-dialog-close]="data" cdkFocusInitial class="btn btn-success">Guardar</button>
+  </mat-dialog-actions>
+  

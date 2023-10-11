@@ -1,0 +1,52 @@
+<mat-dialog-content class="custom-dialog-content">
+  <h1 mat-dialog-title>Creación Usuarios</h1>
+
+  <div class="input-container">
+    <mat-form-field class="input-field">
+      <input matInput placeholder="Nombre" [(ngModel)]="data.name">
+    </mat-form-field>
+    <mat-form-field class="input-field">
+      <input matInput placeholder="Primer Apellido" [(ngModel)]="data.lastname">
+    </mat-form-field>
+    <mat-form-field class="input-field">
+      <input matInput placeholder="Segundo Apellido" [(ngModel)]="data.secondLastname">
+    </mat-form-field>
+    <mat-form-field class="input-field">
+      <input matInput placeholder="Identificación" [(ngModel)]="data.identification">
+    </mat-form-field>
+    <mat-form-field class="input-field">
+      <mat-select placeholder="Tipo Identificación" [(ngModel)]="data.identifierId">
+        <mat-option value="1">Cedula</mat-option>
+        <mat-option value="2">Pasaporte</mat-option>
+        <mat-option value="2">Cedula Juridica</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="input-field">
+      <input matInput placeholder="Correo" [(ngModel)]="data.email">
+    </mat-form-field>
+    <mat-form-field class="input-field">
+      <input matInput type="password" placeholder="Contraseña" [(ngModel)]="data.password">
+    </mat-form-field>
+    <mat-form-field class="input-field">
+      <mat-select placeholder="Rol" [(ngModel)]="data.roleId">
+        <mat-option value="1">Cliente</mat-option>
+        <mat-option value="2">Empleado</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="input-field" *ngIf="data.roleId==2">
+      <input matInput placeholder="ID Empleado" [(ngModel)]="data.employeeId">
+    </mat-form-field>
+    <mat-form-field class="input-field" *ngIf="data.roleId==2">
+      <input matInput placeholder="Posición" [(ngModel)]="data.position">
+    </mat-form-field>
+    <mat-form-field class="input-field" *ngIf="data.roleId==2">
+      <input matInput placeholder="Proyecto a Asignar" [(ngModel)]="data.assignedProject">
+    </mat-form-field>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions class="custom-dialog-actions">
+  
+  <button mat-button (click)="onNoClick()" class="btn btn-primary">Cancelar</button>
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial class="btn btn-success">Guardar</button>
+</mat-dialog-actions>

@@ -8,7 +8,7 @@ import { RegisterComponent } from './sessions/register/register.component';
 import { Error403Component } from './sessions/403.component';
 import { Error404Component } from './sessions/404.component';
 import { Error500Component } from './sessions/500.component';
-import { LandingComponent } from './landing/landing.component';
+import { LandingComponent } from '../landing/landing.component';
 
 const COMPONENTS: any[] = [
   DashboardComponent,
@@ -17,6 +17,7 @@ const COMPONENTS: any[] = [
   Error403Component,
   Error404Component,
   Error500Component,
+  LandingComponent
 ];
 const COMPONENTS_DYNAMIC: any[] = [];
 

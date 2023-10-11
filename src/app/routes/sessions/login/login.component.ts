@@ -14,8 +14,8 @@ export class LoginComponent {
   isSubmitting = false;
 
   loginForm = this.fb.nonNullable.group({
-    username: ['ng-matero', [Validators.required]],
-    password: ['ng-matero', [Validators.required]],
+    username: ['admin', [Validators.required]],
+    password: ['admin', [Validators.required]],
     rememberMe: [false],
   });
 
