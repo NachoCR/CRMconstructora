@@ -280,3 +280,11 @@ table.table .avatar {
 .custom-dialog-actions {
   justify-content: flex-end;
 }
+.error-message {
+  color: 
+red;
+}
+input.ng-touched.ng-invalid {
+  border: 1px solid 
+red;
+}

@@ -1,52 +1,94 @@
 <mat-dialog-content class="custom-dialog-content">
-  <h1 mat-dialog-title>Creación Usuarios</h1>
 
-  <div class="input-container">
-    <mat-form-field class="input-field">
-      <input matInput placeholder="Nombre" [(ngModel)]="data.name">
-    </mat-form-field>
-    <mat-form-field class="input-field">
-      <input matInput placeholder="Primer Apellido" [(ngModel)]="data.lastname">
-    </mat-form-field>
-    <mat-form-field class="input-field">
-      <input matInput placeholder="Segundo Apellido" [(ngModel)]="data.secondLastname">
-    </mat-form-field>
-    <mat-form-field class="input-field">
-      <input matInput placeholder="Identificación" [(ngModel)]="data.identification">
-    </mat-form-field>
-    <mat-form-field class="input-field">
-      <mat-select placeholder="Tipo Identificación" [(ngModel)]="data.identifierId">
-        <mat-option value="1">Cedula</mat-option>
-        <mat-option value="2">Pasaporte</mat-option>
-        <mat-option value="2">Cedula Juridica</mat-option>
-      </mat-select>
-    </mat-form-field>
-    <mat-form-field class="input-field">
-      <input matInput placeholder="Correo" [(ngModel)]="data.email">
-    </mat-form-field>
-    <mat-form-field class="input-field">
-      <input matInput type="password" placeholder="Contraseña" [(ngModel)]="data.password">
-    </mat-form-field>
-    <mat-form-field class="input-field">
-      <mat-select placeholder="Rol" [(ngModel)]="data.roleId">
-        <mat-option value="1">Cliente</mat-option>
-        <mat-option value="2">Empleado</mat-option>
-      </mat-select>
-    </mat-form-field>
-    <mat-form-field class="input-field" *ngIf="data.roleId==2">
-      <input matInput placeholder="ID Empleado" [(ngModel)]="data.employeeId">
-    </mat-form-field>
-    <mat-form-field class="input-field" *ngIf="data.roleId==2">
-      <input matInput placeholder="Posición" [(ngModel)]="data.position">
-    </mat-form-field>
-    <mat-form-field class="input-field" *ngIf="data.roleId==2">
-      <input matInput placeholder="Proyecto a Asignar" [(ngModel)]="data.assignedProject">
-    </mat-form-field>
+  <div class="container">
+    <div class="row mt-3">
+      <div class="col">
+        <form [formGroup]="crearUForm" (ngSubmit)="onSubmit()" novalidate autocomplete="off">
+          <!-- email address -->
+          <div class="form-group">
+            <label for="email" class="control-label font-weight-bold">Email address</label>
+            <input type="email" class="form-control" formControlName="email" placeholder="Your email address" 
+              [ngClass]="{ 'is-valid': (f.email.dirty || submitted) && !f.email.errors, 'is-invalid': (f.email.dirty || submitted) && f.email.errors }" />
+            <div class="invalid-feedback">
+              <span class="text-danger" *ngIf="f.email.errors?.required">Email address is required</span>
+              <span class="text-danger" *ngIf="f.email.errors?.email">Email address is not valid</span>
+            </div>
+          </div>
+  
+          <!-- password -->
+          <div class="form-group">
+            <label for="password" class="control-label font-weight-bold">Password</label>
+            <input type="password" formControlName="password" class="form-control" name="password" placeholder="Choose a password" 
+              [ngClass]="{ 'is-valid': (f.password.dirty || submitted) && passwordValid, 'is-invalid': (f.password.dirty || submitted) && !passwordValid }" />
+            <div class="invalid-feedback">
+              <!-- required -->
+              <span class="text-danger" *ngIf="(f.password.dirty || submitted) && !requiredValid">Password is required</span>
+  
+              <!-- password validation rules -->
+              <div id="validation-rules" class="mt-3" *ngIf="requiredValid">
+                <!-- minlength -->
+                <div [ngClass]="{ 'text-success': minLengthValid, 'text-danger': !minLengthValid }">
+                  <i [attr.class]="minLengthValid ? 'bi-check-square-fill' : 'bi-x-square'"></i>
+                  Must be at least 8 characters long
+                </div>
+  
+                <!-- requires digit -->
+                <div [ngClass]="{ 'text-success': requiresDigitValid, 'text-danger': !requiresDigitValid }">
+                  <i [attr.class]="requiresDigitValid ? 'bi-check-square-fill' : 'bi-x-square'"></i>
+                  Must contain at least 1 digit
+                </div>
+  
+                <!-- requires uppercase -->
+                <div [ngClass]="{ 'text-success': requiresUppercaseValid, 'text-danger': !requiresUppercaseValid }">
+                  <i [attr.class]="requiresUppercaseValid ? 'bi-check-square-fill' : 'bi-x-square'"></i>
+                  Must contain at least 1 uppercase character
+                </div>
+  
+                <!-- requires lowercase -->
+                <div [ngClass]="{ 'text-success': requiresLowercaseValid, 'text-danger': !requiresLowercaseValid }">
+                  <i [attr.class]="requiresLowercaseValid ? 'bi-check-square-fill' : 'bi-x-square'"></i>
+                  Must contain at least 1 lowercase character
+                </div>
+  
+                <!-- requires special characters -->
+                <div [ngClass]="{ 'text-success': requiresSpecialCharsValid, 'text-danger': !requiresSpecialCharsValid }">
+                  <i [attr.class]="requiresSpecialCharsValid ? 'bi-check-square-fill' : 'bi-x-square'"></i>
+                  Must contain at least 1 special character
+                </div>
+              </div>
+            </div>
+          </div>
+  
+          <!-- confirm password -->
+          <div class="form-group">
+            <label for="confirmPassword" class="control-label font-weight-bold">Confirm password</label>
+            <input type="password" formControlName="confirmPassword" class="form-control" name="confirmPassword" placeholder="Confirm your password" 
+              [ngClass]="{ 'is-valid': (submitted || f.confirmPassword.dirty) && !f.confirmPassword.errors, 'is-invalid': (submitted || f.confirmPassword.dirty) && f.confirmPassword.errors }">
+            <div class="invalid-feedback" *ngIf="(submitted || f.confirmPassword.dirty) && f.confirmPassword.errors">
+              <div *ngIf="f.confirmPassword.errors.required">Confirm your password</div>
+              <div *ngIf="f.confirmPassword.errors.minLength">Password must be at least 8 characters long</div>
+              <div *ngIf="f.confirmPassword.errors.mismatch">Passwords do not match</div>
+            </div>
+          </div>
+  
+          <!-- submit button -->
+          <div class="form-group">
+            <button type="submit" class="btn btn-block btn-primary" [disabled]="isWorking">
+              <i [attr.class]="isWorking ? 'bi-hourglass-split' : 'bi-check2-square'"></i> {{ isWorking ? 'Working on it...' : 'Create account' }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
+
+
+
+  <mat-dialog-actions class="custom-dialog-actions">
+  
+    <button mat-button (click)="onNoClick()" class="btn btn-danger">Cancelar</button>
+    <button mat-button [disabled]="crearUForm.invalid" (click)="crear()" [mat-dialog-close]="data" cdkFocusInitial class="btn btn-success">Guardar</button>
+  </mat-dialog-actions>
+
 </mat-dialog-content>
 
-<mat-dialog-actions class="custom-dialog-actions">
-  
-  <button mat-button (click)="onNoClick()" class="btn btn-primary">Cancelar</button>
-  <button mat-button [mat-dialog-close]="data" cdkFocusInitial class="btn btn-success">Guardar</button>
-</mat-dialog-actions>

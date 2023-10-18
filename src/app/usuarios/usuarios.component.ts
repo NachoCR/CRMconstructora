@@ -5,6 +5,8 @@ import { CrearUsuarioComponent } from 'app/crear-usuario/crear-usuario.component
 import { EditarUsuarioComponent } from 'app/editar-usuario/editar-usuario.component';
 import { UsuarioData } from 'app/interfaces/usuario.interface';
 import { UsuarioService } from 'app/services/usuario.service';
+import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+
 
 
 @Component({
