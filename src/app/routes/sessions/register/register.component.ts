@@ -13,12 +13,16 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class RegisterComponent implements OnInit {
   registerForm = this.fb.group({
-    identifierID: [''],
+    identifierID: ['', [Validators.required]],
     identification: ['', [Validators.required]],
+    name: ['', [Validators.required]],
+    lastname: ['', [Validators.required]],
+    secondLastname: ['', [Validators.required]],
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required]],
     confirmPassword: ['', [Validators.required]],
   });
+  
 
   identifiers: any[] = [];
 
@@ -60,24 +64,25 @@ export class RegisterComponent implements OnInit {
       const user: UserRegister = {
         IdentifierId: identifierID ? +identifierID : 0,
         Identification: this.registerForm.get('identification')?.value || "",
+        Name: this.registerForm.get('name')?.value || "",
+        Lastname: this.registerForm.get('lastname')?.value || "",
+        SecondLastname: this.registerForm.get('secondLastname')?.value || "",
         Email: this.registerForm.get('email')?.value || "",
         Password: this.registerForm.get('password')?.value || "",
-        RoleId: 1,
+        RoleId: 3,
       };
   
       this.apiUserService.register(user).subscribe(
         (response) => {
-          this.toastr.success('User registered successfully', 'Success');
+          this.toastr.success('El usuario se ha registrado correctamente', 'Success');
           //this.registerForm.reset(); // Clear the form
           this.router.navigate(['/login']); 
         },
         (error) => {
-          this.toastr.error('Error registering user', 'Error');
-          console.error('Error registering user:', error);
+          this.toastr.error('Error con el registro del usuario', 'Error');
+          console.error('Error con el registro del usuario:', error);
         }
       );
     }
   }
-  
-
 }

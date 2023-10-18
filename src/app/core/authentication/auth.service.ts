@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, iif, merge, of } from 'rxjs';
+import { BehaviorSubject, iif, merge, of } from 'rxjs';
 import { catchError, map, share, switchMap, tap } from 'rxjs/operators';
 import { filterObject, isEmptyObject } from './helpers';
 import { User } from './interface';
 import { LoginService } from './login.service';
 import { TokenService } from './token.service';
-import { ApiAuthService } from './api-auth.service';
+import { MenuService } from '@core/bootstrap/menu.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private user$ = new BehaviorSubject<User>({});
+  private user$ = new BehaviorSubject<User>(this.getUserFromLocalStorage());
   private change$ = merge(
     this.tokenService.change(),
     this.tokenService.refresh().pipe(switchMap(() => this.refresh()))
@@ -23,11 +23,11 @@ export class AuthService {
   constructor(
     private loginService: LoginService,
     private tokenService: TokenService,
-    private apiAuthService: ApiAuthService
+    private menuService: MenuService
   ) {}
 
   init() {
-    return new Promise<void>(resolve => this.change$.subscribe(() => resolve()));
+    return new Promise<void>((resolve) => this.change$.subscribe(() => resolve()));
   }
 
   change() {
@@ -38,63 +38,71 @@ export class AuthService {
     return this.tokenService.valid();
   }
 
-  /*
   login(username: string, password: string, rememberMe = false) {
     return this.loginService.login(username, password, rememberMe).pipe(
-      tap(token => this.tokenService.set(token)),
-      map(() => this.check())
-    );
-  }
-  */
-
-  login(username: string, password: string, rememberMe = false) {
-    return this.apiAuthService.login(username, password).pipe(
-      tap(token => {
-        this.tokenService.set(token.tokenData);
-        this.user$.next(token.userData);
+      tap(({ token, user, menu }) => {
+        this.tokenService.set(token);
+        this.user$.next(user);
+        this.menuService.set(menu);
+        this.saveUserToLocalStorage(user);
       }),
-      map(() => this.check()),
-      catchError(error => {
-        //console.error("Error en la solicitud de inicio de sesión:", error);
-        throw error;
-      })
+      map(() => this.check())
     );
   }
 
   refresh() {
-    return this.apiAuthService
+    return this.loginService
       .refresh(filterObject({ refresh_token: this.tokenService.getRefreshToken() }))
       .pipe(
         catchError(() => of(undefined)),
-        tap(token => this.tokenService.set(token)),
+        tap((token) => this.tokenService.set(token)),
         map(() => this.check())
       );
   }
 
   logout() {
-    return this.apiAuthService.logout().pipe(
-      tap(() => this.tokenService.clear()),
+    return this.loginService.logout().pipe(
+      tap(() => {
+        this.tokenService.clear();
+        this.saveUserToLocalStorage({});
+      }),
       map(() => !this.check())
     );
   }
 
   user() {
+    //console.log('User:', this.user$.value);
     return this.user$.pipe(share());
   }
 
   menu() {
-    return iif(() => this.check(), this.apiAuthService.menu(), of([]));
+    return iif(() => this.check(), this.loginService.menu(), of([]));
   }
 
   private assignUser() {
     if (!this.check()) {
-      return of({}).pipe(tap(user => this.user$.next(user)));
+      return of({}).pipe(tap((user) => {
+        this.user$.next(user);
+        this.saveUserToLocalStorage(user);
+      }));
     }
 
     if (!isEmptyObject(this.user$.getValue())) {
       return of(this.user$.getValue());
     }
 
-    return this.apiAuthService.me().pipe(tap(user => this.user$.next(user)));
+    return this.loginService.me().pipe(tap((user) => {
+      this.user$.next(user);
+      this.saveUserToLocalStorage(user);
+    }));
+  }
+
+  private getUserFromLocalStorage(): User {
+    const userJson = localStorage.getItem('user');
+    return userJson ? JSON.parse(userJson) : {};
+  }
+
+  private saveUserToLocalStorage(user: User) {
+    localStorage.setItem('user', JSON.stringify(user));
   }
 }

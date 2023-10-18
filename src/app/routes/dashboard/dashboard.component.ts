@@ -6,7 +6,7 @@ import {
   ChangeDetectionStrategy,
   NgZone,
 } from '@angular/core';
-import { SettingsService } from '@core';
+import { SettingsService, StartupService } from '@core';
 import { Subscription } from 'rxjs';
 
 import { DashboardService } from './dashboard.service';
@@ -35,7 +35,8 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(
     private ngZone: NgZone,
     private dashboardSrv: DashboardService,
-    private settings: SettingsService
+    private settings: SettingsService,
+    private startupService: StartupService
   ) {}
 
   ngOnInit() {

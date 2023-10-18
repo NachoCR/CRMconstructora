@@ -35,7 +35,7 @@ export interface Menu {
   providedIn: 'root',
 })
 export class MenuService {
-  private menu$: BehaviorSubject<Menu[]> = new BehaviorSubject<Menu[]>([]);
+  private menu$: BehaviorSubject<Menu[]> = new BehaviorSubject<Menu[]>(this.getMenuFromLocalStorage());
 
   /** Get all the menu data. */
   getAll(): Observable<Menu[]> {
@@ -47,9 +47,21 @@ export class MenuService {
     return this.menu$.pipe(share());
   }
 
+  //New
+  private getMenuFromLocalStorage(): Menu[] {
+    const menuJson = localStorage.getItem('menu'); 
+    return menuJson ? JSON.parse(menuJson) : [];
+  }
+
+  private saveMenuToLocalStorage(menu: Menu[]) {
+    localStorage.setItem('menu', JSON.stringify(menu));
+  }
+
   /** Initialize the menu data. */
   set(menu: Menu[]): Observable<Menu[]> {
     this.menu$.next(menu);
+    //New
+    this.saveMenuToLocalStorage(menu);
     return this.menu$.asObservable();
   }
 
@@ -63,6 +75,8 @@ export class MenuService {
   /** Reset the menu data. */
   reset() {
     this.menu$.next([]);
+    //New 
+    localStorage.removeItem('menu'); 
   }
 
   /** Delete empty values and rebuild route. */
@@ -109,6 +123,7 @@ export class MenuService {
   /** Get the menu level. */
   getLevel(routeArr: string[]): string[] {
     let tmpArr: any[] = [];
+    //console.log('Valor del menu: ', this.menu$.value);
     this.menu$.value.forEach(item => {
       // Breadth-first traverse
       let unhandledLayer = [{ item, parentNamePathList: [], realRouteArr: [] }];
@@ -137,7 +152,6 @@ export class MenuService {
     });
     return tmpArr;
   }
-
   /** Add namespace for translation. */
   addNamespace(menu: Menu[] | MenuChildrenItem[], namespace: string) {
     menu.forEach(menuItem => {

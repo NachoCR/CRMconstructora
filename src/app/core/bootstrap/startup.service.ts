@@ -39,15 +39,33 @@ export class StartupService {
     this.menuService.addNamespace(menu, 'menu');
     this.menuService.set(menu);
   }
-
+/*
   private setPermissions(user: User) {
     // In a real app, you should get permissions and roles from the user information.
     const permissions = ['canAdd', 'canDelete', 'canEdit', 'canRead'];
     this.permissonsService.loadPermissions(permissions);
     this.rolesService.flushRoles();
     this.rolesService.addRoles({ ADMIN: permissions });
-
     // Tips: Alternatively you can add permissions with role at the same time.
     // this.rolesService.addRolesWithPermissions({ ADMIN: permissions });
   }
+  */
+
+  private setPermissions(user: User) {
+    const roleMapping: { [key: string]: string } = {
+      'ADMIN': 'ADMIN',
+      'USER': 'Empleado',
+      'GUEST': 'Cliente'
+    };
+
+    const userRole = user.roles as string;
+
+    if (userRole in roleMapping) {
+      const systemRole = roleMapping[userRole];
+      const permissions = user.permissions as string[];
+      this.permissonsService.loadPermissions(permissions);
+      this.rolesService.flushRoles();
+      this.rolesService.addRoles({ [systemRole]: permissions });
+    }
+  }  
 }

@@ -1,66 +1,95 @@
 <div class="d-flex w-full h-full">
-  <mat-card class="m-auto" style="max-width: 380px;">
+  <mat-card class="m-auto" style="max-width: 520px;">
+    <img src="../../../../assets/images/logo.png">
     <mat-card-header class="m-b-24">
       <mat-card-title>
-        {{'Bienvenido al Registro' | translate}}, <br />
+        {{'Bienvenido al Registro' | translate}} <br />
       </mat-card-title>
     </mat-card-header>
-
+  
     <mat-card-content>
-      <form class="form-field-full" [formGroup]="registerForm"  (ngSubmit)="onRegister()">
-
-        <mat-form-field appearance="outline">
-          <mat-label>{{ 'Tipo de identificacion' | translate }}</mat-label>
-          <mat-select formControlName="identifierID">
-            <mat-option *ngFor="let item of identifiers" [value]="item.identifierId">{{ item.identifierName }}</mat-option>
-          </mat-select>
-        </mat-form-field> 
-        
-        <mat-form-field appearance="outline">
-          <mat-label>{{ 'Identification' | translate }}</mat-label>
-          <input matInput formControlName="identification" required>
-          <mat-error *ngIf="registerForm.get('identification')?.hasError('required')">
-            <span>{{ 'validations.required' | translate }}</span>
-          </mat-error>
-        </mat-form-field>
-        
-        <mat-form-field appearance="outline">
-          <mat-label>{{ 'Email' | translate }}</mat-label>
-          <input matInput formControlName="email" required>
-          <mat-error *ngIf="registerForm.get('email')?.hasError('required')">
-            <span>{{ 'validations.required' | translate }}</span>
-          </mat-error>
-          <mat-error *ngIf="registerForm.get('email')?.hasError('email')">
-            <span>{{ 'validations.invalidEmail' | translate }}</span>
-          </mat-error>
-        </mat-form-field>
-
-        <mat-form-field appearance="outline">
-          <mat-label>{{'Contraseña' | translate}}</mat-label>
-          <input matInput type="password" formControlName="password" required>
-          <mat-error *ngIf="registerForm.get('password')?.invalid">
-            <span>{{'validations.required' | translate}}</span>
-          </mat-error>
-        </mat-form-field>
-
-        <mat-form-field appearance="outline">
-          <mat-label>{{'Confirmar contraseña' | translate}}</mat-label>
-          <input matInput type="password" formControlName="confirmPassword" required>
-          <mat-error *ngIf="registerForm.get('confirmPassword')?.hasError('required')">
-            <span>{{'validations.required' | translate}}</span>
-          </mat-error>
-          <mat-error *ngIf="registerForm.get('confirmPassword')?.hasError('mismatch')"
-                     translate [translateParams]="{value: 'login.password' | translate}">
-            <span>{{'validations.inconsistent'}}</span>
-          </mat-error>
-        </mat-form-field>
-
+      <form [formGroup]="registerForm" (ngSubmit)="onRegister()" class="form-field-full">
+        <div class="d-flex">
+          <mat-form-field appearance="outline" class="mr-4">
+            <mat-label>{{ 'Tipo de identificacion' | translate }}</mat-label>
+            <mat-select formControlName="identifierID">
+              <mat-option *ngFor="let item of identifiers" [value]="item.identifierId">{{ item.identifierName }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline" class="mr-4"> 
+            <mat-label>{{ 'Identification' | translate }}</mat-label>
+            <input matInput formControlName="identification" required>
+            <mat-error *ngIf="registerForm.get('identification')?.hasError('required')">
+              <span>{{ 'validations.required' | translate }}</span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+  
+        <div class="d-flex">
+          <mat-form-field appearance="outline" class="mr-4">
+            <mat-label>{{ 'Nombre' | translate }}</mat-label>
+            <input matInput formControlName="name" required>
+            <mat-error *ngIf="registerForm.get('name')?.hasError('required')">
+              <span>{{ 'validations.required' | translate }}</span>
+            </mat-error>
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline" class="mr-4">
+            <mat-label>{{ 'Apellido' | translate }}</mat-label>
+            <input matInput formControlName="lastname" required>
+            <mat-error *ngIf="registerForm.get('lastname')?.hasError('required')">
+              <span>{{ 'validations.required' | translate }}</span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+  
+        <div class="d-flex">
+          <mat-form-field appearance="outline" class="mr-4">
+            <mat-label>{{ 'Segundo Apellido' | translate }}</mat-label>
+            <input matInput formControlName="secondLastname">
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline" class="form-field-full">
+            <mat-label>{{ 'Email' | translate }}</mat-label>
+            <input matInput formControlName="email" required>
+            <mat-error *ngIf="registerForm.get('email')?.hasError('required')">
+              <span>{{ 'validations.required' | translate }}</span>
+            </mat-error>
+            <mat-error *ngIf="registerForm.get('email')?.hasError('email')">
+              <span>{{ 'validations.invalidEmail' | translate }}</span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+  
+        <div class="d-flex">
+          <mat-form-field appearance="outline" class="mr-4">
+            <mat-label>{{'Contraseña' | translate}}</mat-label>
+            <input matInput type="password" formControlName="password" required>
+            <mat-error *ngIf="registerForm.get('password')?.invalid">
+              <span>{{'validations.required' | translate}}</span>
+            </mat-error>
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline" class="form-field-full">
+            <mat-label>{{'Confirmar contraseña' | translate}}</mat-label>
+            <input matInput type="password" formControlName="confirmPassword" required>
+            <mat-error *ngIf="registerForm.get('confirmPassword')?.hasError('required')">
+              <span>{{'validations.required' | translate}}</span>
+            </mat-error>
+            <mat-error *ngIf="registerForm.get('confirmPassword')?.hasError('mismatch')"
+                       translate [translateParams]="{value: 'login.password' | translate}">
+              <span>{{'validations.inconsistent'}}</span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+  
         <mat-checkbox>{{'Estoy de acuerdo' | translate}}</mat-checkbox>
-
+  
         <button class="w-full m-y-16" mat-raised-button color="primary">
           {{'Registrarse' | translate}}
         </button>
-
+  
         <div>{{'Tengo una cuenta' | translate}}?
           <a routerLink="/auth/login">{{'login' | translate}}</a>
         </div>

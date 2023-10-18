@@ -27,14 +27,7 @@ import { EditarTareaComponent } from 'app/editar-tarea/editar-tarea.component';
 const routes: Routes = [
   { path: '#', component: DashboardComponent },
   { path: '', component: LandingComponent },
-  {
-    path: 'usuarios', component: UsuariosComponent
-    // children:
-    // [
-    //   { path: 'crearUsuario', component: CrearUsuarioComponent },
-    //   { path: 'eliminarUsuario', component: EliminarUsuarioComponent }
-    // ]
-  },
+  { path: 'usuarios', component: UsuariosComponent },
   { path: 'crearUsuario', component: CrearUsuarioComponent },
   { path: 'proyectos', component: ProyectosComponent },
   { path: 'proveedores', component: ProveedoresComponent },
@@ -56,7 +49,7 @@ const routes: Routes = [
       { path: '', component: DashboardComponent },
       { path: '403', component: Error403Component },
       { path: '404', component: Error404Component },
-      { path: '500', component: Error500Component }
+      { path: '500', component: Error500Component },
     ],
   },
   {

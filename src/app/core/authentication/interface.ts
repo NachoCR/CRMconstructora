@@ -5,7 +5,7 @@ export interface User {
   name?: string;
   email?: string;
   avatar?: string;
-  roles?: any[];
+  roles?: any;
   permissions?: any[];
 }
 

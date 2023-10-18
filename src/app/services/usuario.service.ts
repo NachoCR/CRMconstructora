@@ -44,7 +44,8 @@ getUserList(): Observable < any[] > {
 }  
 
 addUsuario(val: any) {  
-  return this.http.post(this.APIUrl + '/User', val);  
+  let res;
+  return this.http.post<any>(this.APIUrl + '/User', val).subscribe(data => res = data );  
 }  
 
 updateUsuario(user: any) {  
@@ -52,8 +53,9 @@ updateUsuario(user: any) {
   this.http.put<any>(this.APIUrl + '/User/' + user.userId, user).subscribe(data => result = data);
 }  
 
-deleteUsuario(val: any) {  
-  return this.http.delete(this.APIUrl + '/usuarios/' + val);  
+deleteUsuario(user: any) { 
+  let res; 
+  return this.http.delete<any>(this.APIUrl + '/User/' + user.userId).subscribe(data => res = data);  
 }  
 
 }

@@ -80,8 +80,7 @@ export class TokenService implements OnDestroy {
       this.store.set(this.key, filterObject(value));
     }
 
-    //this.change$.next(this.token);
-    this.change$ = new BehaviorSubject<BaseToken | undefined>(undefined); 
+    this.change$.next(this.token);
     this.buildRefresh();
   }
 
