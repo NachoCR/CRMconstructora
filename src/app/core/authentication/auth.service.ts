@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, iif, merge, of } from 'rxjs';
+import { BehaviorSubject, iif, merge, Observable, of } from 'rxjs';
 import { catchError, map, share, switchMap, tap } from 'rxjs/operators';
 import { filterObject, isEmptyObject } from './helpers';
 import { User } from './interface';
@@ -30,8 +30,8 @@ export class AuthService {
     return new Promise<void>((resolve) => this.change$.subscribe(() => resolve()));
   }
 
-  change() {
-    return this.change$;
+  change(): Observable<User> {
+    return this.user$;
   }
 
   check() {
@@ -64,15 +64,15 @@ export class AuthService {
     return this.loginService.logout().pipe(
       tap(() => {
         this.tokenService.clear();
+        this.user$.next({});
         this.saveUserToLocalStorage({});
       }),
       map(() => !this.check())
     );
   }
 
-  user() {
-    //console.log('User:', this.user$.value);
-    return this.user$.pipe(share());
+  user(): Observable<User> {
+    return this.user$;
   }
 
   menu() {
@@ -83,7 +83,6 @@ export class AuthService {
     if (!this.check()) {
       return of({}).pipe(tap((user) => {
         this.user$.next(user);
-        this.saveUserToLocalStorage(user);
       }));
     }
 
