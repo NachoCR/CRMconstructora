@@ -4,7 +4,7 @@ export class PasswordValidators {
   constructor() {}
 
   static patternValidator(regex: RegExp, error: ValidationErrors): ValidatorFn {
-    return (control: AbstractControl): { [key: string]: any } => {
+    return (control: AbstractControl)  => {
       if (!control.value) {
         // if control is empty return no error.
         return null;
@@ -38,6 +38,8 @@ export class PasswordValidators {
         // if passwords match, don't return an error.
         return null;
       }
+      return null;
     }
+return null;
   }
 }

@@ -14,24 +14,6 @@ export class UsuarioService {
  this.APIUrl = "https://localhost:7226/api" //url de la sln
   }
 
-// get(uri: string) {
-//   return this.http.get(`${this.APIUrl}/${uri}`);
-// }
-
-// post(uri: string, payload: Object) {
-//   return this.http.post(`${this.APIUrl}/${uri}`, payload);
-// }
-
-// patch(uri: string, payload: Object) {
-//   return this.http.patch(`${this.APIUrl}/${uri}`, payload);
-// }
-
-// delete(uri: string) {
-//   return this.http.delete(`${this.APIUrl}/${uri}`);
-// }
-
-
-
 getUserList(): Observable < any[] > {  
     return this.http.get < any > (this.APIUrl + '/User',  {
       headers: {
@@ -44,13 +26,15 @@ getUserList(): Observable < any[] > {
 }  
 
 addUsuario(val: any) {  
+  console.log(val);
   let res;
-  return this.http.post<any>(this.APIUrl + '/User', val).subscribe(data => res = data );  
+  debugger;
+  return this.http.put<any>(this.APIUrl + '/User', val).pipe(map((data : any) => data));
 }  
 
-updateUsuario(user: any) {  
-  let result;
-  this.http.put<any>(this.APIUrl + '/User/' + user.userId, user).subscribe(data => result = data);
+updateUsuario(user: any):Observable < any > {  
+  
+  return this.http.put<any>(this.APIUrl + '/User/', user).pipe(map((data : any) => data));
 }  
 
 deleteUsuario(user: any) { 

@@ -54,15 +54,24 @@ export class CrearUsuarioComponent implements OnInit {
       confirmPassword: new FormControl(null, [
         Validators.required,
         Validators.minLength(8)
-      ])
-    }
+      ]),
+      name : new FormControl(null, [Validators.required]),
+      lastname : new FormControl(null, [Validators.required]),
+      secondLastname : new FormControl(null, [Validators.required]),
+      identifierId : new FormControl(null, [Validators.required]),
+      identification : new FormControl(null, [Validators.required, Validators.minLength(8), Validators.maxLength(15)]),
+      phone : new FormControl(null, [Validators.required]),
+      roleId : new FormControl(null, [Validators.required]),
+      employeeId : new FormControl(null),
+      position : new FormControl(null),
+      assignedProject : new FormControl(null)
+
+    },
+      {
+        validators: PasswordValidators.MatchValidator
+      }
       )
   }
-
-
-
-
-
 
   get f() {
     return this.crearUForm.controls;
@@ -97,7 +106,7 @@ export class CrearUsuarioComponent implements OnInit {
   }
 
 
-  onSubmit() {
+  crear() {
     this.submitted = true;
 
     if (this.crearUForm.invalid) {
@@ -123,9 +132,7 @@ export class CrearUsuarioComponent implements OnInit {
     console.log(this.data);
   }
 
-  crear() {
-    console.log(this.crearUForm.value);
-  }
+
 
 }
 
