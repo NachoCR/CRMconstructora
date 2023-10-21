@@ -6,7 +6,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 
 import { TareasComponent } from 'app/tareas/tareas.component';
 import { ProyectosComponent } from 'app/proyectos/proyectos.component';
-import { UsuariosComponent } from 'app/usuarios/usuarios.component';
+import { UsuariosComponent } from 'app/usuarios-module/usuarios-lista/usuarios.component';
 import { ProveedoresComponent } from 'app/proveedores/proveedores.component';
 
 const COMPONENTS: any[] = [
@@ -22,4 +22,4 @@ const COMPONENTS_DYNAMIC: any[] = [];
   imports: [SharedModule, RoutesRoutingModule],
   declarations: [...COMPONENTS, ...COMPONENTS_DYNAMIC],
 })
-export class RoutesModule {}
+export class RoutesModule { }

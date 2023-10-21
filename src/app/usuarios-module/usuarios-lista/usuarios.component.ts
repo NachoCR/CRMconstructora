@@ -1,8 +1,8 @@
-import { Component, OnInit , Inject } from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
+import { Component, OnInit, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Route, Router, NavigationEnd } from "@angular/router";
-import { CrearUsuarioComponent } from 'app/crear-usuario/crear-usuario.component';
-import { EditarUsuarioComponent } from 'app/editar-usuario/editar-usuario.component';
+import { CrearUsuarioComponent } from 'app/usuarios-module/crear-usuario/crear-usuario.component';
+import { EditarUsuarioComponent } from 'app/usuarios-module/editar-usuario/editar-usuario.component';
 import { UsuarioData } from 'app/interfaces/usuario.interface';
 import { UsuarioService } from 'app/services/usuario.service';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
@@ -18,7 +18,7 @@ import { MatTableDataSource } from '@angular/material/table';
 })
 export class UsuariosComponent implements OnInit {
 
-  usuario?: UsuarioData;  
+  usuario?: UsuarioData;
 
   // usuariosList: UsuarioData[] = [];
 
@@ -33,7 +33,7 @@ export class UsuariosComponent implements OnInit {
   }
 
   ngOnInit(): void {
-this.getUsuariosList();
+    this.getUsuariosList();
   }
 
 
@@ -45,10 +45,10 @@ this.getUsuariosList();
   }
 
   openDialog(): void {
-    
+
     const dialogRef = this.dialog.open(CrearUsuarioComponent, {
       width: '50%',
-      data: {usuario: this.usuario}
+      data: { usuario: this.usuario }
     });
     dialogRef.afterClosed().subscribe(result => {
 
@@ -60,12 +60,12 @@ this.getUsuariosList();
   }
 
   openDialogEditar(user: any): void {
-    
+
     console.log(user);
     const pUser = _.cloneDeep(user);
     const dialogRef = this.dialog.open(EditarUsuarioComponent, {
       width: '60%',
-      data : pUser
+      data: pUser
     });
     dialogRef.afterClosed().subscribe(result => {
 
@@ -80,30 +80,32 @@ this.getUsuariosList();
         }).then(swalResult => {
           if (swalResult.isConfirmed) {
             this.usuarioService.updateUsuario(result).subscribe({
-              next : () => {
+              next: () => {
                 this.getUsuariosList();
                 Swal.fire('Guardados!', '', 'success');
-              }, error:(e)=> {
+              }, error: (e) => {
                 this.getUsuariosList();
                 debugger;
                 console.log(e);
                 Swal.fire('Error al guardar los cambios', '', 'info');
               }
             });
-              // Realizar cualquier acción adicional después de guardar
-            }
-            else if (swalResult.isDenied) {
-              // Usuario eligió no guardar los cambios
-              Swal.fire('Cambios no guardados', '', 'info');
-            }
+            // Realizar cualquier acción adicional después de guardar
           }
-    )}
+          else if (swalResult.isDenied) {
+            // Usuario eligió no guardar los cambios
+            Swal.fire('Cambios no guardados', '', 'info');
+          }
+        }
+        )
       }
-    )};
+    }
+    )
+  };
 
 
   openEliminar(user: any): void {
-    
+
     Swal.fire({
       title: 'Eliminar usuario?',
       text: 'Está seguro que desea eliminar este usuario?',
@@ -114,9 +116,9 @@ this.getUsuariosList();
     }).then((result) => {
       if (result.value) {
         this.usuarioService.deleteUsuario(user.user);
-        let updatedUsers = this.usuariosList.filter(function(u) {
+        let updatedUsers = this.usuariosList.filter(function (u) {
           if (u.userId != user.user.userId) {
-          return u;
+            return u;
           }
           return null;
         })
@@ -128,7 +130,8 @@ this.getUsuariosList();
       }
     });
 
-  }}
+  }
+}
 
 
 

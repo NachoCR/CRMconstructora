@@ -9,6 +9,7 @@ import { Error403Component } from './sessions/403.component';
 import { Error404Component } from './sessions/404.component';
 import { Error500Component } from './sessions/500.component';
 import { LandingComponent } from '../landing/landing.component';
+import { UsuariosComponent } from 'app/usuarios-module/usuarios-lista/usuarios.component';
 
 const COMPONENTS: any[] = [
   DashboardComponent,
@@ -17,7 +18,8 @@ const COMPONENTS: any[] = [
   Error403Component,
   Error404Component,
   Error500Component,
-  LandingComponent
+  LandingComponent,
+  UsuariosComponent
 ];
 const COMPONENTS_DYNAMIC: any[] = [];
 
@@ -25,4 +27,4 @@ const COMPONENTS_DYNAMIC: any[] = [];
   imports: [SharedModule, RoutesRoutingModule],
   declarations: [...COMPONENTS, ...COMPONENTS_DYNAMIC, LandingComponent],
 })
-export class RoutesModule {}
+export class RoutesModule { }

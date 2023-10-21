@@ -3,12 +3,20 @@
     {
       "route": "dashboard",
       "name": "dashboard",
-      "type": "link",
+      "type": "sub",
       "icon": "dashboard",
       "badge": {
         "color": "red-500",
         "value": "5"
-      }
+      },
+      "children": [
+        {
+          "route": "usuarios",
+          "name": "Usuarios",
+          "type": "link",
+          "icon": "person"
+        }
+      ]
     },
     {
       "route": "proyectos",
@@ -27,12 +35,6 @@
       "name": "Tareas",
       "type": "link",
       "icon": ""
-    },
-    {
-      "route": "usuarios",
-      "name": "Usuarios",
-      "type": "link",
-      "icon": "person"
     }
   ]
 }

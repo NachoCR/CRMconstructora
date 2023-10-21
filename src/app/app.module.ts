@@ -32,13 +32,13 @@ import { ProveedoresComponent } from './proveedores/proveedores.component';
 import { CatalogoProveedorComponent } from './catalogo-proveedor/catalogo-proveedor.component';
 import { LandingComponent } from './landing/landing.component';
 import { LoginComponent } from './auth/login/login.component';
-import { UsuariosComponent } from './usuarios/usuarios.component';
+import { UsuariosComponent } from './usuarios-module/usuarios-lista/usuarios.component';
 import { ProyectosComponent } from './proyectos/proyectos.component';
 import { OrdenesCompraComponent } from './ordenes-compra/ordenes-compra.component';
-import { CrearUsuarioComponent } from './crear-usuario/crear-usuario.component';
+import { CrearUsuarioComponent } from './usuarios-module/crear-usuario/crear-usuario.component';
 import { CrearProveedorComponent } from './crear-proveedor/crear-proveedor.component';
 import { EditarProveedorComponent } from './editar-proveedor/editar-proveedor.component';
-import { EditarUsuarioComponent } from './editar-usuario/editar-usuario.component';
+import { EditarUsuarioComponent } from './usuarios-module/editar-usuario/editar-usuario.component';
 import { CrearProyectoComponent } from './crear-proyecto/crear-proyecto.component';
 import { TareasComponent } from './tareas/tareas.component';
 import { CrearTareaComponent } from './crear-tarea/crear-tarea.component';
@@ -53,7 +53,7 @@ export function TranslateHttpLoaderFactory(http: HttpClient) {
 
 
 @NgModule({
-  declarations: [AppComponent, UsuariosComponent, CrearUsuarioComponent, EditarUsuarioComponent, CrearProveedorComponent, EditarProveedorComponent, CrearProductoCatalogoComponent, EditarProductoCatalogoComponent, CrearProyectoComponent, TareasComponent, CrearTareaComponent, EditarTareaComponent],
+  declarations: [AppComponent, CrearUsuarioComponent, EditarUsuarioComponent, CrearProveedorComponent, EditarProveedorComponent, CrearProductoCatalogoComponent, EditarProductoCatalogoComponent, CrearProyectoComponent, TareasComponent, CrearTareaComponent, EditarTareaComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

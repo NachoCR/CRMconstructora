@@ -1,3 +1,4 @@
+/* eslint-disable no-debugger */
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { share } from 'rxjs/operators';
@@ -78,6 +79,7 @@ export class MenuService {
 
   /** Get the menu item name based on current route. */
   getItemName(routeArr: string[]): string {
+    debugger;
     return this.getLevel(routeArr)[routeArr.length - 1];
   }
 
