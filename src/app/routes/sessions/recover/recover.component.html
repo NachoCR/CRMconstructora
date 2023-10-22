@@ -1,0 +1,29 @@
+<div class="d-flex w-full h-full">
+  <mat-card class="m-auto" style="max-width: 380px;">
+    <mat-card-header class="m-b-24">
+      <mat-card-title>
+        {{ 'Recuperar Contraseña' | translate }} <br />
+      </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form class="form-field-full" [formGroup]="RecoverForm">
+        <mat-form-field appearance="outline">
+          <mat-label>{{ 'Correo electrónico' | translate }}</mat-label>
+          <input matInput formControlName="email" required>
+          <mat-error *ngIf="RecoverForm.get('email')?.hasError('required')">
+            {{ 'Campo requerido' | translate }}
+          </mat-error>
+          <mat-error *ngIf="RecoverForm.get('email')?.hasError('email')">
+            {{ 'Formato de correo electrónico inválido' | translate }}
+          </mat-error>
+        </mat-form-field>
+
+        <button class="w-full m-y-16" mat-raised-button (click)="this.recoverPassword()" color="primary" [disabled]="!RecoverForm.valid || isLoading">
+          {{ 'Recuperar contraseña' | translate }}
+        </button>
+
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -37,8 +37,8 @@
                 [disabled]="!!loginForm.invalid" [loading]="isSubmitting"
                 (click)="login()">{{'Iniciar sesión' | translate}}</button>
 
-        <div>{{'No tengo cuenta' | translate}}?
-          <a routerLink="/auth/register">{{'Crear una cuenta' | translate}}</a>
+        <div>
+          <a routerLink="/auth/recover">{{'¿Olvidaste tu contraseña?' | translate}}</a>
         </div>
       </form>
     </mat-card-content>
