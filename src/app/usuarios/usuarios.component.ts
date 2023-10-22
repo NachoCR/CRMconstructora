@@ -11,6 +11,7 @@ import { debug } from 'console';
 import * as _ from 'lodash';
 import { MatTableDataSource } from '@angular/material/table';
 
+
 @Component({
   selector: 'app-usuarios',
   templateUrl: './usuarios.component.html',
@@ -129,6 +130,9 @@ this.getUsuariosList();
     });
 
   }}
+
+
+  }
 
 
 

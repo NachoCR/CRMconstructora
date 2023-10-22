@@ -49,7 +49,7 @@ const routes: Routes = [
       { path: '', component: DashboardComponent },
       { path: '403', component: Error403Component },
       { path: '404', component: Error404Component },
-      { path: '500', component: Error500Component }
+      { path: '500', component: Error500Component },
     ],
   },
   {
