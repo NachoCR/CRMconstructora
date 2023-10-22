@@ -25,11 +25,11 @@ getUserList(): Observable < any[] > {
     } ));  
 }  
 
-addUsuario(val: any) {  
-  console.log(val);
+addUsuario(user: any):Observable < any > {    
+  console.log(user);
   let res;
   debugger;
-  return this.http.put<any>(this.APIUrl + '/User', val).pipe(map((data : any) => data));
+  return this.http.put<any>(this.APIUrl + '/User/', user).pipe(map((data : any) => data));
 }  
 
 updateUsuario(user: any):Observable < any > {  
@@ -39,6 +39,7 @@ updateUsuario(user: any):Observable < any > {
 
 deleteUsuario(user: any) { 
   let res; 
+  console.log(user);
   return this.http.delete<any>(this.APIUrl + '/User/' + user.userId).subscribe(data => res = data);  
 }  
 

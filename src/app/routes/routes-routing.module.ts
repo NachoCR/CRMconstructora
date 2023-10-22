@@ -23,21 +23,18 @@ import { CrearProyectoComponent } from 'app/crear-proyecto/crear-proyecto.compon
 import { TareasComponent } from 'app/tareas/tareas.component';
 import { CrearTareaComponent } from 'app/crear-tarea/crear-tarea.component';
 import { EditarTareaComponent } from 'app/editar-tarea/editar-tarea.component';
+import { ContactosComponent } from 'app/contactos/contactos/contactos.component';
 
 const routes: Routes = [
   { path: '#', component: DashboardComponent },
   { path: '', component: LandingComponent },
   { path: 'usuarios', component: UsuariosComponent },
-  { path: 'crearUsuario', component: CrearUsuarioComponent },
   { path: 'proyectos', component: ProyectosComponent },
   { path: 'proveedores', component: ProveedoresComponent },
-  { path: 'crearProvedor', component: CrearProveedorComponent },
-  { path: 'crearProyecto', component: CrearProyectoComponent},
   { path: 'tareas', component: TareasComponent},
-  { path: 'crearTarea', component: CrearTareaComponent},
-  { path: 'editarTarea', component: EditarTareaComponent},
   { path: 'catalogoProveedor', component: CatalogoProveedorComponent },
-  { path: 'ordenesCompra', component: OrdenesCompraComponent }
+  { path: 'ordenesCompra', component: OrdenesCompraComponent },
+  { path: 'contactos', component: ContactosComponent }
   ,
 
   {

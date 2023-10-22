@@ -8,7 +8,34 @@
       "badge": {
         "color": "red-500",
         "value": "5"
-      }
+      },
+     
+      "children": [
+        {
+          "route": "proyectos",
+          "name": "Proyectos",
+          "type": "link",
+          "icon": "description"
+        },
+        {
+          "route": "proveedores",
+          "name": "Proveedores",
+          "type": "folder",
+          "icon": "favorite"
+        },
+        {
+          "route": "tareas",
+          "name": "Tareas",
+          "type": "link",
+          "icon": "book"
+        },
+        {
+          "route": "usuarios",
+          "name": "Usuarios",
+          "type": "link",
+          "icon": "person"
+        }
+      ]
     },
     {
       "route": "proyectos",

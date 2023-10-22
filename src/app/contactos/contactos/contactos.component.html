@@ -46,13 +46,13 @@ $(document).ready(function(){
 		<div class="container">
 		  <div class="row">
 			<div class="col-sm-6">
-			  <h2>Mantenimiento de <b>Usuarios</b></h2>
+			  <h2>Contactos <b>registrados</b></h2>
 			</div>
 			
 			<div class="col-sm-6 text-right">
 			  <!-- Botón para crear usuarios en la misma fila que el título -->
 			  <button mat-raised-button color="primary" (click)="openDialog()">
-				<mat-icon>add</mat-icon> Crear Usuario
+				<mat-icon>add</mat-icon> Crear contacto
 			  </button>
 			</div>
 		  </div>
@@ -62,41 +62,36 @@ $(document).ready(function(){
 		  <mat-table [dataSource]="dataSource">
 			<ng-container matColumnDef="name">
 			  <mat-header-cell *matHeaderCellDef>Nombre</mat-header-cell>
-			  <mat-cell *matCellDef="let user">{{ user.name }} {{ user.lastname }} {{ user.secondLastname }}</mat-cell>
+			  <mat-cell *matCellDef="let contact">{{ contact.name }} {{ contact.lastname }} {{ contact.secondLastname }}</mat-cell>
 			</ng-container>
 	  
 			<ng-container matColumnDef="email">
 			  <mat-header-cell *matHeaderCellDef>Correo</mat-header-cell>
-			  <mat-cell *matCellDef="let user">{{ user.email }}</mat-cell>
-			</ng-container>
-	  
-			<ng-container matColumnDef="identification">
-			  <mat-header-cell *matHeaderCellDef>Cedula</mat-header-cell>
-			  <mat-cell *matCellDef="let user">{{ user.identification }}</mat-cell>
+			  <mat-cell *matCellDef="let contact">{{ contact.email }}</mat-cell>
 			</ng-container>
 	  
 			<ng-container matColumnDef="phone">
 			  <mat-header-cell *matHeaderCellDef>Teléfono</mat-header-cell>
-			  <mat-cell *matCellDef="let user">{{ user.phone }}</mat-cell>
+			  <mat-cell *matCellDef="let contact">{{ contact.phone }}</mat-cell>
 			</ng-container>
 	  
-			<ng-container matColumnDef="password">
-			  <mat-header-cell *matHeaderCellDef>Contraseña</mat-header-cell>
-			  <mat-cell *matCellDef="let user">{{ user.password }}</mat-cell>
+			<ng-container matColumnDef="details">
+			  <mat-header-cell *matHeaderCellDef>Detalles</mat-header-cell>
+			  <mat-cell *matCellDef="let contact">{{ contact.details }}</mat-cell>
 			</ng-container>
 	  
-			<ng-container matColumnDef="roleId">
-			  <mat-header-cell *matHeaderCellDef>Rol</mat-header-cell>
-			  <mat-cell *matCellDef="let user">{{ user.roleId }}</mat-cell>
+			<ng-container matColumnDef="providerId">
+			  <mat-header-cell *matHeaderCellDef>Proveedor</mat-header-cell>
+			  <mat-cell *matCellDef="let contact">{{ contact.providerId }}</mat-cell>
 			</ng-container>
 	  
 			<ng-container matColumnDef="actions">
 			  <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
-			  <mat-cell *matCellDef="let user">
-				<button mat-icon-button (click)="openDialogEditar(user)" matTooltip="Editar">
+			  <mat-cell *matCellDef="let contact">
+				<button mat-icon-button (click)="openDialogEditar(contact)" matTooltip="Editar">
 				  <mat-icon>edit</mat-icon>
 				</button>
-				<button mat-icon-button (click)="openEliminar(user)" matTooltip="Eliminar">
+				<button mat-icon-button (click)="openEliminar(contact)" matTooltip="Eliminar">
 				  <mat-icon>delete</mat-icon>
 				</button>
 			  </mat-cell>
