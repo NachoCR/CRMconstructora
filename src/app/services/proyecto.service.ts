@@ -38,6 +38,7 @@ updateProyecto(project: any):Observable < any > {
 }  
 
 deleteProyecto(project: any) { 
+  debugger;
   let res; 
   console.log(project);
   return this.http.delete<any>(this.APIUrl + '/Project/' + project.projectId).subscribe(data => res = data);  

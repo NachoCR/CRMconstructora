@@ -6,7 +6,7 @@ export class DateValidator {
       const selectedDate = new Date(control.value);
       const currentDate = new Date();
 
-      if (selectedDate < currentDate) {
+      if (selectedDate <= currentDate) { // Cambiar '<' a '<=' para incluir la fecha actual
         return { dateInPast: true };
       }
     }

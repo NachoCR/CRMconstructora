@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CrearProyectoComponent } from 'app/crear-proyecto/crear-proyecto.component';
 import { ProyectoData } from 'app/interfaces/proyecto.interface';
 import { ProyectoService } from 'app/services/proyecto.service';
-import { EditarProyectoComponent } from 'editar-proyecto/editar-proyecto.component';
+import { EditarProyectoComponent } from 'app/editar-proyecto/editar-proyecto.component';
 import * as _ from 'lodash';
 import Swal from 'sweetalert2';
 
@@ -136,7 +136,6 @@ export class ProyectosComponent {
               return null;
             })
             this.proyectosList = updatedProjects;
-            this.router.navigate([this.router.url]);
             Swal.fire('Eliminado!', 'Proyecto eliminado.', 'success');
           } else if (result.dismiss === Swal.DismissReason.cancel) {
             Swal.fire('Cancelado', 'El proyecto no fue eliminado', 'error');

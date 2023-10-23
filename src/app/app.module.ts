@@ -48,7 +48,7 @@ import { EditarProductoCatalogoComponent } from './editar-producto-catalogo/edit
 import { ContactosComponent } from './contactos/contactos/contactos.component';
 import { CrearContactoComponent } from './contactos/crear-contacto/crear-contacto.component';
 import { EditarContactoComponent } from './contactos/editar-contacto/editar-contacto.component';
-import { EditarProyectoComponent } from 'editar-proyecto/editar-proyecto.component';
+import { EditarProyectoComponent } from './editar-proyecto/editar-proyecto.component';
 
 // Required for AOT compilation
 export function TranslateHttpLoaderFactory(http: HttpClient) {
@@ -74,6 +74,9 @@ export function TranslateHttpLoaderFactory(http: HttpClient) {
     EditarProyectoComponent,
     TareasComponent, 
     CrearTareaComponent, 
+    ProveedoresComponent,
+    CrearProveedorComponent,
+    EditarProveedorComponent,
     EditarTareaComponent],
 
   imports: [

@@ -22,15 +22,16 @@
   
             <div class="form-row">
               <!-- Segundo apellido -->
-              <div class="form-group col-md-6">
+              <div class="form-group col-md-6" >
                 <label for="startDate" class="control-label font-weight-bold">Fecha de inicio</label>
-                <input type="date" class="form-control" placeholder="Fecha de inicio" formControlName="startDate" [(ngModel)]="data.startDate"/>
+                <input type="date" class="form-control" placeholder="Fecha de inicio" formControlName="startDate" [ngModel]="data.startDate | date:'yyyy-MM-dd'" readonly/>
               </div>
+              
   
               <!-- Cédula -->
               <div class="form-group col-md-6">
                 <label for="startDate" class="control-label font-weight-bold">Fecha de Entrega</label>
-                <input type="date" class="form-control" placeholder="Fecha de entrega" formControlName="endDate" [(ngModel)]="data.endDate"/>
+                <input type="date" class="form-control" placeholder="Fecha de entrega" formControlName="endDate" [ngModel]="data.endDate | date:'yyyy-MM-dd'"/>
               </div>
             </div>
   
@@ -58,7 +59,7 @@
   
             <mat-dialog-actions class="custom-dialog-actions">
               <button mat-button (click)="onNoClick()" class="btn btn-default">Cancelar</button>
-              <button mat-button [disabled]="crearProyectoForm.invalid" [mat-dialog-close]="data" cdkFocusInitial class="btn btn-success">Guardar</button>
+              <button mat-button [disabled]="editarProyectoForm.invalid" [mat-dialog-close]="data" cdkFocusInitial class="btn btn-success">Guardar</button>
             </mat-dialog-actions>
           </form>
         </div>

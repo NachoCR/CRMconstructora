@@ -68,12 +68,9 @@ $(document).ready(function(){
 		  <mat-card-content>
 			<p>Descripción del proyecto:</p>
 			<p style="font-size: small;">{{ project.description }}</p>
-			<p>Cliente:</p>
-			<p style="font-size: small;">{{ project.clientId }}</p>
-			<p>Fecha Inicio:</p>
-			<p style="font-size: smaller;">{{ project.startDate }}</p>
-			<p>Fecha Entrega:</p>
-			<p style="font-size: smaller;">{{ project.endDate }}</p>
+			<p style="font-size: small;">Cliente: {{ project.client.name }}</p>
+			<p style="font-size: smaller;">Fecha Inicio: {{ project.startDate }}</p>
+			<p style="font-size: smaller;">Fecha Entrega: {{ project.endDate }}</p>
 		  </mat-card-content>
 		  <mat-card-actions>
 			<button mat-icon-button (click)="openDialogEditar(project)" matTooltip="Editar">
