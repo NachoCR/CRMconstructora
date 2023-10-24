@@ -21,6 +21,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 import { environment } from '@env/environment';
 import { BASE_URL, httpInterceptorProviders, appInitializerProviders } from '@core';
@@ -44,6 +45,10 @@ import { CrearTareaComponent } from './crear-tarea/crear-tarea.component';
 import { EditarTareaComponent } from './editar-tarea/editar-tarea.component';
 import { CrearProductoCatalogoComponent } from './crear-producto-catalogo/crear-producto-catalogo.component';
 import { EditarProductoCatalogoComponent } from './editar-producto-catalogo/editar-producto-catalogo.component';
+import { ContactosComponent } from './contactos/contactos/contactos.component';
+import { CrearContactoComponent } from './contactos/crear-contacto/crear-contacto.component';
+import { EditarContactoComponent } from './contactos/editar-contacto/editar-contacto.component';
+import { EditarProyectoComponent } from './editar-proyecto/editar-proyecto.component';
 
 // Required for AOT compilation
 export function TranslateHttpLoaderFactory(http: HttpClient) {
@@ -52,7 +57,28 @@ export function TranslateHttpLoaderFactory(http: HttpClient) {
 
 
 @NgModule({
-  declarations: [AppComponent, UsuariosComponent, CrearUsuarioComponent, EditarUsuarioComponent, CrearProveedorComponent, EditarProveedorComponent, CrearProductoCatalogoComponent, EditarProductoCatalogoComponent, CrearProyectoComponent, TareasComponent, CrearTareaComponent, EditarTareaComponent],
+  declarations: [AppComponent,
+    ContactosComponent, 
+    CrearContactoComponent,
+    EditarContactoComponent, 
+    UsuariosComponent, 
+    CrearUsuarioComponent, 
+    EditarUsuarioComponent,
+    CrearProveedorComponent, 
+    EditarProveedorComponent, 
+    CrearProductoCatalogoComponent,
+    EditarProductoCatalogoComponent,
+    ProyectosComponent, 
+    CrearProyectoComponent, 
+    EditarProyectoComponent,
+    EditarProyectoComponent,
+    TareasComponent, 
+    CrearTareaComponent, 
+    ProveedoresComponent,
+    CrearProveedorComponent,
+    EditarProveedorComponent,
+    EditarTareaComponent],
+
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

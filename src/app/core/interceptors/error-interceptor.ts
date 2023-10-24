@@ -12,6 +12,7 @@ import { catchError } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 
 export enum STATUS {
+  BAD_REQUEST = 400,
   UNAUTHORIZED = 401,
   FORBIDDEN = 403,
   NOT_FOUND = 404,
@@ -23,6 +24,10 @@ export class ErrorInterceptor implements HttpInterceptor {
   private errorPages = [STATUS.FORBIDDEN, STATUS.NOT_FOUND, STATUS.INTERNAL_SERVER_ERROR];
 
   private getMessage = (error: HttpErrorResponse) => {
+    if (error.status === 0) {
+      return 'No se pudo conectar al servidor. Verifique su conexión a Internet o inténtelo de nuevo más tarde.';
+    }
+
     if (error.error?.message) {
       return error.error.message;
     }
@@ -49,7 +54,10 @@ export class ErrorInterceptor implements HttpInterceptor {
       });
     } else {
       console.error('ERROR', error);
-      this.toast.error(this.getMessage(error));
+      const errorMessage = this.getMessage(error);
+      if (errorMessage !== `${error.status} ${error.statusText}`) {
+        this.toast.error(errorMessage);
+      }
       if (error.status === STATUS.UNAUTHORIZED) {
         this.router.navigateByUrl('/auth/login');
       }

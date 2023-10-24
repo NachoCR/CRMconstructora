@@ -1,47 +1,171 @@
 <mat-dialog-content class="custom-dialog-content">
-    <h1 mat-dialog-title>Edición Usuarios</h1>
-  
-    <div class="input-container">
-      
-      <mat-form-field class="input-field">
-        <input matInput placeholder="Nombre" [(ngModel)]="data.user.name" name="name">
-      </mat-form-field>
-      <mat-form-field class="input-field">
-        <input matInput placeholder="Primer Apellido" [(ngModel)]="data.user.lastname">
-      </mat-form-field>
-      <mat-form-field class="input-field">
-        <input matInput placeholder="Segundo Apellido" [(ngModel)]="data.user.secondLastname">
-      </mat-form-field>
-      <mat-form-field class="input-field">
-        <input matInput placeholder="Identificación" [(ngModel)]="data.user.identification" readonly>
-      </mat-form-field>
-      <mat-form-field class="input-field">
-        <input matInput placeholder="Correo" [(ngModel)]="data.user.email">
-      </mat-form-field>
-      <mat-form-field class="input-field">
-        <input matInput type="password" placeholder="Contraseña" [(ngModel)]="data.user.password">
-      </mat-form-field>
-      <mat-form-field class="input-field">
-        <mat-select placeholder="Rol" [(ngModel)]="data.user.roleId">
-          <mat-option [value]=1>Empleado</mat-option>
-          <mat-option [value]=2>Cliente</mat-option>
-        </mat-select>
-      </mat-form-field>
-      <mat-form-field class="input-field" *ngIf="data.user.roleId==1">
-        <input matInput placeholder="ID Empleado" [(ngModel)]="data.user.employeeId">
-      </mat-form-field>
-      <mat-form-field class="input-field" *ngIf="data.user.roleId==1">
-        <input matInput placeholder="Posición" [(ngModel)]="data.user.position">
-      </mat-form-field>
-      <mat-form-field class="input-field" *ngIf="data.user.roleId==1">
-        <input matInput placeholder="Proyecto a Asignar" [(ngModel)]="data.user.assignedProject">
-      </mat-form-field>
+  <div class="container">
+    <div class="row mt-3">
+      <div class="col">
+        <form [formGroup]="editarUsuarioForm" (ngSubmit)="editar()" novalidate autocomplete="">
+
+          <h3>Edición de Usuarios</h3>
+
+          <div class="form-row">
+            <!-- Nombre -->
+            <div class="form-group col-md-6">
+              <label for="name" class="control-label font-weight-bold">Nombre</label>
+              <input type="text" class="form-control" placeholder="Nombre" formControlName="name" [(ngModel)]="data.name" />
+            </div>
+
+            <!-- Primer apellido -->
+            <div class="form-group col-md-6">
+              <label for="lastname" class="control-label font-weight-bold">Primer Apellido</label>
+              <input type="text" class="form-control" placeholder="Primer apellido" formControlName="lastname" [(ngModel)]="data.lastname"/>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <!-- Segundo apellido -->
+            <div class="form-group col-md-6">
+              <label for="lastsecondname" class="control-label font-weight-bold">Segundo Apellido</label>
+              <input type="text" class="form-control" placeholder="Segundo apellido" formControlName="secondLastname" [(ngModel)]="data.secondLastname"/>
+            </div>
+
+            <!-- Cédula -->
+            <div class="form-group col-md-6">
+              <label class="control-label font-weight-bold">Tipo de identificación</label>
+              <select formControlName="identifierId" [(ngModel)]="data.identifierId" class="form-select" style="border-radius: 2px;">
+                <option value="1">Cédula</option>
+                <option value="2">Pasaporte</option>
+                <option value="3">Cédula jurídica</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Identificación -->
+          <div class="form-group">
+            <label for="identification" class="control-label font-weight-bold">Identificación</label> 
+            <input type="text" class="form-control" placeholder="Identificación" formControlName="identification" [(ngModel)]="data.identification"
+              [ngClass]="{ 'is-valid': (f.identification.dirty || submitted) && !f.identification.errors, 'is-invalid': (f.identification.dirty || submitted) && f.identification.errors }"
+              maxlength="15" minlength="8" />
+            <div class="invalid-feedback">
+              <span class="text-danger" *ngIf="f.identification.errors?.required">Es requerida la cedula</span>
+              <span class="text-danger" *ngIf="f.identification.errors?.maxLengthValid">Debe ser de 8 a 15
+                caracteres</span>
+              <div [ngClass]="{ 'text-sucess': minLengthValid, 'text-danger': !minLengthValid }">
+                <i [attr.class]="minLengthValid ? 'bi-check-square-fill' : 'bi-x-square'"></i>
+                Debe ser mínimo de 8 caracteres a 15 caracteres
+              </div>
+            </div>
+          </div>
+
+          <!-- Correo electrónico -->
+          <div class="form-group">
+            <label for="email" class="control-label font-weight-bold">Correo</label>
+            <input type="email" class="form-control" formControlName="email" placeholder="correo@gmail.com" [(ngModel)]="data.email"
+              [ngClass]="{ 'is-valid': (f.email.dirty || submitted) && !f.email.errors, 'is-invalid': (f.email.dirty || submitted) && f.email.errors }" />
+            <div class="invalid-feedback">
+              <span class="text-danger" *ngIf="f.email.errors?.required">Es requerido el correo electrónico</span>
+              <span class="text-danger" *ngIf="f.email.errors?.email">Correo electrónico inválido</span>
+            </div>
+          </div>
+
+          
+          <div class="form-group">
+            <label for="password" class="control-label font-weight-bold">Contraseña</label>
+            <input type="password" formControlName="password" class="form-control" name="password"
+              placeholder="Ingrese su contraseña" [(ngModel)]="data.password"
+              [ngClass]="{ 'is-valid': (f.password.dirty || submitted) && passwordValid, 'is-invalid': (f.password.dirty || submitted) && !passwordValid }" 
+              (change)="passwordChange()"
+              />
+            <div class="invalid-feedback">
+              <!-- required -->
+              <span class="text-danger" *ngIf="(f.password.dirty || submitted) && !requiredValid">La contraseña es
+                requerida</span>
+
+              <!-- password validation rules -->
+              <div id="validation-rules" class="mt-3" *ngIf="requiredValid">
+                <!-- minlength -->
+                <div [ngClass]="{ 'text-success': minLengthValid, 'text-danger': !minLengthValid }">
+                  <i [attr.class]="minLengthValid ? 'bi-check-square-fill' : 'bi-x-square'"></i>
+                  Debe ser de mínimo 8 caracteres
+                </div>
+
+                <!-- requires digit -->
+                <div [ngClass]="{ 'text-success': requiresDigitValid, 'text-danger': !requiresDigitValid }">
+                  <i [attr.class]="requiresDigitValid ? 'bi-check-square-fill' : 'bi-x-square'"></i>
+                  Debe contener al menos 1 digito
+                </div>
+
+                <!-- requires uppercase -->
+                <div [ngClass]="{ 'text-success': requiresUppercaseValid, 'text-danger': !requiresUppercaseValid }">
+                  <i [attr.class]="requiresUppercaseValid ? 'bi-check-square-fill' : 'bi-x-square'"></i>
+                  Debe tener 1 caracter es mayúscula
+                </div>
+
+                <!-- requires lowercase -->
+                <div [ngClass]="{ 'text-success': requiresLowercaseValid, 'text-danger': !requiresLowercaseValid }">
+                  <i [attr.class]="requiresLowercaseValid ? 'bi-check-square-fill' : 'bi-x-square'"></i>
+                  Debe tener 1 caracter es minúscula
+                </div>
+
+                <!-- requires special characters -->
+                <div
+                  [ngClass]="{ 'text-success': requiresSpecialCharsValid, 'text-danger': !requiresSpecialCharsValid }">
+                  <i [attr.class]="requiresSpecialCharsValid ? 'bi-check-square-fill' : 'bi-x-square'"></i>
+                  Debe tener 1 caracter especial
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Confirmar contraseña -->
+          <div class="form-group" *ngIf="isPasswordEdited">
+            <label for="confirmPassword" class="control-label font-weight-bold">Confirmar contraseña</label>
+            <input type="password" formControlName="confirmPassword" class="form-control" name="confirmPassword"
+              placeholder="Ingrese nuevamente su contraseña"
+              [ngClass]="{ 'is-valid': (submitted || f.confirmPassword.dirty) && !f.confirmPassword.errors, 'is-invalid': (submitted || f.confirmPassword.dirty) && f.confirmPassword.errors }">
+            <div class="invalid-feedback" *ngIf="(submitted || f.confirmPassword.dirty) && f.confirmPassword.errors">
+              <div *ngIf="f.confirmPassword.errors.required">Confirme su contraseña</div>
+              <div *ngIf="f.confirmPassword.errors.minLength">Debe tener mínimo 8 caracteres</div>
+              <div *ngIf="f.confirmPassword.errors.mismatch">Las contraseñas no coinciden</div>
+            </div>
+          </div>
+
+          <!-- Rol -->
+          <div class="form-group"> 
+            <label for="roleId" class="control-label font-weight-bold">Rol</label>
+            <select formControlName="roleId" class="form-select" style="border-radius: 2px;" [(ngModel)]="data.roleId" >
+              <option value="1">Cliente</option>
+              <option value="2">Empleado</option>
+            </select>
+          </div>
+
+          <!-- ID Empleado -->
+          <div class="form-group" *ngIf="editarUsuarioForm.get('roleId')?.value === '2'">
+            <label for="employeeId" class="control-label font-weight-bold">ID Empleado</label>
+            <input type="text" class="form-control" placeholder="ID Empleado" formControlName="employeeId" />
+          </div>
+
+          <!-- Posición -->
+          <div class="form-group" *ngIf="editarUsuarioForm.get('roleId')?.value === '2'">
+            <label for="position" class="control-label font-weight-bold">Posición</label>
+            <input type="text" class="form-control" placeholder="Posición" formControlName="position" />
+          </div>
+
+          <!-- Proyecto a asignar -->
+          <div class="form-group" *ngIf="editarUsuarioForm.get('roleId')?.value === '2'">
+            <label for="assignedProject" class="control-label font-weight-bold">Proyecto a asignar</label>
+            <select formControlName="assignedProject" class="form-select" style="border-radius: 2px;">
+              <option value="1">Santa Ana</option>
+              <option value="2">Escazú</option>
+            </select>
+          </div>
+
+          <mat-dialog-actions class="custom-dialog-actions">
+            <button mat-button (click)="onNoClick()" class="btn btn-danger">Cancelar</button>
+            <button mat-button [disabled]="editarUsuarioForm.invalid" [mat-dialog-close]="data" cdkFocusInitial
+              class="btn btn-success">Guardar</button>
+          </mat-dialog-actions>
+        </form>
+      </div>
     </div>
-  </mat-dialog-content>
-  
-  <mat-dialog-actions class="custom-dialog-actions">
-    
-    <button mat-button (click)="onNoClick()" class="btn btn-primary">Cancelar</button>
-    <button mat-button [mat-dialog-close]="data" cdkFocusInitial class="btn btn-success">Guardar</button>
-  </mat-dialog-actions>
-  
+  </div>
+
+</mat-dialog-content>

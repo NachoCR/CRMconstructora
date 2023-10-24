@@ -1,0 +1,69 @@
+<mat-dialog-content class="custom-dialog-content">
+    <div class="container">
+      <div class="row mt-3">
+        <div class="col">
+          <form [formGroup]="editarProyectoForm" (ngSubmit)="crear()" novalidate autocomplete="">
+  
+            <h3>Edición de Proyectos</h3>
+  
+            <div class="form-row">
+              <!-- Nombre -->
+              <div class="form-group col-md-6">
+                <label for="name" class="control-label font-weight-bold">Nombre del proyecto</label>
+                <input type="text" class="form-control" placeholder="Nombre del Proyecto" formControlName="name" [(ngModel)]="data.name"/>
+              </div>
+  
+              <!-- Primer apellido -->
+              <div class="form-group col-md-6">
+                <label for="lastname" class="control-label font-weight-bold">Descripción</label>
+                <input type="textarea" class="form-control" placeholder="Descripción" formControlName="description" [(ngModel)]="data.description"/>
+              </div>
+            </div>
+  
+            <div class="form-row">
+              <!-- Segundo apellido -->
+              <div class="form-group col-md-6" >
+                <label for="startDate" class="control-label font-weight-bold">Fecha de inicio</label>
+                <input type="date" class="form-control" placeholder="Fecha de inicio" formControlName="startDate" [ngModel]="data.startDate | date:'yyyy-MM-dd'" readonly/>
+              </div>
+              
+  
+              <!-- Cédula -->
+              <div class="form-group col-md-6">
+                <label for="startDate" class="control-label font-weight-bold">Fecha de Entrega</label>
+                <input type="date" class="form-control" placeholder="Fecha de entrega" formControlName="endDate" [ngModel]="data.endDate | date:'yyyy-MM-dd'"/>
+              </div>
+            </div>
+  
+  
+            <!-- Correo electrónico -->
+          
+            <!-- Rol -->
+            <div class="form-group">
+              <label for="statusId" class="control-label font-weight-bold">Estado</label>
+              <select formControlName="statusId" type="number" class="form-select" style="border-radius: 2px;" [(ngModel)]="data.statusId">
+                <option value=1>Nuevo</option>
+                <option value=2>En Progreso</option>
+              </select>
+            </div>
+  
+            <div class="form-group">
+              <label for="clientId" class="control-label font-weight-bold">Cliente</label>
+              <mat-select formControlName="clientId" [(ngModel)]="data.clientId">
+                <mat-option *ngFor="let client of clientesList" [value]="client.clientId">
+                  {{ client.name }}
+                </mat-option>
+              </mat-select>
+            </div>
+          
+  
+            <mat-dialog-actions class="custom-dialog-actions">
+              <button mat-button (click)="onNoClick()" class="btn btn-default">Cancelar</button>
+              <button mat-button [disabled]="editarProyectoForm.invalid" [mat-dialog-close]="data" cdkFocusInitial class="btn btn-success">Guardar</button>
+            </mat-dialog-actions>
+          </form>
+        </div>
+      </div>
+    </div>
+  
+  </mat-dialog-content>

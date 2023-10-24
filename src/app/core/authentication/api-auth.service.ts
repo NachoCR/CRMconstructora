@@ -34,6 +34,6 @@ export class ApiAuthService {
   }
 
   menu() {
-    return this.http.get<{ menu: Menu[] }>('/me/menu').pipe(map(res => res.menu));
+    return this.http.get<{ menu: Menu[] }>('/user/menu').pipe(map(res => res.menu));
   }
 }

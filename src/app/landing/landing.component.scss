@@ -11258,7 +11258,7 @@ header.masthead .masthead-heading {
 
 section#contact {
   background-color: #212529;
-  background-image: url("../../assets/images/fondo2.jpg");
+  background-image: url("../../assets/images/inspecciones/inspeccion2.jpg");
   background-repeat: no-repeat;
   background-position: center;
 }
@@ -11315,3 +11315,158 @@ section#contact form#contactForm :-ms-input-placeholder {
   font-size: 0.9rem;
   font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
+
+// Nav
+.navbar-dark .navbar-collapse {
+  background-color: #212529;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+  transition: background-color 0.3s;
+}
+
+.navbar-dark .navbar-nav .nav-link:hover {
+  background-color: #212529;
+}
+
+//Styles Servicios
+#services .row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -15px;
+  margin-left: -15px;
+}
+
+#services .col-md-4 {
+  flex: 0 0 33.3333%;
+  max-width: 33.3333%;
+  padding-right: 15px;
+  padding-left: 15px;
+  box-sizing: border-box;
+}
+
+#services .fa-stack {
+  font-size: 5em; 
+  color: #000;
+}
+
+@media (max-width: 768px) {
+  #services .col-md-4 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}
+
+// Styles Portafolio
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -15px;
+  margin-left: -15px;
+}
+
+.col-lg-4, .col-sm-6 {
+  flex: 0 0 33.3333%;
+  max-width: 33.3333%;
+  padding-right: 15px;
+  padding-left: 15px;
+  box-sizing: border-box;
+}
+
+.mb-4 {
+  margin-bottom: 1rem;
+}
+
+.portfolio-item:nth-child(2) {
+  flex: 0 0 36.6667%;
+  max-width: 36.6667%;
+}
+
+.portfolio-item {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s;
+}
+
+.portfolio-item:hover {
+  transform: scale(1.1);
+}
+
+.portfolio-link {
+  display: block;
+  position: relative;
+  overflow: hidden;
+}
+
+.portfolio-hover {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  opacity: 0;
+  background: rgba(0, 0, 0, 0.7);
+  transition: opacity 0.3s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.portfolio-hover-content {
+  color: #fff;
+  font-size: 24px;
+}
+
+.img-fluid {
+  max-width: 100%;
+  height: auto;
+}
+
+.portfolio-caption {
+  text-align: center;
+}
+
+.portfolio-caption-heading {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.portfolio-caption-subheading {
+  font-size: 16px;
+  color: #999;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .col-lg-4, .col-sm-6 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}
+
+// Styles Contact
+#contact .col-md-6 {
+  flex: 0 0 50%;
+  max-width: 50%;
+  padding-right: 15px;
+  padding-left: 15px;
+  box-sizing: border-box;
+}
+
+#contact .col-md-6 .form-group-textarea {
+  flex: 0 0 100%;
+  max-width: 100%;
+  padding-left: 15px;
+  padding-right: 15px;
+  box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+  #contact .col-md-6,
+  #contact .col-md-6 .form-group-textarea {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}
+

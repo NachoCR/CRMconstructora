@@ -2,22 +2,24 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Token, User } from './interface';
 import { Menu } from '@core';
-import { map, tap} from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LoginService {
+  readonly APIUrl;
 
-  constructor(protected http: HttpClient) {}
+  constructor(protected http: HttpClient) {
+    this.APIUrl = 'https://localhost:7226/api';
+  }
 
   login(username: string, password: string, rememberMe = false) {
-    const apiUrl = 'https://localhost:7226/api/Login/login';
     const requestBody = {
       identifier: username,
       password: password,
-    };  
-    return this.http.post<any>(apiUrl, requestBody).pipe(
+    };
+    return this.http.post<any>(this.APIUrl + '/Login/login', requestBody).pipe(
       map((response: any) => {
         return {
           token: response.tokenData,
@@ -44,12 +46,9 @@ export class LoginService {
 
   me() {
     return this.http.get<User>('/user');
-
   }
 
   menu() {
     return this.http.get<{ menu: Menu[] }>('/user/menu').pipe(map(res => res.menu));
   }
-  
-
 }

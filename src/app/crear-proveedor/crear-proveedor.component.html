@@ -1,39 +1,86 @@
 <mat-dialog-content class="custom-dialog-content">
-    <h1 mat-dialog-title>Creación Proveedor</h1>
-  
-    <div class="input-container">
-      <mat-form-field class="input-field">
-        <input matInput placeholder="Nombre" [(ngModel)]="data.Name">
-      </mat-form-field>
-      
-      <mat-form-field class="input-field">
-        <input matInput placeholder="Primer Apellido" [(ngModel)]="data.Email">
-      </mat-form-field>
-      <mat-form-field class="input-field">
-        <input matInput placeholder="Segundo Apellido" [(ngModel)]="data.Address">
-      </mat-form-field>
-      <mat-form-field class="input-field">
-        <input matInput placeholder="Identificación" [(ngModel)]="data.Identifier">
-      </mat-form-field>
-      <mat-form-field class="input-field">
-        <mat-select placeholder="Tipo Identificación" [(ngModel)]="data.IdentifierId">
-          <mat-option value="1">Cedula</mat-option>
-          <mat-option value="2">Pasaporte</mat-option>
-          <mat-option value="2">Cedula Juridica</mat-option>
-        </mat-select>
-      </mat-form-field>
-      <mat-form-field class="input-field">
-        <input matInput placeholder="Teléfono" [(ngModel)]="data.Phone">
-      </mat-form-field>
-      <mat-form-field class="input-field">
-        <input matInput placeholder="Detalles" [(ngModel)]="data.Details">
-      </mat-form-field>
+  <div class="container">
+    <div class="row mt-3">
+      <div class="col">
+        <form [formGroup]="crearProveedorForm" (ngSubmit)="crear()" novalidate autocomplete="">
+
+          <h3>Creación de Proveedores</h3>
+
+          <div class="form-row">
+            <!-- Nombre -->
+            <div class="form-group col-md-6">
+              <label for="name" class="control-label font-weight-bold">Nombre proveedor</label>
+              <input type="text" class="form-control" placeholder="Nombre proveedor" formControlName="name" [(ngModel)]="data.name"/>
+            </div>
+          </div>
+
+          <div class="form-row">
+
+            <!-- Cédula -->
+            <div class="form-group col-md-6">
+              <label class="control-label font-weight-bold">Tipo de identificación</label>
+              <select formControlName="identifierId" [(ngModel)]="data.identifierId" class="form-select" style="border-radius: 2px;">
+                <option value="1">Cédula</option>
+                <option value="2">Pasaporte</option>
+                <option value="3">Cédula jurídica</option>
+              </select>
+            </div>
+          
+
+          <!-- Identificación -->
+          <div class="form-group">
+            <label for="identifier" class="control-label font-weight-bold">Identificación</label>
+            <input type="text" class="form-control" placeholder="Identificación" formControlName="identifier" [(ngModel)]="data.identifier"
+            [ngClass]="{ 'is-valid': (f.identifier.dirty || submitted) && !f.identifier.errors, 'is-invalid': (f.identifier.dirty || submitted) && f.identifier.errors }" maxlength="15" minlength="8" />
+            <div class="invalid-feedback">
+              <span class="text-danger" *ngIf="f.identifier.errors?.required">Es requerida la cedula</span>
+              <span class="text-danger" *ngIf="f.identifier.errors?.maxLengthValid">Debe ser de 8 a 15 caracteres</span>
+              <div [ngClass]="{ 'text-sucess': minLengthValid, 'text-danger': !minLengthValid }">
+                <i [attr.class]="minLengthValid ? 'bi-check-square-fill' : 'bi-x-square'"></i>
+               Debe ser mínimo de 8 caracteres a 15 caracteres
+            </div>
+            </div>
+          </div>
+          </div>
+
+          <!-- Correo electrónico -->
+          <div class="form-group">
+            <label for="email" class="control-label font-weight-bold">Correo</label>
+            <input type="email" class="form-control" formControlName="email" placeholder="correo@gmail.com" [(ngModel)]="data.email"
+              [ngClass]="{ 'is-valid': (f.email.dirty || submitted) && !f.email.errors, 'is-invalid': (f.email.dirty || submitted) && f.email.errors }" />
+            <div class="invalid-feedback">
+              <span class="text-danger" *ngIf="f.email.errors?.required">Es requerido el correo electrónico</span>
+              <span class="text-danger" *ngIf="f.email.errors?.email">Correo electrónico inválido</span>
+
+            </div>
+          </div>
+
+        <div class="form-group">
+          <label for="phone" class="control-label font-weight-bold">Teléfono</label>
+          <input type="tel" class="form-control" formControlName="phone" placeholder="xxxx-xxxx" [(ngModel)]="data.phone" />
+
+        </div>
+
+        <div class="form-group">
+          <label for="address" class="control-label font-weight-bold">Dirección</label>
+          <input type="text" class="form-control" formControlName="address" placeholder="Dirección" [(ngModel)]="data.address" />
+
+        </div>
+
+        <div class="form-group">
+          <label for="details" class="control-label font-weight-bold">Detalles</label>
+          <input type="text" class="form-control" formControlName="details" placeholder="Detalles" [(ngModel)]="data.details" />
+
+        </div>
+     
+
+          <mat-dialog-actions class="custom-dialog-actions">
+            <button mat-button (click)="onNoClick()" class="btn btn-default">Cancelar</button>
+            <button mat-button [disabled]="crearProveedorForm.invalid" [mat-dialog-close]="data" cdkFocusInitial class="btn btn-success">Guardar</button>
+          </mat-dialog-actions>
+        </form>
+      </div>
     </div>
-  </mat-dialog-content>
-  
-  <mat-dialog-actions class="custom-dialog-actions">
-    
-    <button mat-button (click)="onNoClick()" class="btn btn-primary">Cancelar</button>
-    <button mat-button [mat-dialog-close]="data" cdkFocusInitial class="btn btn-success">Guardar</button>
-  </mat-dialog-actions>
-  
+  </div>
+
+</mat-dialog-content>

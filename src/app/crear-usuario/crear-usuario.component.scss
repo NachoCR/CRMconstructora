@@ -5,6 +5,18 @@ body {
   font-size: 13px;
 }
 
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Adjust the number of columns as needed */
+  gap: 16px; /* Adjust the gap between grid items */
+}
+
+.form-group {
+  margin-bottom: 16px; /* Add margin between form groups */
+}
+
+/* Add any other styling as needed */
+
 .table-responsive {
   margin: 30px 0;
 }
@@ -279,4 +291,12 @@ table.table .avatar {
 
 .custom-dialog-actions {
   justify-content: flex-end;
+}
+.error-message {
+  color: 
+red;
+}
+input.ng-touched.ng-invalid {
+  border: 1px solid 
+red;
 }
