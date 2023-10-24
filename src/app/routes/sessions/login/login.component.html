@@ -2,43 +2,42 @@
   <mat-card class="m-auto" style="max-width: 380px;">
     <img src="../../../../assets/images/logo.png">
     <mat-card-header class="m-b-24">
-      <mat-card-title>{{'Bienvenido' | translate}}!</mat-card-title>
+      <mat-card-title>{{ 'Bienvenido' | translate }}!</mat-card-title>
     </mat-card-header>
-
     <mat-card-content>
-      <form class="form-field-full" [formGroup]="loginForm">
-        <mat-form-field appearance="outline">
-          <mat-label>{{'Nombre de usuario' | translate}}: admin</mat-label>
-          <input matInput placeholder="Nombre de usuario admin" formControlName="username" required>
-          <mat-error *ngIf="username.invalid">
-            <span *ngIf="username.errors?.required">{{'please_enter' | translate}}
-              <strong>admin</strong>
-            </span>
-            <span *ngIf="username.errors?.remote">{{ username.errors?.remote }}</span>
-          </mat-error>
-        </mat-form-field>
-
-        <mat-form-field appearance="outline">
-          <mat-label>{{'Contraseña' | translate}}: admin</mat-label>
-          <input matInput placeholder="admin" type="password"
-                 formControlName="password" required>
-          <mat-error *ngIf="password.invalid">
-            <span *ngIf="password.errors?.required">{{'please_enter' | translate}}
-              <strong>admin</strong>
-            </span>
-            <span *ngIf="password.errors?.remote">{{ password.errors?.remote }}</span>
-          </mat-error>
-        </mat-form-field>
-
-        <mat-checkbox formControlName="rememberMe">{{'Recordarme' | translate}}
-        </mat-checkbox>
-
-        <button class="w-full m-y-16" mat-raised-button color="primary"
-                [disabled]="!!loginForm.invalid" [loading]="isSubmitting"
-                (click)="login()">{{'Iniciar sesión' | translate}}</button>
-
-        <div>{{'No tengo cuenta' | translate}}?
-          <a routerLink="/auth/register">{{'Crear una cuenta' | translate}}</a>
+      <form [formGroup]="loginForm" class="form-field-full">
+        <div class="form-group row">
+          <div class="col-md-12">
+            <label for="username" class="form-label">{{ 'Usuario' | translate }}:</label>
+            <input matInput placeholder="Email o Identificación" formControlName="username" required class="form-control" />
+            <div *ngIf="loginForm.get('username')?.invalid">
+              <mat-error *ngIf="loginForm.get('username')?.hasError('required')">
+                {{ 'Ingrese su email o identificación' | translate }}
+              </mat-error>
+              <span *ngIf="loginForm.get('username')?.hasError('remote')">{{ loginForm.get('username')?.hasError('remote') }}</span>
+            </div>
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-md-12">
+            <label for="password" class="form-label">{{ 'Contraseña' | translate }}:</label>
+            <input matInput placeholder="Contraseña" type="password" formControlName="password" required class="form-control" />
+            <div *ngIf="loginForm.get('password')?.invalid">
+              <mat-error *ngIf="loginForm.get('password')?.hasError('required')">
+                {{ 'Ingrese su contraseña' | translate }}
+              </mat-error>
+              <span *ngIf="loginForm.get('password')?.hasError('remote')">{{ loginForm.get('password')?.hasError('remote') }}</span>
+            </div>
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-md-12">
+            <mat-checkbox formControlName="rememberMe">{{ 'Recordarme' | translate }}</mat-checkbox>
+          </div>
+        </div>
+        <button class="w-full m-y-8" mat-raised-button color="primary" [disabled]="!!loginForm.invalid" [loading]="isSubmitting" (click)="login()">{{ 'Iniciar sesión' | translate }}</button>
+        <div>{{ 'No tengo cuenta' | translate }}?
+          <a routerLink="/auth/register">{{ 'Crear una cuenta' | translate }}</a>
         </div>
       </form>
     </mat-card-content>

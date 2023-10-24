@@ -14,14 +14,15 @@ import * as bcrypt from 'bcryptjs';
 })
 export class RegisterComponent implements OnInit {
   registerForm = this.fb.group({
-    identifierID: ['1', [Validators.required]],
-    identification: ['402560159', [Validators.required]],
-    name: ['Anthony', [Validators.required, Validators.minLength(2), Validators.maxLength(20)]],
-    lastname: ['Fajardo', [Validators.required, Validators.minLength(2), Validators.maxLength(20)]],
-    secondLastname: ['Villachica', [Validators.required, Validators.minLength(2), Validators.maxLength(20)]],
-    email: ['antho@gmail.com', [Validators.required, Validators.email]],
-    password: ['a123', [Validators.required, this.customPasswordValidator]],
-    confirmPassword: ['a123', [Validators.required]],
+    identifierID: ['', [Validators.required]],
+    identification: ['', [Validators.required]],
+    name: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(20)]],
+    lastname: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(20)]],
+    secondLastname: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(20)]],
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', [Validators.required,Validators.minLength(10), this.customPasswordValidator]],
+    confirmPassword: ['', [Validators.required]],
+    agree: [false, [Validators.requiredTrue]],
   });
 
   identifiers: any[] = [];
@@ -44,11 +45,16 @@ export class RegisterComponent implements OnInit {
 
   customPasswordValidator(control: AbstractControl): { [key: string]: boolean } | null {
     const value = control.value;
-    if (!/[a-zA-Z]/.test(value) || !/\d/.test(value)) {
+    const hasLetter = /[a-zA-Z]/.test(value);
+    const hasDigit = /\d/.test(value);
+    const hasSpecialChar = /[!@#$%^&*()_+{}\[\]:;<>,.?~\\-]/.test(value);
+    if (!(hasLetter && hasDigit && hasSpecialChar)) {
       return { 'passwordPattern': true };
     }
     return null;
-  }
+  }  
+
+
 
   matchValidator(source: string, target: string): ValidatorFn {
     return (control: AbstractControl) => {
