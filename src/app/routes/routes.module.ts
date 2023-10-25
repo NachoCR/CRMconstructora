@@ -9,11 +9,13 @@ import { Error403Component } from './sessions/403.component';
 import { Error404Component } from './sessions/404.component';
 import { Error500Component } from './sessions/500.component';
 import { LandingComponent } from '../landing/landing.component';
+import { RecoverComponent } from './sessions/recover/recover.component';
 
 const COMPONENTS: any[] = [
   DashboardComponent,
   LoginComponent,
   RegisterComponent,
+  RecoverComponent,
   Error403Component,
   Error404Component,
   Error500Component,

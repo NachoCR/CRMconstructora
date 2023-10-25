@@ -24,6 +24,7 @@ import { TareasComponent } from 'app/tareas/tareas.component';
 import { CrearTareaComponent } from 'app/crear-tarea/crear-tarea.component';
 import { EditarTareaComponent } from 'app/editar-tarea/editar-tarea.component';
 import { ContactosComponent } from 'app/contactos/contactos/contactos.component';
+import { RecoverComponent } from './sessions/recover/recover.component';
 
 const routes: Routes = [
   { path: '#', component: DashboardComponent },
@@ -31,11 +32,10 @@ const routes: Routes = [
   { path: 'usuarios', component: UsuariosComponent },
   { path: 'proyectos', component: ProyectosComponent },
   { path: 'proveedores', component: ProveedoresComponent },
-  { path: 'tareas', component: TareasComponent},
+  { path: 'tareas', component: TareasComponent },
   { path: 'catalogoProveedor', component: CatalogoProveedorComponent },
   { path: 'ordenesCompra', component: OrdenesCompraComponent },
-  { path: 'contactos', component: ContactosComponent }
-  ,
+  { path: 'contactos', component: ContactosComponent },
 
   {
     path: 'dashboard',
@@ -46,7 +46,23 @@ const routes: Routes = [
       { path: '', component: DashboardComponent },
       { path: '403', component: Error403Component },
       { path: '404', component: Error404Component },
-      { path: '500', component: Error500Component }
+      { path: '500', component: Error500Component },
+    ],
+  },
+  {
+    path: 'admin',
+    component: AdminLayoutComponent,
+    canActivate: [authGuard],
+    canActivateChild: [authGuard],
+    children: [
+      { path: '', component: DashboardComponent },
+      { path: 'usuarios', component: UsuariosComponent },
+      { path: 'proyectos', component: ProyectosComponent },
+      { path: 'proveedores', component: ProveedoresComponent },
+      { path: 'tareas', component: TareasComponent },
+      { path: 'catalogoProveedor', component: CatalogoProveedorComponent },
+      { path: 'ordenesCompra', component: OrdenesCompraComponent },
+      { path: 'contactos', component: ContactosComponent },
     ],
   },
   {
@@ -55,6 +71,7 @@ const routes: Routes = [
     children: [
       { path: 'login', component: LoginComponent },
       { path: 'register', component: RegisterComponent },
+      { path: 'recover', component: RecoverComponent },
     ],
   },
   { path: '**', redirectTo: 'dashboard' },
@@ -68,4 +85,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule],
 })
-export class RoutesRoutingModule { }
+export class RoutesRoutingModule {}

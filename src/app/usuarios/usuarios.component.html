@@ -62,7 +62,7 @@ $(document).ready(function(){
 		  <mat-table [dataSource]="dataSource">
 			<ng-container matColumnDef="name">
 			  <mat-header-cell *matHeaderCellDef>Nombre</mat-header-cell>
-			  <mat-cell *matCellDef="let user">{{ user.name }} {{ user.lastname }} {{ user.secondLastname }}</mat-cell>
+			  <mat-cell *matCellDef="let user">{{ user.name }} {{ user.lastname }} {{ user.secondLastname }} {{user.userId}}</mat-cell>
 			</ng-container>
 	  
 			<ng-container matColumnDef="email">
