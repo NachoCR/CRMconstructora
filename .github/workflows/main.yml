@@ -1,0 +1,47 @@
+name: CI/CD for Angular
+
+on:
+  push:
+    branches:
+      - dev # Replace with the branch you want to trigger the workflow
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: 18 # Adjust the Node.js version as needed
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Build Angular app
+      run: npm run build
+
+    - name: Archive artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: dist
+        path: dist # Update the path if your build artifacts are in a different directory
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Download artifacts
+      uses: actions/download-artifact@v2
+      with:
+        name: dist
+
+    - name: Deploy to a web server
+      # Add your deployment steps here (e.g., SCP, FTP, Docker, etc.)
