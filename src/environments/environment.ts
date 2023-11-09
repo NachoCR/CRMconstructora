@@ -6,7 +6,7 @@ export const environment = {
   production: false,
   baseUrl: '',
   useHash: false,
-  test: 'test',
+  test: 'testa',
 };
 
 /*
