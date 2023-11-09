@@ -10,7 +10,7 @@ export class ApiUserService {
 
   readonly APIUrl;
   constructor(private http: HttpClient) {
-    this.APIUrl = "https://localhost:7226/api/User" 
+    this.APIUrl = "https://73.56.189.143:7226/api/User"
   }
 
   register(user: UserRegister): Observable<any> {

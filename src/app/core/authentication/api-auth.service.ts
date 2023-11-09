@@ -9,14 +9,14 @@ import { map } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class ApiAuthService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   login(username: string, password: string): Observable<any> {
-    const apiUrl = 'https://localhost:7226/api/Login/login';
+    const apiUrl = 'https://73.56.189.143:7226/api/Login/login';
     const requestBody = {
       identifier: username,
       password: password,
-    };   
+    };
     return this.http.post(apiUrl, requestBody);
   }
 

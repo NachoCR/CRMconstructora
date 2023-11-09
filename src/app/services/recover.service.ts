@@ -4,20 +4,20 @@ import { Observable, map } from 'rxjs';
 
 
 @Injectable({
-  providedIn: 'root'  
+  providedIn: 'root'
 })
 export class RecoverService {
 
   readonly APIUrl;
 
-  constructor(private http: HttpClient) { 
- this.APIUrl = "https://localhost:7226/api" //url de la sln
+  constructor(private http: HttpClient) {
+    this.APIUrl = "https://73.56.189.143:7226/api" //url de la sln
   }
 
-recoverPassword(email: any):Observable < any > {  
-  
-  return this.http.post<any>(this.APIUrl + '/passwordrecovery/recoverpassword', {email:email}).pipe(map((data : any) => data));
-}  
+  recoverPassword(email: any): Observable<any> {
+
+    return this.http.post<any>(this.APIUrl + '/passwordrecovery/recoverpassword', { email: email }).pipe(map((data: any) => data));
+  }
 
 
 

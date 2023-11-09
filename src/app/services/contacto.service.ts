@@ -4,42 +4,42 @@ import { Observable, map } from 'rxjs';
 
 
 @Injectable({
-  providedIn: 'root'  
+  providedIn: 'root'
 })
 export class ContactoService {
 
   readonly APIUrl;
 
-  constructor(private http: HttpClient) { 
- this.APIUrl = "https://localhost:7226/api" //url de la sln
+  constructor(private http: HttpClient) {
+    this.APIUrl = "https://73.56.189.143:7226/api" //url de la sln
   }
 
-getContactoList(): Observable < any[] > {  
-    return this.http.get < any > (this.APIUrl + '/Contact',  {
+  getContactoList(): Observable<any[]> {
+    return this.http.get<any>(this.APIUrl + '/Contact', {
       headers: {
 
       }
     }).pipe(map((data: any) => {
       console.log(data);
       return data;
-    } ));  
-}  
+    }));
+  }
 
-addContacto(contacto: any):Observable < any > {    
-  console.log(contacto);
-  let res;
-  debugger;
-  return this.http.put<any>(this.APIUrl + '/Contact/', contacto).pipe(map((data : any) => data));
-}  
+  addContacto(contacto: any): Observable<any> {
+    console.log(contacto);
+    let res;
+    debugger;
+    return this.http.put<any>(this.APIUrl + '/Contact/', contacto).pipe(map((data: any) => data));
+  }
 
-updateContacto(contacto: any):Observable < any > {  
-  
-  return this.http.put<any>(this.APIUrl + '/Contact/', contacto).pipe(map((data : any) => data));
-}  
+  updateContacto(contacto: any): Observable<any> {
 
-deleteContacto(contacto: any) { 
-  let res; 
-  return this.http.delete<any>(this.APIUrl + '/Contact/' + contacto.contactId).subscribe(data => res = data);  
-}  
+    return this.http.put<any>(this.APIUrl + '/Contact/', contacto).pipe(map((data: any) => data));
+  }
+
+  deleteContacto(contacto: any) {
+    let res;
+    return this.http.delete<any>(this.APIUrl + '/Contact/' + contacto.contactId).subscribe(data => res = data);
+  }
 
 }

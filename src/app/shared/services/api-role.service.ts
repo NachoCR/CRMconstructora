@@ -7,10 +7,10 @@ import { Observable } from 'rxjs';
 })
 export class ApiRolService {
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getRoles(): Observable<any> {
-    const url = 'https://localhost:7226/api/Role';
+    const url = 'https://73.56.189.143:7226/api/Role';
     return this.http.get(url);
   }
 }
