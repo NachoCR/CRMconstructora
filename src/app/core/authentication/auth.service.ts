@@ -24,7 +24,7 @@ export class AuthService {
     private loginService: LoginService,
     private tokenService: TokenService,
     private menuService: MenuService
-  ) {}
+  ) { }
 
   init() {
     return new Promise<void>((resolve) => this.change$.subscribe(() => resolve()));
@@ -56,7 +56,12 @@ export class AuthService {
       .pipe(
         catchError(() => of(undefined)),
         tap((token) => this.tokenService.set(token)),
-        map(() => this.check())
+        map(() => {
+          if (this.check()) {
+            this.menu();
+          }
+          return this.check();
+        })
       );
   }
 
