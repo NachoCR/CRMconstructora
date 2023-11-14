@@ -10,7 +10,7 @@ export class ApiRolService {
   constructor(private http: HttpClient) { }
 
   getRoles(): Observable<any> {
-    const url = 'https://73.56.189.143:7226/api/Role';
+    const url = 'http://73.56.189.143:7226/api/Role';
     return this.http.get(url);
   }
 }

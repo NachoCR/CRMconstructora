@@ -82,12 +82,14 @@ $(document).ready(function(){
 	  
 			<ng-container matColumnDef="password">
 			  <mat-header-cell *matHeaderCellDef>Contraseña</mat-header-cell>
-			  <mat-cell *matCellDef="let user">{{ user.password }}</mat-cell>
+			  <mat-cell *matCellDef="let user">{{ ocultarContrasena(user.password) }}</mat-cell>
 			</ng-container>
 	  
 			<ng-container matColumnDef="roleId">
 			  <mat-header-cell *matHeaderCellDef>Rol</mat-header-cell>
-			  <mat-cell *matCellDef="let user">{{ user.roleId }}</mat-cell>
+			  <mat-cell *matCellDef="let user">
+				{{ rolesMap.get(user.roleId) }}
+			</mat-cell>
 			</ng-container>
 	  
 			<ng-container matColumnDef="actions">

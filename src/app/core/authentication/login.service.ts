@@ -11,7 +11,7 @@ export class LoginService {
   readonly APIUrl;
 
   constructor(protected http: HttpClient) {
-    this.APIUrl = 'https://73.56.189.143:7226/api';
+    this.APIUrl = 'http://73.56.189.143:7226/api';
   }
 
   login(username: string, password: string, rememberMe = false) {

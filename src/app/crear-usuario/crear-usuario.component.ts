@@ -3,9 +3,11 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
 import { UsuarioData } from 'app/interfaces/usuario.interface';
 import { PasswordValidators } from 'app/password-validator';
+import { UsuarioService } from 'app/services/usuario.service';
+import { MatTableDataSource } from '@angular/material/table';
 // import { matchpassword } from 'app/confirmed.validator';
 // import { CustomValidators } from 'app/custom-validator';
 
@@ -22,10 +24,12 @@ export class CrearUsuarioComponent implements OnInit {
   crearUForm: FormGroup;
   submitted = false;
   isWorking = false;
+  usuariosList: any[] = []; // Asegúrate de que usuariosList contenga tus datos
+  dataSource: MatTableDataSource<any> = new MatTableDataSource();
 
   usuario?: UsuarioData;
   constructor(
-    public dialogRef: MatDialogRef<CrearUsuarioComponent>,
+    public dialogRef: MatDialogRef<CrearUsuarioComponent>,private usuarioService: UsuarioService,
     @Inject(MAT_DIALOG_DATA) public data: any, private fb: FormBuilder) {
     // this.crearUForm = this.crearUsuarioForm();
 
@@ -60,7 +64,7 @@ export class CrearUsuarioComponent implements OnInit {
       secondLastname : new FormControl(null, [Validators.required]),
       identifierId : new FormControl(null, [Validators.required]),
       identification : new FormControl(null, [Validators.required, Validators.minLength(8), Validators.maxLength(15)]),
-      phone : new FormControl(null, [Validators.required]),
+      phone : new FormControl(null, [Validators.required, Validators.maxLength(8), this.phoneNumberValidator()]),
       roleId : new FormControl(null, [Validators.required]),
       employeeId : new FormControl(null),
       position : new FormControl(null),
@@ -71,7 +75,45 @@ export class CrearUsuarioComponent implements OnInit {
         validators: PasswordValidators.MatchValidator
       }
       )
+
+
+      
   }
+
+
+  checkCedulaExists() {
+    const cedulaControl = this.crearUForm.get('identification');
+    debugger;
+    if (cedulaControl && this.usuariosList.length > 0) {
+      const identification = cedulaControl.value;
+
+      const cedulaExists = this.usuariosList.some(usuario => usuario.identification === identification);
+
+      if (cedulaExists) {
+        cedulaControl.setErrors({ 'cedulaExists': true });
+      } else {
+        cedulaControl.setErrors(null);
+      }
+    }
+  }
+
+  checkEmailExists() {
+    const emailControl = this.crearUForm.get('email');
+    debugger;
+    if (emailControl && this.usuariosList.length > 0) {
+      const email = emailControl.value;
+
+      const emailExists = this.usuariosList.some(usuario => usuario.email === email);
+
+      if (emailExists) {
+        emailControl.setErrors({ 'emailExists': true });
+      } else {
+        emailControl.setErrors(null);
+      }
+    }
+  }
+
+
 
   get f() {
     return this.crearUForm.controls;
@@ -105,6 +147,22 @@ export class CrearUsuarioComponent implements OnInit {
     return !this.crearUForm.controls["password"].hasError("requiresSpecialChars");
   }
 
+  // Función de validación personalizada para el número de teléfono
+// Función de validación personalizada para el número de teléfono
+private phoneNumberValidator(): ValidatorFn {
+  return (control: AbstractControl): { [key: string]: any } | null => {
+    const phoneNumber = control.value;
+    const phoneNumberPattern = /^\d{8}$/; // Asumiendo un número de teléfono de 8 dígitos
+
+    if (!phoneNumberPattern.test(phoneNumber)) {
+      return { invalidPhoneNumber: true };
+    }
+
+    return null;
+  };
+}
+
+
 
   crear() {
     this.submitted = true;
@@ -128,9 +186,16 @@ export class CrearUsuarioComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
-    console.log(this.data);
-  }
+    this.getUsuariosList();
+      }
+    
+    
+      getUsuariosList(): void {
+        this.usuarioService.getUserList().subscribe((result: any) => {
+          this.usuariosList = result;
+          this.dataSource = new MatTableDataSource(this.usuariosList);
+        });
+      }
 
 
 

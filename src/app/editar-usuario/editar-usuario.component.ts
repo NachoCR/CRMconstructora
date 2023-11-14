@@ -1,6 +1,7 @@
 import { Component, Inject, Input, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
 import { UsuarioData } from 'app/interfaces/usuario.interface';
 import { PasswordValidators } from 'app/password-validator';
 import { UsuarioService } from 'app/services/usuario.service';
@@ -20,12 +21,20 @@ export class EditarUsuarioComponent implements OnInit {
   editData: any;
 
   usuario?: UsuarioData;
+  usuariosList: any[] = []; // Asegúrate de que usuariosList contenga tus datos
+  dataSource: MatTableDataSource<any> = new MatTableDataSource();
+  cedulaOriginal: any;
+  correoOriginal: any;
 
   constructor(
 
-    public dialogRef: MatDialogRef<EditarUsuarioComponent>,
+    public dialogRef: MatDialogRef<EditarUsuarioComponent>,private usuarioService: UsuarioService, 
 
     @Inject(MAT_DIALOG_DATA) public data: any) { 
+
+       this.cedulaOriginal = data.identification;
+       this.correoOriginal = data.email;
+
 
       this.editarUsuarioForm = new FormGroup(
         {
@@ -34,61 +43,65 @@ export class EditarUsuarioComponent implements OnInit {
           null,
           Validators.compose([
             Validators.required,
-            Validators.minLength(8),
-            PasswordValidators.patternValidator(new RegExp("(?=.*[0-9])"), {
-              requiresDigit: true
-            }),
-            PasswordValidators.patternValidator(new RegExp("(?=.*[A-Z])"), {
-              requiresUppercase: true
-            }),
-            PasswordValidators.patternValidator(new RegExp("(?=.*[a-z])"), {
-              requiresLowercase: true
-            }),
-            PasswordValidators.patternValidator(new RegExp("(?=.*[$@^!%*?&])"), {
-              requiresSpecialChars: true
-            })
+            Validators.minLength(8)
           ])
         ),
-        confirmPassword: new FormControl(null, [
-          Validators.minLength(8)
-        ]),
         name : new FormControl(null, [Validators.required]),
         lastname : new FormControl(null, [Validators.required]),
         secondLastname : new FormControl(null, [Validators.required]),
         identifierId : new FormControl(null, [Validators.required]),
         identification : new FormControl(null, [Validators.required, Validators.minLength(8), Validators.maxLength(15)]),
+        phone : new FormControl(null, [Validators.required, Validators.maxLength(8), this.phoneNumberValidator()]),
         roleId : new FormControl(null, [Validators.required]),
         employeeId : new FormControl(null),
         position : new FormControl(null),
         assignedProject : new FormControl(null),
-        
-        
-
-        
-      },
-        {
-          validators: PasswordValidators.MatchValidator
-        }
+      }
         )
 
-      
-        // if (this.data && this.data.user) {
-        //   const userData = this.data.user;
-        //   this.editarUsuarioForm.setValue({
-        //     name: userData.name,
-        //     lastname: userData.lastname,
-        //     secondLastname: userData.secondLastname,
-        //     identification: userData.identification,
-        //     email: userData.email,
-        //     password: userData.password,
-        //     roleId: userData.roleId,
-        //     employeeId: userData.employeeId,
-        //     position: userData.position,
-        //     assignedProject: userData.assignedProject
-        //   });
-        // }
-
     }
+
+    checkCedulaExists() {
+      
+      const cedulaControl = this.editarUsuarioForm.get('identification');
+      debugger;
+      if (cedulaControl && this.usuariosList.length > 0) {
+        const identification = cedulaControl.value;
+  
+        const cedulaExists = this.usuariosList.some(usuario => usuario.identification === identification);
+        if(this.cedulaOriginal != identification){
+          if (cedulaExists) {
+            cedulaControl.setErrors({ 'cedulaExists': true });
+          } else {
+            cedulaControl.setErrors(null);
+          }
+        }
+      }
+    }
+  
+    checkEmailExists() {
+      const emailControl = this.editarUsuarioForm.get('email');
+      debugger;
+      if (emailControl && this.usuariosList.length > 0) {
+        const email = emailControl.value;
+  
+        const emailExists = this.usuariosList.some(usuario => usuario.email === email);
+  
+        if(this.correoOriginal != email){
+          if (emailExists) {
+            emailControl.setErrors({ '': true });
+          } else {
+            emailControl.setErrors(null);
+          }
+
+        // if (emailExists) {
+        //   emailControl.setErrors({ 'emailExists': true });
+        // } else {
+        //   emailControl.setErrors(null);
+        // }
+      }
+    }
+  }
 
   
 
@@ -148,10 +161,31 @@ export class EditarUsuarioComponent implements OnInit {
     this.dialogRef.close();
   }
 
+  // Función de validación personalizada para el número de teléfono
+private phoneNumberValidator(): ValidatorFn {
+  return (control: AbstractControl): { [key: string]: any } | null => {
+    const phoneNumber = control.value;
+    const phoneNumberPattern = /^\d{8}$/; // Asumiendo un número de teléfono de 8 dígitos
+
+    if (!phoneNumberPattern.test(phoneNumber)) {
+      return { invalidPhoneNumber: true };
+    }
+
+    return null;
+  };
+}
+
   ngOnInit(): void {
-    // this.editarUsuarioForm.get("roleId")?.disable();
-    console.log(this.data);
-  }
+    this.getUsuariosList();
+      }
+    
+    
+      getUsuariosList(): void {
+        this.usuarioService.getUserList().subscribe((result: any) => {
+          this.usuariosList = result;
+          this.dataSource = new MatTableDataSource(this.usuariosList);
+        });
+      }
 
 
   passwordChange(): void {
