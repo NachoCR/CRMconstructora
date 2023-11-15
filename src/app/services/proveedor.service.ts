@@ -9,7 +9,7 @@ export class ProveedorService {
   readonly APIUrl;
 
   constructor(private http: HttpClient) {
-    this.APIUrl = 'http://73.56.189.143:7226/api'; //url de la sln
+    this.APIUrl = "http://73.56.189.143:7226/api" //url de la sln
   }
 
   getProvidersList(): Observable<any[]> {
@@ -26,9 +26,11 @@ export class ProveedorService {
   }
 
   addProveedor(provider: any): Observable<any> {
+    provider.contacts = [];
     console.log(provider);
     let res;
     debugger;
+    
     return this.http.put<any>(this.APIUrl + '/Provider/', provider).pipe(map((data: any) => data));
   }
 

@@ -19,19 +19,19 @@ function closeDialog() {
 $(document).ready(function(){
 	// Activate tooltip
 	$('[data-toggle="tooltip"]').tooltip();
-	
+
 	// Select/Deselect checkboxes
 	var checkbox = $('table tbody input[type="checkbox"]');
 	$("#selectAll").click(function(){
 		if(this.checked){
 			checkbox.each(function(){
-				this.checked = true;                        
+				this.checked = true;
 			});
 		} else{
 			checkbox.each(function(){
-				this.checked = false;                        
+				this.checked = false;
 			});
-		} 
+		}
 	});
 	checkbox.click(function(){
 		if(!this.checked){
@@ -48,7 +48,7 @@ $(document).ready(function(){
 			<div class="col-sm-6">
 			  <h2>Mantenimiento de <b>Usuarios</b></h2>
 			</div>
-			
+
 			<div class="col-sm-6 text-right">
 			  <!-- Botón para crear usuarios en la misma fila que el título -->
 			  <button mat-raised-button color="primary" (click)="openDialog()">
@@ -57,39 +57,41 @@ $(document).ready(function(){
 			</div>
 		  </div>
 
-		
+
 		<div class="table-responsive">
 		  <mat-table [dataSource]="dataSource">
 			<ng-container matColumnDef="name">
 			  <mat-header-cell *matHeaderCellDef>Nombre</mat-header-cell>
-			  <mat-cell *matCellDef="let user">{{ user.name }} {{ user.lastname }} {{ user.secondLastname }} {{user.userId}}</mat-cell>
+			  <mat-cell *matCellDef="let user">{{ user.name }} {{ user.lastname }} {{ user.secondLastname }}</mat-cell>
 			</ng-container>
-	  
+
 			<ng-container matColumnDef="email">
 			  <mat-header-cell *matHeaderCellDef>Correo</mat-header-cell>
 			  <mat-cell *matCellDef="let user">{{ user.email }}</mat-cell>
 			</ng-container>
-	  
+
 			<ng-container matColumnDef="identification">
 			  <mat-header-cell *matHeaderCellDef>Cedula</mat-header-cell>
 			  <mat-cell *matCellDef="let user">{{ user.identification }}</mat-cell>
 			</ng-container>
-	  
+
 			<ng-container matColumnDef="phone">
 			  <mat-header-cell *matHeaderCellDef>Teléfono</mat-header-cell>
 			  <mat-cell *matCellDef="let user">{{ user.phone }}</mat-cell>
 			</ng-container>
-	  
+
 			<ng-container matColumnDef="password">
 			  <mat-header-cell *matHeaderCellDef>Contraseña</mat-header-cell>
-			  <mat-cell *matCellDef="let user">{{ user.password }}</mat-cell>
+			  <mat-cell *matCellDef="let user">{{ ocultarContrasena(user.password) }}</mat-cell>
 			</ng-container>
-	  
+
 			<ng-container matColumnDef="roleId">
 			  <mat-header-cell *matHeaderCellDef>Rol</mat-header-cell>
-			  <mat-cell *matCellDef="let user">{{ user.roleId }}</mat-cell>
+			  <mat-cell *matCellDef="let user">
+				{{ rolesMap.get(user.roleId) }}
+			</mat-cell>
 			</ng-container>
-	  
+
 			<ng-container matColumnDef="actions">
 			  <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
 			  <mat-cell *matCellDef="let user">
@@ -101,11 +103,11 @@ $(document).ready(function(){
 				</button>
 			  </mat-cell>
 			</ng-container>
-	  
+
 			<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
 			<mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
 
-			
+
 		  </mat-table>
 		</div>
 	  </div>

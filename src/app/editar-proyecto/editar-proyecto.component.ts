@@ -4,6 +4,10 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { DateValidator } from 'app/date-validator';
 import { ProyectoData } from 'app/interfaces/proyecto.interface';
 import { ClienteService } from 'app/services/cliente.service';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { Observable, debounceTime, map, startWith } from 'rxjs';
 
 @Component({
   selector: 'app-editar-proyecto',
@@ -56,6 +60,7 @@ export class EditarProyectoComponent {
   }
 
   clientesList: any[] = []; // Aquí almacenarás la lista de clientes
+  filteredClientesList$: Observable<any[]> | undefined;
 
   get f() {
     return this.editarProyectoForm.controls;
@@ -89,10 +94,18 @@ export class EditarProyectoComponent {
     debugger;
     this.clienteService.getClientList().subscribe((data) => {
       this.clientesList = data;
+      this.filteredClientesList$ = this.editarProyectoForm.get('clientId')?.valueChanges.pipe(
+        startWith(''),
+        debounceTime(300),
+        map(value => this._filterClientes(value))
+      );
     });
-    console.log(this.data)
+    console.log(this.data);
   }
-
-
+  
+  private _filterClientes(value: string): any[] {
+    const filterValue = value.toLowerCase();
+    return this.clientesList.filter(cliente => cliente.name.toLowerCase().includes(filterValue));
+  }
 
 }

@@ -8,18 +8,61 @@ import { ProyectoService } from 'app/services/proyecto.service';
 import { EditarProyectoComponent } from 'app/editar-proyecto/editar-proyecto.component';
 import * as _ from 'lodash';
 import Swal from 'sweetalert2';
+import {Pipe, PipeTransform } from '@angular/core';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import {Observable} from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
+import {AsyncPipe} from '@angular/common';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatFormFieldModule} from '@angular/material/form-field';
+
+
+
+@Pipe({
+  name: 'filter'
+})
+export class FilterPipe implements PipeTransform {
+  transform(items: any[], filtro: string): any[] {
+    if (!items || !filtro) {
+      return items;
+    }
+
+    return items.filter(item => {
+      // Implementa tu lógica de filtrado según tus necesidades
+      return (
+        item.name.toLowerCase().includes(filtro) ||
+        item.description.toLowerCase().includes(filtro)
+        // Agrega más propiedades según sea necesario
+      )
+    });
+  }
+}
+
+
+
 
 @Component({
   selector: 'app-proyectos',
   templateUrl: './proyectos.component.html',
   styleUrls: ['./proyectos.component.scss']
 })
+
+
+
 export class ProyectosComponent {
 
   proyecto?: ProyectoData;  
   dataSource: MatTableDataSource<any> = new MatTableDataSource();
   proyectosList: any[] = []; // Asegúrate de que usuariosList contenga tus datos
+  filtro: string = '';
 
+  aplicarFiltro(filtro: string): void {
+    console.log('filtro:', filtro);
+    this.filtro = filtro;
+    console.log('this.filtro:', this.filtro);
+    // ... rest of your logic
+  }
 
   
   constructor(public dialog: MatDialog, private proyectoService: ProyectoService, private router: Router, private activatedRoute: ActivatedRoute) {}
@@ -39,7 +82,7 @@ export class ProyectosComponent {
 
   openDialog(): void {
     const dialogRef = this.dialog.open(CrearProyectoComponent, {
-      width: '200 px',
+      width: '60%',
       data: {proyecto: this.proyecto}
     });
 
@@ -52,7 +95,6 @@ export class ProyectosComponent {
           confirmButtonText: 'Guardar',
           denyButtonText: `No guardar`,
         }).then(swalResult => {
-          debugger;
           if (swalResult.isConfirmed) {
             this.proyectoService.addProyecto(result).subscribe({
               next : () => {
@@ -143,8 +185,5 @@ export class ProyectosComponent {
         });
     
       }
-
-
-
 
 }

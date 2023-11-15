@@ -33,7 +33,7 @@ import { CatalogoProveedorComponent } from './catalogo-proveedor/catalogo-provee
 import { LandingComponent } from './landing/landing.component';
 import { LoginComponent } from './auth/login/login.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
-import { ProyectosComponent } from './proyectos/proyectos.component';
+import { FilterPipe, ProyectosComponent } from './proyectos/proyectos.component';
 import { OrdenesCompraComponent } from './ordenes-compra/ordenes-compra.component';
 import { CrearUsuarioComponent } from './crear-usuario/crear-usuario.component';
 import { CrearProveedorComponent } from './crear-proveedor/crear-proveedor.component';
@@ -49,6 +49,9 @@ import { ContactosComponent } from './contactos/contactos/contactos.component';
 import { CrearContactoComponent } from './contactos/crear-contacto/crear-contacto.component';
 import { EditarContactoComponent } from './contactos/editar-contacto/editar-contacto.component';
 import { EditarProyectoComponent } from './editar-proyecto/editar-proyecto.component';
+import { BuscarProyectoComponent } from './buscar-proyecto/buscar-proyecto.component';
+import { MatSelectModule } from '@angular/material/select';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 // Required for AOT compilation
 export function TranslateHttpLoaderFactory(http: HttpClient) {
@@ -58,9 +61,11 @@ export function TranslateHttpLoaderFactory(http: HttpClient) {
 
 @NgModule({
   declarations: [AppComponent,
+    FilterPipe,
     ContactosComponent, 
     CrearContactoComponent,
     EditarContactoComponent, 
+    BuscarProyectoComponent,
     UsuariosComponent, 
     CrearUsuarioComponent, 
     EditarUsuarioComponent,
@@ -77,6 +82,7 @@ export function TranslateHttpLoaderFactory(http: HttpClient) {
     ProveedoresComponent,
     CrearProveedorComponent,
     EditarProveedorComponent,
+
     EditarTareaComponent],
 
   imports: [
@@ -84,6 +90,8 @@ export function TranslateHttpLoaderFactory(http: HttpClient) {
     BrowserAnimationsModule,
     HttpClientModule,
     CoreModule,
+    MatAutocompleteModule,
+    MatSelectModule,
     ThemeModule,
     RoutesModule,
     RouterModule,

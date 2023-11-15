@@ -49,25 +49,34 @@ $(document).ready(function(){
 		<h2>Mantenimiento de <b>Proyectos</b></h2>
 	  </div>
   
+
+	  
+
 	  <div class="col-sm-6 text-right">
+		
 		<button mat-raised-button color="primary" (click)="openDialog()">
 		  <mat-icon>add</mat-icon> Crear Proyecto
 		</button>
+		
 	  </div>
 	</div>
 	<br><br>
   
 	<div class="row">
-	  <div class="col-12 col-md-4" *ngFor="let project of proyectosList">
+		<app-buscar-proyecto (filtroChange)="aplicarFiltro($event)"></app-buscar-proyecto>
+	  <div class="col-12 col-md-4" *ngFor="let project of proyectosList | filter: filtro">
 		<mat-card>
 		  <img mat-card-image src="../../assets/images/inspecciones/inspeccion1.jpg" alt="Project 1">
 		  <mat-card-header>
 			<mat-card-title>{{ project.name }}</mat-card-title>
-			<mat-card-subtitle>Estado: {{ project.statusId }}</mat-card-subtitle>
+			<mat-card-subtitle>
+				Estado:
+				{{ project.statusId === 1 ? 'Nuevo' : (project.statusId === 2 ? 'En Progreso' : 'Estado Desconocido') }}
+			  </mat-card-subtitle>
 		  </mat-card-header>
 		  <mat-card-content>
-			<p>Descripción del proyecto:</p>
-			<p style="font-size: small;">{{ project.description }}</p>
+			
+			<p style="font-size: small;">Descripción del proyecto: {{ project.description }}</p>
 			<p style="font-size: small;">Cliente: {{ project.client.name }}</p>
 			<p style="font-size: smaller;">Fecha Inicio: {{ project.startDate }}</p>
 			<p style="font-size: smaller;">Fecha Entrega: {{ project.endDate }}</p>

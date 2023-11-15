@@ -11,6 +11,7 @@ import { debug } from 'console';
 import * as _ from 'lodash';
 import { MatTableDataSource } from '@angular/material/table';
 
+
 @Component({
   selector: 'app-usuarios',
   templateUrl: './usuarios.component.html',
@@ -48,7 +49,7 @@ this.getUsuariosList();
     
     
     const dialogRef = this.dialog.open(CrearUsuarioComponent, {
-      width: '60%', 
+      width: '95%',
       data: {usuario: this.usuario}
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -87,7 +88,7 @@ this.getUsuariosList();
     console.log(user);
     const pUser = _.cloneDeep(user);
     const dialogRef = this.dialog.open(EditarUsuarioComponent, {
-      width: '60%',
+      width: '80%',
       data : pUser
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -155,6 +156,25 @@ this.getUsuariosList();
     });
 
   }
+
+
+  ocultarContrasena(password: string){
+    let hiddenPassword = "";
+
+    for (let index = 0; index < password.length; index++) {
+     hiddenPassword += "*";
+    }
+    
+    return hiddenPassword.slice(0,10);
+  }
+
+
+  rolesMap = new Map<number, string>([
+    [1, 'Cliente'],
+    [2, 'Empleado'],
+    [3, 'Administrador'],
+    // Agrega más pares ID de rol - Nombre de rol según tus necesidades
+  ]);
 
 }
 

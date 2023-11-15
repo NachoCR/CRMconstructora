@@ -6,10 +6,14 @@ export class DateValidator {
       const selectedDate = new Date(control.value);
       const currentDate = new Date();
 
-      if (selectedDate <= currentDate) { // Cambiar '<' a '<=' para incluir la fecha actual
-        return { dateInPast: true };
-      }
-    }
-    return null;
-  }
+     // Convertir a formato UTC
+     const selectedDateUTC = new Date(selectedDate.toUTCString());
+     const currentDateUTC = new Date(currentDate.toUTCString());
+
+     if (selectedDateUTC <= currentDateUTC) {
+       return { dateInPast: true };
+     }
+   }
+   return null;
+ }
 }
