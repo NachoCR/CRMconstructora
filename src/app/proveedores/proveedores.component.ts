@@ -78,7 +78,7 @@ export class ProveedoresComponent {
       console.log(provider);
       const pProveedor = _.cloneDeep(provider);
       const dialogRef = this.dialog.open(EditarProveedorComponent, {
-        width: '70%',
+        width: '50%',
         data : pProveedor
       });
 

@@ -89,7 +89,7 @@ export class EditarUsuarioComponent implements OnInit {
   
         if(this.correoOriginal != email){
           if (emailExists) {
-            emailControl.setErrors({ '': true });
+            emailControl.setErrors({ 'emailExists': true });
           } else {
             emailControl.setErrors(null);
           }

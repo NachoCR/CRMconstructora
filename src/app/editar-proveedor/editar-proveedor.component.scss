@@ -233,3 +233,9 @@ table.table .avatar {
 .modal form label {
 	font-weight: normal;
 }	
+
+input.ng-touched.ng-invalid {
+    border: 1px solid 
+  red;
+  }
+  

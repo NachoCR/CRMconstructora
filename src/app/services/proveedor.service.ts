@@ -29,6 +29,7 @@ export class ProveedorService {
     console.log(provider);
     let res;
     debugger;
+    provider.contacts = [];
     return this.http.put<any>(this.APIUrl + '/Provider/', provider).pipe(map((data: any) => data));
   }
 
