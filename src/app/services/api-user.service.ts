@@ -4,13 +4,12 @@ import { UserRegister } from '@core/models/user-register';
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ApiUserService {
-
   readonly APIUrl;
   constructor(private http: HttpClient) {
-    this.APIUrl = "http://73.56.189.143:7226/api/User"
+    this.APIUrl = 'http://73.56.189.143:7226/api/User';
   }
 
   register(user: UserRegister): Observable<any> {

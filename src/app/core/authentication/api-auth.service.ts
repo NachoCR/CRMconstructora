@@ -9,7 +9,7 @@ import { map } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class ApiAuthService {
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   login(username: string, password: string): Observable<any> {
     const apiUrl = 'http://73.56.189.143:7226/api/Login/login';

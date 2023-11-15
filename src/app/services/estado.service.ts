@@ -2,7 +2,6 @@
 // import { HttpClient, HttpClientModule } from '@angular/common/http';
 // import { Observable, map } from 'rxjs';
 
-
 // @Injectable({
 //   providedIn: 'root'
 // })
