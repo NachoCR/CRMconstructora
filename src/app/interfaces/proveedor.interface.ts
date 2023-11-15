@@ -1,3 +1,5 @@
+import { ContactosData } from "./contacto.interface";
+
 export interface ProveedorData {
     providerId?: number;
     identifierId: number;
@@ -7,4 +9,5 @@ export interface ProveedorData {
     address: string;
     phone: string;
     details: string;
+    contacts: ContactosData[];
   }

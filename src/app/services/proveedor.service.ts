@@ -26,15 +26,15 @@ export class ProveedorService {
   }
 
   addProveedor(provider: any): Observable<any> {
+    provider.contacts = [];
     console.log(provider);
     let res;
     debugger;
-    provider.contacts = [];
+    
     return this.http.put<any>(this.APIUrl + '/Provider/', provider).pipe(map((data: any) => data));
   }
 
   updateProveedor(provider: any): Observable<any> {
-
     return this.http.put<any>(this.APIUrl + '/Provider/', provider).pipe(map((data: any) => data));
   }
 
