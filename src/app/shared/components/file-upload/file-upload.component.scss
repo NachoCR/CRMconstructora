@@ -1,3 +1,66 @@
-.file-input {
-    display: none;
+.card {
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.mat-card-content {
+  width: 100%;
+}
+
+.upload-container {
+  width: 88%;
+  display: flex;
+  height: 150px;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 33px;
+
+  .row {}
+
+  .col-6 {
+    display: block;
+    width: 150px;
+    height: 150px;
+    padding-left: 0px;
+    padding-right: 0px;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
   }
+
+}
+
+
+
+
+.upload-button {
+  cursor: pointer;
+  background-color: #e0e0e0;
+  padding: 10px;
+  border-radius: 50%;
+  margin-right: 20px;
+}
+
+.image-preview {
+  width: 150px;
+
+  img {
+    min-height: 150px;
+    min-width: 150px;
+    max-width: 150px;
+    max-height: 150px;
+    object-fit: cover;
+    border-radius: 30px;
+    border: solid #e3e3e3 3px;
+    box-shadow: darkgray 0px 1px 4px 0px;
+  }
+}

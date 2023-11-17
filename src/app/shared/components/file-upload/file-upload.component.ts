@@ -7,25 +7,21 @@ import { Component } from '@angular/core';
   styleUrls: ['./file-upload.component.scss'],
 })
 export class FileUploadComponent {
-  fileName?: string;
-  imageSrc?: string;
-  constructor(private http: HttpClient) {}
+  selectedFile: File | null = null;
+  imageSrc: any;
 
-  onFileSelected(event: any) {
+  onFileSelected(event: any): void {
     const file: File = event.target.files[0];
 
     if (file) {
-      this.imageSrc = URL.createObjectURL(file);
-      console.log(this.imageSrc);
-      this.fileName = file.name;
+      this.selectedFile = file;
 
-      const formData = new FormData();
-
-      formData.append('thumbnail', file);
-
-      // const upload$ = this.http.post('/api/thumbnail-upload', formData);
-
-      // upload$.subscribe();
+      // Mostrar miniatura de la imagen
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.imageSrc = e.target.result;
+      };
+      reader.readAsDataURL(file);
     }
   }
 }
