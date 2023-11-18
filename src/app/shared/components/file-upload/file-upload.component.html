@@ -1,9 +1,5 @@
 <!-- image-upload-card.component.html -->
 <div class="card">
-  <mat-card-header>
-    <mat-card-title></mat-card-title>
-  </mat-card-header>
-  <br/>
   <mat-card-content class="mat-card-content" >
     <div class="upload-container" >
       <div class="row">
@@ -24,4 +20,8 @@
     </div>
 
   </mat-card-content>
+
+  <button type="button" (click)="onFileUpload()" *ngIf="this.selectedFile" class="upload-button">
+    <mat-icon>arrow_right_alt</mat-icon>
+  </button>
 </div>
