@@ -10,7 +10,7 @@
           <div class="col-md-12">
             <label for="username" class="form-label">{{ 'Usuario' | translate }}:</label>
             <input matInput placeholder="Email o Identificación" formControlName="username" required class="form-control" />
-            <div *ngIf="loginForm.get('username')?.invalid">
+            <div *ngIf="loginForm.get('username')?.invalid && loginForm.get('username')?.touched">
               <mat-error *ngIf="loginForm.get('username')?.hasError('required')">
                 {{ 'Ingrese su email o identificación' | translate }}
               </mat-error>
@@ -22,7 +22,7 @@
           <div class="col-md-12">
             <label for="password" class="form-label">{{ 'Contraseña' | translate }}:</label>
             <input matInput placeholder="Contraseña" type="password" formControlName="password" required class="form-control" />
-            <div *ngIf="loginForm.get('password')?.invalid">
+            <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
               <mat-error *ngIf="loginForm.get('password')?.hasError('required')">
                 {{ 'Ingrese su contraseña' | translate }}
               </mat-error>

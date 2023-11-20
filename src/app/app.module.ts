@@ -49,6 +49,7 @@ import { ContactosComponent } from './contactos/contactos/contactos.component';
 import { CrearContactoComponent } from './contactos/crear-contacto/crear-contacto.component';
 import { EditarContactoComponent } from './contactos/editar-contacto/editar-contacto.component';
 import { EditarProyectoComponent } from './editar-proyecto/editar-proyecto.component';
+import { DetallesContactoComponent } from './contactos/detalles-contacto/detalles-contacto.component';
 
 // Required for AOT compilation
 export function TranslateHttpLoaderFactory(http: HttpClient) {
@@ -77,7 +78,8 @@ export function TranslateHttpLoaderFactory(http: HttpClient) {
     ProveedoresComponent,
     CrearProveedorComponent,
     EditarProveedorComponent,
-    EditarTareaComponent],
+    EditarTareaComponent,
+    DetallesContactoComponent],
 
   imports: [
     BrowserModule,

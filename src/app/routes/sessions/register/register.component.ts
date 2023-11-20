@@ -32,7 +32,7 @@ export class RegisterComponent implements OnInit {
     private apiIdentifierService: ApiIdentifierService,
     private apiUserService: ApiUserService,
     private toastr: ToastrService,
-    private router: Router 
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -52,15 +52,13 @@ export class RegisterComponent implements OnInit {
       return { 'passwordPattern': true };
     }
     return null;
-  }  
-
-
+  }
 
   matchValidator(source: string, target: string): ValidatorFn {
     return (control: AbstractControl) => {
       const sourceControl = control.get(source);
       const targetControl = control.get(target);
-  
+
       if (sourceControl && targetControl && sourceControl.value !== targetControl.value) {
         targetControl?.setErrors({ mismatch: true });
         return { mismatch: true };
@@ -69,7 +67,7 @@ export class RegisterComponent implements OnInit {
         return null;
       }
     };
-  }  
+  }
 
   async onRegister() {
     if (this.registerForm.valid) {
@@ -87,13 +85,13 @@ export class RegisterComponent implements OnInit {
         SecondLastname: this.registerForm.get('secondLastname')?.value || "",
         Email: this.registerForm.get('email')?.value || "",
         Password: pass,
-        RoleId: 3,
+        RoleId: 2,
       };
-  
+
       this.apiUserService.register(user).subscribe(
         (response) => {
           this.toastr.success('El usuario se ha registrado correctamente', 'Success');
-          // this.registerForm.reset(); 
+          // this.registerForm.reset();
           this.router.navigate(['/login']);
         },
         (error) => {
@@ -110,7 +108,7 @@ export class RegisterComponent implements OnInit {
             //console.error('Error con el registro del usuario:', error);
           }
         }
-      );     
+      );
     }
   }
 
