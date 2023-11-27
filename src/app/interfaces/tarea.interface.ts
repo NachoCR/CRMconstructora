@@ -1,5 +1,6 @@
-export interface TareasData {
+export interface TareaData {
     TaskId?: number;
+    Name: string;
     Description: string;
     Date_Due: Date;
     PriorityId: number;

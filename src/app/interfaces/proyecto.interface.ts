@@ -1,4 +1,4 @@
-import { TareasData } from "./tareas.interface";
+import { TareaData } from "./tarea.interface";
 
 export interface ProyectoData {
     projectId?: number;
@@ -8,5 +8,5 @@ export interface ProyectoData {
     endDate: Date;
     statusId: number;
     clientId: number;
-    tasks: TareasData[]
+    tasks: TareaData[]
   }
