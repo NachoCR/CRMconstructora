@@ -72,7 +72,7 @@ this.getContactoList();
               Swal.fire('Registrado!', '', 'success');
             }, error:(e)=> {
               this.getContactoList();
-              debugger;
+              
               console.log(e);
               Swal.fire('Error al registrar contacto', '', 'info');
             }
@@ -111,7 +111,7 @@ this.getContactoList();
                 Swal.fire('Guardados!', '', 'success');
               }, error:(e)=> {
                 this.getContactoList();
-                debugger;
+                
                 console.log(e);
                 Swal.fire('Error al guardar los cambios', '', 'info');
               }

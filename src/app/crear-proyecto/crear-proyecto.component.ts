@@ -35,7 +35,7 @@ import { UsuarioService } from 'app/services/usuario.service';
       // Restar 3 días a la fecha actual
       currentDate.setDate(currentDate.getDate() - 2);
     
-      debugger;
+      
       if (selectedDate < currentDate) {
         return { 'dateInPast': true };
       }
@@ -104,6 +104,7 @@ import { UsuarioService } from 'app/services/usuario.service';
 
       //Servicio de clientes para cargar la lista
       this.clienteService.getClientList().subscribe((data) => {
+        
         this.clientesList = data;
         this.filteredClientesList$ = this.crearProyectoForm.get('clientId')?.valueChanges.pipe(
           startWith(''),
@@ -129,6 +130,7 @@ import { UsuarioService } from 'app/services/usuario.service';
     //Filtro clientes
     private _filterClientes(value: string): any[] {
       const filterValue = value.toLowerCase();
+      
       return this.clientesList.filter(cliente => cliente.name.toLowerCase().includes(filterValue));
     }
 

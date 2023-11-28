@@ -52,7 +52,7 @@ export class ProveedoresComponent {
           confirmButtonText: 'Guardar',
           denyButtonText: `No guardar`,
         }).then(swalResult => {
-          debugger;
+          
           if (swalResult.isConfirmed) {
             this.proveedorService.addProveedor(result).subscribe({
               next : () => {
@@ -99,7 +99,7 @@ export class ProveedoresComponent {
                   Swal.fire('Cambios guardados!', '', 'success');
                 }, error:(e)=> {
                   this.getProveedoresList();
-                  debugger;
+                  
                   console.log(e);
                   Swal.fire('Error al guardar los cambios', '', 'info');
                 }
@@ -127,7 +127,7 @@ export class ProveedoresComponent {
           cancelButtonText: 'No',
         }).then((result) => {
           if (result.value) {
-            debugger;
+            
             this.proveedorService.deleteProveedor(provider);
             let updatedProviders = this.proveedoresList.filter(function(u) {
               if (u.providerId != provider.providerId) {

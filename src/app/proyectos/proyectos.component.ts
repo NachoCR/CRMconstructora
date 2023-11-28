@@ -141,7 +141,7 @@ export class ProyectosComponent {
                   Swal.fire('Cambios guardados!', '', 'success');
                 }, error:(e)=> {
                   this.getProyectosList();
-                  debugger;
+                  
                   console.log(e);
                   Swal.fire('Error al guardar los cambios', '', 'info');
                 }
@@ -169,7 +169,7 @@ export class ProyectosComponent {
           cancelButtonText: 'No',
         }).then((result) => {
           if (result.value) {
-            debugger;
+            
             this.proyectoService.deleteProyecto(project);
             let updatedProjects = this.proyectosList.filter(function(u) {
               if (u.projectId != project.projectId) {

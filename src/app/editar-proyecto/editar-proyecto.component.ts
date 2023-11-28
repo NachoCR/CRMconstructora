@@ -91,7 +91,7 @@ export class EditarProyectoComponent {
   }
 
   ngOnInit(): void {
-    debugger;
+    
     this.clienteService.getClientList().subscribe((data) => {
       this.clientesList = data;
       this.filteredClientesList$ = this.editarProyectoForm.get('clientId')?.valueChanges.pipe(

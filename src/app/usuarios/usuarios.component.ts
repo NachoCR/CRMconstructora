@@ -49,7 +49,7 @@ this.getUsuariosList();
     
     
     const dialogRef = this.dialog.open(CrearUsuarioComponent, {
-      width: '95%',
+      width: '100%',
       data: {usuario: this.usuario}
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -61,15 +61,17 @@ this.getUsuariosList();
         confirmButtonText: 'Guardar',
         denyButtonText: `No guardar`,
       }).then(swalResult => {
-        debugger;
+        
         if (swalResult.isConfirmed) {
+          console.log(result);
           this.usuarioService.addUsuario(result).subscribe({
+            
             next : () => {
               this.getUsuariosList();
               Swal.fire('Registrado!', '', 'success');
             }, error:(e)=> {
               this.getUsuariosList();
-              debugger;
+              
               console.log(e);
               Swal.fire('Error al registrar usuario', '', 'info');
             }
@@ -108,7 +110,7 @@ this.getUsuariosList();
                 Swal.fire('Cambios guardados!', '', 'success');
               }, error:(e)=> {
                 this.getUsuariosList();
-                debugger;
+                
                 console.log(e);
                 Swal.fire('Error al guardar los cambios', '', 'info');
               }
@@ -136,7 +138,7 @@ this.getUsuariosList();
       cancelButtonText: 'No',
     }).then((result) => {
       if (result.value) {
-        debugger;
+        
         this.usuarioService.deleteUsuario(user);
         setTimeout(()=> {}, 2000);
         this.getUsuariosList();
