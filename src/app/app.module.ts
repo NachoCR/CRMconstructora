@@ -52,6 +52,7 @@ import { EditarProyectoComponent } from './editar-proyecto/editar-proyecto.compo
 import { BuscarProyectoComponent } from './buscar-proyecto/buscar-proyecto.component';
 import { MatSelectModule } from '@angular/material/select';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { DetallesContactoComponent } from './contactos/detalles-contacto/detalles-contacto.component';
 
 // Required for AOT compilation
 export function TranslateHttpLoaderFactory(http: HttpClient) {
@@ -62,28 +63,29 @@ export function TranslateHttpLoaderFactory(http: HttpClient) {
 @NgModule({
   declarations: [AppComponent,
     FilterPipe,
-    ContactosComponent, 
+    ContactosComponent,
     CrearContactoComponent,
-    EditarContactoComponent, 
+    EditarContactoComponent,
     BuscarProyectoComponent,
-    UsuariosComponent, 
-    CrearUsuarioComponent, 
+    UsuariosComponent,
+    CrearUsuarioComponent,
     EditarUsuarioComponent,
-    CrearProveedorComponent, 
-    EditarProveedorComponent, 
+    CrearProveedorComponent,
+    EditarProveedorComponent,
     CrearProductoCatalogoComponent,
     EditarProductoCatalogoComponent,
-    ProyectosComponent, 
-    CrearProyectoComponent, 
+    ProyectosComponent,
+    CrearProyectoComponent,
     EditarProyectoComponent,
     EditarProyectoComponent,
-    TareasComponent, 
-    CrearTareaComponent, 
+    TareasComponent,
+    CrearTareaComponent,
     ProveedoresComponent,
     CrearProveedorComponent,
     EditarProveedorComponent,
 
-    EditarTareaComponent],
+    EditarTareaComponent,
+    DetallesContactoComponent],
 
   imports: [
     BrowserModule,
