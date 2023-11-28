@@ -6,17 +6,16 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   templateUrl: './file-upload.component.html',
   styleUrls: ['./file-upload.component.scss'],
 })
-//How to use: https://www.samarpaninfotech.com/blog/methods-to-share-data-between-angular-components/#h-method-2-child-to-parent-via-output-decorator-and-eventemitter
 export class FileUploadComponent {
   selectedFile: File | null = null;
-  imageSrc: any;
+  @Input() imageSrc: any;
   cloudName: string = 'dvti3rnyq';
   unsignedUploadPreset: string = 'ezqicsjs';
   uploadEndpoint: string = `https://api.cloudinary.com/v1_1/${this.cloudName}/upload`;
   apiKey = '562183172196363';
   apiSecret = 'uWwD2flyFgdGJdoVmfUBew7WGjM';
 
-  @Output() imagePostedURLEvent? = new EventEmitter<string>();
+  @Output() imagePostedURLEvent = new EventEmitter<string>();
 
   constructor(private http: HttpClient) {}
 
@@ -45,11 +44,11 @@ export class FileUploadComponent {
 
       this.http.post(this.uploadEndpoint, formData).subscribe({
         next: (result: any) => {
-          this.imagePostedURLEvent?.emit(result.url);
+          this.imagePostedURLEvent?.emit(result.url ?? '');
         },
         error: error => {},
         complete: () => {
-          // console.log('Request completed');
+          // // console.log('Request completed');
         },
       });
     }

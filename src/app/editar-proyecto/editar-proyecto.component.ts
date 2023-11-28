@@ -12,7 +12,7 @@ import { Observable, debounceTime, map, startWith } from 'rxjs';
 @Component({
   selector: 'app-editar-proyecto',
   templateUrl: './editar-proyecto.component.html',
-  styleUrls: ['./editar-proyecto.component.scss']
+  styleUrls: ['./editar-proyecto.component.scss'],
 })
 export class EditarProyectoComponent {
   public get data(): any {
@@ -22,41 +22,40 @@ export class EditarProyectoComponent {
     this._data = value;
   }
 
-
   editarProyectoForm: FormGroup;
   submitted = false;
   isWorking = false;
 
   // Función de validación personalizada
- dateNotInPast(control: AbstractControl): { [key: string]: boolean } | null {
-  const selectedDate = new Date(control.value);
-  const currentDate = new Date();
+  dateNotInPast(control: AbstractControl): { [key: string]: boolean } | null {
+    const selectedDate = new Date(control.value);
+    const currentDate = new Date();
 
-  if (selectedDate < currentDate) {
-    return { 'dateInPast': true };
+    if (selectedDate < currentDate) {
+      return { dateInPast: true };
+    }
+
+    return null;
   }
-
-  return null;
-}
 
   proyecto?: ProyectoData;
   constructor(
     public dialogRef: MatDialogRef<EditarProyectoComponent>,
     @Inject(MAT_DIALOG_DATA)
-    private _data: any, private fb: FormBuilder, private clienteService: ClienteService) {
+    private _data: any,
+    private fb: FormBuilder,
+    private clienteService: ClienteService
+  ) {
     // this.crearUForm = this.crearUsuarioForm();
 
-    this.editarProyectoForm = new FormGroup(
-      {
+    this.editarProyectoForm = new FormGroup({
       name: new FormControl(null, [Validators.required]),
       description: new FormControl(null, [Validators.required]),
       startDate: new FormControl(null, [Validators.required, DateValidator.dateNotInPast]),
       endDate: new FormControl(null, [Validators.required, DateValidator.dateNotInPast]),
-      statusId : new FormControl(null, [Validators.required]),
-      clientId : new FormControl(null),
-    
-    }
-      )
+      statusId: new FormControl(null, [Validators.required]),
+      clientId: new FormControl(null),
+    });
   }
 
   clientesList: any[] = []; // Aquí almacenarás la lista de clientes
@@ -65,9 +64,6 @@ export class EditarProyectoComponent {
   get f() {
     return this.editarProyectoForm.controls;
   }
-
-  
-  
 
   crear() {
     this.submitted = true;
@@ -85,14 +81,12 @@ export class EditarProyectoComponent {
     }, 1500);
   }
 
-
   onNoClick(): void {
     this.dialogRef.close();
   }
 
   ngOnInit(): void {
-    debugger;
-    this.clienteService.getClientList().subscribe((data) => {
+    this.clienteService.getClientList().subscribe(data => {
       this.clientesList = data;
       this.filteredClientesList$ = this.editarProyectoForm.get('clientId')?.valueChanges.pipe(
         startWith(''),
@@ -100,12 +94,16 @@ export class EditarProyectoComponent {
         map(value => this._filterClientes(value))
       );
     });
-    console.log(this.data);
+    // console.log(this.data);
   }
-  
+
   private _filterClientes(value: string): any[] {
     const filterValue = value.toLowerCase();
     return this.clientesList.filter(cliente => cliente.name.toLowerCase().includes(filterValue));
   }
 
+  handleFileUploadUrl($event: string) {
+    console.log($event);
+    this.data.imageURL = $event;
+  }
 }

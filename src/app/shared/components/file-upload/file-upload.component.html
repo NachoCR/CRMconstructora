@@ -1,24 +1,27 @@
 <!-- image-upload-card.component.html -->
 <div class="card">
-  <mat-card-content class="mat-card-content" >
-    <div class="upload-container" >
+  <mat-card-content class="mat-card-content">
+    <div class="upload-container">
       <div class="row">
         <div class="col-6">
-          <input type="file" (change)="onFileSelected($event)" accept="image/*" style="display: none" #fileInput />
+          <input
+            type="file"
+            (change)="onFileSelected($event)"
+            accept="image/*"
+            style="display: none"
+            #fileInput
+          />
           <button mat-mini-fab (click)="fileInput.click()" class="upload-button">
             <mat-icon>add_photo_alternate</mat-icon>
           </button>
         </div>
         <div class="col-6">
-          <div *ngIf="selectedFile" class="image-preview">
+          <div *ngIf="selectedFile || imageSrc" class="image-preview">
             <img class="image-preview-content" [src]="imageSrc" alt="Preview" />
           </div>
         </div>
-
       </div>
-
     </div>
-
   </mat-card-content>
 
   <button type="button" (click)="onFileUpload()" *ngIf="this.selectedFile" class="upload-button">

@@ -42,7 +42,12 @@ const MODULES: any[] = [
   ToastrModule,
   TranslateModule,
 ];
-const COMPONENTS: any[] = [BreadcrumbComponent, PageHeaderComponent, ErrorCodeComponent];
+const COMPONENTS: any[] = [
+  BreadcrumbComponent,
+  PageHeaderComponent,
+  ErrorCodeComponent,
+  FileUploadComponent,
+];
 const COMPONENTS_DYNAMIC: any[] = [];
 const DIRECTIVES: any[] = [DisableControlDirective];
 const PIPES: any[] = [SafeUrlPipe, ToObservablePipe];
@@ -50,6 +55,12 @@ const PIPES: any[] = [SafeUrlPipe, ToObservablePipe];
 @NgModule({
   imports: [...MODULES],
   exports: [...MODULES, ...COMPONENTS, ...DIRECTIVES, ...PIPES],
-  declarations: [...COMPONENTS, ...COMPONENTS_DYNAMIC, ...DIRECTIVES, ...PIPES, FileUploadComponent],
+  declarations: [
+    ...COMPONENTS,
+    ...COMPONENTS_DYNAMIC,
+    ...DIRECTIVES,
+    ...PIPES,
+    FileUploadComponent,
+  ],
 })
 export class SharedModule {}
