@@ -64,32 +64,35 @@ $(document).ready(function(){
 			  <mat-header-cell *matHeaderCellDef>Nombre</mat-header-cell>
 			  <mat-cell *matCellDef="let contact">{{ contact.name }} {{ contact.lastname }} {{ contact.secondLastname }}</mat-cell>
 			</ng-container>
-	  
+
 			<ng-container matColumnDef="email">
-			  <mat-header-cell *matHeaderCellDef>Correo</mat-header-cell>
-			  <mat-cell *matCellDef="let contact">{{ contact.email }}</mat-cell>
-			</ng-container>
+				<mat-header-cell *matHeaderCellDef>Correo</mat-header-cell>
+				<mat-cell *matCellDef="let contact">{{ contact.email }}</mat-cell>
+			  </ng-container>
 	  
 			<ng-container matColumnDef="phone">
 			  <mat-header-cell *matHeaderCellDef>Teléfono</mat-header-cell>
 			  <mat-cell *matCellDef="let contact">{{ contact.phone }}</mat-cell>
 			</ng-container>
-	  
+
 			<ng-container matColumnDef="details">
-			  <mat-header-cell *matHeaderCellDef>Detalles</mat-header-cell>
-			  <mat-cell *matCellDef="let contact">{{ contact.details }}</mat-cell>
-			</ng-container>
-	  
-			<ng-container matColumnDef="providerId">
-			  <mat-header-cell *matHeaderCellDef>Proveedor</mat-header-cell>
-			  <mat-cell *matCellDef="let contact">{{ contact.providerId }}</mat-cell>
-			</ng-container>
+				<mat-header-cell *matHeaderCellDef>Detalles</mat-header-cell>
+				<mat-cell *matCellDef="let contact">{{ contact.details }}</mat-cell>
+			  </ng-container>
+		
+			  <ng-container matColumnDef="providerId">
+				<mat-header-cell *matHeaderCellDef>Proveedor</mat-header-cell>
+				<mat-cell *matCellDef="let contact">{{ contact.providerId }}</mat-cell>
+			  </ng-container>
 	  
 			<ng-container matColumnDef="actions">
 			  <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
 			  <mat-cell *matCellDef="let contact">
 				<button mat-icon-button (click)="openDialogEditar(contact)" matTooltip="Editar">
 				  <mat-icon>edit</mat-icon>
+				</button>
+				<button mat-icon-button (click)="openDetailsDialog(contact)" matTooltip="Ver detalles">
+					<mat-icon>details</mat-icon>
 				</button>
 				<button mat-icon-button (click)="openEliminar(contact)" matTooltip="Eliminar">
 				  <mat-icon>delete</mat-icon>
