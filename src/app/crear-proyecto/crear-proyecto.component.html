@@ -3,24 +3,34 @@
     <div class="row mt-3">
       <div class="col">
         <form [formGroup]="crearProyectoForm" (ngSubmit)="crear()" novalidate autocomplete="">
-
           <h3>Creación de Proyectos</h3>
+          <app-file-upload (imagePostedURLEvent)="handleFileUploadUrl($event)"></app-file-upload>
 
           <div class="form-row">
             <!-- Nombre -->
             <div class="form-group col-md-6">
               <label for="name" class="control-label font-weight-bold">Nombre del proyecto</label>
-              <input type="text" class="form-control" placeholder="Nombre del Proyecto" formControlName="name"
-                [(ngModel)]="data.name" />
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Nombre del Proyecto"
+                formControlName="name"
+                [(ngModel)]="data.name"
+              />
             </div>
 
             <!-- Primer apellido -->
             <div class="form-group col-md-6">
               <label for="statusId" class="control-label font-weight-bold">Estado</label>
-              <select formControlName="statusId" type="number" class="form-select" style="border-radius: 2px;"
-                [(ngModel)]="data.statusId">
-                <option value=1>Nuevo</option>
-                <option value=2>En Progreso</option>
+              <select
+                formControlName="statusId"
+                type="number"
+                class="form-select"
+                style="border-radius: 2px"
+                [(ngModel)]="data.statusId"
+              >
+                <option value="1">Nuevo</option>
+                <option value="2">En Progreso</option>
               </select>
             </div>
           </div>
@@ -29,36 +39,58 @@
             <!-- Fecha de inicio -->
             <div class="form-group col-md-6">
               <label for="startDate" class="control-label font-weight-bold">Fecha de inicio</label>
-              <input type="date" class="form-control" placeholder="Fecha de inicio" formControlName="startDate"
-                [(ngModel)]="data.startDate" />
+              <input
+                type="date"
+                class="form-control"
+                placeholder="Fecha de inicio"
+                formControlName="startDate"
+                [(ngModel)]="data.startDate"
+              />
               <!-- Muestra un mensaje de error si la fecha está en el pasado -->
               <div
-                *ngIf="crearProyectoForm.get('startDate')?.hasError('dateInPast') && crearProyectoForm.get('startDate')?.touched">
+                *ngIf="
+                  crearProyectoForm.get('startDate')?.hasError('dateInPast') &&
+                  crearProyectoForm.get('startDate')?.touched
+                "
+              >
                 <small class="text-danger">La fecha no puede ser anterior a la fecha de hoy.</small>
               </div>
             </div>
-          
+
             <!-- Fecha de Entrega -->
             <div class="form-group col-md-6">
               <label for="endDate" class="control-label font-weight-bold">Fecha de Entrega</label>
-              <input type="date" class="form-control" placeholder="Fecha de entrega" formControlName="endDate"
-                [(ngModel)]="data.endDate" />
+              <input
+                type="date"
+                class="form-control"
+                placeholder="Fecha de entrega"
+                formControlName="endDate"
+                [(ngModel)]="data.endDate"
+              />
               <!-- Muestra un mensaje de error si la fecha está en el pasado -->
               <div
-                *ngIf="crearProyectoForm.get('endDate')?.hasError('dateInPast') && crearProyectoForm.get('endDate')?.touched">
-                <small class="text-danger">La fecha no puede ser anterior a la fecha de inicio.</small>
+                *ngIf="
+                  crearProyectoForm.get('endDate')?.hasError('dateInPast') &&
+                  crearProyectoForm.get('endDate')?.touched
+                "
+              >
+                <small class="text-danger"
+                  >La fecha no puede ser anterior a la fecha de inicio.</small
+                >
               </div>
             </div>
           </div>
 
-        
-
-        
-        <div class="form-group">
-          <label for="lastname" class="control-label font-weight-bold">Descripción</label>
-          <textarea matInput class="form-control" placeholder="Descripción" formControlName="description"
-            [(ngModel)]="data.description"></textarea>
-        </div>
+          <div class="form-group">
+            <label for="lastname" class="control-label font-weight-bold">Descripción</label>
+            <textarea
+              matInput
+              class="form-control"
+              placeholder="Descripción"
+              formControlName="description"
+              [(ngModel)]="data.description"
+            ></textarea>
+          </div>
 
           <!-- <div class="form-group">
             <label for="clientId" class="control-label font-weight-bold">Cliente</label>
@@ -69,18 +101,22 @@
             </mat-select>
           </div> -->
 
-
           <div class="form-group">
             <label for="clientId" class="control-label font-weight-bold">Cliente</label>
-            <input type="text"
-                   placeholder="Buscar cliente"
-                   formControlName="clientId"
-                   [matAutocomplete]="auto"
-                   [(ngModel)]="data.clientId"
-                   class="form-control">
+            <input
+              type="text"
+              placeholder="Buscar cliente"
+              formControlName="clientId"
+              [matAutocomplete]="auto"
+              [(ngModel)]="data.clientId"
+              class="form-control"
+            />
             <mat-autocomplete #auto="matAutocomplete">
-              <mat-option *ngFor="let cliente of filteredClientesList$ | async" [value]="cliente.clientId">
-                {{cliente.cedula}} {{cliente.name}}
+              <mat-option
+                *ngFor="let cliente of filteredClientesList$ | async"
+                [value]="cliente.clientId"
+              >
+                {{ cliente.cedula }} {{ cliente.name }}
               </mat-option>
             </mat-autocomplete>
           </div>
@@ -102,12 +138,18 @@
 
           <mat-dialog-actions class="custom-dialog-actions">
             <button mat-button (click)="onNoClick()" class="btn btn-default">Cancelar</button>
-            <button mat-button [disabled]="crearProyectoForm.invalid" [mat-dialog-close]="data" cdkFocusInitial
-              class="btn btn-success">Guardar</button>
+            <button
+              mat-button
+              [disabled]="crearProyectoForm.invalid"
+              [mat-dialog-close]="data"
+              cdkFocusInitial
+              class="btn btn-success"
+            >
+              Guardar
+            </button>
           </mat-dialog-actions>
         </form>
       </div>
     </div>
   </div>
-
 </mat-dialog-content>

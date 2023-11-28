@@ -25,6 +25,7 @@ import { CrearTareaComponent } from 'app/crear-tarea/crear-tarea.component';
 import { EditarTareaComponent } from 'app/editar-tarea/editar-tarea.component';
 import { ContactosComponent } from 'app/contactos/contactos/contactos.component';
 import { RecoverComponent } from './sessions/recover/recover.component';
+import { FileUploadComponent } from '@shared/components/file-upload/file-upload.component';
 
 const routes: Routes = [
   { path: '#', component: DashboardComponent },
@@ -36,6 +37,7 @@ const routes: Routes = [
   { path: 'catalogoProveedor', component: CatalogoProveedorComponent },
   { path: 'ordenesCompra', component: OrdenesCompraComponent },
   { path: 'contactos', component: ContactosComponent },
+  { path: 'uploadImage', component: FileUploadComponent },
 
   {
     path: 'dashboard',
