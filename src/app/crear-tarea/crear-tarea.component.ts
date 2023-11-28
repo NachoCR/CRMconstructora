@@ -18,6 +18,32 @@ import { ProyectoService } from 'app/services/proyecto.service';
   styleUrls: ['./crear-tarea.component.scss'],
 })
 export class CrearTareaComponent {
+
+
+  selectedProject: any;
+
+  transformData() {
+    this.data.assignedProject = this.selectedProject.projectId;
+    this.crearTareaForm.controls["projectId"].setValue(this.selectedProject.projectId);
+  }
+  setProjectValue(proyecto : any) {
+    this.selectedProject = proyecto;
+    this.data.assignedProject = proyecto.name;
+    this.crearTareaForm.controls["projectId"].setValue(proyecto.name);
+  }
+
+  selectedUser: any;
+  
+  transformData2() {
+    this.data.assignedUser = this.selectedUser.employeeId;
+    this.crearTareaForm.controls["employeeId"].setValue(this.selectedUser.employeeId);
+  }
+  setUserValue(employee : any) {
+    this.selectedUser = employee;
+    this.data.assignedUser = employee.name;
+    this.crearTareaForm.controls["employeeId"].setValue(employee.name);
+  }
+
   // public crearUForm: FormGroup;
 
   crearTareaForm: FormGroup;
@@ -45,7 +71,9 @@ export class CrearTareaComponent {
 
   constructor(
     public dialogRef: MatDialogRef<CrearTareaComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any, private fb: FormBuilder, private proyectoService: ProyectoService, private usuarioService: UsuarioService) {
+    @Inject(MAT_DIALOG_DATA) public data: any, private fb: FormBuilder, 
+    private proyectoService: ProyectoService, 
+    private usuarioService: UsuarioService) {
     // this.crearUForm = this.crearUsuarioForm();
 
     this.crearTareaForm = new FormGroup(
@@ -53,7 +81,7 @@ export class CrearTareaComponent {
       name: new FormControl(null, [Validators.required]),
       description: new FormControl(null, [Validators.required]),
       statusId : new FormControl(null, [Validators.required]),
-      endDate: new FormControl(null, [Validators.required, DateValidator.dateNotInPast]),
+      dateDue: new FormControl(null, [Validators.required, DateValidator.dateNotInPast]),
       priorityId : new FormControl(null, [Validators.required]),
       projectId : new FormControl(null, [Validators.required]),
       employeeId : new FormControl(null, [Validators.required]),
@@ -61,11 +89,11 @@ export class CrearTareaComponent {
       )
   }
 
-  proyectosList: any[] = []; // Aquí almacenarás la lista de clientes
-  empleadosList: any[] = []; // Aquí almacenarás la lista de clientes
+  proyectosList: any[] = []; // Aquí almacenarás la lista de proyectos
+  usuariosList: any[] = []; // Aquí almacenarás la lista de usuarios
 
   filteredProyectosList$: Observable<any[]> | undefined;
-  filteredEmpleadosList$: Observable<any[]> | undefined;
+  filteredUserList$: Observable<any[]> | undefined;
 
   get f() {
     return this.crearTareaForm.controls;
@@ -106,13 +134,16 @@ export class CrearTareaComponent {
 
     //Servicio de empleados para cargar la lista
      this.usuarioService.getUserList().subscribe((data) => {
-       this.empleadosList = data;
-       this.filteredEmpleadosList$ = this.crearTareaForm.get('employeeId')?.valueChanges.pipe(
+       this.usuariosList = data;
+       console.log(data)
+       this.usuariosList = this.usuariosList.filter(x => x.roleId == 2); 
+       this.filteredUserList$ = this.crearTareaForm.get('employeeId')?.valueChanges.pipe(
          startWith(''),
          debounceTime(300),
-         map(value => this._filterEmpleados(value))
+         map(value => this._filterUser(value))
        );
      });
+
 
     console.log(this.data);
   }
@@ -125,9 +156,9 @@ export class CrearTareaComponent {
   }
 
   //Filtro empleados
-  private _filterEmpleados(value: string): any[] {
+  private _filterUser(value: string): any[] {
      const filterValue = value.toLowerCase();
-    return this.empleadosList.filter(user => user.name.toLowerCase().includes(filterValue));
+    return this.usuariosList.filter(user => user.name.toLowerCase().includes(filterValue));
    }
 
 

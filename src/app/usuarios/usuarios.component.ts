@@ -62,6 +62,7 @@ this.getUsuariosList();
         denyButtonText: `No guardar`,
       }).then(swalResult => {
         debugger;
+        console.log(result);
         if (swalResult.isConfirmed) {
           this.usuarioService.addUsuario(result).subscribe({
             next : () => {

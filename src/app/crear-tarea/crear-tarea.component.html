@@ -15,12 +15,12 @@
                 [(ngModel)]="data.name" />
             </div>
             <div class="form-group col-md-4">
-              <label for="endDate" class="control-label font-weight-bold">Fecha de Entrega</label>
-              <input type="date" class="form-control" placeholder="Fecha de entrega" formControlName="endDate"
-                [(ngModel)]="data.endDate" />
+              <label for="dateDue" class="control-label font-weight-bold">Fecha de Entrega</label>
+              <input type="date" class="form-control" placeholder="Fecha de entrega" formControlName="dateDue"
+                [(ngModel)]="data.dateDue" />
               <!-- Muestra un mensaje de error si la fecha está en el pasado -->
               <div
-                *ngIf="crearTareaForm.get('endDate')?.hasError('dateInPast') && crearTareaForm.get('endDate')?.touched">
+                *ngIf="crearTareaForm.get('dateDue')?.hasError('dateInPast') && crearTareaForm.get('dateDue')?.touched">
                 <small class="text-danger">La fecha no puede ser anterior a la fecha de inicio.</small>
               </div>
             </div>
@@ -45,6 +45,7 @@
                 <option value=3>Alta</option>
               </select>
             </div> 
+
             <div class="form-group col-md-4">
               <label for="projectId" class="control-label font-weight-bold">Projecto</label>
               <input type="text"
@@ -54,22 +55,23 @@
                      [(ngModel)]="data.projectId"
                      class="form-control">
               <mat-autocomplete #auto="matAutocomplete">
-                <mat-option *ngFor="let proyecto of filteredProyectosList$ | async" [value]="proyecto.projectId">
+                <mat-option *ngFor="let proyecto of filteredProyectosList$ | async" [value]="proyecto.projectId" (click)="setProjectValue(proyecto)">
                   {{proyecto.name}}
                 </mat-option>
               </mat-autocomplete>
             </div>
+
             <div class="form-group col-md-4">
-            <label for="employeeName" class="control-label font-weight-bold">Ingeniero a cargo:</label>
+            <label for="employeeId" class="control-label font-weight-bold">Ingeniero a cargo:</label>
             <input type="text"
                    placeholder="Buscar empleado"
-                   formControlName="employeeName"
-                   [matAutocomplete]="auto"
+                   formControlName="employeeId"
+                   [matAutocomplete]="autousuario"
                    [(ngModel)]="data.employeeId"
                    class="form-control">
-            <mat-autocomplete #auto="matAutocomplete">
-              <mat-option *ngFor="let empleado of filteredEmpleadosList$ | async" [value]="empleado.employeeId">
-              {{empleado.name}}
+            <mat-autocomplete #autousuario="matAutocomplete">
+              <mat-option *ngFor="let user of filteredUserList$ | async" [value]="user.employeeId" (click)="setUserValue(user)">
+              {{user.name}}
               </mat-option>
             </mat-autocomplete>
             </div>
@@ -87,10 +89,13 @@
           
           <mat-dialog-actions class="custom-dialog-actions">
             <button mat-button (click)="onNoClick()" class="btn btn-default">Cancelar</button>
-            <button mat-button [disabled]="crearTareaForm.invalid" [mat-dialog-close]="data" cdkFocusInitial
+            <button mat-button [disabled]="crearTareaForm.invalid" (click)="transformData()" (click)="transformData2()"  [mat-dialog-close]="data" cdkFocusInitial
               class="btn btn-success">Guardar</button>
           </mat-dialog-actions>
           
+
+
+
 
         </form>
       </div>

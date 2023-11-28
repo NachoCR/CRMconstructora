@@ -24,7 +24,7 @@ export class TareasComponent implements OnInit {
   dataSource: MatTableDataSource<any> = new MatTableDataSource();
   tareasList: any[] = []; // Asegúrate de que tareasList contenga tus datos
 
-  displayedColumns: string[] = ['name', 'description', 'endDate', 'statusId', 'priorityId', 'projectId', 'task'];
+  displayedColumns: string[] = ['name', 'description', 'dateDue', 'statusId', 'priorityId', 'projectId', 'employeeId', 'actions'];
 
 
 
@@ -44,7 +44,6 @@ this.getTaskList();
   }
 
   openDialog(): void {
-    
     
     const dialogRef = this.dialog.open(CrearTareaComponent, {
       width: '80%',
@@ -134,10 +133,14 @@ this.getTaskList();
       cancelButtonText: 'No',
     }).then((result) => {
       if (result.value) {
-        debugger;
         this.tareaService.deleteTask(Task);
-        setTimeout(()=> {}, 2000);
-        this.getTaskList();
+        let updatedTask = this.tareasList.filter(function(u) {
+          if (u.taskId != Task.taskId) {
+          return u;
+          }
+          return null;
+        })
+        this.tareasList = updatedTask;
 
         Swal.fire('Eliminada!', 'Tarea eliminada.', 'success');
       } else if (result.dismiss === Swal.DismissReason.cancel) {

@@ -65,42 +65,38 @@ $(document).ready(function(){
 
 				
 					<ng-container matColumnDef="name">
-					<mat-header-cell *matHeaderCellDef>Nombre</mat-header-cell>
-					<mat-cell *matCellDef="let task">{{ task.name }}</mat-cell>
+						<mat-header-cell *matHeaderCellDef>Nombre</mat-header-cell>
+						<mat-cell *matCellDef="let task">{{ task.name }}</mat-cell>
 					</ng-container>
 
 					<ng-container matColumnDef="description">
-					<mat-header-cell *matHeaderCellDef>Descripción</mat-header-cell>
-					<mat-cell *matCellDef="let task">{{ task.description }}</mat-cell>
+						<mat-header-cell *matHeaderCellDef>Descripción</mat-header-cell>
+						<mat-cell *matCellDef="let task">{{ task.description }}</mat-cell>
 					</ng-container>
 
-					<ng-container matColumnDef="endDate">
-					<mat-header-cell *matHeaderCellDef>Fecha Limite</mat-header-cell>
-					<mat-cell *matCellDef="let task">{{ task.Date_Due }}</mat-cell>
+					<ng-container matColumnDef="dateDue">
+						<mat-header-cell *matHeaderCellDef>Fecha Limite</mat-header-cell>
+						<mat-cell *matCellDef="let task">{{ task.dateDue }}</mat-cell>
 					</ng-container>
 
 					<ng-container matColumnDef="statusId">
-					<mat-header-cell *matHeaderCellDef>Estado</mat-header-cell>
-					<mat-cell *matCellDef="let task">{{ task.status }}</mat-cell>
+						<mat-header-cell *matHeaderCellDef>Estado</mat-header-cell>
+						<mat-cell *matCellDef="let task">{{ task.statusId }}</mat-cell>
 					</ng-container>
 
 					<ng-container matColumnDef="priorityId">
-					<mat-header-cell *matHeaderCellDef>Prioridad</mat-header-cell>
-					<mat-cell *matCellDef="let task">{{ task.priority }}</mat-cell>
+						<mat-header-cell *matHeaderCellDef>Prioridad</mat-header-cell>
+						<mat-cell *matCellDef="let task">{{ task.priorityId }}</mat-cell>
 					</ng-container>
 
 					<ng-container matColumnDef="projectId"> 
 						<mat-header-cell *matHeaderCellDef>Proyecto</mat-header-cell>
-						<mat-cell *matCellDef="let task">
-							{{ rolesMap.get(task.projectId) }}
-						</mat-cell>
+						<mat-cell *matCellDef="let task">{{ task.projectId }}</mat-cell>
 					</ng-container> 
 					
-					<ng-container matColumnDef="task"> 
+					<ng-container matColumnDef="employeeId"> 
 						<mat-header-cell *matHeaderCellDef>Asignado</mat-header-cell>
-						<mat-cell *matCellDef="let task">
-						{{ rolesMap.get(task.taskId) }} 
-						</mat-cell>
+						<mat-cell *matCellDef="let task">{{ task.employeeId }}</mat-cell>
 					</ng-container>
 
 					<ng-container matColumnDef="actions">
