@@ -27,8 +27,7 @@ export class EditarUsuarioComponent implements OnInit {
   this.editarUsuarioForm.controls["assignedProject"].setValue(proyecto.name);
   }
   
-  @ViewChild('passwordInput') passwordInput: ElementRef | undefined;
-  @ViewChild('confirmPasswordInput') confirmPasswordInput: ElementRef | undefined;  // public crearUForm: FormGroup;
+
   showPassword: boolean = false;
   showConfirmPassword: boolean = false;
   filteredOptions: Observable<string[]> = new Observable<string[]>(); // Inicialización
@@ -59,13 +58,6 @@ export class EditarUsuarioComponent implements OnInit {
       this.editarUsuarioForm = new FormGroup(
         {
         email: new FormControl(null, [Validators.required, Validators.email]),
-        password: new FormControl(
-          null,
-          Validators.compose([
-            Validators.required,
-            Validators.minLength(8)
-          ])
-        ),
         name : new FormControl(null, [Validators.required]),
         lastname : new FormControl(null, [Validators.required]),
         secondLastname : new FormControl(null, [Validators.required]),
@@ -79,17 +71,15 @@ export class EditarUsuarioComponent implements OnInit {
         position : new FormControl(null),
         assignedProject : new FormControl(null),
       },
-      {
-        validators: PasswordValidators.MatchValidator
-      })
+      )
       this.editarUsuarioForm.get('identifierId')?.valueChanges.subscribe((value) => {
         this.actualizarValidaciones(value);
       });
   
-
     }
-    proyectosList: any[] = []; // Aquí almacenarás la lista de clientes
 
+
+    proyectosList: any[] = []; 
     filteredProyectosList$: Observable<any[]> | undefined;
     
     private actualizarValidaciones(identifierId: string) {
@@ -142,13 +132,13 @@ emailValidator(control: AbstractControl): ValidationErrors | null {
 
 
 checkCedulaExists() {
-  const cedulaControl = this.editarUsuarioForm.get('identification');
-  
-  if (cedulaControl && this.usuariosList.length > 0) {
-    const identification = cedulaControl.value;
+const cedulaControl = this.editarUsuarioForm.get('identification');
+debugger;
+if (cedulaControl && this.usuariosList.length > 0) {
+  const identification = cedulaControl.value;
 
-    const cedulaExists = this.usuariosList.some(usuario => usuario.identification === identification);
-
+  const cedulaExists = this.usuariosList.some(usuario => usuario.identification === identification);
+  if(this.cedulaOriginal === identification){
     if (cedulaExists) {
       cedulaControl.setErrors({ 'cedulaExists': true });
     } else {
@@ -156,6 +146,26 @@ checkCedulaExists() {
       cedulaControl.updateValueAndValidity();
     }
   }
+}
+}
+
+checkEmailExists() {
+  const emailControl = this.editarUsuarioForm.get('email');
+  debugger;
+  if (emailControl && this.usuariosList.length > 0) {
+    const email = emailControl.value;
+
+    const emailExists = this.usuariosList.some(usuario => usuario.email === email);
+
+    if(this.correoOriginal === email){
+      if (emailExists) {
+        emailControl.setErrors({ 'emailExists': true });
+      } else {
+        emailControl.setErrors(null);
+        emailControl.updateValueAndValidity();
+      }
+  }
+}
 }
 
 checkPassportExists() {
@@ -190,25 +200,6 @@ checkJuridicExists() {
   }
 }
 
-checkEmailExists() {
-
-  const emailControl = this.editarUsuarioForm.get('email');
-
-  if (emailControl) { // Verificar que el control no sea nulo
-    const email = emailControl.value;
-
-    const emailExists = this.usuariosList.some(usuario => usuario.email === email);
-
-    if (emailExists) {
-      emailControl.setErrors({ 'emailExists': true });
-    } else {
-      // Limpiar el error si el correo no existe (puedes ajustar esto según tus necesidades)
-      emailControl.setErrors(null);
-      emailControl.updateValueAndValidity();
-    }
-  }
-  
-}
 
 onEmailBlur() {
   this.checkEmailExists();
@@ -225,34 +216,11 @@ onCedulaBlur() {
   // this.crearUForm.get('identification')?.updateValueAndValidity(); // Actualiza la validación de Angular
 }
 onPassportBlur() {
+  debugger
   this.checkCedulaExists();
   // this.crearUForm.get('passport')?.updateValueAndValidity(); // Actualiza la validación de Angular
 }
 
-// Método para alternar la visibilidad de la contraseña
-togglePasswordVisibility(): void {
-  if (this.passwordInput) {
-    const inputElement: HTMLInputElement = this.passwordInput.nativeElement;
-
-    // Cambia el tipo del input entre 'password' y 'text'
-    inputElement.type = this.showPassword ? 'password' : 'text';
-
-    // Invierte el estado
-    this.showPassword = !this.showPassword;
-  }
-}
-
-toggleConfirmPasswordVisibility(): void {
-  if (this.confirmPasswordInput) {
-    const inputElement: HTMLInputElement = this.confirmPasswordInput.nativeElement;
-
-    // Cambia el tipo del input entre 'password' y 'text'
-    inputElement.type = this.showConfirmPassword ? 'password' : 'text';
-
-    // Invierte el estado
-    this.showConfirmPassword = !this.showConfirmPassword;
-  }
-}
 
     get f() {
       return this.editarUsuarioForm.controls;

@@ -35,7 +35,7 @@
             <!-- Cédula -->
             <div class="form-group col-md-4">
               <label class="control-label font-weight-bold">Tipo de identificación</label>
-              <select formControlName="identifierId" [(ngModel)]="data.identifierId" class="form-select"
+              <select formControlName="identifierId" [(ngModel)]="data.identifierId" class="form-select" [ariaDisabled]="true"
                 style="border-radius: 2px;">
                 <option value="1">Cédula</option>
                 <option value="2">Pasaporte</option>
@@ -50,7 +50,7 @@
             <input type="text" class="form-control" placeholder="Cédula" formControlName="identification"
               [(ngModel)]="data.identification"
               [ngClass]="{ 'is-valid': (f.identification.dirty || submitted) && !f.identification.errors, 'is-invalid': (f.identification.dirty || submitted) && f.identification.errors }"
-              (blur)="onCedulaBlur()" maxlength="9" minlength="9" />
+              (focusout)="checkCedulaExists()" maxlength="9" minlength="9" />
               <div class="invalid-feedback">
                 <span class="text-danger" *ngIf="f.identification.errors?.required">La cédula es requerida</span>
                 <span class="text-danger" *ngIf="f.identification.errors?.pattern">La cedula debe tener 9 dígitos y solo contener numeros</span>
@@ -71,7 +71,7 @@
             <input type="text" class="form-control" placeholder="Pasaporte" formControlName="passport"
               [(ngModel)]="data.identification"
               [ngClass]="{ 'is-valid': (f.passport.dirty || submitted) && !f.passport.errors, 'is-invalid': (f.passport.dirty || submitted) && f.passport.errors }"
-              (blur)="onPassportBlur()" maxlength="9" minlength="9" />
+              (focusout)="checkJuridicExists()" maxlength="9" minlength="9" />
               <div class="invalid-feedback">
                 <span class="text-danger" *ngIf="f.passport.errors?.required">El pasaporte es requerida</span>
                 <span class="text-danger" *ngIf="f.passport.errors?.pattern">El pasaporte debe tener 9 dígitos y solo contener numeros</span>
@@ -93,8 +93,7 @@
             <input type="text" class="form-control" placeholder="Cédula jurídica" formControlName="juridic"
               [(ngModel)]="data.identification"
               [ngClass]="{ 'is-valid': (f.juridic.dirty || submitted) && !f.juridic.errors, 'is-invalid': (f.juridic.dirty || submitted) && f.juridic.errors }"
-              (input)="checkJuridicExists()"
-              (blur)="onJuridicaBlur()"
+              (focusout)="checkJuridicExists()"
               maxlength="11" 
               minlength="11" />
               <div class="invalid-feedback">
@@ -154,38 +153,20 @@
           </div>
           </div>
       
-
-
-
         <div class="form-row">
 
-            <div class="form-group col-md-4">
-              <label for="email" class="control-label font-weight-bold">Correo</label>
-              <input type="email" class="form-control" formControlName="email" placeholder="correo@gmail.com"
-                [ngClass]="{
-                  'is-valid': (f.email.dirty || submitted) && !f.email.errors,
-                  'is-invalid': (f.email.dirty || submitted) && f.email.errors
-                }"
-                (ngModelChange)="checkEmailExists()"
-                (blur)="onEmailBlur()"
-                formControlName="email"
-                [(ngModel)]="data.email"
-              />
-              <div class="invalid-feedback">
-                <span class="text-danger" *ngIf="f.email.errors?.required">Es requerido el correo electrónico</span>
-                <span class="text-danger" *ngIf="f.email.errors?.email">Correo electrónico inválido</span>
-                <span class="text-danger" *ngIf="f.email.errors?.emailExists">Este correo electrónico ya está registrado</span>
-              </div>
+          <div class="form-group col-md-4">
+            <label for="email" class="control-label font-weight-bold">Correo</label>
+            <input type="email" class="form-control" formControlName="email" placeholder="correo@gmail.com" [(ngModel)]="data.email"
+              [ngClass]="{ 'is-valid': (f.email.dirty || submitted) && !f.email.errors, 'is-invalid': (f.email.dirty || submitted) && f.email.errors }"
+              (focusout)="checkEmailExists()" />
+            <div class="invalid-feedback">
+              <span class="text-danger" *ngIf="f.email.errors?.required">Es requerido el correo electrónico</span>
+              <span class="text-danger" *ngIf="f.email.errors?.email">Correo electrónico inválido</span>
+              <span class="text-danger" *ngIf="f.email.errors?.emailExists">Este correo electrónico ya está
+                registrado</span>
             </div>
-
-
-
-          <!-- Primer apellido -->
-          <!-- <div class="form-group col-md-6">
-          <label for="phone" class="control-label font-weight-bold">Teléfono</label>
-          <input type="text" class="form-control" placeholder="Teléfono" formControlName="phone" [(ngModel)]="data.phone"/>
-        </div> -->
-
+          </div>
 
         <div class="form-group col-md-4">
           <label for="phone" class="control-label font-weight-bold">Teléfono</label>
@@ -210,90 +191,6 @@
           </div>
         </div>
         </div>
-
-
-        <div class="form-row">
-          <!-- Contraseña -->
-          <div class="form-group col-md-6">
-            <label for="password" class="control-label font-weight-bold">Contraseña</label>
-            <div class="input-group">
-              <input type="password" formControlName="password" class="form-control" 
-              name="password" placeholder="Ingrese su contraseña" 
-              [(ngModel)]="data.password" 
-              [ngClass]="{ 'is-valid': (f.password.dirty || submitted) && passwordValid, 'is-invalid': (f.password.dirty || submitted) && !passwordValid }" 
-              #passwordInput />
-              <span class="input-group-text" (click)="togglePasswordVisibility()">
-            
-                <mat-icon *ngIf="showPassword">lock_open</mat-icon>
-                <mat-icon *ngIf="!showPassword">lock</mat-icon>
-              </span>
-              <div class="invalid-feedback">
-                <!-- required -->
-                <span class="text-danger" *ngIf="(f.password.dirty || submitted) && !requiredValid">La contraseña es
-                  requerida</span>
-  
-                <!-- password validation rules -->
-                <div id="validation-rules" class="mt-3" *ngIf="requiredValid">
-                  <!-- minlength -->
-                  <div [ngClass]="{ 'text-success': minLengthValid, 'text-danger': !minLengthValid }">
-                    <i [attr.class]="minLengthValid ? 'bi-check-square-fill' : 'bi-x-square'"></i>
-                    Debe ser de mínimo 8 caracteres
-                  </div>
-  
-                  <!-- requires digit -->
-                  <div [ngClass]="{ 'text-success': requiresDigitValid, 'text-danger': !requiresDigitValid }">
-                    <i [attr.class]="requiresDigitValid ? 'bi-check-square-fill' : 'bi-x-square'"></i>
-                    Debe contener al menos 1 digito
-                  </div>
-  
-                  <!-- requires uppercase -->
-                  <div [ngClass]="{ 'text-success': requiresUppercaseValid, 'text-danger': !requiresUppercaseValid }">
-                    <i [attr.class]="requiresUppercaseValid ? 'bi-check-square-fill' : 'bi-x-square'"></i>
-                    Debe tener 1 caracter es mayúscula
-                  </div>
-  
-                  <!-- requires lowercase -->
-                  <div [ngClass]="{ 'text-success': requiresLowercaseValid, 'text-danger': !requiresLowercaseValid }">
-                    <i [attr.class]="requiresLowercaseValid ? 'bi-check-square-fill' : 'bi-x-square'"></i>
-                    Debe tener 1 caracter es minúscula
-                  </div>
-  
-                  <!-- requires special characters -->
-                  <div
-                    [ngClass]="{ 'text-success': requiresSpecialCharsValid, 'text-danger': !requiresSpecialCharsValid }">
-                    <i [attr.class]="requiresSpecialCharsValid ? 'bi-check-square-fill' : 'bi-x-square'"></i>
-                    Debe tener 1 caracter especial
-                  </div>
-                </div>
-              </div>
-            </div>
-
-          </div>
-
-          <!-- Confirmar contraseña -->
-          <div class="form-group col-md-6">
-            <label for="confirmPassword" class="control-label font-weight-bold">Confirmar contraseña</label>
-            <div class="input-group">
-            <input type="password" formControlName="confirmPassword" class="form-control" name="confirmPassword"
-              placeholder="Ingrese nuevamente su contraseña"
-              [ngClass]="{ 'is-valid': (submitted || f.confirmPassword.dirty) && !f.confirmPassword.errors, 'is-invalid': (submitted || f.confirmPassword.dirty) && f.confirmPassword.errors }" #confirmPasswordInput>
-              <span class="input-group-text" (click)="toggleConfirmPasswordVisibility()">
-                <!-- {{ showPassword ? 'Ocultar' : 'Mostrar' }} -->
-                <mat-icon *ngIf="showConfirmPassword">lock_open</mat-icon>
-                <mat-icon *ngIf="!showConfirmPassword">lock</mat-icon>
-              </span>
-            </div>
-              <div class="invalid-feedback" *ngIf="(submitted || f.confirmPassword.dirty) && f.confirmPassword.errors">
-              <div *ngIf="f.confirmPassword.errors.required">Confirme su contraseña</div>
-              <div *ngIf="f.confirmPassword.errors.minLength">Debe tener mínimo 8 caracteres</div>
-              <div *ngIf="f.confirmPassword.errors.mismatch">Las contraseñas no coinciden</div>
-            </div>
-          </div>
-
-        </div>
-
-
-
 
           <mat-dialog-actions class="custom-dialog-actions">
             <button mat-button (click)="onNoClick()" class="btn btn-default">Cancelar</button>
