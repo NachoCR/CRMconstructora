@@ -64,7 +64,12 @@
         <app-buscar-proyecto (filtroChange)="aplicarFiltro($event)"></app-buscar-proyecto>
         <div class="col-12 col-md-4" *ngFor="let project of proyectosList | filter: filtro">
           <mat-card style="min-height: 490px">
-            <img mat-card-image [src]="this.checkProjectImage(project.imageURL)" alt="Project 1" />
+            <img
+              mat-card-image
+              style="min-height: 230px"
+              [src]="this.checkProjectImage(project.imageURL)"
+              alt="Project 1"
+            />
             <mat-card-header>
               <mat-card-title>{{ project.name }}</mat-card-title>
               <mat-card-subtitle>
