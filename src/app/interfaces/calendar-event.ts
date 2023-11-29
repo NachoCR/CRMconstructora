@@ -1,6 +1,5 @@
 export interface TareasData {
     TaskId?: number;
-    Name: string;
     Description: string;
     Date_Due: Date;
     Start_Date: Date;

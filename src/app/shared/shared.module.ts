@@ -24,6 +24,9 @@ import { DisableControlDirective } from './directives/disable-control.directive'
 import { SafeUrlPipe } from './pipes/safe-url.pipe';
 import { ToObservablePipe } from './pipes/to-observable.pipe';
 import { FileUploadComponent } from './components/file-upload/file-upload.component';
+import { FullCalendarModule } from '@fullcalendar/angular';
+import { TaskCalendarComponent } from './components/task-calendar/task-calendar.component';
+import { EventDetailsDialogComponent } from './components/event-details-dialog-component/event-details-dialog-component';
 
 const MODULES: any[] = [
   CommonModule,
@@ -41,12 +44,15 @@ const MODULES: any[] = [
   NgxPermissionsModule,
   ToastrModule,
   TranslateModule,
+  FullCalendarModule,
 ];
 const COMPONENTS: any[] = [
   BreadcrumbComponent,
   PageHeaderComponent,
   ErrorCodeComponent,
   FileUploadComponent,
+  TaskCalendarComponent,
+  EventDetailsDialogComponent,
 ];
 const COMPONENTS_DYNAMIC: any[] = [];
 const DIRECTIVES: any[] = [DisableControlDirective];
@@ -61,6 +67,7 @@ const PIPES: any[] = [SafeUrlPipe, ToObservablePipe];
     ...DIRECTIVES,
     ...PIPES,
     FileUploadComponent,
+    TaskCalendarComponent,
   ],
 })
 export class SharedModule {}
