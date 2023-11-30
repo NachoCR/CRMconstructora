@@ -5,12 +5,13 @@ import { catalogoProveedorData } from 'app/interfaces/catalogoProveedor.interfac
 @Component({
   selector: 'app-editar-producto-catalogo',
   templateUrl: './editar-producto-catalogo.component.html',
-  styleUrls: ['./editar-producto-catalogo.component.scss']
+  styleUrls: ['./editar-producto-catalogo.component.scss'],
 })
 export class EditarProductoCatalogoComponent {
   constructor(
     public dialogRef: MatDialogRef<EditarProductoCatalogoComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: catalogoProveedorData) {}
+    @Inject(MAT_DIALOG_DATA) public data: catalogoProveedorData
+  ) {}
 
   onNoClick(): void {
     this.dialogRef.close();

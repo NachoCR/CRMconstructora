@@ -4,11 +4,11 @@ $utilities: (
   'width': (
     property: width,
     class: w,
-    values: variables.$sizes
+    values: variables.$sizes,
   ),
   'height': (
     property: height,
     class: h,
-    values: variables.$sizes
-  )
+    values: variables.$sizes,
+  ),
 );

@@ -9,10 +9,9 @@ import { ContactoService } from 'app/services/contacto.service';
 @Component({
   selector: 'app-editar-contacto',
   templateUrl: './editar-contacto.component.html',
-  styleUrls: ['./editar-contacto.component.scss']
+  styleUrls: ['./editar-contacto.component.scss'],
 })
 export class EditarContactoComponent {
-
   proveedorList: any[] = [];
 
   phoneError: string = '';
@@ -25,7 +24,7 @@ export class EditarContactoComponent {
     email: ['', [Validators.required, Validators.email]],
     phone: ['', [Validators.required]],
     providerId: ['', [Validators.required]],
-    details: ['', [Validators.required, Validators.minLength(10)]]
+    details: ['', [Validators.required, Validators.minLength(10)]],
   });
 
   constructor(
@@ -52,15 +51,14 @@ export class EditarContactoComponent {
     //   this.validate({ id: this.data.contactId, email: this.contactoForm.get('email')?.value, phone: value});
     // });
 
-    this.contactoForm.valueChanges.subscribe((value) => {
+    this.contactoForm.valueChanges.subscribe(value => {
       //console.log('Formulario cambiado:', value);
       this.validate({
         id: this.data.contactId,
         email: value.email,
-        phone: value.phone
+        phone: value.phone,
       });
     });
-
   }
 
   getProviderList(): void {
@@ -78,11 +76,11 @@ export class EditarContactoComponent {
 
   validate(input: any): void {
     this.contactoService.validate(input).subscribe(
-      (response) => {
+      response => {
         this.emailError = '';
         this.phoneError = '';
       },
-      (error) => {
+      error => {
         this.emailError = '';
         this.phoneError = '';
 
@@ -104,5 +102,4 @@ export class EditarContactoComponent {
       }
     );
   }
-
 }

@@ -4,8 +4,8 @@
 .row {
   display: flex;
   flex-wrap: wrap;
-  margin-right: variables.$grid-gutter * -.5;
-  margin-left: variables.$grid-gutter * -.5;
+  margin-right: variables.$grid-gutter * -0.5;
+  margin-left: variables.$grid-gutter * -0.5;
 }
 
 .no-gutters {
@@ -30,9 +30,7 @@
 @each $breakpoint, $infix in variables.$breakpoint-infixs {
   @if ($breakpoint== 'xsmall') {
     @include mixins.loop-grid-columns(variables.$grid-columns, $infix);
-  }
-
-  @else {
+  } @else {
     @include mixins.bp-gt($breakpoint) {
       @include mixins.loop-grid-columns(variables.$grid-columns, $infix);
     }

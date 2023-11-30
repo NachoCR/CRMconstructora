@@ -32,7 +32,10 @@ export class TopmenuPanelComponent implements OnInit, OnDestroy {
 
   private routerSubscription = Subscription.EMPTY;
 
-  constructor(private menu: MenuService, private router: Router) {}
+  constructor(
+    private menu: MenuService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.items.forEach(item => {

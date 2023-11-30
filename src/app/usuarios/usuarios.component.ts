@@ -1,6 +1,11 @@
-import { Component, OnInit , Inject } from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
-import { ActivatedRoute, Route, Router, NavigationEnd } from "@angular/router";
+import { Component, OnInit, Inject } from '@angular/core';
+import {
+  MAT_DIALOG_DATA,
+  MatDialog,
+  MatDialogModule,
+  MatDialogRef,
+} from '@angular/material/dialog';
+import { ActivatedRoute, Route, Router, NavigationEnd } from '@angular/router';
 import { CrearUsuarioComponent } from 'app/crear-usuario/crear-usuario.component';
 import { EditarUsuarioComponent } from 'app/editar-usuario/editar-usuario.component';
 import { UsuarioData } from 'app/interfaces/usuario.interface';
@@ -11,32 +16,39 @@ import { debug } from 'console';
 import * as _ from 'lodash';
 import { MatTableDataSource } from '@angular/material/table';
 
-
 @Component({
   selector: 'app-usuarios',
   templateUrl: './usuarios.component.html',
-  styleUrls: ['./usuarios.component.scss']
+  styleUrls: ['./usuarios.component.scss'],
 })
 export class UsuariosComponent implements OnInit {
-
-  usuario?: UsuarioData;  
+  usuario?: UsuarioData;
 
   // usuariosList: UsuarioData[] = [];
 
   dataSource: MatTableDataSource<any> = new MatTableDataSource();
   usuariosList: any[] = []; // Asegúrate de que usuariosList contenga tus datos
 
-  displayedColumns: string[] = ['name', 'email', 'identification', 'phone', 'password', 'roleId', 'actions'];
+  displayedColumns: string[] = [
+    'name',
+    'email',
+    'identification',
+    'phone',
+    'password',
+    'roleId',
+    'actions',
+  ];
 
-
-
-  constructor(public dialog: MatDialog, private usuarioService: UsuarioService, private router: Router, private activatedRoute: ActivatedRoute) {
-  }
+  constructor(
+    public dialog: MatDialog,
+    private usuarioService: UsuarioService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
-this.getUsuariosList();
+    this.getUsuariosList();
   }
-
 
   getUsuariosList(): void {
     this.usuarioService.getUserList().subscribe((result: any) => {
@@ -46,53 +58,48 @@ this.getUsuariosList();
   }
 
   openDialog(): void {
-    
-    
     const dialogRef = this.dialog.open(CrearUsuarioComponent, {
       width: '95%',
-      data: {usuario: this.usuario}
+      data: { usuario: this.usuario },
     });
     dialogRef.afterClosed().subscribe(result => {
-    if (result) {
-      // Mostrar SweetAlert para confirmar los cambios
-      Swal.fire({
-        title: '¿Quiere registar al usuario?',
-        showDenyButton: true,
-        confirmButtonText: 'Guardar',
-        denyButtonText: `No guardar`,
-      }).then(swalResult => {
-        debugger;
-        if (swalResult.isConfirmed) {
-          this.usuarioService.addUsuario(result).subscribe({
-            next : () => {
-              this.getUsuariosList();
-              Swal.fire('Registrado!', '', 'success');
-            }, error:(e)=> {
-              this.getUsuariosList();
-              debugger;
-              console.log(e);
-              Swal.fire('Error al registrar usuario', '', 'info');
-            }
-          });
+      if (result) {
+        // Mostrar SweetAlert para confirmar los cambios
+        Swal.fire({
+          title: '¿Quiere registar al usuario?',
+          showDenyButton: true,
+          confirmButtonText: 'Guardar',
+          denyButtonText: `No guardar`,
+        }).then(swalResult => {
+          debugger;
+          if (swalResult.isConfirmed) {
+            this.usuarioService.addUsuario(result).subscribe({
+              next: () => {
+                this.getUsuariosList();
+                Swal.fire('Registrado!', '', 'success');
+              },
+              error: e => {
+                this.getUsuariosList();
+                debugger;
+                console.log(e);
+                Swal.fire('Error al registrar usuario', '', 'info');
+              },
+            });
             // Realizar cualquier acción adicional después de guardar
           }
-          
-        }
-  )}
-    }
-  )};
-  
+        });
+      }
+    });
+  }
 
   openDialogEditar(user: any): void {
-    
     console.log(user);
     const pUser = _.cloneDeep(user);
     const dialogRef = this.dialog.open(EditarUsuarioComponent, {
       width: '80%',
-      data : pUser
+      data: pUser,
     });
     dialogRef.afterClosed().subscribe(result => {
-
       if (result) {
         // Mostrar SweetAlert para confirmar los cambios
         Swal.fire({
@@ -103,30 +110,28 @@ this.getUsuariosList();
         }).then(swalResult => {
           if (swalResult.isConfirmed) {
             this.usuarioService.updateUsuario(result).subscribe({
-              next : () => {
+              next: () => {
                 this.getUsuariosList();
                 Swal.fire('Cambios guardados!', '', 'success');
-              }, error:(e)=> {
+              },
+              error: e => {
                 this.getUsuariosList();
                 debugger;
                 console.log(e);
                 Swal.fire('Error al guardar los cambios', '', 'info');
-              }
+              },
             });
-              // Realizar cualquier acción adicional después de guardar
-            }
-            else if (swalResult.isDenied) {
-              // Usuario eligió no guardar los cambios
-              Swal.fire('Cambios no guardados', '', 'info');
-            }
+            // Realizar cualquier acción adicional después de guardar
+          } else if (swalResult.isDenied) {
+            // Usuario eligió no guardar los cambios
+            Swal.fire('Cambios no guardados', '', 'info');
           }
-    )}
+        });
       }
-    )};
-
+    });
+  }
 
   openEliminar(user: any): void {
-    
     Swal.fire({
       title: 'Eliminar usuario?',
       text: 'Está seguro que desea eliminar este usuario?',
@@ -134,11 +139,11 @@ this.getUsuariosList();
       showCancelButton: true,
       confirmButtonText: 'Si, continuar',
       cancelButtonText: 'No',
-    }).then((result) => {
+    }).then(result => {
       if (result.value) {
         debugger;
         this.usuarioService.deleteUsuario(user);
-        setTimeout(()=> {}, 2000);
+        setTimeout(() => {}, 2000);
         this.getUsuariosList();
 
         // let updatedUsers = this.usuariosList.filter(function(u) {
@@ -154,20 +159,17 @@ this.getUsuariosList();
         Swal.fire('Cancelado', 'El usuario no fue eliminado', 'error');
       }
     });
-
   }
 
-
-  ocultarContrasena(password: string){
-    let hiddenPassword = "";
+  ocultarContrasena(password: string) {
+    let hiddenPassword = '';
 
     for (let index = 0; index < password.length; index++) {
-     hiddenPassword += "*";
+      hiddenPassword += '*';
     }
-    
-    return hiddenPassword.slice(0,10);
-  }
 
+    return hiddenPassword.slice(0, 10);
+  }
 
   rolesMap = new Map<number, string>([
     [1, 'Cliente'],
@@ -175,8 +177,4 @@ this.getUsuariosList();
     [3, 'Administrador'],
     // Agrega más pares ID de rol - Nombre de rol según tus necesidades
   ]);
-
 }
-
-
-

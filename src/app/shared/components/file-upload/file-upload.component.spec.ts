@@ -8,7 +8,7 @@ describe('FileUploadComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [FileUploadComponent]
+      declarations: [FileUploadComponent],
     });
     fixture = TestBed.createComponent(FileUploadComponent);
     component = fixture.componentInstance;

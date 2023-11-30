@@ -8,10 +8,9 @@ import { ContactoService } from '../../services/contacto.service';
 @Component({
   selector: 'app-crear-contacto',
   templateUrl: './crear-contacto.component.html',
-  styleUrls: ['./crear-contacto.component.scss']
+  styleUrls: ['./crear-contacto.component.scss'],
 })
 export class CrearContactoComponent implements OnInit {
-
   proveedorList: any[] = [];
 
   phoneError: string = '';
@@ -24,7 +23,7 @@ export class CrearContactoComponent implements OnInit {
     email: ['', [Validators.required, Validators.email]],
     phone: ['', [Validators.required]],
     providerId: ['', [Validators.required]],
-    details: ['', [Validators.required, Validators.minLength(10)]]
+    details: ['', [Validators.required, Validators.minLength(10)]],
   });
 
   constructor(
@@ -41,10 +40,10 @@ export class CrearContactoComponent implements OnInit {
 
   ngOnInit(): void {
     this.getProviderList();
-    this.contactoForm.get('email')?.valueChanges.subscribe((value) => {
+    this.contactoForm.get('email')?.valueChanges.subscribe(value => {
       this.validate({ email: value, phone: this.contactoForm.get('phone')?.value });
     });
-    this.contactoForm.get('phone')?.valueChanges.subscribe((value) => {
+    this.contactoForm.get('phone')?.valueChanges.subscribe(value => {
       this.validate({ email: this.contactoForm.get('email')?.value, phone: value });
     });
   }
@@ -64,11 +63,11 @@ export class CrearContactoComponent implements OnInit {
 
   validate(input: any): void {
     this.contactoService.validate(input).subscribe(
-      (response) => {
+      response => {
         this.emailError = '';
         this.phoneError = '';
       },
-      (error) => {
+      error => {
         this.emailError = '';
         this.phoneError = '';
 
@@ -89,5 +88,4 @@ export class CrearContactoComponent implements OnInit {
       }
     );
   }
-
 }

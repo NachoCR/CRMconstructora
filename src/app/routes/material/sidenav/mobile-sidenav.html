@@ -1,5 +1,9 @@
-<mat-toolbar color="primary" role="header" aria-label="Responsive sidenav app"
-            [class.demo-sidenav-header-fixed]="mobileQuery.matches">
+<mat-toolbar
+  color="primary"
+  role="header"
+  aria-label="Responsive sidenav app"
+  [class.demo-sidenav-header-fixed]="mobileQuery.matches"
+>
   <button mat-icon-button aria-label="Navigation menu" (click)="snav.toggle()">
     <mat-icon aria-hidden="true">menu</mat-icon>
   </button>
@@ -7,14 +11,16 @@
 </mat-toolbar>
 
 <mat-sidenav-container
-    class="demo-sidenav-container"
-    [class.demo-sidenav-container-fixed]="mobileQuery.matches"
-    [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
+  class="demo-sidenav-container"
+  [class.demo-sidenav-container-fixed]="mobileQuery.matches"
+  [style.marginTop.px]="mobileQuery.matches ? 56 : 0"
+>
   <mat-sidenav
-      #snav
-      role="navigation"
-      [mode]="mobileQuery.matches ? 'over' : 'side'"
-      [fixedInViewport]="mobileQuery.matches">
+    #snav
+    role="navigation"
+    [mode]="mobileQuery.matches ? 'over' : 'side'"
+    [fixedInViewport]="mobileQuery.matches"
+  >
     <mat-nav-list>
       <a mat-list-item routerLink="..">Home</a>
       <a mat-list-item routerLink="../basic">Basic sidenav example</a>
@@ -25,8 +31,13 @@
   </mat-sidenav>
 
   <mat-sidenav-content role="region">
-    <button mat-raised-button aria-label="Close responsive sidenav example" color="primary"
-            class="demo-sidenav-close" routerLink="..">
+    <button
+      mat-raised-button
+      aria-label="Close responsive sidenav example"
+      color="primary"
+      class="demo-sidenav-close"
+      routerLink=".."
+    >
       Close example
     </button>
     <p class="demo-sidenav-filler" *ngFor="let f of filler">Filler content</p>

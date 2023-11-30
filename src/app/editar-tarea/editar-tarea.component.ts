@@ -5,12 +5,13 @@ import { TareasData } from 'app/interfaces/tareas.interface';
 @Component({
   selector: 'app-editar-tarea',
   templateUrl: './editar-tarea.component.html',
-  styleUrls: ['./editar-tarea.component.scss']
+  styleUrls: ['./editar-tarea.component.scss'],
 })
 export class EditarTareaComponent {
   constructor(
     public dialogRef: MatDialogRef<EditarTareaComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: TareasData) {}
+    @Inject(MAT_DIALOG_DATA) public data: TareasData
+  ) {}
 
   onNoClick(): void {
     this.dialogRef.close();

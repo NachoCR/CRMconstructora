@@ -16,8 +16,7 @@
     @media (min-width: $min) {
       @content;
     }
-  }
-  @else {
+  } @else {
     @content;
   }
 }
@@ -30,8 +29,7 @@
     @media (max-width: $max) {
       @content;
     }
-  }
-  @else {
+  } @else {
     @content;
   }
 }
@@ -52,8 +50,8 @@
   #{$list} {
     position: relative;
     width: 100%;
-    padding-right: variables.$grid-gutter * .5;
-    padding-left: variables.$grid-gutter * .5;
+    padding-right: variables.$grid-gutter * 0.5;
+    padding-left: variables.$grid-gutter * 0.5;
   }
 }
 

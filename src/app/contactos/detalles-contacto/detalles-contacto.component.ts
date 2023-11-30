@@ -4,7 +4,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 @Component({
   selector: 'app-detalles-contacto',
   templateUrl: './detalles-contacto.component.html',
-  styleUrls: ['./detalles-contacto.component.scss']
+  styleUrls: ['./detalles-contacto.component.scss'],
 })
 export class DetallesContactoComponent {
   constructor(
