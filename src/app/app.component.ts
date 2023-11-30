@@ -9,8 +9,12 @@ import { response } from 'express';
   template: '<router-outlet></router-outlet>',
 })
 export class AppComponent implements OnInit, AfterViewInit {
-  posts:any;
-  constructor(private preloader: PreloaderService, private settings: SettingsService, private service:UsuarioService) {}
+  posts: any;
+  constructor(
+    private preloader: PreloaderService,
+    private settings: SettingsService,
+    private service: UsuarioService
+  ) {}
 
   ngOnInit() {
     this.settings.setDirection();

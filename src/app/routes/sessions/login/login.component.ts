@@ -24,7 +24,7 @@ export class LoginComponent {
     private fb: FormBuilder,
     private router: Router,
     private auth: AuthService,
-    private toastr: ToastrService,
+    private toastr: ToastrService
   ) {}
 
   get username() {

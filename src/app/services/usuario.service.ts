@@ -28,7 +28,7 @@ export class UsuarioService {
   addUsuario(user: any): Observable<any> {
     console.log(user);
     let res;
-    
+
     return this.http.put<any>(this.APIUrl + '/User/', user).pipe(map((data: any) => data));
   }
 

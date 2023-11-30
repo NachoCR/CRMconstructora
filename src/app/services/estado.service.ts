@@ -14,7 +14,7 @@
 //   }
 
 // getStatusList(): Observable < any[] > {
-//   
+//
 //     return this.http.get < any > (this.APIUrl + '/Client',  {
 //       headers: {
 
@@ -28,7 +28,7 @@
 // addCliente(client: any):Observable < any > {
 //   console.log(client);
 //   let res;
-//   
+//
 //   return this.http.put<any>(this.APIUrl + '/Client/', client).pipe(map((data : any) => data));
 // }
 

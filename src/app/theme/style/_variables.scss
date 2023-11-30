@@ -28,10 +28,10 @@ $font-family-base: $font-family-sans-serif !default;
 // adapting to different screen sizes, for use in media queries.
 $breakpoints: (
   xsmall: 0,
-  small:  600px,
+  small: 600px,
   medium: 960px,
-  large:  1280px,
-  xlarge: 1920px
+  large: 1280px,
+  xlarge: 1920px,
 ) !default;
 
 // Material colors
@@ -58,9 +58,9 @@ $mat-colors: (
   white: white,
   black: black,
   light: white,
-  dark: rgba(black, .87),
+  dark: rgba(black, 0.87),
 ) !default;
 
 // The material default animation curves
 $swift-ease-out-duration: 400ms !default;
-$swift-ease-out-timing-function: cubic-bezier(.25, .8, .25, 1) !default;
+$swift-ease-out-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1) !default;

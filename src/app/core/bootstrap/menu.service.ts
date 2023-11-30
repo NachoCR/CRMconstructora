@@ -35,7 +35,9 @@ export interface Menu {
   providedIn: 'root',
 })
 export class MenuService {
-  private menu$: BehaviorSubject<Menu[]> = new BehaviorSubject<Menu[]>(this.getMenuFromLocalStorage());
+  private menu$: BehaviorSubject<Menu[]> = new BehaviorSubject<Menu[]>(
+    this.getMenuFromLocalStorage()
+  );
 
   /** Get all the menu data. */
   getAll(): Observable<Menu[]> {
@@ -49,7 +51,7 @@ export class MenuService {
 
   //New
   private getMenuFromLocalStorage(): Menu[] {
-    const menuJson = localStorage.getItem('menu'); 
+    const menuJson = localStorage.getItem('menu');
     return menuJson ? JSON.parse(menuJson) : [];
   }
 
@@ -75,8 +77,8 @@ export class MenuService {
   /** Reset the menu data. */
   reset() {
     this.menu$.next([]);
-    //New 
-    localStorage.removeItem('menu'); 
+    //New
+    localStorage.removeItem('menu');
   }
 
   /** Delete empty values and rebuild route. */

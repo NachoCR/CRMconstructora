@@ -13,7 +13,6 @@ export class ClienteService {
   }
 
   getClientList(): Observable<any[]> {
-    
     return this.http
       .get<any>(this.APIUrl + '/Client', {
         headers: {},
@@ -29,7 +28,7 @@ export class ClienteService {
   addCliente(client: any): Observable<any> {
     console.log(client);
     let res;
-    
+
     return this.http.put<any>(this.APIUrl + '/Client/', client).pipe(map((data: any) => data));
   }
 

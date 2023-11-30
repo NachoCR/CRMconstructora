@@ -4,7 +4,9 @@ $utilities: (
   'flex': (
     property: flex,
     class: flex,
-    values: (fill: 1 1 auto)
+    values: (
+      fill: 1 1 auto,
+    ),
   ),
   'flex-direction': (
     property: flex-direction,
@@ -13,8 +15,8 @@ $utilities: (
       row: row,
       row-reverse: row-reverse,
       col: column,
-      col-reverse: column-reverse
-    )
+      col-reverse: column-reverse,
+    ),
   ),
   'flex-grow': (
     property: flex-grow,
@@ -22,7 +24,7 @@ $utilities: (
     values: (
       grow-0: 0,
       grow-1: 1,
-    )
+    ),
   ),
   'flex-shrink': (
     property: flex-shrink,
@@ -30,12 +32,12 @@ $utilities: (
     values: (
       shrink-0: 0,
       shrink-1: 1,
-    )
+    ),
   ),
   'flex-wrap': (
     property: flex-wrap,
     class: flex,
-    values: wrap nowrap wrap-reverse
+    values: wrap nowrap wrap-reverse,
   ),
   'justify-content': (
     property: justify-content,
@@ -46,7 +48,7 @@ $utilities: (
       center: center,
       between: space-between,
       around: space-around,
-    )
+    ),
   ),
   'align-content': (
     property: align-content,
@@ -58,7 +60,7 @@ $utilities: (
       between: space-between,
       around: space-around,
       stretch: stretch,
-    )
+    ),
   ),
   'align-items': (
     property: align-items,
@@ -69,7 +71,7 @@ $utilities: (
       center: center,
       baseline: baseline,
       stretch: stretch,
-    )
+    ),
   ),
   'align-self': (
     property: align-self,
@@ -81,6 +83,6 @@ $utilities: (
       center: center,
       baseline: baseline,
       stretch: stretch,
-    )
+    ),
   ),
 );

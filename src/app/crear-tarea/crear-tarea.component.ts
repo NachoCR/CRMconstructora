@@ -5,12 +5,13 @@ import { TareasData } from 'app/interfaces/tareas.interface';
 @Component({
   selector: 'app-crear-tarea',
   templateUrl: './crear-tarea.component.html',
-  styleUrls: ['./crear-tarea.component.scss']
+  styleUrls: ['./crear-tarea.component.scss'],
 })
 export class CrearTareaComponent {
   constructor(
     public dialogRef: MatDialogRef<CrearTareaComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: TareasData) {}
+    @Inject(MAT_DIALOG_DATA) public data: TareasData
+  ) {}
 
   onNoClick(): void {
     this.dialogRef.close();

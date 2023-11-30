@@ -7,21 +7,18 @@ import { TareasData } from 'app/interfaces/tareas.interface';
 @Component({
   selector: 'app-tareas',
   templateUrl: './tareas.component.html',
-  styleUrls: ['./tareas.component.scss']
+  styleUrls: ['./tareas.component.scss'],
 })
 export class TareasComponent {
-
-  tarea?: TareasData;  
+  tarea?: TareasData;
 
   constructor(public dialog: MatDialog) {}
 
   openDialog(): void {
     const dialogRef = this.dialog.open(CrearTareaComponent, {
       width: '500px',
-      data: {tarea: this.tarea}
+      data: { tarea: this.tarea },
     });
-
-
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
@@ -32,12 +29,11 @@ export class TareasComponent {
   openDialogEditar(): void {
     const dialogRef = this.dialog.open(EditarTareaComponent, {
       width: '500px',
-      data: {tarea: this.tarea}
+      data: { tarea: this.tarea },
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
       this.tarea = result;
     });
   }
-
 }

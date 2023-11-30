@@ -44,9 +44,9 @@
     $shadows: list.append(
       $shadows,
       (math.sin(0deg + $direction) * $current-step)
-      (math.cos(0deg + $direction) * $current-step)
-      0
-      $current-color,
+        (math.cos(0deg + $direction) * $current-step)
+        0
+        $current-color,
       'comma'
     );
   }

@@ -29,8 +29,7 @@ export class ProveedorService {
     provider.contacts = [];
     console.log(provider);
     let res;
-    
-    
+
     return this.http.put<any>(this.APIUrl + '/Provider/', provider).pipe(map((data: any) => data));
   }
 
@@ -39,7 +38,6 @@ export class ProveedorService {
   }
 
   deleteProveedor(provider: any) {
-    
     let res;
     console.log(provider);
     return this.http
