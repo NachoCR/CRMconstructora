@@ -51,6 +51,7 @@ import { EditarProyectoComponent } from './editar-proyecto/editar-proyecto.compo
 import { BuscarProyectoComponent } from './buscar-proyecto/buscar-proyecto.component';
 import { MatSelectModule } from '@angular/material/select';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { DetallesContactoComponent } from './contactos/detalles-contacto/detalles-contacto.component';
 
 // Required for AOT compilation
 export function TranslateHttpLoaderFactory(http: HttpClient) {
@@ -83,6 +84,7 @@ export function TranslateHttpLoaderFactory(http: HttpClient) {
     EditarProveedorComponent,
 
     EditarTareaComponent,
+    DetallesContactoComponent,
   ],
 
   imports: [

@@ -13,6 +13,7 @@ import Swal from 'sweetalert2';
 import { EditarContactoComponent } from 'app/contactos/editar-contacto/editar-contacto.component';
 import * as _ from 'lodash';
 import { MatTableDataSource } from '@angular/material/table';
+import { DetallesContactoComponent } from '../detalles-contacto/detalles-contacto.component';
 
 @Component({
   selector: 'app-contactos',
@@ -49,7 +50,7 @@ export class ContactosComponent implements OnInit {
 
   openDialog(): void {
     const dialogRef = this.dialog.open(CrearContactoComponent, {
-      width: '50%',
+      // width: '50%',
       data: { contacto: this.contacto },
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -75,7 +76,7 @@ export class ContactosComponent implements OnInit {
               },
               error: e => {
                 this.getContactoList();
-
+                debugger;
                 console.log(e);
                 Swal.fire('Error al registrar contacto', '', 'info');
               },
@@ -91,7 +92,6 @@ export class ContactosComponent implements OnInit {
     console.log(user);
     const pUser = _.cloneDeep(user);
     const dialogRef = this.dialog.open(EditarContactoComponent, {
-      width: '60%',
       data: pUser,
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -127,6 +127,7 @@ export class ContactosComponent implements OnInit {
   }
 
   openEliminar(contacto: any): void {
+    console.table(contacto);
     Swal.fire({
       title: 'Eliminar contacto?',
       text: 'Está seguro que desea eliminar este contacto?',
@@ -136,19 +137,22 @@ export class ContactosComponent implements OnInit {
       cancelButtonText: 'No',
     }).then(result => {
       if (result.value) {
-        this.contactoService.deleteContacto(contacto.contacto);
-        let updatedContacts = this.contactoList.filter(function (u) {
-          if (u.contactId != contacto.contacto.contactId) {
-            return u;
-          }
-          return null;
-        });
-        this.contactoList = updatedContacts;
-        this.router.navigate([this.router.url]);
+        this.contactoService.deleteContacto(contacto);
+        this.contactoList = this.contactoList.filter(u => u.contactId !== contacto.contactId);
+        this.dataSource.data = this.contactoList;
         Swal.fire('Eliminado!', 'Contacto eliminado.', 'success');
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         Swal.fire('Cancelado', 'El Contacto no fue eliminado', 'error');
       }
+    });
+  }
+
+  openDetailsDialog(contacto: any): void {
+    this.contactoService.getContactDetails(contacto.contactId).subscribe((contactDetails: any) => {
+      console.table(contactDetails);
+      const dialogRef = this.dialog.open(DetallesContactoComponent, {
+        data: contactDetails,
+      });
     });
   }
 }

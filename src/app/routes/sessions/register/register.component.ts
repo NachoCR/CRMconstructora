@@ -84,7 +84,7 @@ export class RegisterComponent implements OnInit {
         SecondLastname: this.registerForm.get('secondLastname')?.value || '',
         Email: this.registerForm.get('email')?.value || '',
         Password: pass,
-        RoleId: 3,
+        RoleId: 1,
       };
 
       this.apiUserService.register(user).subscribe(

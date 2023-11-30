@@ -4,6 +4,7 @@
       <div class="col">
         <form [formGroup]="crearProyectoForm" (ngSubmit)="crear()" novalidate autocomplete="">
           <h3>Creación de Proyectos</h3>
+          <app-file-upload (imagePostedURLEvent)="handleFileUploadUrl($event)"></app-file-upload>
 
           <div class="form-row">
             <!-- Nombre -->

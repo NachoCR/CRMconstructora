@@ -14,7 +14,7 @@ const COMPONENTS: any[] = [
   TareasComponent,
   ProyectosComponent,
   UsuariosComponent,
-  ProveedoresComponent
+  ProveedoresComponent,
 ];
 const COMPONENTS_DYNAMIC: any[] = [];
 

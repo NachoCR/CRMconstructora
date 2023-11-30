@@ -63,10 +63,11 @@
       <div class="row">
         <app-buscar-proyecto (filtroChange)="aplicarFiltro($event)"></app-buscar-proyecto>
         <div class="col-12 col-md-4" *ngFor="let project of proyectosList | filter: filtro">
-          <mat-card>
+          <mat-card style="min-height: 490px">
             <img
               mat-card-image
-              src="../../assets/images/inspecciones/inspeccion1.jpg"
+              style="min-height: 230px"
+              [src]="this.checkProjectImage(project.imageURL)"
               alt="Project 1"
             />
             <mat-card-header>

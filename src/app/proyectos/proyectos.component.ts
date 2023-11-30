@@ -16,6 +16,7 @@ import { map, startWith } from 'rxjs/operators';
 import { AsyncPipe } from '@angular/common';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { debug } from 'console';
 
 @Pipe({
   name: 'filter',
@@ -48,9 +49,9 @@ export class ProyectosComponent {
   filtro: string = '';
 
   aplicarFiltro(filtro: string): void {
-    console.log('filtro:', filtro);
+    // console.log('filtro:', filtro);
     this.filtro = filtro;
-    console.log('this.filtro:', this.filtro);
+    // console.log('this.filtro:', this.filtro);
     // ... rest of your logic
   }
 
@@ -94,7 +95,7 @@ export class ProyectosComponent {
               },
               error: e => {
                 this.getProyectosList();
-                console.log(e);
+                // console.log(e);
                 Swal.fire('Error al registrar proyecto', '', 'info');
               },
             });
@@ -106,7 +107,7 @@ export class ProyectosComponent {
   }
 
   openDialogEditar(project: any): void {
-    console.log(project);
+    // console.log(project);
     const pProyecto = _.cloneDeep(project);
     const dialogRef = this.dialog.open(EditarProyectoComponent, {
       width: '60%',
@@ -114,6 +115,8 @@ export class ProyectosComponent {
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      debugger;
+
       if (result) {
         // Mostrar SweetAlert para confirmar los cambios
         Swal.fire({
@@ -130,8 +133,8 @@ export class ProyectosComponent {
               },
               error: e => {
                 this.getProyectosList();
-
-                console.log(e);
+                debugger;
+                // console.log(e);
                 Swal.fire('Error al guardar los cambios', '', 'info');
               },
             });
@@ -155,6 +158,7 @@ export class ProyectosComponent {
       cancelButtonText: 'No',
     }).then(result => {
       if (result.value) {
+        debugger;
         this.proyectoService.deleteProyecto(project);
         let updatedProjects = this.proyectosList.filter(function (u) {
           if (u.projectId != project.projectId) {
@@ -168,5 +172,11 @@ export class ProyectosComponent {
         Swal.fire('Cancelado', 'El proyecto no fue eliminado', 'error');
       }
     });
+  }
+  checkProjectImage(url?: string): string {
+    if (url) {
+      return url ?? '';
+    }
+    return '../../assets/images/inspecciones/inspeccion1.jpg';
   }
 }

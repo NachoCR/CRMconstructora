@@ -137,6 +137,7 @@ export class EditarUsuarioComponent implements OnInit {
         Validators.maxLength(11),
       ]);
     }
+  }
 
     identificationControl?.updateValueAndValidity();
     passportControl?.updateValueAndValidity();

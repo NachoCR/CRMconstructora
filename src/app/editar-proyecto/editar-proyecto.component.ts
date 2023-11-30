@@ -94,11 +94,16 @@ export class EditarProyectoComponent {
         map(value => this._filterClientes(value))
       );
     });
-    console.log(this.data);
+    // console.log(this.data);
   }
 
   private _filterClientes(value: string): any[] {
     const filterValue = value.toLowerCase();
     return this.clientesList.filter(cliente => cliente.name.toLowerCase().includes(filterValue));
+  }
+
+  handleFileUploadUrl($event: string) {
+    console.log($event);
+    this.data.imageURL = $event;
   }
 }

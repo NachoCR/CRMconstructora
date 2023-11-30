@@ -9,4 +9,5 @@ export interface ProyectoData {
   statusId: number;
   clientId: number;
   tasks: TareasData[];
+  imageURL?: string;
 }

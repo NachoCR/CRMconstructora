@@ -14,7 +14,7 @@ export class ContactoService {
 
   getContactoList(): Observable<any[]> {
     return this.http
-      .get<any>(this.APIUrl + '/Contact', {
+      .get<any>(this.APIUrl + '/ProviderContact', {
         headers: {},
       })
       .pipe(
@@ -28,18 +28,31 @@ export class ContactoService {
   addContacto(contacto: any): Observable<any> {
     console.log(contacto);
     let res;
-
-    return this.http.put<any>(this.APIUrl + '/Contact/', contacto).pipe(map((data: any) => data));
+    debugger;
+    return this.http
+      .put<any>(this.APIUrl + '/ProviderContact/', contacto)
+      .pipe(map((data: any) => data));
   }
 
   updateContacto(contacto: any): Observable<any> {
-    return this.http.put<any>(this.APIUrl + '/Contact/', contacto).pipe(map((data: any) => data));
+    return this.http
+      .put<any>(this.APIUrl + '/ProviderContact/', contacto)
+      .pipe(map((data: any) => data));
   }
 
   deleteContacto(contacto: any) {
     let res;
     return this.http
-      .delete<any>(this.APIUrl + '/Contact/' + contacto.contactId)
+      .delete<any>(this.APIUrl + '/ProviderContact/' + contacto.contactId)
       .subscribe(data => (res = data));
+  }
+
+  getContactDetails(pId: number): Observable<any> {
+    return this.http.get<any>(this.APIUrl + `/ProviderContact/GetProviderContactDetails/${pId}`);
+  }
+
+  validate(validate: any): Observable<any> {
+    console.log('Llamada a validate:', validate);
+    return this.http.post<any>(this.APIUrl + '/ProviderContact', validate);
   }
 }

@@ -115,7 +115,6 @@ export class CrearProyectoComponent {
   //Filtro clientes
   private _filterClientes(value: string): any[] {
     const filterValue = value.toLowerCase();
-
     return this.clientesList.filter(cliente => cliente.name.toLowerCase().includes(filterValue));
   }
 
@@ -124,4 +123,8 @@ export class CrearProyectoComponent {
   //   const filterValue = value.toLowerCase();
   //   return this.empleadosList.filter(user => user.name.toLowerCase().includes(filterValue));
   // }
+  handleFileUploadUrl($event: string) {
+    this.data.imageURL = $event;
+    if (this.proyecto) this.proyecto.imageURL = $event;
+  }
 }

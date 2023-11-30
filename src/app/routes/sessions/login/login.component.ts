@@ -19,6 +19,7 @@ export class LoginComponent {
     password: ['', [Validators.required]],
     rememberMe: [false],
   });
+  isSubmitted: any;
 
   constructor(
     private fb: FormBuilder,
