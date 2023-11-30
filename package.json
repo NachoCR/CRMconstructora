@@ -41,7 +41,7 @@
     "@angular/platform-browser": "^16.2.8",
     "@angular/platform-browser-dynamic": "^16.2.8",
     "@angular/router": "^16.2.8",
-    "@fortawesome/fontawesome-free": "6.3.0",
+    "@fortawesome/fontawesome-free": "^6.3.0",
     "@ng-matero/extensions": "^16.1.1",
     "@ng-matero/extensions-moment-adapter": "^16.0.0",
     "@ngx-formly/core": "^6.2.1",

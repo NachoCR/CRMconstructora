@@ -65,7 +65,7 @@ export class CrearProveedorComponent {
 
   checkCedulaExists() {
     const cedulaControl = this.crearProveedorForm.get('identifier');
-    debugger;
+
     if (cedulaControl && this.proveedoresList.length > 0) {
       const identifier = cedulaControl.value;
 
@@ -83,7 +83,7 @@ export class CrearProveedorComponent {
 
   checkEmailExists() {
     const emailControl = this.crearProveedorForm.get('email');
-    debugger;
+
     if (emailControl && this.proveedoresList.length > 0) {
       const email = emailControl.value;
 
@@ -137,7 +137,6 @@ export class CrearProveedorComponent {
   }
 
   ngOnInit(): void {
-    debugger;
     this.getProveedoresList();
   }
 

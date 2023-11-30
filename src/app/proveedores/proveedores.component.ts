@@ -51,7 +51,6 @@ export class ProveedoresComponent {
           confirmButtonText: 'Guardar',
           denyButtonText: `No guardar`,
         }).then(swalResult => {
-          debugger;
           if (swalResult.isConfirmed) {
             this.proveedorService.addProveedor(result).subscribe({
               next: () => {

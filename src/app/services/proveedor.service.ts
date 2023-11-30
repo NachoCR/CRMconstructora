@@ -39,7 +39,6 @@ export class ProveedorService {
   }
 
   deleteProveedor(provider: any) {
-    debugger;
     let res;
     console.log(provider);
     return this.http

@@ -59,7 +59,7 @@ export class UsuariosComponent implements OnInit {
 
   openDialog(): void {
     const dialogRef = this.dialog.open(CrearUsuarioComponent, {
-      width: '95%',
+      width: '100%',
       data: { usuario: this.usuario },
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -71,8 +71,8 @@ export class UsuariosComponent implements OnInit {
           confirmButtonText: 'Guardar',
           denyButtonText: `No guardar`,
         }).then(swalResult => {
-          debugger;
           if (swalResult.isConfirmed) {
+            console.log(result);
             this.usuarioService.addUsuario(result).subscribe({
               next: () => {
                 this.getUsuariosList();
@@ -80,7 +80,7 @@ export class UsuariosComponent implements OnInit {
               },
               error: e => {
                 this.getUsuariosList();
-                debugger;
+
                 console.log(e);
                 Swal.fire('Error al registrar usuario', '', 'info');
               },
@@ -116,7 +116,7 @@ export class UsuariosComponent implements OnInit {
               },
               error: e => {
                 this.getUsuariosList();
-                debugger;
+
                 console.log(e);
                 Swal.fire('Error al guardar los cambios', '', 'info');
               },
@@ -141,7 +141,6 @@ export class UsuariosComponent implements OnInit {
       cancelButtonText: 'No',
     }).then(result => {
       if (result.value) {
-        debugger;
         this.usuarioService.deleteUsuario(user);
         setTimeout(() => {}, 2000);
         this.getUsuariosList();

@@ -1,3 +1,9 @@
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.18.0/font/bootstrap-icons.css"
+  integrity="sha384-GLhlTQ8iKt6iOpTJMLlGzNqibZiJxz5F3J1qIjK7pNEy"
+  crossorigin="anonymous"
+/>
 <mat-dialog-content class="custom-dialog-content" style="height: 100% !important">
   <div class="container-fluid">
     <div class="row mt-3">
@@ -7,7 +13,7 @@
 
           <div class="form-row">
             <!-- Nombre -->
-            <div class="form-group col-md-6" style="width: auto">
+            <div class="form-group col-md-4" style="width: auto">
               <label for="name" class="control-label font-weight-bold">Nombre</label>
               <input
                 type="text"
@@ -19,7 +25,7 @@
             </div>
 
             <!-- Primer apellido -->
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-4">
               <label for="lastname" class="control-label font-weight-bold">Primer Apellido</label>
               <input
                 type="text"
@@ -31,7 +37,7 @@
             </div>
 
             <!-- Segundo apellido -->
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-4">
               <label for="lastsecondname" class="control-label font-weight-bold"
                 >Segundo Apellido</label
               >
@@ -47,7 +53,7 @@
 
           <div class="form-row">
             <!-- Cédula -->
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-4">
               <label class="control-label font-weight-bold">Tipo de identificación</label>
               <select
                 formControlName="identifierId"
@@ -62,7 +68,7 @@
             </div>
 
             <!-- Identificación -->
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-6" *ngIf="crearUForm.get('identifierId')?.value === '1'">
               <label for="identification" class="control-label font-weight-bold">Cédula</label>
               <input
                 type="text"
@@ -74,28 +80,101 @@
                   'is-valid': (f.identification.dirty || submitted) && !f.identification.errors,
                   'is-invalid': (f.identification.dirty || submitted) && f.identification.errors
                 }"
-                (focusout)="checkCedulaExists()"
-                maxlength="15"
-                minlength="8"
+                (blur)="onCedulaBlur()"
+                maxlength="9"
+                minlength="9"
               />
               <div class="invalid-feedback">
                 <span class="text-danger" *ngIf="f.identification.errors?.required"
                   >La cédula es requerida</span
                 >
                 <span class="text-danger" *ngIf="f.identification.errors?.pattern"
-                  >La cédula debe tener 10 dígitos</span
+                  >La cedula debe tener 9 dígitos y solo contener numeros</span
                 >
                 <span class="text-danger" *ngIf="f.identification.errors?.cedulaExists"
                   >Esta cédula ya está registrada</span
                 >
 
                 <!-- Validaciones existentes -->
-                <span class="text-danger" *ngIf="f.identification.errors?.maxLengthValid"
-                  >Debe ser de 8 a 15 caracteres</span
-                >
+                <!-- <span class="text-danger" *ngIf="f.identification.errors?.maxLengthValid">Debe ser de 9 caracteres</span>
                 <div [ngClass]="{ 'text-sucess': minLengthValid, 'text-danger': !minLengthValid }">
                   <i [attr.class]="minLengthValid ? 'bi-check-square-fill' : 'bi-x-square'"></i>
-                  Debe ser mínimo de 8 caracteres a 15 caracteres
+                  Debe ser mínimo de 9 caracteres
+                </div> -->
+              </div>
+            </div>
+
+            <div class="form-group col-md-6" *ngIf="crearUForm.get('identifierId')?.value === '2'">
+              <label for="identification" class="control-label font-weight-bold">Pasaporte</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Pasaporte"
+                formControlName="passport"
+                [(ngModel)]="data.identification"
+                [ngClass]="{
+                  'is-valid': (f.passport.dirty || submitted) && !f.passport.errors,
+                  'is-invalid': (f.passport.dirty || submitted) && f.passport.errors
+                }"
+                (blur)="onPassportBlur()"
+                maxlength="9"
+                minlength="9"
+              />
+              <div class="invalid-feedback">
+                <span class="text-danger" *ngIf="f.passport.errors?.required"
+                  >El pasaporte es requerida</span
+                >
+                <span class="text-danger" *ngIf="f.passport.errors?.pattern"
+                  >El pasaporte debe tener 9 dígitos y solo contener numeros</span
+                >
+                <span class="text-danger" *ngIf="f.passport.errors?.passportExists"
+                  >Este pasaporte ya está registrado</span
+                >
+
+                <!-- Validaciones existentes -->
+                <!-- <span class="text-danger" *ngIf="f.identification.errors?.maxLengthValid">Debe ser de 9 caracteres</span>
+                <div [ngClass]="{ 'text-sucess': minLengthValid, 'text-danger': !minLengthValid }">
+                  <i [attr.class]="minLengthValid ? 'bi-check-square-fill' : 'bi-x-square'"></i>
+                  Debe ser mínimo de 9 caracteres
+                </div> -->
+              </div>
+            </div>
+
+            <div class="form-group col-md-6" *ngIf="crearUForm.get('identifierId')?.value === '3'">
+              <label for="identification" class="control-label font-weight-bold"
+                >Cédula jurídica</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Cédula jurídica"
+                formControlName="juridic"
+                [(ngModel)]="data.identification"
+                [ngClass]="{
+                  'is-valid': (f.juridic.dirty || submitted) && !f.juridic.errors,
+                  'is-invalid': (f.juridic.dirty || submitted) && f.juridic.errors
+                }"
+                (input)="checkJuridicExists()"
+                (blur)="onJuridicaBlur()"
+                maxlength="11"
+                minlength="11"
+              />
+              <div class="invalid-feedback">
+                <span class="text-danger" *ngIf="f.juridic.errors?.required"
+                  >La cédula juridica es requerida</span
+                >
+                <span class="text-danger" *ngIf="f.juridic.errors?.pattern"
+                  >La cedula juridica debe tener 11 dígitos y solo contener numeros</span
+                >
+                <span class="text-danger" *ngIf="f.juridic.errors?.juridicExists"
+                  >Esta cedula juridica ya está registrada</span
+                >
+
+                <!-- Validaciones existentes -->
+
+                <div [ngClass]="{ 'text-sucess': minLengthValid, 'text-danger': !minLengthValid }">
+                  <i [attr.class]="minLengthValid ? 'bi-check-square-fill' : 'bi-x-square'"></i>
+                  Debe ser mínimo de 11 caracteres
                 </div>
               </div>
             </div>
@@ -103,7 +182,7 @@
 
           <div class="form-row">
             <!-- Rol -->
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-4">
               <label for="roleId" class="control-label font-weight-bold">Rol</label>
               <select
                 formControlName="roleId"
@@ -116,59 +195,58 @@
               </select>
             </div>
 
-            <div class="form-group col-md-6" *ngIf="crearUForm.get('roleId')?.value === '2'">
-              <label for="employeeId" class="control-label font-weight-bold">ID Empleado</label>
-              <input
-                type="text"
-                class="form-control"
-                placeholder="ID Empleado"
-                formControlName="employeeId"
-              />
-            </div>
-          </div>
-
-          <div class="form-row" *ngIf="crearUForm.get('roleId')?.value === '2'">
             <!-- Posición -->
-            <div class="form-group col-md-6" *ngIf="crearUForm.get('roleId')?.value === '2'">
+            <div class="form-group col-md-4" *ngIf="crearUForm.get('roleId')?.value === '2'">
               <label for="position" class="control-label font-weight-bold">Posición</label>
-              <input
-                type="text"
-                class="form-control"
-                placeholder="Posición"
-                formControlName="position"
-              />
+              <select formControlName="position" class="form-select" style="border-radius: 2px">
+                <option value="1">Electrico</option>
+                <option value="1">Plomero</option>
+                <option value="1">Obrero</option>
+                <option value="2">Maestro de obras</option>
+              </select>
             </div>
 
             <!-- Proyecto a asignar -->
-            <div class="form-group col-md-6" *ngIf="crearUForm.get('roleId')?.value === '2'">
+            <div class="form-group col-md-4" *ngIf="crearUForm.get('roleId')?.value === '2'">
               <label for="assignedProject" class="control-label font-weight-bold"
                 >Proyecto a asignar</label
               >
-              <select
+              <input
+                type="text"
+                placeholder="Buscar proyecto"
                 formControlName="assignedProject"
-                class="form-select"
-                style="border-radius: 2px"
-              >
-                <option value="1">Santa Ana</option>
-                <option value="2">Escazú</option>
-              </select>
+                [matAutocomplete]="auto"
+                [(ngModel)]="data.assignedProject"
+                class="form-control"
+              />
+              <mat-autocomplete #auto="matAutocomplete">
+                <mat-option
+                  (click)="setProjectValue(proyecto)"
+                  *ngFor="let proyecto of filteredProyectosList$ | async"
+                  [value]="proyecto.projectId"
+                >
+                  {{ proyecto.name }}
+                </mat-option>
+              </mat-autocomplete>
             </div>
           </div>
 
           <div class="form-row">
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-4">
               <label for="email" class="control-label font-weight-bold">Correo</label>
               <input
                 type="email"
                 class="form-control"
                 formControlName="email"
                 placeholder="correo@gmail.com"
-                [(ngModel)]="data.email"
                 [ngClass]="{
                   'is-valid': (f.email.dirty || submitted) && !f.email.errors,
                   'is-invalid': (f.email.dirty || submitted) && f.email.errors
                 }"
-                (focusout)="checkEmailExists()"
+                (ngModelChange)="checkEmailExists()"
+                (blur)="onEmailBlur()"
+                formControlName="email"
+                [(ngModel)]="data.email"
               />
               <div class="invalid-feedback">
                 <span class="text-danger" *ngIf="f.email.errors?.required"
@@ -189,19 +267,39 @@
           <input type="text" class="form-control" placeholder="Teléfono" formControlName="phone" [(ngModel)]="data.phone"/>
         </div> -->
 
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-4">
               <label for="phone" class="control-label font-weight-bold">Teléfono</label>
               <input
-                type="number"
+                type="text"
                 class="form-control"
                 formControlName="phone"
-                placeholder="88882222"
-                [maxlength]="8"
+                placeholder="12345678"
+                maxlength="8"
+                minlength="8"
                 [(ngModel)]="data.phone"
+                [ngClass]="{
+                  'is-valid': (f.phone.dirty || submitted) && !f.phone.errors,
+                  'is-invalid': (f.phone.dirty || submitted) && f.phone.errors
+                }"
               />
 
-              <div *ngIf="crearUForm.get('phone')?.hasError('invalidPhoneNumber')">
-                <small class="text-danger">Ingrese un número de teléfono válido (8 dígitos).</small>
+              <!-- <div *ngIf="crearUForm.get('phone')?.hasError('invalidPhoneNumber')">
+            <small class="text-danger">Ingrese un número de teléfono válido (8 dígitos).</small>
+          </div> -->
+              <div class="invalid-feedback">
+                <span class="text-danger" *ngIf="f.phone.errors?.required"
+                  >El numero de teléfono es requerido</span
+                >
+                <span class="text-danger" *ngIf="f.phone.errors?.pattern"
+                  >El número debe tener 8 dígitos y solo contener números</span
+                >
+
+                <!-- Validaciones existentes -->
+                <!-- <span class="text-danger" *ngIf="f.identification.errors?.maxLengthValid">Debe ser de 9 caracteres</span>
+            <div [ngClass]="{ 'text-sucess': minLengthValid, 'text-danger': !minLengthValid }">
+              <i [attr.class]="minLengthValid ? 'bi-check-square-fill' : 'bi-x-square'"></i>
+              Debe ser mínimo de 9 caracteres
+            </div> -->
               </div>
             </div>
           </div>
@@ -210,86 +308,99 @@
             <!-- Contraseña -->
             <div class="form-group col-md-6">
               <label for="password" class="control-label font-weight-bold">Contraseña</label>
-              <input
-                type="password"
-                formControlName="password"
-                class="form-control"
-                name="password"
-                placeholder="Ingrese su contraseña"
-                [(ngModel)]="data.password"
-                [ngClass]="{
-                  'is-valid': (f.password.dirty || submitted) && passwordValid,
-                  'is-invalid': (f.password.dirty || submitted) && !passwordValid
-                }"
-              />
-              <div class="invalid-feedback">
-                <!-- required -->
-                <span class="text-danger" *ngIf="(f.password.dirty || submitted) && !requiredValid"
-                  >La contraseña es requerida</span
-                >
-
-                <!-- password validation rules -->
-                <div id="validation-rules" class="mt-3" *ngIf="requiredValid">
-                  <!-- minlength -->
-                  <div
-                    [ngClass]="{ 'text-success': minLengthValid, 'text-danger': !minLengthValid }"
+              <div class="input-group">
+                <input
+                  type="password"
+                  formControlName="password"
+                  class="form-control"
+                  name="password"
+                  placeholder="Ingrese su contraseña"
+                  [(ngModel)]="data.password"
+                  [ngClass]="{
+                    'is-valid': (f.password.dirty || submitted) && passwordValid,
+                    'is-invalid': (f.password.dirty || submitted) && !passwordValid
+                  }"
+                  #passwordInput
+                />
+                <span class="input-group-text" (click)="togglePasswordVisibility()">
+                  <mat-icon *ngIf="showPassword">lock_open</mat-icon>
+                  <mat-icon *ngIf="!showPassword">lock</mat-icon>
+                </span>
+                <div class="invalid-feedback">
+                  <!-- required -->
+                  <span
+                    class="text-danger"
+                    *ngIf="(f.password.dirty || submitted) && !requiredValid"
+                    >La contraseña es requerida</span
                   >
-                    <i [attr.class]="minLengthValid ? 'bi-check-square-fill' : 'bi-x-square'"></i>
-                    Debe ser de mínimo 8 caracteres
-                  </div>
 
-                  <!-- requires digit -->
-                  <div
-                    [ngClass]="{
-                      'text-success': requiresDigitValid,
-                      'text-danger': !requiresDigitValid
-                    }"
-                  >
-                    <i
-                      [attr.class]="requiresDigitValid ? 'bi-check-square-fill' : 'bi-x-square'"
-                    ></i>
-                    Debe contener al menos 1 digito
-                  </div>
+                  <!-- password validation rules -->
+                  <div id="validation-rules" class="mt-3" *ngIf="requiredValid">
+                    <!-- minlength -->
+                    <div
+                      [ngClass]="{ 'text-success': minLengthValid, 'text-danger': !minLengthValid }"
+                    >
+                      <i [attr.class]="minLengthValid ? 'bi-check-square-fill' : 'bi-x-square'"></i>
+                      Debe ser de mínimo 8 caracteres
+                    </div>
 
-                  <!-- requires uppercase -->
-                  <div
-                    [ngClass]="{
-                      'text-success': requiresUppercaseValid,
-                      'text-danger': !requiresUppercaseValid
-                    }"
-                  >
-                    <i
-                      [attr.class]="requiresUppercaseValid ? 'bi-check-square-fill' : 'bi-x-square'"
-                    ></i>
-                    Debe tener 1 caracter es mayúscula
-                  </div>
+                    <!-- requires digit -->
+                    <div
+                      [ngClass]="{
+                        'text-success': requiresDigitValid,
+                        'text-danger': !requiresDigitValid
+                      }"
+                    >
+                      <i
+                        [attr.class]="requiresDigitValid ? 'bi-check-square-fill' : 'bi-x-square'"
+                      ></i>
+                      Debe contener al menos 1 digito
+                    </div>
 
-                  <!-- requires lowercase -->
-                  <div
-                    [ngClass]="{
-                      'text-success': requiresLowercaseValid,
-                      'text-danger': !requiresLowercaseValid
-                    }"
-                  >
-                    <i
-                      [attr.class]="requiresLowercaseValid ? 'bi-check-square-fill' : 'bi-x-square'"
-                    ></i>
-                    Debe tener 1 caracter es minúscula
-                  </div>
+                    <!-- requires uppercase -->
+                    <div
+                      [ngClass]="{
+                        'text-success': requiresUppercaseValid,
+                        'text-danger': !requiresUppercaseValid
+                      }"
+                    >
+                      <i
+                        [attr.class]="
+                          requiresUppercaseValid ? 'bi-check-square-fill' : 'bi-x-square'
+                        "
+                      ></i>
+                      Debe tener 1 caracter es mayúscula
+                    </div>
 
-                  <!-- requires special characters -->
-                  <div
-                    [ngClass]="{
-                      'text-success': requiresSpecialCharsValid,
-                      'text-danger': !requiresSpecialCharsValid
-                    }"
-                  >
-                    <i
-                      [attr.class]="
-                        requiresSpecialCharsValid ? 'bi-check-square-fill' : 'bi-x-square'
-                      "
-                    ></i>
-                    Debe tener 1 caracter especial
+                    <!-- requires lowercase -->
+                    <div
+                      [ngClass]="{
+                        'text-success': requiresLowercaseValid,
+                        'text-danger': !requiresLowercaseValid
+                      }"
+                    >
+                      <i
+                        [attr.class]="
+                          requiresLowercaseValid ? 'bi-check-square-fill' : 'bi-x-square'
+                        "
+                      ></i>
+                      Debe tener 1 caracter es minúscula
+                    </div>
+
+                    <!-- requires special characters -->
+                    <div
+                      [ngClass]="{
+                        'text-success': requiresSpecialCharsValid,
+                        'text-danger': !requiresSpecialCharsValid
+                      }"
+                    >
+                      <i
+                        [attr.class]="
+                          requiresSpecialCharsValid ? 'bi-check-square-fill' : 'bi-x-square'
+                        "
+                      ></i>
+                      Debe tener 1 caracter especial
+                    </div>
                   </div>
                 </div>
               </div>
@@ -300,17 +411,25 @@
               <label for="confirmPassword" class="control-label font-weight-bold"
                 >Confirmar contraseña</label
               >
-              <input
-                type="password"
-                formControlName="confirmPassword"
-                class="form-control"
-                name="confirmPassword"
-                placeholder="Ingrese nuevamente su contraseña"
-                [ngClass]="{
-                  'is-valid': (submitted || f.confirmPassword.dirty) && !f.confirmPassword.errors,
-                  'is-invalid': (submitted || f.confirmPassword.dirty) && f.confirmPassword.errors
-                }"
-              />
+              <div class="input-group">
+                <input
+                  type="password"
+                  formControlName="confirmPassword"
+                  class="form-control"
+                  name="confirmPassword"
+                  placeholder="Ingrese nuevamente su contraseña"
+                  [ngClass]="{
+                    'is-valid': (submitted || f.confirmPassword.dirty) && !f.confirmPassword.errors,
+                    'is-invalid': (submitted || f.confirmPassword.dirty) && f.confirmPassword.errors
+                  }"
+                  #confirmPasswordInput
+                />
+                <span class="input-group-text" (click)="toggleConfirmPasswordVisibility()">
+                  <!-- {{ showPassword ? 'Ocultar' : 'Mostrar' }} -->
+                  <mat-icon *ngIf="showConfirmPassword">lock_open</mat-icon>
+                  <mat-icon *ngIf="!showConfirmPassword">lock</mat-icon>
+                </span>
+              </div>
               <div
                 class="invalid-feedback"
                 *ngIf="(submitted || f.confirmPassword.dirty) && f.confirmPassword.errors"
@@ -327,6 +446,7 @@
             <button
               mat-button
               [disabled]="crearUForm.invalid"
+              (click)="transformData()"
               [mat-dialog-close]="data"
               cdkFocusInitial
               class="btn btn-success"
