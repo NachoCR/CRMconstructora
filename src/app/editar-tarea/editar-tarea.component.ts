@@ -14,7 +14,7 @@ import { ProyectoService } from 'app/services/proyecto.service';
 @Component({
   selector: 'app-editar-tarea',
   templateUrl: './editar-tarea.component.html',
-  styleUrls: ['./editar-tarea.component.scss']
+  styleUrls: ['./editar-tarea.component.scss'],
 })
 export class EditarTareaComponent {
 

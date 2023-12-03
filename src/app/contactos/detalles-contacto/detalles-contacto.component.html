@@ -1,0 +1,69 @@
+<mat-dialog-content class="custom-dialog-content">
+  <div class="mb-4">
+    <h2 mat-dialog-title class="display-4">Detalles de Contacto</h2>
+    <div class="row d-flex">
+      <div class="col-md-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h5 class="card-title">Información de Contacto</h5>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">
+                <strong>ID del Contacto:</strong> {{ data.contactId }}
+              </li>
+              <li class="list-group-item">
+                <strong>Nombre:</strong> {{ data.name }} {{ data.lastname }}
+                {{ data.secondLastname }}
+              </li>
+              <li class="list-group-item"><strong>Correo Electrónico:</strong> {{ data.email }}</li>
+              <li class="list-group-item"><strong>Teléfono:</strong> {{ data.phone }}</li>
+              <li class="list-group-item"><strong>Detalles:</strong> {{ data.details }}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h5 class="card-title">Detalles del Proveedor</h5>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">
+                <strong>ID del Proveedor:</strong> {{ data.provider.providerId }}
+              </li>
+              <li class="list-group-item">
+                <strong>Nombre del Proveedor:</strong> {{ data.provider.name }}
+              </li>
+              <li class="list-group-item">
+                <strong>Correo Electrónico:</strong> {{ data.provider.email }}
+              </li>
+              <li class="list-group-item">
+                <strong>Dirección:</strong> {{ data.provider.address }}
+              </li>
+              <li class="list-group-item"><strong>Teléfono:</strong> {{ data.provider.phone }}</li>
+              <li class="list-group-item">
+                <strong>Detalles:</strong> {{ data.provider.details }}
+              </li>
+              <li class="list-group-item">
+                <strong>Cantidad de Catálogos:</strong> {{ data.provider.catalogCount }}
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- <div class="mt-4">
+    <h3 class="h5">Catálogos del Proveedor</h3>
+    <ul class="list-group">
+      <li *ngFor="let catalog of data.provider.providerCatalogs" class="list-group-item">
+        <strong>ID:</strong> {{ catalog.itemId }},
+        <strong>Nombre:</strong> {{ catalog.name }},
+        <strong>Precio:</strong> {{ catalog.price }}
+      </li>
+    </ul>
+  </div> -->
+  <mat-dialog-actions class="custom-dialog-actions mt-4">
+    <button mat-button (click)="onNoClick()" class="btn btn-danger">Cerrar</button>
+  </mat-dialog-actions>
+</mat-dialog-content>

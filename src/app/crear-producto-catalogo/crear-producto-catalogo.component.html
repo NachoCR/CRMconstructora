@@ -1,33 +1,32 @@
-
 <mat-dialog-content class="custom-dialog-content">
-    <h1 mat-dialog-title>Registrar producto</h1>
-  
-    <div class="input-container">
-      <mat-form-field class="input-field">
-        <input matInput placeholder="ID Producto" [(ngModel)]="data.ItemId">
-      </mat-form-field>
-      
-      <mat-form-field class="input-field">
-        <input matInput placeholder="Nombre" [(ngModel)]="data.Name">
-      </mat-form-field>
-      <mat-form-field class="input-field">
-        <input matInput placeholder="Detalles" [(ngModel)]="data.Details">
-      </mat-form-field>
-      <mat-form-field class="input-field">
-        <input matInput placeholder="Precio" [(ngModel)]="data.Price">
-      </mat-form-field>
-      <mat-form-field class="input-field">
-        <input matInput placeholder="Proveedor" [(ngModel)]="data.ProviderId">
-      </mat-form-field>
-      <mat-form-field class="input-field">
-        <input matInput placeholder="Unidad" [(ngModel)]="data.UnitId">
-      </mat-form-field>
-    </div>
-  </mat-dialog-content>
-  
-  <mat-dialog-actions class="custom-dialog-actions">
-    
-    <button mat-button (click)="onNoClick()" class="btn btn-primary">Cancelar</button>
-    <button mat-button [mat-dialog-close]="data" cdkFocusInitial class="btn btn-success">Guardar</button>
-  </mat-dialog-actions>
-  
+  <h1 mat-dialog-title>Registrar producto</h1>
+
+  <div class="input-container">
+    <mat-form-field class="input-field">
+      <input matInput placeholder="ID Producto" [(ngModel)]="data.ItemId" />
+    </mat-form-field>
+
+    <mat-form-field class="input-field">
+      <input matInput placeholder="Nombre" [(ngModel)]="data.Name" />
+    </mat-form-field>
+    <mat-form-field class="input-field">
+      <input matInput placeholder="Detalles" [(ngModel)]="data.Details" />
+    </mat-form-field>
+    <mat-form-field class="input-field">
+      <input matInput placeholder="Precio" [(ngModel)]="data.Price" />
+    </mat-form-field>
+    <mat-form-field class="input-field">
+      <input matInput placeholder="Proveedor" [(ngModel)]="data.ProviderId" />
+    </mat-form-field>
+    <mat-form-field class="input-field">
+      <input matInput placeholder="Unidad" [(ngModel)]="data.UnitId" />
+    </mat-form-field>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions class="custom-dialog-actions">
+  <button mat-button (click)="onNoClick()" class="btn btn-primary">Cancelar</button>
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial class="btn btn-success">
+    Guardar
+  </button>
+</mat-dialog-actions>

@@ -21,7 +21,10 @@ export class PermissionsRoleSwitchingComponent implements OnInit, OnDestroy {
 
   private readonly _destroy$ = new Subject<void>();
 
-  constructor(private rolesSrv: NgxRolesService, private permissionsSrv: NgxPermissionsService) {}
+  constructor(
+    private rolesSrv: NgxRolesService,
+    private permissionsSrv: NgxPermissionsService
+  ) {}
 
   ngOnInit() {
     this.currentRole = Object.keys(this.rolesSrv.getRoles())[0];

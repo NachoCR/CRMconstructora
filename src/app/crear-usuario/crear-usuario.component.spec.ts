@@ -8,7 +8,7 @@ describe('CrearUsuarioComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [CrearUsuarioComponent]
+      declarations: [CrearUsuarioComponent],
     });
     fixture = TestBed.createComponent(CrearUsuarioComponent);
     component = fixture.componentInstance;

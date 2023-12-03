@@ -28,7 +28,10 @@ export class TopmenuComponent implements OnDestroy {
   private menuSubscription = Subscription.EMPTY;
   private routerSubscription = Subscription.EMPTY;
 
-  constructor(private menu: MenuService, private router: Router) {
+  constructor(
+    private menu: MenuService,
+    private router: Router
+  ) {
     this.menuSubscription = this.menu$.subscribe(res => {
       this.menuList = res;
       this.menuList.forEach(item => {

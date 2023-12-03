@@ -1,0 +1,9 @@
+.custom-dialog-content {
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.mat-dialog-container {
+  width: auto !important;
+  max-width: 80%;
+}

@@ -1,484 +1,495 @@
 <!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Agency - Start Bootstrap Theme</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <!-- Font Awesome icons (free version)-->
+    <!-- Google fonts-->
+    <link
+      href="https://fonts.googleapis.com/css?family=Montserrat:400,700"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <!-- Core theme CSS (includes Bootstrap)-->
+  </head>
 
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-  <meta name="description" content="" />
-  <meta name="author" content="" />
-  <title>Agency - Start Bootstrap Theme</title>
-  <!-- Favicon-->
-  <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-  <!-- Font Awesome icons (free version)-->
-  <!-- Google fonts-->
-  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
-  <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
-  <!-- Core theme CSS (includes Bootstrap)-->
-</head>
+  <body id="page-top">
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+      <div class="container">
+        <a class="navbar-brand" href="#page-top">
+          <img src="assets/images/logo.svg" alt="Logo" style="width: 100px; height: auto" />
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarResponsive"
+          aria-controls="navbarResponsive"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          Menu
+          <i class="fas fa-bars ms-1"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" href="#services">Servicios</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#portfolio">Portfolio</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#about">Sobre la Empresa</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#contact">Contactenos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/auth/login">Inicio de Sesión</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- Masthead-->
+    <header id="#page-top" class="masthead">
+      <div class="container">
+        <div class="masthead-subheading"></div>
+        <div class="masthead-heading text-uppercase">
+          ¡Bienvenido a Constructora Muñoz Bonilla SA!
+        </div>
+        <a class="btn btn-primary btn-xl text-uppercase" href="#services">Servicios</a>
+      </div>
+    </header>
+    <!-- Services-->
+    <section class="page-section" id="services">
+      <div class="container">
+        <div class="text-center">
+          <h2 class="section-heading text-uppercase">Nuestros Servicios</h2>
+          <h3 class="section-subheading text-muted">
+            Construcción de calidad desde el diseño hasta la finalización.
+          </h3>
+        </div>
+        <div class="row text-center">
+          <div class="col-md-4">
+            <span class="fa-stack fa-4x">
+              <i class="fas fa-circle fa-stack-2x text-dark"></i>
+              <i class="fas fa-home fa-stack-1x fa-inverse"></i>
+            </span>
+            <h4 class="my-3">Construcción Residencial</h4>
+            <p class="text-muted">
+              Diseñamos y construimos hermosas viviendas personalizadas que se adaptan a tus
+              necesidades y estilo de vida.
+            </p>
+          </div>
+          <div class="col-md-4">
+            <span class="fa-stack fa-4x">
+              <i class="fas fa-circle fa-stack-2x text-dark"></i>
+              <i class="fas fa-building fa-stack-1x fa-inverse"></i>
+            </span>
+            <h4 class="my-3">Construcción Comercial</h4>
+            <p class="text-muted">
+              Creamos espacios comerciales funcionales y atractivos que impulsan el éxito de tu
+              negocio.
+            </p>
+          </div>
+          <div class="col-md-4">
+            <span class="fa-stack fa-4x">
+              <i class="fas fa-circle fa-stack-2x text-dark"></i>
+              <i class="fas fa-hammer fa-stack-1x fa-inverse"></i>
+            </span>
+            <h4 class="my-3">Renovaciones</h4>
+            <p class="text-muted">
+              Transformamos tus propiedades existentes en espacios renovados y modernos con nuestro
+              equipo de expertos en renovación.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
 
-<body id="page-top">
-  <!-- Navigation-->
-  <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
-    <div class="container">
-      <a class="navbar-brand" href="#page-top">
-        <img src="assets/images/logo.svg" alt="Logo" style="width: 100px; height: auto;" />
-      </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
-        aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-        Menu
-        <i class="fas fa-bars ms-1"></i>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarResponsive">
-        <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
-          <li class="nav-item">
-            <a class="nav-link" href="#services">Servicios</a>
+    <!-- Portfolio Grid-->
+    <section class="page-section bg-light" id="portfolio">
+      <div class="container">
+        <div class="text-center">
+          <h2 class="section-heading text-uppercase">Portfolio de Proyectos</h2>
+          <h3 class="section-subheading text-muted"></h3>
+        </div>
+        <div class="row">
+          <div class="col-lg-4 col-sm-6 mb-4">
+            <!-- Portfolio item 1-->
+            <div class="portfolio-item">
+              <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal1">
+                <div class="portfolio-hover">
+                  <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                </div>
+                <img
+                  class="img-fluid"
+                  src="assets/images/casas/aserri.jpg"
+                  alt="Proyecto en Aserri"
+                />
+              </a>
+              <div class="portfolio-caption">
+                <div class="portfolio-caption-heading">Proyecto en Aserri</div>
+                <div class="portfolio-caption-subheading text-muted">
+                  Hermosa vivienda ubicada en Aserri, con vistas panorámicas a las montañas y
+                  amplias comodidades para toda la familia.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-sm-6 mb-4">
+            <!-- Portfolio item 2-->
+            <div class="portfolio-item">
+              <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal2">
+                <div class="portfolio-hover">
+                  <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                </div>
+                <img
+                  class="img-fluid"
+                  src="assets/images/casas/santa.jpg"
+                  alt="Proyecto en Santa Ana"
+                />
+              </a>
+              <div class="portfolio-caption">
+                <div class="portfolio-caption-heading">Proyecto en Santa Ana</div>
+                <div class="portfolio-caption-subheading text-muted">
+                  Moderna casa en Santa Ana, con acabados de lujo y una ubicación conveniente cerca
+                  de servicios y comercios.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-sm-6 mb-4">
+            <!-- Portfolio item 3-->
+            <div class="portfolio-item">
+              <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal3">
+                <div class="portfolio-hover">
+                  <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                </div>
+                <img
+                  class="img-fluid"
+                  src="assets/images/casas/aserri.jpg"
+                  alt="Proyecto en Aserri"
+                />
+              </a>
+              <div class="portfolio-caption">
+                <div class="portfolio-caption-heading">Proyecto en Aserri</div>
+                <div class="portfolio-caption-subheading text-muted">
+                  Hermosa vivienda ubicada en Aserri, con vistas panorámicas a las montañas y
+                  amplias comodidades para toda la familia.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- About-->
+    <section class="page-section" id="about">
+      <div class="container">
+        <div class="text-center">
+          <h2 class="section-heading text-uppercase">Sobre la empresa</h2>
+          <h3 class="section-subheading text-muted"></h3>
+        </div>
+        <ul class="timeline">
+          <li>
+            <div class="timeline-image">
+              <img class="rounded-circle img-fluid" src="assets/img/about/1.jpg" alt="..." />
+            </div>
+            <div class="timeline-panel">
+              <div class="timeline-heading">
+                <h4>2005</h4>
+                <h4 class="subheading"></h4>
+              </div>
+              <div class="timeline-body">
+                <p class="text-muted">
+                  Constructora Muñoz Bonilla, fue constituida en el año 2005 con capital 100%
+                  costarricense, ubicado en San Jose Costa Rica.
+                </p>
+              </div>
+            </div>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#portfolio">Portfolio</a>
+          <li class="timeline-inverted">
+            <div class="timeline-image">
+              <img class="rounded-circle img-fluid" src="assets/img/about/2.jpg" alt="..." />
+            </div>
+            <div class="timeline-panel">
+              <div class="timeline-heading">
+                <h4>Inicio de operaciones</h4>
+                <h4 class="subheading"></h4>
+              </div>
+              <div class="timeline-body">
+                <p class="text-muted">
+                  Inicio operaciones en Julio del 2005 como un sistema constructivo alternativo,
+                  caracterizándose por la calidad de sus productos y enfocada a resolver y
+                  satisfacer las necesidades de sus clientes en aspectos de funcionalidad, estética,
+                  costo y tiempo, para proyectos de vivienda, comercial e industrial.
+                </p>
+              </div>
+            </div>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#about">Sobre la Empresa</a>
+          <li>
+            <div class="timeline-image">
+              <img class="rounded-circle img-fluid" src="assets/img/about/3.jpg" alt="..." />
+            </div>
+            <div class="timeline-panel">
+              <div class="timeline-heading">
+                <h4>Visión</h4>
+                <h4 class="subheading"></h4>
+              </div>
+              <div class="timeline-body">
+                <p class="text-muted">
+                  Nuestra empresa nace con la visión y el compromiso de convertir las ideas y sueños
+                  de nuestros clientes. Trabajamos bajo la filosofía de transparencia y honradez,
+                  diferenciándonos mediante un compromiso en pro de nuestros clientes.
+                </p>
+              </div>
+            </div>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#contact">Contactenos</a>
+          <li class="timeline-inverted">
+            <div class="timeline-image">
+              <img class="rounded-circle img-fluid" src="assets/img/about/4.jpg" alt="..." />
+            </div>
+            <div class="timeline-panel">
+              <div class="timeline-heading">
+                <h4>Estándares</h4>
+                <h4 class="subheading"></h4>
+              </div>
+              <div class="timeline-body">
+                <p class="text-muted">
+                  Cumplimos con los estándares del código Sísmico de Costa Rica y Colegio Federado
+                  de Ingenieros y de Arquitectos de Costa Rica.
+                </p>
+              </div>
+            </div>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/auth/login">Inicio de Sesión</a>
+          <li class="timeline-inverted">
+            <div class="timeline-image">
+              <h4>
+                <br />
+              </h4>
+            </div>
           </li>
         </ul>
       </div>
-    </div>
-  </nav>
-  <!-- Masthead-->
-  <header id="#page-top" class="masthead">
-    <div class="container">
-      <div class="masthead-subheading"></div>
-      <div class="masthead-heading text-uppercase">
-        ¡Bienvenido a Constructora Muñoz Bonilla SA!
-      </div>
-      <a class="btn btn-primary btn-xl text-uppercase" href="#services">Servicios</a>
-    </div>
-  </header>
-  <!-- Services-->
-  <section class="page-section" id="services">
-    <div class="container">
-      <div class="text-center">
-        <h2 class="section-heading text-uppercase">Nuestros Servicios</h2>
-        <h3 class="section-subheading text-muted">
-          Construcción de calidad desde el diseño hasta la finalización.
-        </h3>
-      </div>
-      <div class="row text-center">
-        <div class="col-md-4">
-          <span class="fa-stack fa-4x">
-            <i class="fas fa-circle fa-stack-2x text-dark"></i>
-            <i class="fas fa-home fa-stack-1x fa-inverse"></i>
-          </span>
-          <h4 class="my-3">Construcción Residencial</h4>
-          <p class="text-muted">
-            Diseñamos y construimos hermosas viviendas personalizadas que se adaptan a tus
-            necesidades y estilo de vida.
-          </p>
-        </div>
-        <div class="col-md-4">
-          <span class="fa-stack fa-4x">
-            <i class="fas fa-circle fa-stack-2x text-dark"></i>
-            <i class="fas fa-building fa-stack-1x fa-inverse"></i>
-          </span>
-          <h4 class="my-3">Construcción Comercial</h4>
-          <p class="text-muted">
-            Creamos espacios comerciales funcionales y atractivos que impulsan el éxito de tu
-            negocio.
-          </p>
-        </div>
-        <div class="col-md-4">
-          <span class="fa-stack fa-4x">
-            <i class="fas fa-circle fa-stack-2x text-dark"></i>
-            <i class="fas fa-hammer fa-stack-1x fa-inverse"></i>
-          </span>
-          <h4 class="my-3">Renovaciones</h4>
-          <p class="text-muted">
-            Transformamos tus propiedades existentes en espacios renovados y modernos con nuestro
-            equipo de expertos en renovación.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Portfolio Grid-->
-  <section class="page-section bg-light" id="portfolio">
-    <div class="container">
-      <div class="text-center">
-        <h2 class="section-heading text-uppercase">Portfolio de Proyectos</h2>
-        <h3 class="section-subheading text-muted"></h3>
-      </div>
-      <div class="row">
-        <div class="col-lg-4 col-sm-6 mb-4">
-          <!-- Portfolio item 1-->
-          <div class="portfolio-item">
-            <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal1">
-              <div class="portfolio-hover">
-                <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
-              </div>
-              <img class="img-fluid" src="assets/images/casas/aserri.jpg" alt="Proyecto en Aserri" />
-            </a>
-            <div class="portfolio-caption">
-              <div class="portfolio-caption-heading">Proyecto en Aserri</div>
-              <div class="portfolio-caption-subheading text-muted">
-                Hermosa vivienda ubicada en Aserri, con vistas panorámicas a las montañas y amplias comodidades para
-                toda la familia.
-              </div>
-            </div>
-          </div>
-        </div>
+    <!-- Contact-->
 
-        <div class="col-lg-4 col-sm-6 mb-4">
-          <!-- Portfolio item 2-->
-          <div class="portfolio-item">
-            <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal2">
-              <div class="portfolio-hover">
-                <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
-              </div>
-              <img class="img-fluid" src="assets/images/casas/santa.jpg" alt="Proyecto en Santa Ana" />
-            </a>
-            <div class="portfolio-caption">
-              <div class="portfolio-caption-heading">Proyecto en Santa Ana</div>
-              <div class="portfolio-caption-subheading text-muted">
-                Moderna casa en Santa Ana, con acabados de lujo y una ubicación conveniente cerca de servicios y
-                comercios.
-              </div>
-            </div>
+    <!-- Footer-->
+    <footer class="footer py-4">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-lg-4 text-lg-start">Copyright &copy; CONSTRUCTORA MUÑOZ BONILLA SA</div>
+          <div class="col-lg-4 my-3 my-lg-0">
+            <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Twitter"
+              ><i class="fab fa-twitter"></i
+            ></a>
+            <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Facebook"
+              ><i class="fab fa-facebook-f"></i
+            ></a>
+            <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="LinkedIn"
+              ><i class="fab fa-linkedin-in"></i
+            ></a>
+          </div>
+          <div class="col-lg-4 text-lg-end">
+            <a class="link-dark text-decoration-none me-3" href="#!">Privacy Policy</a>
+            <a class="link-dark text-decoration-none" href="#!">Terms of Use</a>
           </div>
         </div>
-
-        <div class="col-lg-4 col-sm-6 mb-4">
-          <!-- Portfolio item 3-->
-          <div class="portfolio-item">
-            <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal3">
-              <div class="portfolio-hover">
-                <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
-              </div>
-              <img class="img-fluid" src="assets/images/casas/aserri.jpg" alt="Proyecto en Aserri" />
-            </a>
-            <div class="portfolio-caption">
-              <div class="portfolio-caption-heading">Proyecto en Aserri</div>
-              <div class="portfolio-caption-subheading text-muted">
-                Hermosa vivienda ubicada en Aserri, con vistas panorámicas a las montañas y amplias comodidades para
-                toda la familia.
+      </div>
+    </footer>
+    <!-- Portfolio Modals-->
+    <!-- Portfolio item 1 modal popup-->
+    <div
+      class="portfolio-modal modal fade"
+      id="portfolioModal1"
+      tabindex="-1"
+      role="dialog"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="close-modal" data-bs-dismiss="modal">
+            <img src="assets/img/close-icon.svg" alt="Close modal" />
+          </div>
+          <div class="container">
+            <div class="row justify-content-center">
+              <div class="col-lg-8">
+                <div class="modal-body">
+                  <!-- Project details-->
+                  <h2 class="text-uppercase">Proyecto en Aserri</h2>
+                  <p class="item-intro text-muted">
+                    Hermosa vivienda ubicada en Aserri, con vistas panorámicas a las montañas y
+                    amplias comodidades para toda la familia.
+                  </p>
+                  <img
+                    class="img-fluid d-block mx-auto"
+                    src="assets/images/casas/aserri.jpg"
+                    alt="Proyecto en Aserri"
+                  />
+                  <p>
+                    Este proyecto en Aserri es el lugar perfecto para aquellos que buscan un hogar
+                    tranquilo y acogedor en medio de la naturaleza. La casa cuenta con una vista
+                    panorámica impresionante de las montañas circundantes y ofrece amplios espacios
+                    para toda la familia.
+                  </p>
+                  <ul class="list-inline">
+                    <li>
+                      <strong>Cliente:</strong>
+                      Tu Cliente
+                    </li>
+                    <li>
+                      <strong>Categoría:</strong>
+                      Categoría del Proyecto
+                    </li>
+                  </ul>
+                  <button
+                    class="btn btn-primary btn-xl text-uppercase"
+                    data-bs-dismiss="modal"
+                    type="button"
+                  >
+                    <i class="fas fa-xmark me-1"></i>
+                    Cerrar Proyecto
+                  </button>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </section>
-  <!-- About-->
-  <section class="page-section" id="about">
-    <div class="container">
-      <div class="text-center">
-        <h2 class="section-heading text-uppercase">Sobre la empresa</h2>
-        <h3 class="section-subheading text-muted"></h3>
-      </div>
-      <ul class="timeline">
-        <li>
-          <div class="timeline-image">
-            <img class="rounded-circle img-fluid" src="assets/img/about/1.jpg" alt="..." />
+    <!-- Portfolio item 2 modal popup-->
+    <div
+      class="portfolio-modal modal fade"
+      id="portfolioModal2"
+      tabindex="-1"
+      role="dialog"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="close-modal" data-bs-dismiss="modal">
+            <img src="assets/img/close-icon.svg" alt="Close modal" />
           </div>
-          <div class="timeline-panel">
-            <div class="timeline-heading">
-              <h4>2005</h4>
-              <h4 class="subheading"></h4>
-            </div>
-            <div class="timeline-body">
-              <p class="text-muted">
-                Constructora Muñoz Bonilla, fue constituida en el año 2005 con capital 100%
-                costarricense, ubicado en San Jose Costa Rica.
-              </p>
-            </div>
-          </div>
-        </li>
-        <li class="timeline-inverted">
-          <div class="timeline-image">
-            <img class="rounded-circle img-fluid" src="assets/img/about/2.jpg" alt="..." />
-          </div>
-          <div class="timeline-panel">
-            <div class="timeline-heading">
-              <h4>Inicio de operaciones</h4>
-              <h4 class="subheading"></h4>
-            </div>
-            <div class="timeline-body">
-              <p class="text-muted">
-                Inicio operaciones en Julio del 2005 como un sistema constructivo alternativo,
-                caracterizándose por la calidad de sus productos y enfocada a resolver y
-                satisfacer las necesidades de sus clientes en aspectos de funcionalidad, estética,
-                costo y tiempo, para proyectos de vivienda, comercial e industrial.
-              </p>
-            </div>
-          </div>
-        </li>
-        <li>
-          <div class="timeline-image">
-            <img class="rounded-circle img-fluid" src="assets/img/about/3.jpg" alt="..." />
-          </div>
-          <div class="timeline-panel">
-            <div class="timeline-heading">
-              <h4>Visión</h4>
-              <h4 class="subheading"></h4>
-            </div>
-            <div class="timeline-body">
-              <p class="text-muted">
-                Nuestra empresa nace con la visión y el compromiso de convertir las ideas y sueños
-                de nuestros clientes. Trabajamos bajo la filosofía de transparencia y honradez,
-                diferenciándonos mediante un compromiso en pro de nuestros clientes.
-              </p>
-            </div>
-          </div>
-        </li>
-        <li class="timeline-inverted">
-          <div class="timeline-image">
-            <img class="rounded-circle img-fluid" src="assets/img/about/4.jpg" alt="..." />
-          </div>
-          <div class="timeline-panel">
-            <div class="timeline-heading">
-              <h4>Estándares</h4>
-              <h4 class="subheading"></h4>
-            </div>
-            <div class="timeline-body">
-              <p class="text-muted">
-                Cumplimos con los estándares del código Sísmico de Costa Rica y Colegio Federado
-                de Ingenieros y de Arquitectos de Costa Rica.
-              </p>
-            </div>
-          </div>
-        </li>
-        <li class="timeline-inverted">
-          <div class="timeline-image">
-            <h4>
-              <br />
-              Fin
-            </h4>
-          </div>
-        </li>
-      </ul>
-    </div>
-  </section>
-
-  <!-- Contact-->
-  <section class="page-section" id="contact">
-    <div class="container">
-      <div class="text-center">
-        <h2 class="section-heading text-uppercase">Contáctanos</h2>
-        <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
-      </div>
-      <form id="contactForm" data-sb-form-api-token="API_TOKEN">
-        <div class="row align-items-stretch mb-5">
-          <div class="col-md-6">
-            <div class="form-group">
-              <!-- Entrada de nombre -->
-              <input class="form-control" id="name" type="text" placeholder="Tu Nombre *"
-                data-sb-validations="required" />
-              <div class="invalid-feedback" data-sb-feedback="name:required">
-                Se requiere un nombre.
-              </div>
-            </div>
-            <div class="form-group">
-              <!-- Entrada de correo electrónico -->
-              <input class="form-control" id="email" type="email" placeholder="Tu Correo Electrónico *"
-                data-sb-validations="required,email" />
-              <div class="invalid-feedback" data-sb-feedback="email:required">
-                Se requiere un correo electrónico.
-              </div>
-              <div class="invalid-feedback" data-sb-feedback="email:email">
-                El correo electrónico no es válido.
-              </div>
-            </div>
-            <div class="form-group mb-md-0">
-              <!-- Entrada de número de teléfono -->
-              <input class="form-control" id="phone" type="tel" placeholder="Tu Teléfono *"
-                data-sb-validations="required" />
-              <div class="invalid-feedback" data-sb-feedback="phone:required">
-                Se requiere un número de teléfono.
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="form-group form-group-textarea mb-md-0">
-              <!-- Entrada de mensaje -->
-              <textarea class="form-control" id="message" placeholder="Tu Mensaje *"
-                data-sb-validations="required"></textarea>
-              <div class="invalid-feedback" data-sb-feedback="message:required">
-                Se requiere un mensaje.
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="d-none" id="submitSuccessMessage">
-          <div class="text-center text-white mb-3">
-            <div class="fw-bolder">¡Envío del formulario exitoso!</div>
-            Para activar este formulario, regístrate en
-            <br />
-            <a
-              href="https://startbootstrap.com/solution/contact-forms">https://startbootstrap.com/solution/contact-forms</a>
-          </div>
-        </div>
-        <div class="d-none" id="submitErrorMessage">
-          <div class="text-center text-danger mb-3">¡Error al enviar el mensaje!</div>
-        </div>
-        <!-- Botón de envío -->
-        <div class="text-center">
-          <button class="btn btn-primary btn-xl text-uppercase disabled" id="submitButton" type="submit">
-            Enviar Mensaje
-          </button>
-        </div>
-      </form>
-    </div>
-  </section>
-
-  <!-- Footer-->
-  <footer class="footer py-4">
-    <div class="container">
-      <div class="row align-items-center">
-        <div class="col-lg-4 text-lg-start">Copyright &copy; CONSTRUCTORA MUÑOZ BONILLA SA</div>
-        <div class="col-lg-4 my-3 my-lg-0">
-          <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-          <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-          <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-        </div>
-        <div class="col-lg-4 text-lg-end">
-          <a class="link-dark text-decoration-none me-3" href="#!">Privacy Policy</a>
-          <a class="link-dark text-decoration-none" href="#!">Terms of Use</a>
-        </div>
-      </div>
-    </div>
-  </footer>
-  <!-- Portfolio Modals-->
-  <!-- Portfolio item 1 modal popup-->
-  <div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="close-modal" data-bs-dismiss="modal">
-          <img src="assets/img/close-icon.svg" alt="Close modal" />
-        </div>
-        <div class="container">
-          <div class="row justify-content-center">
-            <div class="col-lg-8">
-              <div class="modal-body">
-                <!-- Project details-->
-                <h2 class="text-uppercase">Proyecto en Aserri</h2>
-                <p class="item-intro text-muted">Hermosa vivienda ubicada en Aserri, con vistas panorámicas a las
-                  montañas y amplias comodidades para toda la familia.</p>
-                <img class="img-fluid d-block mx-auto" src="assets/images/casas/aserri.jpg" alt="Proyecto en Aserri" />
-                <p>
-                  Este proyecto en Aserri es el lugar perfecto para aquellos que buscan un hogar tranquilo y acogedor en
-                  medio de la naturaleza. La casa cuenta con una vista panorámica impresionante de las montañas
-                  circundantes y ofrece amplios espacios para toda la familia.
-                </p>
-                <ul class="list-inline">
-                  <li>
-                    <strong>Cliente:</strong>
-                    Tu Cliente
-                  </li>
-                  <li>
-                    <strong>Categoría:</strong>
-                    Categoría del Proyecto
-                  </li>
-                </ul>
-                <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal" type="button">
-                  <i class="fas fa-xmark me-1"></i>
-                  Cerrar Proyecto
-                </button>
+          <div class="container">
+            <div class="row justify-content-center">
+              <div class="col-lg-8">
+                <div class="modal-body">
+                  <!-- Project details-->
+                  <h2 class="text-uppercase">Proyecto en Santa Ana</h2>
+                  <p class="item-intro text-muted">
+                    Moderna casa en Santa Ana, con acabados de lujo y una ubicación conveniente
+                    cerca de servicios y comercios.
+                  </p>
+                  <img
+                    class="img-fluid d-block mx-auto"
+                    src="assets/images/casas/santa.jpg"
+                    alt="Proyecto en Santa Ana"
+                  />
+                  <p>
+                    Esta moderna casa en Santa Ana está diseñada con acabados de lujo y una
+                    ubicación conveniente cerca de servicios y comercios. Es perfecta para aquellos
+                    que buscan un estilo de vida urbano y cómodo.
+                  </p>
+                  <ul class="list-inline">
+                    <li>
+                      <strong>Cliente:</strong>
+                      Tu Cliente
+                    </li>
+                    <li>
+                      <strong>Categoría:</strong>
+                      Categoría del Proyecto
+                    </li>
+                  </ul>
+                  <button
+                    class="btn btn-primary btn-xl text-uppercase"
+                    data-bs-dismiss="modal"
+                    type="button"
+                  >
+                    <i class="fas fa-xmark me-1"></i>
+                    Cerrar Proyecto
+                  </button>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <!-- Portfolio item 2 modal popup-->
-  <div class="portfolio-modal modal fade" id="portfolioModal2" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="close-modal" data-bs-dismiss="modal">
-          <img src="assets/img/close-icon.svg" alt="Close modal" />
-        </div>
-        <div class="container">
-          <div class="row justify-content-center">
-            <div class="col-lg-8">
-              <div class="modal-body">
-                <!-- Project details-->
-                <h2 class="text-uppercase">Proyecto en Santa Ana</h2>
-                <p class="item-intro text-muted">Moderna casa en Santa Ana, con acabados de lujo y una ubicación
-                  conveniente cerca de servicios y comercios.</p>
-                <img class="img-fluid d-block mx-auto" src="assets/images/casas/santa.jpg"
-                  alt="Proyecto en Santa Ana" />
-                <p>
-                  Esta moderna casa en Santa Ana está diseñada con acabados de lujo y una ubicación conveniente cerca de
-                  servicios y comercios. Es perfecta para aquellos que buscan un estilo de vida urbano y cómodo.
-                </p>
-                <ul class="list-inline">
-                  <li>
-                    <strong>Cliente:</strong>
-                    Tu Cliente
-                  </li>
-                  <li>
-                    <strong>Categoría:</strong>
-                    Categoría del Proyecto
-                  </li>
-                </ul>
-                <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal" type="button">
-                  <i class="fas fa-xmark me-1"></i>
-                  Cerrar Proyecto
-                </button>
+    <!-- Portfolio item 3 modal popup-->
+    <div
+      class="portfolio-modal modal fade"
+      id="portfolioModal3"
+      tabindex="-1"
+      role="dialog"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="close-modal" data-bs-dismiss="modal">
+            <img src="assets/img/close-icon.svg" alt="Close modal" />
+          </div>
+          <div class="container">
+            <div class="row justify-content-center">
+              <div class="col-lg-8">
+                <div class="modal-body">
+                  <!-- Project details-->
+                  <h2 class="text-uppercase">Proyecto en Aserri</h2>
+                  <p class="item-intro text-muted">
+                    Hermosa vivienda ubicada en Aserri, con vistas panorámicas a las montañas y
+                    amplias comodidades para toda la familia.
+                  </p>
+                  <img
+                    class="img-fluid d-block mx-auto"
+                    src="assets/images/casas/aserri.jpg"
+                    alt="Proyecto en Aserri"
+                  />
+                  <p>
+                    Este proyecto en Aserri es el lugar perfecto para aquellos que buscan un hogar
+                    tranquilo y acogedor en medio de la naturaleza. La casa cuenta con una vista
+                    panorámica impresionante de las montañas circundantes y ofrece amplios espacios
+                    para toda la familia.
+                  </p>
+                  <ul class="list-inline">
+                    <li>
+                      <strong>Cliente:</strong>
+                      Tu Cliente
+                    </li>
+                    <li>
+                      <strong>Categoría:</strong>
+                      Categoría del Proyecto
+                    </li>
+                  </ul>
+                  <button
+                    class="btn btn-primary btn-xl text-uppercase"
+                    data-bs-dismiss="modal"
+                    type="button"
+                  >
+                    <i class="fas fa-xmark me-1"></i>
+                    Cerrar Proyecto
+                  </button>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <!-- Portfolio item 3 modal popup-->
-  <div class="portfolio-modal modal fade" id="portfolioModal3" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="close-modal" data-bs-dismiss="modal">
-          <img src="assets/img/close-icon.svg" alt="Close modal" />
-        </div>
-        <div class="container">
-          <div class="row justify-content-center">
-            <div class="col-lg-8">
-              <div class="modal-body">
-                <!-- Project details-->
-                <h2 class="text-uppercase">Proyecto en Aserri</h2>
-                <p class="item-intro text-muted">Hermosa vivienda ubicada en Aserri, con vistas panorámicas a las
-                  montañas y amplias comodidades para toda la familia.</p>
-                <img class="img-fluid d-block mx-auto" src="assets/images/casas/aserri.jpg" alt="Proyecto en Aserri" />
-                <p>
-                  Este proyecto en Aserri es el lugar perfecto para aquellos que buscan un hogar tranquilo y acogedor en
-                  medio de la naturaleza. La casa cuenta con una vista panorámica impresionante de las montañas
-                  circundantes y ofrece amplios espacios para toda la familia.
-                </p>
-                <ul class="list-inline">
-                  <li>
-                    <strong>Cliente:</strong>
-                    Tu Cliente
-                  </li>
-                  <li>
-                    <strong>Categoría:</strong>
-                    Categoría del Proyecto
-                  </li>
-                </ul>
-                <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal" type="button">
-                  <i class="fas fa-xmark me-1"></i>
-                  Cerrar Proyecto
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</body>
-
+  </body>
 </html>

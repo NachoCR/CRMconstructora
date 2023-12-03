@@ -6,7 +6,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 import { Router, RouterModule } from '@angular/router';
 
-
 import { CoreModule } from '@core/core.module';
 import { ThemeModule } from '@theme/theme.module';
 import { SharedModule } from '@shared/shared.module';
@@ -21,7 +20,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { environment } from '@env/environment';
 import { BASE_URL, httpInterceptorProviders, appInitializerProviders } from '@core';
@@ -52,38 +51,41 @@ import { EditarProyectoComponent } from './editar-proyecto/editar-proyecto.compo
 import { BuscarProyectoComponent } from './buscar-proyecto/buscar-proyecto.component';
 import { MatSelectModule } from '@angular/material/select';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { DetallesContactoComponent } from './contactos/detalles-contacto/detalles-contacto.component';
 
 // Required for AOT compilation
 export function TranslateHttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
-
 @NgModule({
-  declarations: [AppComponent,
+  declarations: [
+    AppComponent,
     FilterPipe,
-    ContactosComponent, 
+    ContactosComponent,
     CrearContactoComponent,
-    EditarContactoComponent, 
+    EditarContactoComponent,
     BuscarProyectoComponent,
-    UsuariosComponent, 
-    CrearUsuarioComponent, 
+    UsuariosComponent,
+    CrearUsuarioComponent,
     EditarUsuarioComponent,
-    CrearProveedorComponent, 
-    EditarProveedorComponent, 
+    CrearProveedorComponent,
+    EditarProveedorComponent,
     CrearProductoCatalogoComponent,
     EditarProductoCatalogoComponent,
-    ProyectosComponent, 
-    CrearProyectoComponent, 
+    ProyectosComponent,
+    CrearProyectoComponent,
     EditarProyectoComponent,
     EditarProyectoComponent,
-    TareasComponent, 
-    CrearTareaComponent, 
+    TareasComponent,
+    CrearTareaComponent,
     ProveedoresComponent,
     CrearProveedorComponent,
     EditarProveedorComponent,
 
-    EditarTareaComponent],
+    EditarTareaComponent,
+    DetallesContactoComponent,
+  ],
 
   imports: [
     BrowserModule,
@@ -124,4 +126,4 @@ export function TranslateHttpLoaderFactory(http: HttpClient) {
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

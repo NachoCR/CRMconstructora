@@ -19,7 +19,7 @@ const COMPONENTS: any[] = [
   Error403Component,
   Error404Component,
   Error500Component,
-  LandingComponent
+  LandingComponent,
 ];
 const COMPONENTS_DYNAMIC: any[] = [];
 

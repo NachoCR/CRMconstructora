@@ -10,10 +10,10 @@ export class ClienteService {
 
   constructor(private http: HttpClient) {
     this.APIUrl = 'http://73.56.189.143:7226/api'; //url de la sln
+    this.APIUrl = 'http://73.56.189.143:7226/api'; //url de la sln
   }
 
   getClientList(): Observable<any[]> {
-    debugger;
     return this.http
       .get<any>(this.APIUrl + '/Client', {
         headers: {},
@@ -29,7 +29,7 @@ export class ClienteService {
   addCliente(client: any): Observable<any> {
     console.log(client);
     let res;
-    debugger;
+
     return this.http.put<any>(this.APIUrl + '/Client/', client).pipe(map((data: any) => data));
   }
 

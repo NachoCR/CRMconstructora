@@ -37,7 +37,10 @@ export class FormsSelectComponent implements OnInit {
   selectedCompanyCustom = null;
   selectedCompanyCustomPromise = null;
 
-  constructor(private dataService: DataService, public dialog: MatDialog) {}
+  constructor(
+    private dataService: DataService,
+    public dialog: MatDialog
+  ) {}
 
   ngOnInit() {
     this.people$ = this.dataService.getPeople();

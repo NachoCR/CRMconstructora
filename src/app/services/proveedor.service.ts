@@ -30,7 +30,7 @@ export class ProveedorService {
     console.log(provider);
     let res;
     debugger;
-    
+
     return this.http.put<any>(this.APIUrl + '/Provider/', provider).pipe(map((data: any) => data));
   }
 
@@ -39,7 +39,6 @@ export class ProveedorService {
   }
 
   deleteProveedor(provider: any) {
-    debugger;
     let res;
     console.log(provider);
     return this.http

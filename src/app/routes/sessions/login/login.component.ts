@@ -19,12 +19,13 @@ export class LoginComponent {
     password: ['', [Validators.required]],
     rememberMe: [false],
   });
+  isSubmitted: any;
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private auth: AuthService,
-    private toastr: ToastrService,
+    private toastr: ToastrService
   ) {}
 
   get username() {

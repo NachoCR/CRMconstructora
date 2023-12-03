@@ -65,7 +65,7 @@ export class FormsElementsComponent implements OnInit, OnDestroy {
     return form.get('email')?.hasError('required')
       ? 'validations.required'
       : form.get('email')?.hasError('email')
-      ? 'validations.invalid_email'
-      : '';
+        ? 'validations.invalid_email'
+        : '';
   }
 }

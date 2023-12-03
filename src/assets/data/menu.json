@@ -9,7 +9,7 @@
         "color": "red-500",
         "value": "5"
       },
-     
+
       "children": [
         {
           "route": "proyectos",

@@ -26,10 +26,9 @@ export class ProyectoService {
   }
 
   addProyecto(project: any): Observable<any> {
-    
     project.tasks = [];
     console.log(project);
-    debugger;
+
     return this.http.put<any>(this.APIUrl + '/Project/', project).pipe(map((data: any) => data));
   }
 
@@ -38,7 +37,6 @@ export class ProyectoService {
   }
 
   deleteProyecto(project: any) {
-    debugger;
     let res;
     console.log(project);
     return this.http

@@ -12,8 +12,9 @@
         <mat-checkbox>Yes, I agree to the terms and conditions</mat-checkbox>
       </div>
       <div>
-        <mat-checkbox [disabled]="true">No, I do not agree to the terms and
-          conditions</mat-checkbox>
+        <mat-checkbox [disabled]="true"
+          >No, I do not agree to the terms and conditions</mat-checkbox
+        >
       </div>
       <div>
         <mat-checkbox [indeterminate]="true">A partially done task</mat-checkbox>
@@ -23,16 +24,18 @@
     <section>
       <h2>Nested checklist</h2>
       <div *ngFor="let task of tasks">
-        <mat-checkbox [(ngModel)]="task.completed"
-                      [checked]="allComplete(task)"
-                      [indeterminate]="someComplete(task.subtasks!)"
-                      (change)="setAllCompleted(task.subtasks!, $event.checked)">
-          {{task.name}}
+        <mat-checkbox
+          [(ngModel)]="task.completed"
+          [checked]="allComplete(task)"
+          [indeterminate]="someComplete(task.subtasks!)"
+          (change)="setAllCompleted(task.subtasks!, $event.checked)"
+        >
+          {{ task.name }}
         </mat-checkbox>
         <div class="demo-sub-list">
           <div *ngFor="let subtask of task.subtasks">
             <mat-checkbox [(ngModel)]="subtask.completed">
-              {{subtask.name}}
+              {{ subtask.name }}
             </mat-checkbox>
           </div>
         </div>

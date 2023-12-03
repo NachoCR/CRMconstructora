@@ -1,8 +1,5 @@
 {
-  "ignoreFiles": [
-    "dist/**",
-    "schematics/**"
-  ],
+  "ignoreFiles": ["dist/**", "schematics/**"],
   "extends": [
     "stylelint-config-standard",
     "stylelint-config-recommended-scss",
@@ -21,9 +18,7 @@
     "selector-pseudo-element-no-unknown": [
       true,
       {
-        "ignorePseudoElements": [
-          "ng-deep"
-        ]
+        "ignorePseudoElements": ["ng-deep"]
       }
     ],
     "selector-class-pattern": null,

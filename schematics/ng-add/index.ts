@@ -3,7 +3,7 @@ import { RunSchematicTask, NodePackageInstallTask } from '@angular-devkit/schema
 import { addKeyPkgsToPackageJson } from './packages';
 
 // Just return the tree
-export default function(options: any): Rule {
+export default function (options: any): Rule {
   return (host: Tree, context: SchematicContext) => {
     // Add CDK first!
     addKeyPkgsToPackageJson(host);

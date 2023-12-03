@@ -14,12 +14,12 @@
   }
 
   &::-webkit-scrollbar-track {
-    box-shadow: rgba(0, 0, 0, .2) 1px 1px 5px inset;
+    box-shadow: rgba(0, 0, 0, 0.2) 1px 1px 5px inset;
   }
 
   &::-webkit-scrollbar-thumb {
     min-height: 20px;
-    background-color: rgba(0, 0, 0, .2);
+    background-color: rgba(0, 0, 0, 0.2);
   }
 
   &::-webkit-scrollbar-corner {

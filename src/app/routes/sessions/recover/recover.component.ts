@@ -10,13 +10,14 @@ import Swal from 'sweetalert2';
 })
 export class RecoverComponent {
   isLoading = false;
-  RecoverForm = this.fb.group(
-    {
-      email: ['', [Validators.required, Validators.email]],
-    },
-  );
+  RecoverForm = this.fb.group({
+    email: ['', [Validators.required, Validators.email]],
+  });
 
-  constructor(private fb: FormBuilder, private recoverService: RecoverService) {}
+  constructor(
+    private fb: FormBuilder,
+    private recoverService: RecoverService
+  ) {}
 
   matchValidator(source: string, target: string) {
     return (control: AbstractControl) => {
@@ -35,20 +36,18 @@ export class RecoverComponent {
     };
   }
 
-  recoverPassword(){
-
+  recoverPassword() {
     let email = this.RecoverForm.get('email')?.value;
     this.isLoading = true;
     this.recoverService.recoverPassword(email).subscribe({
-      next : () => {
+      next: () => {
         Swal.fire('Correo enviado correctamente!', '', 'success');
         this.isLoading = false;
-      }, error:(e)=> {    
+      },
+      error: e => {
         Swal.fire('Ocurrio un problema al enviar el correo', '', 'error');
         this.isLoading = false;
-      }
+      },
     });
-
   }
-
 }

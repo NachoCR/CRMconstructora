@@ -24,10 +24,10 @@ export class AuthService {
     private loginService: LoginService,
     private tokenService: TokenService,
     private menuService: MenuService
-  ) { }
+  ) {}
 
   init() {
-    return new Promise<void>((resolve) => this.change$.subscribe(() => resolve()));
+    return new Promise<void>(resolve => this.change$.subscribe(() => resolve()));
   }
 
   change(): Observable<User> {
@@ -55,7 +55,7 @@ export class AuthService {
       .refresh(filterObject({ refresh_token: this.tokenService.getRefreshToken() }))
       .pipe(
         catchError(() => of(undefined)),
-        tap((token) => this.tokenService.set(token)),
+        tap(token => this.tokenService.set(token)),
         map(() => {
           if (this.check()) {
             this.menu();
@@ -86,19 +86,23 @@ export class AuthService {
 
   private assignUser() {
     if (!this.check()) {
-      return of({}).pipe(tap((user) => {
-        this.user$.next(user);
-      }));
+      return of({}).pipe(
+        tap(user => {
+          this.user$.next(user);
+        })
+      );
     }
 
     if (!isEmptyObject(this.user$.getValue())) {
       return of(this.user$.getValue());
     }
 
-    return this.loginService.me().pipe(tap((user) => {
-      this.user$.next(user);
-      this.saveUserToLocalStorage(user);
-    }));
+    return this.loginService.me().pipe(
+      tap(user => {
+        this.user$.next(user);
+        this.saveUserToLocalStorage(user);
+      })
+    );
   }
 
   private getUserFromLocalStorage(): User {

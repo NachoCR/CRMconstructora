@@ -1,6 +1,6 @@
 export interface UsuarioData {
-    clientId?: number;
-    name: number;
-    lastname: number;
-    phone: string;
-  }
+  clientId?: number;
+  name: number;
+  lastname: number;
+  phone: string;
+}
