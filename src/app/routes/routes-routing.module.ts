@@ -15,7 +15,6 @@ import { UsuariosComponent } from 'app/usuarios/usuarios.component';
 import { authGuard } from '@core/authentication';
 import { ProyectosComponent } from 'app/proyectos/proyectos.component';
 import { ProveedoresComponent } from 'app/proveedores/proveedores.component';
-import { CatalogoProveedorComponent } from 'app/catalogo-proveedor/catalogo-proveedor.component';
 import { OrdenesCompraComponent } from 'app/ordenes-compra/ordenes-compra.component';
 import { CrearUsuarioComponent } from 'app/crear-usuario/crear-usuario.component';
 import { CrearProveedorComponent } from 'app/crear-proveedor/crear-proveedor.component';
@@ -26,6 +25,7 @@ import { EditarTareaComponent } from 'app/editar-tarea/editar-tarea.component';
 import { ContactosComponent } from 'app/contactos/contactos/contactos.component';
 import { RecoverComponent } from './sessions/recover/recover.component';
 import { FileUploadComponent } from '@shared/components/file-upload/file-upload.component';
+import { ProductosComponent } from 'app/productos/productos/productos.component';
 
 const routes: Routes = [
   { path: '#', component: DashboardComponent },
@@ -34,10 +34,10 @@ const routes: Routes = [
   { path: 'proyectos', component: ProyectosComponent },
   { path: 'proveedores', component: ProveedoresComponent },
   { path: 'tareas', component: TareasComponent },
-  { path: 'catalogoProveedor', component: CatalogoProveedorComponent },
   { path: 'ordenesCompra', component: OrdenesCompraComponent },
   { path: 'contactos', component: ContactosComponent },
   { path: 'uploadImage', component: FileUploadComponent },
+  { path: 'productos', component: ProductosComponent },
 
   {
     path: 'dashboard',
@@ -62,9 +62,10 @@ const routes: Routes = [
       { path: 'proyectos', component: ProyectosComponent },
       { path: 'proveedores', component: ProveedoresComponent },
       { path: 'tareas', component: TareasComponent },
-      { path: 'catalogoProveedor', component: CatalogoProveedorComponent },
       { path: 'ordenesCompra', component: OrdenesCompraComponent },
       { path: 'contactos', component: ContactosComponent },
+      { path: 'productos', component: ProductosComponent },
+
     ],
   },
   {

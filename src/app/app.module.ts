@@ -28,7 +28,6 @@ import { BASE_URL, httpInterceptorProviders, appInitializerProviders } from '@co
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemDataService } from '@shared/in-mem/in-mem-data.service';
 import { ProveedoresComponent } from './proveedores/proveedores.component';
-import { CatalogoProveedorComponent } from './catalogo-proveedor/catalogo-proveedor.component';
 import { LandingComponent } from './landing/landing.component';
 import { LoginComponent } from './auth/login/login.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
@@ -42,8 +41,6 @@ import { CrearProyectoComponent } from './crear-proyecto/crear-proyecto.componen
 import { TareasComponent } from './tareas/tareas.component';
 import { CrearTareaComponent } from './crear-tarea/crear-tarea.component';
 import { EditarTareaComponent } from './editar-tarea/editar-tarea.component';
-import { CrearProductoCatalogoComponent } from './crear-producto-catalogo/crear-producto-catalogo.component';
-import { EditarProductoCatalogoComponent } from './editar-producto-catalogo/editar-producto-catalogo.component';
 import { ContactosComponent } from './contactos/contactos/contactos.component';
 import { CrearContactoComponent } from './contactos/crear-contacto/crear-contacto.component';
 import { EditarContactoComponent } from './contactos/editar-contacto/editar-contacto.component';
@@ -52,6 +49,10 @@ import { BuscarProyectoComponent } from './buscar-proyecto/buscar-proyecto.compo
 import { MatSelectModule } from '@angular/material/select';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { DetallesContactoComponent } from './contactos/detalles-contacto/detalles-contacto.component';
+import { ProductosComponent } from './productos/productos/productos.component';
+import { CrearProductoComponent } from './productos/crear-producto/crear-producto.component';
+import { DetallesProductoComponent } from './productos/detalles-producto/detalles-producto.component';
+import { EditarProductoComponent } from './productos/editar-producto/editar-producto.component';
 
 // Required for AOT compilation
 export function TranslateHttpLoaderFactory(http: HttpClient) {
@@ -71,8 +72,6 @@ export function TranslateHttpLoaderFactory(http: HttpClient) {
     EditarUsuarioComponent,
     CrearProveedorComponent,
     EditarProveedorComponent,
-    CrearProductoCatalogoComponent,
-    EditarProductoCatalogoComponent,
     ProyectosComponent,
     CrearProyectoComponent,
     EditarProyectoComponent,
@@ -85,6 +84,10 @@ export function TranslateHttpLoaderFactory(http: HttpClient) {
 
     EditarTareaComponent,
     DetallesContactoComponent,
+    ProductosComponent,
+    CrearProductoComponent,
+    EditarProductoComponent,
+    DetallesProductoComponent,
   ],
 
   imports: [
