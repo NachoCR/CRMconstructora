@@ -19,7 +19,7 @@ export class ProveedorService {
       })
       .pipe(
         map((data: any) => {
-          console.log(data);
+          //console.log(data);
           return data;
         })
       );
