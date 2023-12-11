@@ -7,6 +7,17 @@ body {
 .table-responsive {
   margin: 30px 0;
 }
+
+/* Estilo CSS personalizado para el título de la tabla */
+.table-title {
+	font-size: 24px;
+	font-weight: bold;
+	text-align: center;
+	padding: 20px 0;
+	background-color: hsla(219, 100%, 50%, 0.678); /* Color de fondo */
+	color: white; /* Color de texto */
+  }
+
 .table-wrapper {
   background: #fff;
   padding: 20px 25px;

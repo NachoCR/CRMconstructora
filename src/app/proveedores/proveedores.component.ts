@@ -8,6 +8,26 @@ import { ProveedorData } from 'app/interfaces/proveedor.interface';
 import { ProveedorService } from 'app/services/proveedor.service';
 import * as _ from 'lodash';
 import Swal from 'sweetalert2';
+import { Pipe, PipeTransform } from '@angular/core';
+
+@Pipe({
+  name: 'filter2'
+})
+export class FilterPipe2 implements PipeTransform {
+  transform(itemsProv: any[], filtro: string): any[] {
+    if (!itemsProv || !filtro) {
+      return itemsProv;
+    }
+    debugger
+    return itemsProv.filter(item => {
+      // Implementa tu lógica de filtrado según tus necesidades
+      return (
+        item.name.toLowerCase().includes(filtro) || item.details.toLowerCase().includes(filtro)
+        // Agrega más propiedades según sea necesario
+      );
+    });
+  }
+}
 
 @Component({
   selector: 'app-proveedores',
@@ -18,6 +38,15 @@ export class ProveedoresComponent {
   proveedor?: ProveedorData;
   dataSource: MatTableDataSource<any> = new MatTableDataSource();
   proveedoresList: any[] = []; // Asegúrate de que usuariosList contenga tus datos
+
+  
+  filtro: string = '';
+  aplicarFiltroProv(filtro: string): void {
+    // console.log('filtroProv:', filtroProv);
+    this.filtro = filtro;
+    // console.log('this.filtroProv:', this.filtroProv);
+    // ... rest of your logic
+  }
 
   constructor(
     public dialog: MatDialog,

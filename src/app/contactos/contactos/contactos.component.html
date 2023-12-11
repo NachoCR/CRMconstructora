@@ -57,16 +57,28 @@
           <button mat-raised-button color="primary" (click)="openDialog()">
             <mat-icon>add</mat-icon> Crear contacto
           </button>
+          
+        </div>
+        <div class="col-sm-6">
+          <mat-form-field appearance="fill">
+          <mat-label>Buscar Contactos</mat-label>
+          <mat-icon matPrefix>search</mat-icon>
+            <input
+              matInput
+              type="text"
+              id="searchInput"
+              [(ngModel)]="searchTerm"
+              (ngModelChange)="applyFilter()"
+            />
+          </mat-form-field>
         </div>
       </div>
-
       <div class="table-responsive">
-        <mat-table [dataSource]="dataSource">
+        <mat-table [dataSource]="filteredContact">
           <ng-container matColumnDef="name">
             <mat-header-cell *matHeaderCellDef>Nombre</mat-header-cell>
-            <mat-cell *matCellDef="let contact"
-              >{{ contact.name }} {{ contact.lastname }} {{ contact.secondLastname }}</mat-cell
-            >
+            <mat-cell *matCellDef="let contact" 
+              >{{ contact.name }} {{ contact.lastname }} {{ contact.secondLastname }}</mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="email">
@@ -109,7 +121,7 @@
           </ng-container>
 
           <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-          <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>    
         </mat-table>
       </div>
     </div>

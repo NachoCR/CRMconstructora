@@ -15,6 +15,9 @@ import * as _ from 'lodash';
 import { MatTableDataSource } from '@angular/material/table';
 import { DetallesContactoComponent } from '../detalles-contacto/detalles-contacto.component';
 
+import { Pipe, PipeTransform } from '@angular/core';
+
+
 @Component({
   selector: 'app-contactos',
   templateUrl: './contactos.component.html',
@@ -22,13 +25,14 @@ import { DetallesContactoComponent } from '../detalles-contacto/detalles-contact
 })
 export class ContactosComponent implements OnInit {
   contacto?: ContactosData;
-
-  // usuariosList: UsuarioData[] = [];
-
   dataSource: MatTableDataSource<any> = new MatTableDataSource();
   contactoList: any[] = []; // Asegúrate de que usuariosList contenga tus datos
 
   displayedColumns: string[] = ['name', 'email', 'phone', 'details', 'providerId', 'actions'];
+
+  // usuariosList: UsuarioData[] = [];
+  searchTerm: string = '';   
+  filteredContact: any[] = [];
 
   constructor(
     public dialog: MatDialog,
@@ -40,10 +44,17 @@ export class ContactosComponent implements OnInit {
   ngOnInit(): void {
     this.getContactoList();
   }
+  applyFilter(): void {
+    this.filteredContact = this.contactoList.filter((contacto) =>
+    contacto.name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+    contacto.email.toLowerCase().includes(this.searchTerm.toLowerCase())
+    );
+  }
 
   getContactoList(): void {
     this.contactoService.getContactoList().subscribe((result: any) => {
       this.contactoList = result;
+      this.filteredContact = this.contactoList;
       this.dataSource = new MatTableDataSource(this.contactoList);
     });
   }

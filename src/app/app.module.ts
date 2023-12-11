@@ -27,31 +27,38 @@ import { BASE_URL, httpInterceptorProviders, appInitializerProviders } from '@co
 
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemDataService } from '@shared/in-mem/in-mem-data.service';
-import { ProveedoresComponent } from './proveedores/proveedores.component';
+
+
 import { CatalogoProveedorComponent } from './catalogo-proveedor/catalogo-proveedor.component';
 import { LandingComponent } from './landing/landing.component';
 import { LoginComponent } from './auth/login/login.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { FilterPipe, ProyectosComponent } from './proyectos/proyectos.component';
+import { FilterPipe2, ProveedoresComponent } from './proveedores/proveedores.component';
+import { ContactosComponent  } from './contactos/contactos/contactos.component';
+import { TareaComponent } from './tareas/tareas.component';
 import { OrdenesCompraComponent } from './ordenes-compra/ordenes-compra.component';
 import { CrearUsuarioComponent } from './crear-usuario/crear-usuario.component';
 import { CrearProveedorComponent } from './crear-proveedor/crear-proveedor.component';
 import { EditarProveedorComponent } from './editar-proveedor/editar-proveedor.component';
 import { EditarUsuarioComponent } from './editar-usuario/editar-usuario.component';
 import { CrearProyectoComponent } from './crear-proyecto/crear-proyecto.component';
-import { TareasComponent } from './tareas/tareas.component';
 import { CrearTareaComponent } from './crear-tarea/crear-tarea.component';
 import { EditarTareaComponent } from './editar-tarea/editar-tarea.component';
 import { CrearProductoCatalogoComponent } from './crear-producto-catalogo/crear-producto-catalogo.component';
 import { EditarProductoCatalogoComponent } from './editar-producto-catalogo/editar-producto-catalogo.component';
-import { ContactosComponent } from './contactos/contactos/contactos.component';
 import { CrearContactoComponent } from './contactos/crear-contacto/crear-contacto.component';
 import { EditarContactoComponent } from './contactos/editar-contacto/editar-contacto.component';
 import { EditarProyectoComponent } from './editar-proyecto/editar-proyecto.component';
 import { BuscarProyectoComponent } from './buscar-proyecto/buscar-proyecto.component';
+import { BuscarProveedorComponent } from './buscar-proveedor/buscar-proveedor.component';
 import { MatSelectModule } from '@angular/material/select';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { DetallesContactoComponent } from './contactos/detalles-contacto/detalles-contacto.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
+
+
+
 
 // Required for AOT compilation
 export function TranslateHttpLoaderFactory(http: HttpClient) {
@@ -62,10 +69,12 @@ export function TranslateHttpLoaderFactory(http: HttpClient) {
   declarations: [
     AppComponent,
     FilterPipe,
+    FilterPipe2,
     ContactosComponent,
     CrearContactoComponent,
     EditarContactoComponent,
     BuscarProyectoComponent,
+    BuscarProveedorComponent,
     UsuariosComponent,
     CrearUsuarioComponent,
     EditarUsuarioComponent,
@@ -77,17 +86,17 @@ export function TranslateHttpLoaderFactory(http: HttpClient) {
     CrearProyectoComponent,
     EditarProyectoComponent,
     EditarProyectoComponent,
-    TareasComponent,
+    TareaComponent,
     CrearTareaComponent,
     ProveedoresComponent,
     CrearProveedorComponent,
     EditarProveedorComponent,
-
     EditarTareaComponent,
     DetallesContactoComponent,
   ],
 
   imports: [
+    MatPaginatorModule,
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
