@@ -1,4 +1,4 @@
-import { Component, OnInit , Inject } from '@angular/core';
+import { Component, OnInit , Inject, ViewChild, Pipe, PipeTransform } from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import { ActivatedRoute, Route, Router, NavigationEnd } from "@angular/router";
 import { CrearTareaComponent } from 'app/crear-tarea/crear-tarea.component';
@@ -9,7 +9,13 @@ import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
 import Swal from 'sweetalert2';
 import { debug } from 'console';
 import * as _ from 'lodash';
+
 import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator, MatPaginatorIntl, PageEvent } from '@angular/material/paginator';
+import { MatPaginatorModule } from '@angular/material/paginator';
+
+
+
 
 
 @Component({
@@ -17,28 +23,53 @@ import { MatTableDataSource } from '@angular/material/table';
   templateUrl: './tareas.component.html',
   styleUrls: ['./tareas.component.scss'],
 })
-export class TareasComponent implements OnInit {
+export class TareaComponent implements OnInit {
 
   tarea?: TareaData;  
 
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  items: any[] = []; // Ajusta el tipo según tus datos reales
+  pageSize: number = 5; // Número de elementos por página
+  p: number = 1; // Página actual
+
+
   dataSource: MatTableDataSource<any> = new MatTableDataSource();
   tareasList: any[] = []; // Asegúrate de que tareasList contenga tus datos
+  displayedColumns: string[] = ['name', 'description', 'dateDue', 'statusId', 'priorityId', 'projectId', 'userId', 'actions'];
 
-  displayedColumns: string[] = ['name', 'description', 'dateDue', 'statusId', 'priorityId', 'projectId', 'employeeId', 'actions'];
+
+  searchTerm: string = '';   
+  filteredTasks: any[] = [];
+
 
 
 
   constructor(public dialog: MatDialog, private tareaService: TareaService, private router: Router, private activatedRoute: ActivatedRoute) {
   }
 
+
+
+
+
   ngOnInit(): void {
 this.getTaskList();
+  }
+
+
+  applyFilter(): void {
+    this.filteredTasks = this.tareasList.filter((task) =>
+    task.name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+    task.description.toLowerCase().includes(this.searchTerm.toLowerCase())
+    );
   }
 
 
   getTaskList(): void {
     this.tareaService.getTaskList().subscribe((result: any) => {
       this.tareasList = result;
+      this.filteredTasks = this.tareasList;
       this.dataSource = new MatTableDataSource(this.tareasList);
     });
   }
@@ -149,18 +180,6 @@ this.getTaskList();
     });
 
   }
-
-
-
-
-
-
-  rolesMap = new Map<number, string>([
-    [1, 'Cliente'],
-    [2, 'Empleado'],
-    [3, 'Administrador'],
-    // Agrega más pares ID de rol - Nombre de rol según tus necesidades
-  ]);
 
 }
 

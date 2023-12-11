@@ -61,15 +61,15 @@
             </div>
 
             <div class="form-group col-md-4">
-            <label for="employeeId" class="control-label font-weight-bold">Ingeniero a cargo:</label>
+            <label for="userId" class="control-label font-weight-bold">Ingeniero a cargo:</label>
             <input type="text"
                    placeholder="Buscar empleado"
-                   formControlName="employeeId"
+                   formControlName="userId"
                    [matAutocomplete]="autousuario"
-                   [(ngModel)]="data.employeeId"
+                   [(ngModel)]="data.userId"
                    class="form-control">
             <mat-autocomplete #autousuario="matAutocomplete">
-              <mat-option *ngFor="let user of filteredUserList$ | async" [value]="user.employeeId" (click)="setUserValue(user)">
+              <mat-option *ngFor="let user of filteredUserList$ | async" [value]="user.userId" (click)="setUserValue(user)">
               {{user.name}}
               </mat-option>
             </mat-autocomplete>

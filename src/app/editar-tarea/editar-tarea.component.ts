@@ -34,13 +34,13 @@ export class EditarTareaComponent {
   selectedUser: any;
   
   transformData2() {
-    this.data.assignedUser = this.selectedUser.employeeId;
-    this.editarTareaForm.controls["employeeId"].setValue(this.selectedUser.employeeId);
+    this.data.assignedUser = this.selectedUser.userId;
+    this.editarTareaForm.controls["userId"].setValue(this.selectedUser.userId);
   }
   setUserValue(employee : any) {
     this.selectedUser = employee;
     this.data.assignedUser = employee.name;
-    this.editarTareaForm.controls["employeeId"].setValue(employee.name);
+    this.editarTareaForm.controls["userId"].setValue(employee.name);
   }
 
   // public editarUForm: FormGroup;
@@ -83,7 +83,7 @@ export class EditarTareaComponent {
       dateDue: new FormControl(null, [Validators.required, DateValidator.dateNotInPast]),
       priorityId : new FormControl(null, [Validators.required]),
       projectId : new FormControl(null, [Validators.required]),
-      employeeId : new FormControl(null, [Validators.required]),
+      userId : new FormControl(null, [Validators.required]),
     }
       )
   }
@@ -136,7 +136,7 @@ export class EditarTareaComponent {
        this.usuariosList = data;
        console.log(data)
        this.usuariosList = this.usuariosList.filter(x => x.roleId == 2); 
-       this.filteredUserList$ = this.editarTareaForm.get('employeeId')?.valueChanges.pipe(
+       this.filteredUserList$ = this.editarTareaForm.get('userId')?.valueChanges.pipe(
          startWith(''),
          debounceTime(300),
          map(value => this._filterUser(value))

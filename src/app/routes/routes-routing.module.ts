@@ -20,7 +20,7 @@ import { OrdenesCompraComponent } from 'app/ordenes-compra/ordenes-compra.compon
 import { CrearUsuarioComponent } from 'app/crear-usuario/crear-usuario.component';
 import { CrearProveedorComponent } from 'app/crear-proveedor/crear-proveedor.component';
 import { CrearProyectoComponent } from 'app/crear-proyecto/crear-proyecto.component';
-import { TareasComponent } from 'app/tareas/tareas.component';
+import { TareaComponent } from 'app/tareas/tareas.component';
 import { CrearTareaComponent } from 'app/crear-tarea/crear-tarea.component';
 import { EditarTareaComponent } from 'app/editar-tarea/editar-tarea.component';
 import { ContactosComponent } from 'app/contactos/contactos/contactos.component';
@@ -33,7 +33,7 @@ const routes: Routes = [
   { path: 'usuarios', component: UsuariosComponent },
   { path: 'proyectos', component: ProyectosComponent },
   { path: 'proveedores', component: ProveedoresComponent },
-  { path: 'tareas', component: TareasComponent },
+  { path: 'tareas', component: TareaComponent },
   { path: 'catalogoProveedor', component: CatalogoProveedorComponent },
   { path: 'ordenesCompra', component: OrdenesCompraComponent },
   { path: 'contactos', component: ContactosComponent },
@@ -61,7 +61,7 @@ const routes: Routes = [
       { path: 'usuarios', component: UsuariosComponent },
       { path: 'proyectos', component: ProyectosComponent },
       { path: 'proveedores', component: ProveedoresComponent },
-      { path: 'tareas', component: TareasComponent },
+      { path: 'tareas', component: TareaComponent },
       { path: 'catalogoProveedor', component: CatalogoProveedorComponent },
       { path: 'ordenesCompra', component: OrdenesCompraComponent },
       { path: 'contactos', component: ContactosComponent },

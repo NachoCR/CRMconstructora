@@ -35,13 +35,13 @@ export class CrearTareaComponent {
   selectedUser: any;
   
   transformData2() {
-    this.data.assignedUser = this.selectedUser.employeeId;
-    this.crearTareaForm.controls["employeeId"].setValue(this.selectedUser.employeeId);
+    this.data.assignedUser = this.selectedUser.userId;
+    this.crearTareaForm.controls["userId"].setValue(this.selectedUser.userId);
   }
   setUserValue(employee : any) {
     this.selectedUser = employee;
     this.data.assignedUser = employee.name;
-    this.crearTareaForm.controls["employeeId"].setValue(employee.name);
+    this.crearTareaForm.controls["userId"].setValue(employee.name);
   }
 
   // public crearUForm: FormGroup;
@@ -84,7 +84,7 @@ export class CrearTareaComponent {
       dateDue: new FormControl(null, [Validators.required, DateValidator.dateNotInPast]),
       priorityId : new FormControl(null, [Validators.required]),
       projectId : new FormControl(null, [Validators.required]),
-      employeeId : new FormControl(null, [Validators.required]),
+      userId : new FormControl(null, [Validators.required]),
     }
       )
   }
@@ -137,7 +137,7 @@ export class CrearTareaComponent {
        this.usuariosList = data;
        console.log(data)
        this.usuariosList = this.usuariosList.filter(x => x.roleId == 2); 
-       this.filteredUserList$ = this.crearTareaForm.get('employeeId')?.valueChanges.pipe(
+       this.filteredUserList$ = this.crearTareaForm.get('userId')?.valueChanges.pipe(
          startWith(''),
          debounceTime(300),
          map(value => this._filterUser(value))

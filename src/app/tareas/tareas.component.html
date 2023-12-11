@@ -59,7 +59,7 @@ $(document).ready(function(){
 			<div class="col-sm-6">
 			  <h2>Mantenimiento de <b>Tareas</b></h2>
 			</div>
-
+			
 
 			<div class="col-sm-6 text-right">
 			  <!-- Botón para crear tareas en la misma fila que el título -->
@@ -67,50 +67,59 @@ $(document).ready(function(){
 				<mat-icon>add</mat-icon> Crear Tarea
 			  </button>
 			</div>
+			<div class="col-sm-6">
+            <mat-form-field appearance="fill">
+            <mat-label>Buscar tareas</mat-label>
+            <mat-icon matPrefix>search</mat-icon>
+              <input
+                matInput
+                type="text"
+                id="searchInput"
+                [(ngModel)]="searchTerm"
+                (ngModelChange)="applyFilter()"
+              />
+            </mat-form-field>
+          	</div>
 		  </div>
-		
-
 			<div class="table-responsive">
-				<mat-table [dataSource]="dataSource">
+				<mat-table [dataSource]="filteredTasks" matSort >  <!---->
 
-
-				
-					<ng-container matColumnDef="name">
+					<ng-container *ngFor="let column of ['name']" matColumnDef="name">
 						<mat-header-cell *matHeaderCellDef>Nombre</mat-header-cell>
 						<mat-cell *matCellDef="let task">{{ task.name }}</mat-cell>
 					</ng-container>
 
-					<ng-container matColumnDef="description">
+					<ng-container *ngFor="let column of ['description'] " matColumnDef="description">
 						<mat-header-cell *matHeaderCellDef>Descripción</mat-header-cell>
 						<mat-cell *matCellDef="let task">{{ task.description }}</mat-cell>
 					</ng-container>
 
-					<ng-container matColumnDef="dateDue">
+					<ng-container *ngFor="let column of ['dateDue']" matColumnDef="dateDue">
 						<mat-header-cell *matHeaderCellDef>Fecha Limite</mat-header-cell>
 						<mat-cell *matCellDef="let task">{{ task.dateDue }}</mat-cell>
 					</ng-container>
 
-					<ng-container matColumnDef="statusId">
+					<ng-container *ngFor="let column of ['statusId'] " matColumnDef="statusId">
 						<mat-header-cell *matHeaderCellDef>Estado</mat-header-cell>
 						<mat-cell *matCellDef="let task">{{ task.statusId }}</mat-cell>
 					</ng-container>
 
-					<ng-container matColumnDef="priorityId">
+					<ng-container *ngFor="let column of ['priorityId']" matColumnDef="priorityId">
 						<mat-header-cell *matHeaderCellDef>Prioridad</mat-header-cell>
 						<mat-cell *matCellDef="let task">{{ task.priorityId }}</mat-cell>
 					</ng-container>
 
-					<ng-container matColumnDef="projectId"> 
+					<ng-container *ngFor="let column of ['projectId']" matColumnDef="projectId"> 
 						<mat-header-cell *matHeaderCellDef>Proyecto</mat-header-cell>
 						<mat-cell *matCellDef="let task">{{ task.projectId }}</mat-cell>
 					</ng-container> 
 					
-					<ng-container matColumnDef="employeeId"> 
+					<ng-container *ngFor="let column of ['userId']" matColumnDef="userId"> 
 						<mat-header-cell *matHeaderCellDef>Asignado</mat-header-cell>
-						<mat-cell *matCellDef="let task">{{ task.employeeId }}</mat-cell>
+						<mat-cell *matCellDef="let task">{{ task.userId }}</mat-cell>
 					</ng-container>
 
-					<ng-container matColumnDef="actions">
+					<ng-container *ngFor="let column of ['actions']" matColumnDef="actions">
 						<mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
 						<mat-cell *matCellDef="let task">
 							<button mat-icon-button (click)="openDialogEditar(task)" matTooltip="Editar">
@@ -125,7 +134,8 @@ $(document).ready(function(){
 					<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
 					<mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
 
-					
+
+
 				</mat-table>
 			</div>
 		</div>

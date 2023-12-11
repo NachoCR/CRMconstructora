@@ -61,7 +61,8 @@
       <br /><br />
 
       <div class="row">
-        <div class="col-12 col-md-4" *ngFor="let provider of proveedoresList">
+        <app-buscar-proveedor (filtroChangeProv)="aplicarFiltroProv($event)"></app-buscar-proveedor>
+        <div class="col-12 col-md-4" *ngFor="let provider of proveedoresList | filter2: filtro">
           <mat-card>
             <img mat-card-image src="../../assets/images/epaLoog.webp" alt="Project 1" />
             <mat-card-header>
@@ -85,6 +86,8 @@
           </mat-card>
         </div>
       </div>
+      <mat-paginator [pageSize]="10" [pageIndex]="0" [length]="dataSource.data.length"></mat-paginator>
+
     </div>
   </div>
 </body>
