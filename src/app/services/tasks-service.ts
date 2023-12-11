@@ -9,7 +9,7 @@ export class TasksService {
   readonly APIUrl;
 
   constructor(private http: HttpClient) {
-    this.APIUrl = "https://localhost:7226/api" //url de la sln
+    this.APIUrl = 'https://localhost:7226/api'; //url de la sln
   }
 
   getTasksList(): Observable<any[]> {
@@ -23,5 +23,15 @@ export class TasksService {
         })
       );
   }
-
+  getTasksByUser(): Observable<any[]> {
+    return this.http
+      .get<any>(this.APIUrl + '/Task', {
+        headers: {},
+      })
+      .pipe(
+        map((data: any) => {
+          return data;
+        })
+      );
+  }
 }

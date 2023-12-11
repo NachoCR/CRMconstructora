@@ -4,8 +4,8 @@ import { CalendarOptions } from '@fullcalendar/core';
 import { EventDef } from '@fullcalendar/core/internal';
 import { TareasData } from 'app/interfaces/tareas.interface';
 import { TasksService } from 'app/services/tasks-service';
-import { take } from 'rxjs';
-// import dayGridMonth from '@fullcalendar/daygrid';
+import { take, takeLast } from 'rxjs';
+import dayGridMonth from '@fullcalendar/daygrid';
 import multiMonthPlugin from '@fullcalendar/multimonth';
 import { DatePipe } from '@angular/common';
 import { MatDialog, MatDialogContent } from '@angular/material/dialog';
@@ -18,17 +18,17 @@ import { EventDetailsDialogComponent } from '../event-details-dialog-component/e
 })
 export class TaskCalendarComponent {
   @Input() taskData: any;
-
+  @Input() userId?: number;
   eventsData: any[] = [];
   calendarOptions: CalendarOptions = {
-    plugins: [multiMonthPlugin],
-    initialView: 'multiMonthFourMonth',
-    views: {
-      multiMonthFourMonth: {
-        type: 'multiMonth',
-        duration: { months: 3 },
-      },
-    },
+    plugins: [multiMonthPlugin, dayGridMonth],
+    initialView: 'dayGridMonth',
+    // views: {
+    //   multiMonthFourMonth: {
+    //     type: 'multiMonth',
+    //     duration: { months: 3 },
+    //   },
+    // },
     eventInteractive: true,
     eventMinHeight: 1000,
     weekends: false,
@@ -43,33 +43,70 @@ export class TaskCalendarComponent {
   };
   datepipe: DatePipe = new DatePipe('en-US');
 
-  // @Output() imagePostedURLEvent = new EventEmitter<string>();
-
   constructor(
     private taskService: TasksService,
     private dialog: MatDialog // Inject ModalService
   ) {
+    if (this.userId) {
+      this.getTareasByUser();
+    }
     this.getTareasList();
   }
+  getTareasByUser(pId: number): void {
+    const eventList: any[] = [];
 
-  getTareasList() {
-    this.taskService
+    const subscription = this.taskService
       .getTasksList()
       .pipe()
-      .subscribe(result => {
-        const eventList = result.map(taskData => {
-          return {
-            title: taskData.name,
-            start: this.datepipe.transform(taskData.startDate, 'YYYY-MM-dd')?.toString(),
-            end: this.datepipe.transform(taskData.dateDue, 'YYYY-MM-dd')?.toString(),
-            extendedProps: {
-              description: taskData.description,
-            },
-          };
-        });
-        this.calendarOptions.events = eventList;
+      .subscribe({
+        next: (result: any[]): void => {
+          for (const task of result) {
+            eventList.push({
+              title: task.name,
+              start: this.datepipe.transform(task.startDate, 'YYYY-MM-dd'),
+              end: this.datepipe.transform(task.dueDate, 'YYYY-MM-dd'),
+              extendedProps: {
+                description: task.description,
+              },
+            });
+          }
+          this.calendarOptions.events = eventList;
+        },
+        error: (error: Error): void => {
+          console.error(error);
+        },
+        complete: () => {
+          subscription.unsubscribe();
+        },
+      });
+  }
 
-        console.log(eventList);
+  getTareasList(): void {
+    const eventList: any[] = [];
+
+    const subscription = this.taskService
+      .getTasksList()
+      .pipe()
+      .subscribe({
+        next: (result: any[]): void => {
+          for (const task of result) {
+            eventList.push({
+              title: task.name,
+              start: this.datepipe.transform(task.startDate, 'YYYY-MM-dd'),
+              end: this.datepipe.transform(task.dueDate, 'YYYY-MM-dd'),
+              extendedProps: {
+                description: task.description,
+              },
+            });
+          }
+          this.calendarOptions.events = eventList;
+        },
+        error: (error: Error): void => {
+          console.error(error);
+        },
+        complete: () => {
+          subscription.unsubscribe();
+        },
       });
   }
 }
