@@ -32,6 +32,8 @@ export class EditarProductoComponent {
     price: [1, [Validators.required, this.validadorNoCeroNiNegativo()]],
     providerId: ['', [Validators.required]],
     unitId: ['', [Validators.required]],
+    quantity: [0, [Validators.required]],
+  
   });
 
   constructor(
@@ -64,6 +66,7 @@ export class EditarProductoComponent {
       price: this.data.price,
       providerId: this.data.providerId,
       unitId: this.data.unitId.toString(),
+      quantity: this.data.quantity,
     });
   }
 

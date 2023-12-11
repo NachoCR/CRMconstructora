@@ -31,6 +31,7 @@ export class CrearProductoComponent {
     price: [1, [Validators.required, this.validadorNoCeroNiNegativo()]],
     providerId: ['', [Validators.required]],
     unitId: ['', [Validators.required]],
+    quantity: [0, [Validators.required]],
   });
 
   constructor(
