@@ -2,17 +2,17 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ContactosData } from 'app/interfaces/contacto.interface';
 import { ProveedorService } from '../../services/proveedor.service';
-import { FormBuilder, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, ValidatorFn, Validators } from '@angular/forms';
 import { ContactoService } from '../../services/contacto.service';
 
 @Component({
   selector: 'app-crear-contacto',
   templateUrl: './crear-contacto.component.html',
-  styleUrls: ['./crear-contacto.component.scss'],
+  styleUrls: ['./crear-contacto.component.scss']
 })
 export class CrearContactoComponent implements OnInit {
-  proveedorList: any[] = [];
 
+  proveedorList: any[] = [];
   phoneError: string = '';
   emailError: string = '';
 
@@ -21,9 +21,9 @@ export class CrearContactoComponent implements OnInit {
     lastname: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
     secondLastname: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
     email: ['', [Validators.required, Validators.email]],
-    phone: ['', [Validators.required]],
+    phone: ['', [Validators.required, Validators.maxLength(8), this.phoneNumberValidator()]],
     providerId: ['', [Validators.required]],
-    details: ['', [Validators.required, Validators.minLength(10)]],
+    details: ['', [Validators.required, Validators.minLength(10)]]
   });
 
   constructor(
@@ -40,22 +40,31 @@ export class CrearContactoComponent implements OnInit {
 
   ngOnInit(): void {
     this.getProviderList();
-    this.contactoForm.get('email')?.valueChanges.subscribe(value => {
-      this.validate({ email: value, phone: this.contactoForm.get('phone')?.value });
+    this.contactoForm.get('email')?.valueChanges.subscribe((value) => {
+      this.validate({ email: value, phone: this.contactoForm.get('phone')?.value?.toString() });
     });
-    this.contactoForm.get('phone')?.valueChanges.subscribe(value => {
-      this.validate({ email: this.contactoForm.get('email')?.value, phone: value });
+    this.contactoForm.get('phone')?.valueChanges.subscribe((value) => {
+      this.validate({ email: this.contactoForm.get('email')?.value, phone: value?.toString() });
     });
+  }
+
+  onInput(controlName: string): void {
+    const control = this.contactoForm.get(controlName);
+    if (control) {
+      control.markAsDirty();
+      control.markAsTouched();
+    }
   }
 
   getProviderList(): void {
     this.proveedorService.getProvidersList().subscribe((result: any) => {
-      //console.log(result);
       this.proveedorList = result;
     });
   }
 
   onSave(): void {
+    const phoneValue = this.contactoForm.get('phone')?.value?.toString();
+    this.contactoForm.patchValue({ phone: phoneValue });
     if (this.contactoForm.valid) {
       this.dialogRef.close(this.contactoForm.value);
     }
@@ -63,19 +72,17 @@ export class CrearContactoComponent implements OnInit {
 
   validate(input: any): void {
     this.contactoService.validate(input).subscribe(
-      response => {
+      (response) => {
         this.emailError = '';
         this.phoneError = '';
       },
-      error => {
+      (error) => {
         this.emailError = '';
         this.phoneError = '';
-
         if (error.status === 400 && error.error && error.error.errors) {
           const errorResponse = error.error;
           for (const key in errorResponse.errors) {
             if (errorResponse.errors.hasOwnProperty(key)) {
-              //console.table(key);
               const errorMessage = errorResponse.errors[key].errors[0].errorMessage;
               if (key === 'Email') {
                 this.emailError = errorMessage;
@@ -88,4 +95,16 @@ export class CrearContactoComponent implements OnInit {
       }
     );
   }
+
+  private phoneNumberValidator(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      const phoneNumber = control.value;
+      const phoneNumberPattern = /^\d{8}$/;
+      if (!phoneNumberPattern.test(phoneNumber)) {
+        return { invalidPhoneNumber: true };
+      }
+      return null;
+    };
+  }
+
 }

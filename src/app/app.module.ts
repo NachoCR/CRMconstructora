@@ -56,6 +56,10 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { DetallesContactoComponent } from './contactos/detalles-contacto/detalles-contacto.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { ProductosComponent } from './productos/productos/productos.component';
+import { DetallesProductoComponent } from './productos/detalles-producto/detalles-producto.component';
+import { CrearProductoComponent } from './productos/crear-producto/crear-producto.component';
+import { EditarProductoComponent } from './productos/editar-producto/editar-producto.component';
 
 
 
@@ -93,6 +97,12 @@ export function TranslateHttpLoaderFactory(http: HttpClient) {
     EditarProveedorComponent,
     EditarTareaComponent,
     DetallesContactoComponent,
+    ProductosComponent,
+    DetallesProductoComponent,
+    CrearProductoComponent,
+    DetallesProductoComponent,
+    EditarProductoComponent
+
   ],
 
   imports: [
