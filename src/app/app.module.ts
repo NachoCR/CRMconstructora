@@ -27,7 +27,7 @@ import { BASE_URL, httpInterceptorProviders, appInitializerProviders } from '@co
 
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemDataService } from '@shared/in-mem/in-mem-data.service';
-import { ProveedoresComponent } from './proveedores/proveedores.component';
+import { FilterPipe2, ProveedoresComponent } from './proveedores/proveedores.component';
 import { CatalogoProveedorComponent } from './catalogo-proveedor/catalogo-proveedor.component';
 import { LandingComponent } from './landing/landing.component';
 import { LoginComponent } from './auth/login/login.component';
@@ -52,6 +52,12 @@ import { BuscarProyectoComponent } from './buscar-proyecto/buscar-proyecto.compo
 import { MatSelectModule } from '@angular/material/select';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { DetallesContactoComponent } from './contactos/detalles-contacto/detalles-contacto.component';
+import { BuscarProveedorComponent } from './buscar-proveedor/buscar-proveedor.component';
+import { SolicitudesComponent } from './solicitudes/solicitudes/solicitudes.component';
+import { CrearSolicitudComponent } from './solicitudes/crear-solicitud/crear-solicitud.component';
+import { EditarSolicitudComponent } from './solicitudes/editar-solicitud/editar-solicitud.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
+
 
 // Required for AOT compilation
 export function TranslateHttpLoaderFactory(http: HttpClient) {
@@ -62,10 +68,13 @@ export function TranslateHttpLoaderFactory(http: HttpClient) {
   declarations: [
     AppComponent,
     FilterPipe,
+    FilterPipe2,
     ContactosComponent,
     CrearContactoComponent,
     EditarContactoComponent,
     BuscarProyectoComponent,
+    ProveedoresComponent,
+    BuscarProveedorComponent,
     UsuariosComponent,
     CrearUsuarioComponent,
     EditarUsuarioComponent,
@@ -82,6 +91,9 @@ export function TranslateHttpLoaderFactory(http: HttpClient) {
     ProveedoresComponent,
     CrearProveedorComponent,
     EditarProveedorComponent,
+    SolicitudesComponent, 
+    CrearSolicitudComponent,
+    EditarSolicitudComponent,
 
     EditarTareaComponent,
     DetallesContactoComponent,

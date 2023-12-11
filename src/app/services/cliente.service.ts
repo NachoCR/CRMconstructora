@@ -20,14 +20,14 @@ export class ClienteService {
       })
       .pipe(
         map((data: any) => {
-          console.log(data);
+          
           return data;
         })
       );
   }
 
   addCliente(client: any): Observable<any> {
-    console.log(client);
+    
     let res;
 
     return this.http.put<any>(this.APIUrl + '/Client/', client).pipe(map((data: any) => data));
@@ -39,7 +39,7 @@ export class ClienteService {
 
   deleteCliente(client: any) {
     let res;
-    console.log(client);
+    
     return this.http
       .delete<any>(this.APIUrl + '/Client/' + client.clientId)
       .subscribe(data => (res = data));

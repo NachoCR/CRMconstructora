@@ -26,12 +26,14 @@ import { EditarTareaComponent } from 'app/editar-tarea/editar-tarea.component';
 import { ContactosComponent } from 'app/contactos/contactos/contactos.component';
 import { RecoverComponent } from './sessions/recover/recover.component';
 import { FileUploadComponent } from '@shared/components/file-upload/file-upload.component';
+import { SolicitudesComponent } from 'app/solicitudes/solicitudes/solicitudes.component';
 
 const routes: Routes = [
   { path: '#', component: DashboardComponent },
   { path: '', component: LandingComponent },
   { path: 'usuarios', component: UsuariosComponent },
   { path: 'proyectos', component: ProyectosComponent },
+  { path: 'solicitudes', component: SolicitudesComponent },
   { path: 'proveedores', component: ProveedoresComponent },
   { path: 'tareas', component: TareasComponent },
   { path: 'catalogoProveedor', component: CatalogoProveedorComponent },
@@ -65,6 +67,7 @@ const routes: Routes = [
       { path: 'catalogoProveedor', component: CatalogoProveedorComponent },
       { path: 'ordenesCompra', component: OrdenesCompraComponent },
       { path: 'contactos', component: ContactosComponent },
+      // { path: 'solicitudes', component: SolicitudesComponent },
     ],
   },
   {

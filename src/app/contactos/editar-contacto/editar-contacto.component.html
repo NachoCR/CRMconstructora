@@ -1,9 +1,12 @@
 <mat-dialog-content class="custom-dialog-content">
   <div class="container">
     <div class="row mt-3">
+      <button mat-icon-button class="close-button" (click)="cerrarModal()">
+        <mat-icon>close</mat-icon>
+      </button>
       <div class="col">
-        <form [formGroup]="contactoForm" (ngSubmit)="onSave()" novalidate autocomplete="">
-          <h3>Creación de Contacto</h3>
+        <form [formGroup]="editarContacto" (ngSubmit)="onSave()" novalidate autocomplete="">
+          <h3>Edición de Contacto</h3>
 
           <div class="form-row">
             <div class="form-group col-md-6">
@@ -17,8 +20,8 @@
               />
               <div
                 *ngIf="
-                  contactoForm.get('name')?.hasError('required') &&
-                  contactoForm.get('name')?.touched
+                  editarContacto.get('name')?.hasError('required') &&
+                  editarContacto.get('name')?.touched
                 "
                 class="text-danger"
               >
@@ -26,8 +29,8 @@
               </div>
               <div
                 *ngIf="
-                  contactoForm.get('name')?.hasError('minlength') &&
-                  contactoForm.get('name')?.touched
+                  editarContacto.get('name')?.hasError('minlength') &&
+                  editarContacto.get('name')?.touched
                 "
                 class="text-danger"
               >
@@ -35,8 +38,8 @@
               </div>
               <div
                 *ngIf="
-                  contactoForm.get('name')?.hasError('maxlength') &&
-                  contactoForm.get('name')?.touched
+                  editarContacto.get('name')?.hasError('maxlength') &&
+                  editarContacto.get('name')?.touched
                 "
                 class="text-danger"
               >
@@ -55,8 +58,8 @@
               />
               <div
                 *ngIf="
-                  contactoForm.get('lastname')?.hasError('required') &&
-                  contactoForm.get('lastname')?.touched
+                  editarContacto.get('lastname')?.hasError('required') &&
+                  editarContacto.get('lastname')?.touched
                 "
                 class="text-danger"
               >
@@ -64,8 +67,8 @@
               </div>
               <div
                 *ngIf="
-                  contactoForm.get('lastname')?.hasError('minlength') &&
-                  contactoForm.get('lastname')?.touched
+                  editarContacto.get('lastname')?.hasError('minlength') &&
+                  editarContacto.get('lastname')?.touched
                 "
                 class="text-danger"
               >
@@ -73,8 +76,8 @@
               </div>
               <div
                 *ngIf="
-                  contactoForm.get('lastname')?.hasError('maxlength') &&
-                  contactoForm.get('lastname')?.touched
+                  editarContacto.get('lastname')?.hasError('maxlength') &&
+                  editarContacto.get('lastname')?.touched
                 "
                 class="text-danger"
               >
@@ -97,8 +100,8 @@
               />
               <div
                 *ngIf="
-                  contactoForm.get('secondLastname')?.hasError('required') &&
-                  contactoForm.get('secondLastname')?.touched
+                  editarContacto.get('secondLastname')?.hasError('required') &&
+                  editarContacto.get('secondLastname')?.touched
                 "
                 class="text-danger"
               >
@@ -106,8 +109,8 @@
               </div>
               <div
                 *ngIf="
-                  contactoForm.get('secondLastname')?.hasError('minlength') &&
-                  contactoForm.get('secondLastname')?.touched
+                  editarContacto.get('secondLastname')?.hasError('minlength') &&
+                  editarContacto.get('secondLastname')?.touched
                 "
                 class="text-danger"
               >
@@ -115,8 +118,8 @@
               </div>
               <div
                 *ngIf="
-                  contactoForm.get('secondLastname')?.hasError('maxlength') &&
-                  contactoForm.get('secondLastname')?.touched
+                  editarContacto.get('secondLastname')?.hasError('maxlength') &&
+                  editarContacto.get('secondLastname')?.touched
                 "
                 class="text-danger"
               >
@@ -125,50 +128,67 @@
             </div>
 
             <div class="form-group col-md-6">
-              <label for="email" class="control-label font-weight-bold">Correo Electrónico</label>
+              <label for="email" class="control-label font-weight-bold">Correo</label>
               <input
-                type="text"
+                type="email"
                 class="form-control"
-                placeholder="Correo Electrónico"
                 formControlName="email"
+                placeholder="correo@gmail.com"
                 [(ngModel)]="data.email"
+                [ngClass]="{
+                  'is-valid': (f.email.dirty || submitted) && !f.email.errors,
+                  'is-invalid': (f.email.dirty || submitted) && f.email.errors
+                }"
+                (focusout)="checkEmailExists()"
               />
-              <div
-                *ngIf="
-                  contactoForm.get('email')?.hasError('required') &&
-                  contactoForm.get('email')?.touched
-                "
-                class="text-danger"
-              >
-                El Correo Electrónico es obligatorio.
-              </div>
-              <div *ngIf="emailError" class="text-danger">
-                {{ emailError }}
+              <div class="invalid-feedback">
+                <span class="text-danger" *ngIf="f.email.errors?.required"
+                  >Es requerido el correo electrónico</span
+                >
+                <span class="text-danger" *ngIf="f.email.errors?.email"
+                  >Correo electrónico inválido</span
+                >
+                <span class="text-danger" *ngIf="f.email.errors?.emailExists"
+                  >Este correo electrónico ya está registrado</span
+                >
               </div>
             </div>
           </div>
 
           <div class="form-row">
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-6 col-sm-6">
               <label for="phone" class="control-label font-weight-bold">Teléfono</label>
               <input
                 type="text"
                 class="form-control"
-                placeholder="Teléfono"
                 formControlName="phone"
+                placeholder="12345678"
+                maxlength="8"
+                minlength="8"
                 [(ngModel)]="data.phone"
+                [ngClass]="{
+                  'is-valid': (f.phone.dirty || submitted) && !f.phone.errors,
+                  'is-invalid': (f.phone.dirty || submitted) && f.phone.errors
+                }"
               />
-              <div
-                *ngIf="
-                  contactoForm.get('phone')?.hasError('required') &&
-                  contactoForm.get('phone')?.touched
-                "
-                class="text-danger"
-              >
-                El Teléfono es obligatorio.
-              </div>
-              <div *ngIf="phoneError" class="text-danger">
-                {{ phoneError }}
+        
+              <!-- <div *ngIf="crearUForm.get('phone')?.hasError('invalidPhoneNumber')">
+            <small class="text-danger">Ingrese un número de teléfono válido (8 dígitos).</small>
+          </div> -->
+              <div class="invalid-feedback">
+                <span class="text-danger" *ngIf="f.phone.errors?.required"
+                  >El numero de teléfono es requerido</span
+                >
+                <span class="text-danger" *ngIf="f.phone.errors?.pattern"
+                  >El número debe tener 8 dígitos y solo contener números</span
+                >
+        
+                <!-- Validaciones existentes -->
+                <!-- <span class="text-danger" *ngIf="f.identification.errors?.maxLengthValid">Debe ser de 9 caracteres</span>
+            <div [ngClass]="{ 'text-sucess': minLengthValid, 'text-danger': !minLengthValid }">
+              <i [attr.class]="minLengthValid ? 'bi-check-square-fill' : 'bi-x-square'"></i>
+              Debe ser mínimo de 9 caracteres
+            </div> -->
               </div>
             </div>
 
@@ -186,8 +206,8 @@
               </select>
               <div
                 *ngIf="
-                  contactoForm.get('providerId')?.hasError('required') &&
-                  contactoForm.get('providerId')?.touched
+                  editarContacto.get('providerId')?.hasError('required') &&
+                  editarContacto.get('providerId')?.touched
                 "
                 class="text-danger"
               >
@@ -207,8 +227,8 @@
             ></textarea>
             <div
               *ngIf="
-                contactoForm.get('details')?.hasError('required') &&
-                contactoForm.get('details')?.touched
+                editarContacto.get('details')?.hasError('required') &&
+                editarContacto.get('details')?.touched
               "
               class="text-danger"
             >
@@ -216,8 +236,8 @@
             </div>
             <div
               *ngIf="
-                contactoForm.get('details')?.hasError('minlength') &&
-                contactoForm.get('details')?.touched
+                editarContacto.get('details')?.hasError('minlength') &&
+                editarContacto.get('details')?.touched
               "
               class="text-danger"
             >
@@ -226,17 +246,17 @@
           </div>
 
           <mat-dialog-actions class="custom-dialog-actions">
-            <button mat-button (click)="onNoClick()" class="btn btn-secondary">Cancelar</button>
-            <button
-              mat-button
-              [disabled]="!contactoForm.valid || emailError !== '' || phoneError !== ''"
-              [mat-dialog-close]="data"
-              cdkFocusInitial
-              class="btn btn-success"
-            >
-              Guardar
-            </button>
-          </mat-dialog-actions>
+            <button mat-button (click)="onNoClick()" class="btn btn-default">Cancelar</button>
+          <button
+            mat-button
+            (click)="onSave()"
+            cdkFocusInitial
+            class="btn btn-success"
+            [disabled]="!editarContacto.valid || emailError !== '' || phoneError !== ''"
+          >
+            Guardar
+          </button>
+        </mat-dialog-actions>
         </form>
       </div>
     </div>

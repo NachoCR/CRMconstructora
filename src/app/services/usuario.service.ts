@@ -19,26 +19,27 @@ export class UsuarioService {
       })
       .pipe(
         map((data: any) => {
-          console.log(data);
+       
           return data;
         })
       );
   }
 
   addUsuario(user: any): Observable<any> {
-    console.log(user);
+  
     let res;
     user.phone = user.phone.toString();
     return this.http.put<any>(this.APIUrl + '/User/', user).pipe(map((data: any) => data));
   }
 
   updateUsuario(user: any): Observable<any> {
+    console.log(user);
     return this.http.put<any>(this.APIUrl + '/User/', user).pipe(map((data: any) => data));
   }
 
   deleteUsuario(user: any) {
     let res;
-    console.log(user);
+  
     return this.http
       .delete<any>(this.APIUrl + '/User/' + user.userId)
       .subscribe(data => (res = data));

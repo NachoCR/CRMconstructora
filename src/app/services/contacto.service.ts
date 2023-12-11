@@ -19,22 +19,24 @@ export class ContactoService {
       })
       .pipe(
         map((data: any) => {
-          console.log(data);
+         
           return data;
         })
       );
   }
 
   addContacto(contacto: any): Observable<any> {
-    console.log(contacto);
+    
     let res;
-    debugger;
+    
     return this.http
       .put<any>(this.APIUrl + '/ProviderContact/', contacto)
       .pipe(map((data: any) => data));
   }
 
   updateContacto(contacto: any): Observable<any> {
+    debugger;
+    console.log(contacto)
     return this.http
       .put<any>(this.APIUrl + '/ProviderContact/', contacto)
       .pipe(map((data: any) => data));
@@ -52,7 +54,7 @@ export class ContactoService {
   }
 
   validate(validate: any): Observable<any> {
-    console.log('Llamada a validate:', validate);
+  
     return this.http.post<any>(this.APIUrl + '/ProviderContact', validate);
   }
 }

@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { DateValidator } from 'app/date-validator';
 import { ProyectoData } from 'app/interfaces/proyecto.interface';
@@ -9,6 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { Observable, debounceTime, map, startWith } from 'rxjs';
 import { UsuarioService } from 'app/services/usuario.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-crear-proyecto',
@@ -38,13 +39,27 @@ export class CrearProyectoComponent {
     return null;
   }
 
+  selectedUser: any;
+  
+  transformData2() {
+    this.data.assignedUser = this.selectedUser.userId;
+    this.crearProyectoForm.controls["userId"].setValue(this.selectedUser.userId);
+  }
+  setUserValue(user : any) {
+    debugger
+    this.selectedUser = user;
+    console.log(user)
+    this.data.assignedUser = user.name;
+    this.crearProyectoForm.controls["userId"].setValue(user.userId);
+  }
+
   proyecto?: ProyectoData;
 
   constructor(
     public dialogRef: MatDialogRef<CrearProyectoComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder,
-    private clienteService: ClienteService
+    private usuarioService: UsuarioService
   ) {
     // this.crearUForm = this.crearUsuarioForm();
 
@@ -54,14 +69,15 @@ export class CrearProyectoComponent {
       startDate: new FormControl(null, [Validators.required, DateValidator.dateNotInPast]),
       endDate: new FormControl(null, [Validators.required, DateValidator.dateNotInPast]),
       statusId: new FormControl(null, [Validators.required]),
-      clientId: new FormControl(null),
+      userId: new FormControl(null),
     });
   }
 
-  clientesList: any[] = []; // Aquí almacenarás la lista de clientes
+
+  userList: any[] = []; // Aquí almacenarás la lista de clientes
   // empleadosList: any[] = []; // Aquí almacenarás la lista de clientes
 
-  filteredClientesList$: Observable<any[]> | undefined;
+  filteredUserList$: Observable<any[]> | undefined;
   // filteredEmpleadosList$: Observable<any[]> | undefined;
 
   get f() {
@@ -90,32 +106,24 @@ export class CrearProyectoComponent {
 
   ngOnInit(): void {
     //Servicio de clientes para cargar la lista
-    this.clienteService.getClientList().subscribe(data => {
-      this.clientesList = data;
-      this.filteredClientesList$ = this.crearProyectoForm.get('clientId')?.valueChanges.pipe(
+    this.usuarioService.getUserList().subscribe((data) => {
+      this.userList = data.filter(x => x.roleId == 1); 
+      
+      console.log(data)
+      this.filteredUserList$ = this.crearProyectoForm.get('userId')?.valueChanges.pipe(
         startWith(''),
         debounceTime(300),
-        map(value => this._filterClientes(value))
+        map(value => this._filterUser(value))
       );
     });
-
-    //Servicio de empleados para cargar la lista
-    // this.usuarioService.getUserList().subscribe((data) => {
-    //   this.empleadosList = data;
-    //   this.filteredEmpleadosList$ = this.crearProyectoForm.get('employeeId')?.valueChanges.pipe(
-    //     startWith(''),
-    //     debounceTime(300),
-    //     map(value => this._filterEmpleados(value))
-    //   );
-    // });
-
+    // this.crearProyectoForm.setControl('endDate', new FormControl(null, [Validators.required, DateValidator.dateFactory(new Date (this.crearProyectoForm.get('startDate')?.value))]));
     console.log(this.data);
   }
 
   //Filtro clientes
-  private _filterClientes(value: string): any[] {
+  private _filterUser(value: string): any[] {
     const filterValue = value.toLowerCase();
-    return this.clientesList.filter(cliente => cliente.name.toLowerCase().includes(filterValue));
+    return this.userList.filter(user => user.name.toLowerCase().includes(filterValue));
   }
 
   //Filtro empleados
@@ -126,5 +134,9 @@ export class CrearProyectoComponent {
   handleFileUploadUrl($event: string) {
     this.data.imageURL = $event;
     if (this.proyecto) this.proyecto.imageURL = $event;
+  }
+
+  cerrarModal() {
+    this.dialogRef.close();
   }
 }

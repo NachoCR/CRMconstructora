@@ -61,33 +61,44 @@
       <br /><br />
 
       <div class="row">
-        <app-buscar-proyecto (filtroChange)="aplicarFiltro($event)"></app-buscar-proyecto>
-        <div class="col-12 col-md-4" *ngFor="let project of proyectosList | filter: filtro">
+        <div style="display: flex; align-items: center;">
+          <app-buscar-proyecto (filtroChange)="aplicarFiltro($event)"></app-buscar-proyecto>
+          <mat-form-field style="margin-left: 10px;">
+            <input matInput [matDatepicker]="pickerFechaInicio" placeholder="Filtrar por fecha de inicio" [(ngModel)]="fechaInicioFilter" (ngModelChange)="filtrarPorFechaInicio()">
+            <mat-datepicker-toggle matSuffix [for]="pickerFechaInicio"></mat-datepicker-toggle>
+            <mat-datepicker #pickerFechaInicio></mat-datepicker>
+          </mat-form-field>
+          <button mat-button style="margin-left: 10px;" (click)="limpiarFiltros()" [disabled]="!pickerFechaInicioSeleccionada">Limpiar fecha</button>
+        </div>
+
+
+
+        <div class="col-12 col-md-4" *ngFor="let project of proyectosPaginados | filter: filtro">
           <mat-card style="min-height: 490px">
             <img
               mat-card-image
               style="min-height: 230px"
-              [src]="this.checkProjectImage(project.imageURL)"
+              [src]="this.checkProjectImage(project?.imageURL)"
               alt="Project 1"
             />
             <mat-card-header>
-              <mat-card-title>{{ project.name }}</mat-card-title>
+              <mat-card-title>{{ project?.name }}</mat-card-title>
               <mat-card-subtitle>
                 Estado:
                 {{
-                  project.statusId === 1
+                  project?.statusId === 1
                     ? 'Nuevo'
-                    : project.statusId === 2
+                    : project?.statusId === 2
                       ? 'En Progreso'
                       : 'Estado Desconocido'
                 }}
               </mat-card-subtitle>
             </mat-card-header>
             <mat-card-content>
-              <p style="font-size: small">Descripción del proyecto: {{ project.description }}</p>
-              <p style="font-size: small">Cliente: {{ project.client.name }}</p>
-              <p style="font-size: smaller">Fecha Inicio: {{ project.startDate }}</p>
-              <p style="font-size: smaller">Fecha Entrega: {{ project.endDate }}</p>
+              <p style="font-size: small">Descripción del proyecto: {{ project?.description }}</p>
+              <p style="font-size: small">Cliente: {{ project?.client?.name }}</p>
+              <p style="font-size: smaller">Fecha Inicio: {{ project?.startDate }}</p>
+              <p style="font-size: smaller">Fecha Entrega: {{ project?.endDate }}</p>
             </mat-card-content>
             <mat-card-actions>
               <button mat-icon-button (click)="openDialogEditar(project)" matTooltip="Editar">
@@ -99,6 +110,14 @@
             </mat-card-actions>
           </mat-card>
         </div>
+        <mat-paginator
+        
+        [length]="proyectosList.length"
+        [pageSize]="pageSize"
+        [pageSizeOptions]="pageSizeOptions"
+        (page)="onPageChange($event)"
+        showFirstLastButtons 
+      ></mat-paginator>
       </div>
     </div>
   </div>

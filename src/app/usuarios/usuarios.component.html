@@ -47,6 +47,7 @@
   <br /><br />
   <div class="container-fluid">
     <div class="container">
+
       <div class="row">
         <div class="col-sm-6">
           <h2>Mantenimiento de <b>Usuarios</b></h2>
@@ -54,14 +55,36 @@
 
         <div class="col-sm-6 text-right">
           <!-- Botón para crear usuarios en la misma fila que el título -->
+          <button mat-raised-button color="secondary" (click)="exportTable()">
+            <mat-icon>download</mat-icon> Exportar
+          </button>
           <button mat-raised-button color="primary" (click)="openDialog()">
             <mat-icon>add</mat-icon> Crear Usuario
           </button>
+
+          
         </div>
+
+        
+       
+          <div class="col-sm-6">
+            <mat-form-field appearance="fill">
+            <mat-label>Buscar usuarios</mat-label>
+            <mat-icon matPrefix>search</mat-icon>
+              <input
+                matInput
+                type="text"
+                id="searchInput"
+                [(ngModel)]="searchTerm"
+                (ngModelChange)="applyFilter()"
+              />
+            </mat-form-field>
+          </div>
+      
       </div>
 
       <div class="table-responsive">
-        <mat-table [dataSource]="dataSource">
+        <mat-table #UsuariosTable  [dataSource]="filteredUsers">
           <ng-container matColumnDef="name">
             <mat-header-cell *matHeaderCellDef>Nombre</mat-header-cell>
             <mat-cell *matCellDef="let user"
@@ -111,6 +134,12 @@
           <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
           <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
         </mat-table>
+        <mat-paginator
+        [length]="usuariosList.length"
+        [pageSize]="pageSize"
+        [pageSizeOptions]="pageSizeOptions"
+        (page)="onPageChange($event)"
+      ></mat-paginator>
       </div>
     </div>
   </div>

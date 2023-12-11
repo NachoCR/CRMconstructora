@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -17,6 +17,8 @@ import { AsyncPipe } from '@angular/common';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { debug } from 'console';
+import { MatPaginator } from '@angular/material/paginator';
+
 
 @Pipe({
   name: 'filter',
@@ -26,12 +28,11 @@ export class FilterPipe implements PipeTransform {
     if (!items || !filtro) {
       return items;
     }
-
     return items.filter(item => {
       // Implementa tu lógica de filtrado según tus necesidades
       return (
         item.name.toLowerCase().includes(filtro) || item.description.toLowerCase().includes(filtro)
-        // Agrega más propiedades según sea necesario
+
       );
     });
   }
@@ -46,7 +47,22 @@ export class ProyectosComponent {
   proyecto?: ProyectoData;
   dataSource: MatTableDataSource<any> = new MatTableDataSource();
   proyectosList: any[] = []; // Asegúrate de que usuariosList contenga tus datos
+  proyectosPaginados: any[] = []; // Lista que se mostrará en la página actual
   filtro: string = '';
+  fechaInicioFilter: Date | null = null;
+  proyectosFiltradosPorFechaInicio: any[] = [];
+  pickerFechaInicioSeleccionada: boolean = false;
+
+  proyectosFiltrados: any[] = [];
+
+    //Paginacion
+
+    pageSizeOptions: number[] = [6, 10, 25, 100];
+    pageSize: number = 6;
+    pageIndex: number = 0;
+    @ViewChild(MatPaginator) paginator!: MatPaginator; // <-- Agrega el modificador !
+  
+    //
 
   aplicarFiltro(filtro: string): void {
     // console.log('filtro:', filtro);
@@ -55,26 +71,65 @@ export class ProyectosComponent {
     // ... rest of your logic
   }
 
+  filtrarPorFechaInicio(): void {
+    debugger
+    this.proyectosFiltradosPorFechaInicio = this.proyectosList.filter(project => {
+      const fechaInicioProyecto = new Date(project.startDate).toISOString();
+      const fechaSeleccionada = this.fechaInicioFilter ? this.fechaInicioFilter.toISOString() : null;
+
+      const fechaInicioCoincide = fechaSeleccionada ? fechaInicioProyecto >= fechaSeleccionada : true;
+
+      return fechaInicioCoincide;
+    });
+
+    // Actualiza el estado del picker
+    this.pickerFechaInicioSeleccionada = this.fechaInicioFilter !== null;
+    // Actualiza la lista que se mostrará en la página actual
+    this.proyectosList = this.proyectosFiltradosPorFechaInicio.slice(
+      this.pageIndex * this.pageSize,
+      (this.pageIndex + 1) * this.pageSize
+    );
+
+
+  this.aplicarPaginacion();
+  this.paginator.firstPage();
+  this.proyectosList = this.proyectosPaginados;
+  this.dataSource.paginator = this.paginator;
+  }
+  limpiarFiltros(): void {
+    // Limpiar filtros
+    this.filtro = ''; 
+    this.fechaInicioFilter = null;
+    this.filtrarPorFechaInicio(); // Aplicar filtrado
+    this.getProyectosList();
+  }
+
   constructor(
     public dialog: MatDialog,
     private proyectoService: ProyectoService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
   ) {}
 
   ngOnInit(): void {
     this.getProyectosList();
   }
 
+  ngAfterViewInit(): void {
+    this.aplicarPaginacion();
+  }
+
+
   getProyectosList(): void {
     this.proyectoService.getProyectList().subscribe((result: any) => {
       this.proyectosList = result;
+      this.aplicarPaginacion(); // Aplicar la paginación aquí
     });
   }
 
   openDialog(): void {
     const dialogRef = this.dialog.open(CrearProyectoComponent, {
-      width: '60%',
+      width:'60%',  
       data: { proyecto: this.proyecto },
     });
 
@@ -108,6 +163,7 @@ export class ProyectosComponent {
 
   openDialogEditar(project: any): void {
     // console.log(project);
+
     const pProyecto = _.cloneDeep(project);
     const dialogRef = this.dialog.open(EditarProyectoComponent, {
       width: '60%',
@@ -115,7 +171,7 @@ export class ProyectosComponent {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      debugger;
+      
 
       if (result) {
         // Mostrar SweetAlert para confirmar los cambios
@@ -133,7 +189,7 @@ export class ProyectosComponent {
               },
               error: e => {
                 this.getProyectosList();
-                debugger;
+                
                 // console.log(e);
                 Swal.fire('Error al guardar los cambios', '', 'info');
               },
@@ -158,7 +214,7 @@ export class ProyectosComponent {
       cancelButtonText: 'No',
     }).then(result => {
       if (result.value) {
-        debugger;
+        
         this.proyectoService.deleteProyecto(project);
         let updatedProjects = this.proyectosList.filter(function (u) {
           if (u.projectId != project.projectId) {
@@ -178,5 +234,18 @@ export class ProyectosComponent {
       return url ?? '';
     }
     return '../../assets/images/inspecciones/inspeccion1.jpg';
+  }
+
+  onPageChange(event: any): void {
+    this.pageSize = event.pageSize;
+    this.pageIndex = event.pageIndex;
+    this.aplicarPaginacion(); // Llamada a la función que aplica la paginación
+  }
+
+  aplicarPaginacion(): void {
+  const startIndex = this.pageIndex * this.pageSize;
+  const endIndex = startIndex + this.pageSize;
+
+  this.proyectosPaginados = this.proyectosList.slice(startIndex, endIndex);
   }
 }

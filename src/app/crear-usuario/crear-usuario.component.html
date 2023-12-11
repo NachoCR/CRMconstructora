@@ -4,9 +4,12 @@
   integrity="sha384-GLhlTQ8iKt6iOpTJMLlGzNqibZiJxz5F3J1qIjK7pNEy"
   crossorigin="anonymous"
 />
-<mat-dialog-content class="custom-dialog-content" style="height: 100% !important">
-  <div class="container-fluid">
+<mat-dialog-content class="custom-dialog-content">
+  <div class="container">
     <div class="row mt-3">
+      <button mat-icon-button class="close-button" (click)="cerrarModal()">
+        <mat-icon>close</mat-icon>
+      </button>
       <div class="col">
         <form [formGroup]="crearUForm" (ngSubmit)="crear()" novalidate autocomplete="">
           <h3>Creación de Usuarios</h3>
@@ -190,44 +193,21 @@
                 style="border-radius: 2px"
                 [(ngModel)]="data.roleId"
               >
-                <option value="1">Cliente</option>
-                <option value="2">Empleado</option>
+                <option value=1>Empleado</option>
+                <option value=2>Cliente</option>
               </select>
             </div>
 
             <!-- Posición -->
-            <div class="form-group col-md-4" *ngIf="crearUForm.get('roleId')?.value === '2'">
+            <div class="form-group col-md-4" *ngIf="crearUForm.get('roleId')?.value === '1'">
               <label for="position" class="control-label font-weight-bold">Posición</label>
-              <select formControlName="position" class="form-select" style="border-radius: 2px">
-                <option value="1">Electrico</option>
-                <option value="1">Plomero</option>
-                <option value="1">Obrero</option>
-                <option value="2">Maestro de obras</option>
-              </select>
-            </div>
-
-            <!-- Proyecto a asignar -->
-            <div class="form-group col-md-4" *ngIf="crearUForm.get('roleId')?.value === '2'">
-              <label for="assignedProject" class="control-label font-weight-bold"
-                >Proyecto a asignar</label
-              >
               <input
-                type="text"
-                placeholder="Buscar proyecto"
-                formControlName="assignedProject"
-                [matAutocomplete]="auto"
-                [(ngModel)]="data.assignedProject"
-                class="form-control"
-              />
-              <mat-autocomplete #auto="matAutocomplete">
-                <mat-option
-                  (click)="setProjectValue(proyecto)"
-                  *ngFor="let proyecto of filteredProyectosList$ | async"
-                  [value]="proyecto.projectId"
-                >
-                  {{ proyecto.name }}
-                </mat-option>
-              </mat-autocomplete>
+              type="text"
+              class="form-control"
+              placeholder="Posición"
+              formControlName="position"
+              [(ngModel)]="data.position"
+            />
             </div>
           </div>
 
@@ -293,13 +273,6 @@
                 <span class="text-danger" *ngIf="f.phone.errors?.pattern"
                   >El número debe tener 8 dígitos y solo contener números</span
                 >
-
-                <!-- Validaciones existentes -->
-                <!-- <span class="text-danger" *ngIf="f.identification.errors?.maxLengthValid">Debe ser de 9 caracteres</span>
-            <div [ngClass]="{ 'text-sucess': minLengthValid, 'text-danger': !minLengthValid }">
-              <i [attr.class]="minLengthValid ? 'bi-check-square-fill' : 'bi-x-square'"></i>
-              Debe ser mínimo de 9 caracteres
-            </div> -->
               </div>
             </div>
           </div>
@@ -454,6 +427,7 @@
               Guardar
             </button>
           </mat-dialog-actions>
+          
         </form>
       </div>
     </div>

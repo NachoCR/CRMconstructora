@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Pipe, PipeTransform, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CrearProveedorComponent } from 'app/crear-proveedor/crear-proveedor.component';
@@ -7,7 +8,30 @@ import { EditarProveedorComponent } from 'app/editar-proveedor/editar-proveedor.
 import { ProveedorData } from 'app/interfaces/proveedor.interface';
 import { ProveedorService } from 'app/services/proveedor.service';
 import * as _ from 'lodash';
+
 import Swal from 'sweetalert2';
+
+
+@Pipe({
+  name: 'filter2',
+})
+export class FilterPipe2 implements PipeTransform {
+  transform(items2: any[], filtro2: string): any[] {
+    if (!items2 || !filtro2) {
+      return items2;
+    }
+debugger
+    return items2.filter(itemProv => {
+      // Implementa tu lógica de filtrado según tus necesidades
+      return (
+        
+        itemProv.name.toLowerCase().includes(filtro2)
+        // Agrega más propiedades según sea necesario
+      );
+    });
+  }
+}
+
 
 @Component({
   selector: 'app-proveedores',
@@ -18,7 +42,25 @@ export class ProveedoresComponent {
   proveedor?: ProveedorData;
   dataSource: MatTableDataSource<any> = new MatTableDataSource();
   proveedoresList: any[] = []; // Asegúrate de que usuariosList contenga tus datos
+  filtroNew: string = '';
+  proveedoresPaginados: any[] = []; // Lista que se mostrará en la página actual
+  proveedoresFiltrados: any[] = [];
 
+    //Paginacion
+
+    pageSizeOptions: number[] = [6, 10, 25, 100];
+    pageSize: number = 6;
+    pageIndex: number = 0;
+    @ViewChild(MatPaginator) paginator!: MatPaginator; // <-- Agrega el modificador !
+  
+    //
+
+  aplicarFiltroProv(filtro2: string): void {
+    // console.log('filtro:', filtro);
+    this.filtroNew = filtro2;
+    // console.log('this.filtro:', this.filtro);
+    // ... rest of your logic
+  }
   constructor(
     public dialog: MatDialog,
     private proveedorService: ProveedorService,
@@ -30,9 +72,15 @@ export class ProveedoresComponent {
     this.getProveedoresList();
   }
 
+  ngAfterViewInit(): void {
+    this.aplicarPaginacion();
+  }
+
+
   getProveedoresList(): void {
     this.proveedorService.getProvidersList().subscribe((result: any) => {
       this.proveedoresList = result;
+      this.aplicarPaginacion(); // Aplicar la paginación aquí
     });
   }
 
@@ -95,7 +143,7 @@ export class ProveedoresComponent {
               },
               error: e => {
                 this.getProveedoresList();
-                debugger;
+                
                 console.log(e);
                 Swal.fire('Error al guardar los cambios', '', 'info');
               },
@@ -120,7 +168,7 @@ export class ProveedoresComponent {
       cancelButtonText: 'No',
     }).then(result => {
       if (result.value) {
-        debugger;
+        
         this.proveedorService.deleteProveedor(provider);
         let updatedProviders = this.proveedoresList.filter(function (u) {
           if (u.providerId != provider.providerId) {
@@ -134,5 +182,18 @@ export class ProveedoresComponent {
         Swal.fire('Cancelado', 'El proveedor no fue eliminado', 'error');
       }
     });
+  }
+
+  onPageChange(event: any): void {
+    this.pageSize = event.pageSize;
+    this.pageIndex = event.pageIndex;
+    this.aplicarPaginacion(); // Llamada a la función que aplica la paginación
+  }
+
+  aplicarPaginacion(): void {
+  const startIndex = this.pageIndex * this.pageSize;
+  const endIndex = startIndex + this.pageSize;
+
+  this.proveedoresPaginados = this.proveedoresList.slice(startIndex, endIndex);
   }
 }
