@@ -5,4 +5,5 @@ export interface catalogoProveedorData {
   price: number;
   providerId?: string;
   unitId: number;
+  quantity: number;
 }

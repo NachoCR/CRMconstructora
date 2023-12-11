@@ -21,7 +21,7 @@ export class ProductosComponent implements OnInit{
   dataSource: MatTableDataSource<any> = new MatTableDataSource();
   productoList: any[] = [];
 
-  displayedColumns: string[] = ['name', 'details', 'price', 'providerId', 'unitId', 'actions'];
+  displayedColumns: string[] = ['name', 'details', 'price', 'providerId', 'unitId', 'quantity', 'actions'];
 
   constructor(public dialog: MatDialog, private productoService: ProductoService, private router: Router, private activatedRoute: ActivatedRoute) {
   }
