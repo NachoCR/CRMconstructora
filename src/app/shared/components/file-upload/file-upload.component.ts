@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { CommunicationService } from './uploadImage.service';
 
 @Component({
   selector: 'app-file-upload',
@@ -17,7 +18,10 @@ export class FileUploadComponent {
 
   @Output() imagePostedURLEvent = new EventEmitter<string>();
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private communicationService: CommunicationService
+  ) {}
 
   onFileSelected(event: any): void {
     const file: File = event.target.files[0];
@@ -44,7 +48,7 @@ export class FileUploadComponent {
 
       this.http.post(this.uploadEndpoint, formData).subscribe({
         next: (result: any) => {
-          this.imagePostedURLEvent?.emit(result.url ?? '');
+          this.communicationService.setResult(result.url);
         },
         error: error => {},
         complete: () => {

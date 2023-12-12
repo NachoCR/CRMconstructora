@@ -17,4 +17,7 @@ export class DetallesContactoComponent {
   onNoClick(): void {
     this.dialogRef.close();
   }
+  cerrarModal() {
+    this.dialogRef.close();
+  }
 }

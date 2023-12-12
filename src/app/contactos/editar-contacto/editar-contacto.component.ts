@@ -1,32 +1,28 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, ValidatorFn, Validators } from '@angular/forms';
+import { Component, Inject } from '@angular/core';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { CrearContactoComponent } from '../crear-contacto/crear-contacto.component';
 import { ContactosData } from 'app/interfaces/contacto.interface';
 import { ProveedorService } from 'app/services/proveedor.service';
 import { ContactoService } from 'app/services/contacto.service';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-editar-contacto',
   templateUrl: './editar-contacto.component.html',
-  styleUrls: ['./editar-contacto.component.scss']
+  styleUrls: ['./editar-contacto.component.scss'],
 })
-export class EditarContactoComponent implements OnInit  {
-
+export class EditarContactoComponent {
   proveedorList: any[] = [];
-
+  contactoList: any[] = [];
   phoneError: string = '';
   emailError: string = '';
+  editarContacto: FormGroup;
+  submitted = false;
+  dataSource: MatTableDataSource<any> = new MatTableDataSource();
+  correoOriginal: any;
 
-  contactoForm = this.fb.group({
-    contactId: this.data.contactId,
-    name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
-    lastname: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
-    secondLastname: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
-    email: ['', [Validators.required, Validators.email]],
-    phone: ['', [Validators.required, Validators.maxLength(8), this.phoneNumberValidator()]],
-    providerId: ['', [Validators.required]],
-    details: ['', [Validators.required, Validators.minLength(10)]]
-  });
+
 
   constructor(
     public dialogRef: MatDialogRef<EditarContactoComponent>,
@@ -34,67 +30,134 @@ export class EditarContactoComponent implements OnInit  {
     private proveedorService: ProveedorService,
     private contactoService: ContactoService,
     private fb: FormBuilder
-  ) {}
+  ) {
+    this.editarContacto = new FormGroup(
+      {
+        name: new FormControl(null, [Validators.required]),
+        lastname: new FormControl(null, [Validators.required]),
+        secondLastname: new FormControl(null, [Validators.required]),
+        email: new FormControl(null, [
+          Validators.required,
+          Validators.email,
+          this.emailValidator,
+          Validators.pattern(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/),
+        ]),
+        
+        phone: new FormControl(null, [
+          Validators.required,
+          Validators.maxLength(8),
+          Validators.minLength(8),
+          Validators.pattern(/^\d{8}$/),
+        ]),
+        providerId: new FormControl(null, [Validators.required]),
+        details: new FormControl(null, [Validators.required, Validators.minLength(10)])
+      },
+
+    );
+
+
+
+  }
+  
+  emailValidator(control: AbstractControl): ValidationErrors | null {
+    const email = control.value as string;
+    if (email && email.indexOf('@') === -1) {
+      return { invalidEmail: true };
+    }
+    return null;
+  }
+
+  onEmailBlur() {
+    this.checkEmailExists();
+    // this.crearUForm.get('email')?.updateValueAndValidity(); // Actualiza la validación de Angular
+  }
+
+  checkEmailExists() {
+    
+    const emailControl = this.editarContacto.get('email');
+    
+    if (emailControl && this.contactoList.length > 0) {
+      const email = emailControl.value;
+
+      const emailExists = this.contactoList.some(contacto => contacto.email === email);
+
+      if (this.correoOriginal != email) {
+        if (emailExists) {
+          emailControl.setErrors({ emailExists: true });
+        } else {
+          emailControl.setErrors(null);
+          emailControl.updateValueAndValidity();
+        }
+      }
+    }
+  }
+
+  private phoneNumberValidator(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      const phoneNumber = control.value;
+      const phoneNumberPattern = /^\d{8}$/; // Asumiendo un número de teléfono de 8 dígitos
+
+      if (!phoneNumberPattern.test(phoneNumber)) {
+        return { invalidPhoneNumber: true };
+      }
+
+      return null;
+    };
+  }
 
   onNoClick(): void {
     this.dialogRef.close();
   }
-
-  onInput(controlName: string): void {
-    const control = this.contactoForm.get(controlName);
-    if (control) {
-      control.markAsDirty();
-      control.markAsTouched();
-    }
+  cerrarModal() {
+    this.dialogRef.close();
   }
-
   ngOnInit(): void {
+    //console.table(this.data);
     this.getProviderList();
-    this.contactoForm.patchValue({
-      contactId: this.data.contactId,
-      name: this.data.name,
-      lastname: this.data.lastname,
-      secondLastname: this.data.secondLastname,
-      email: this.data.email,
-      phone: this.data.phone,
-      providerId: this.data.providerId ? this.data.providerId.toString() : null,
-      details: this.data.details
-    });
-    this.contactoForm.get('email')?.valueChanges.subscribe((value) => {
-      this.validate({ id: this.data.contactId, email: value, phone: this.contactoForm.get('phone')?.value?.toString() });
-    });
-    this.contactoForm.get('phone')?.valueChanges.subscribe((value) => {
-      this.validate({ id: this.data.contactId, email: this.contactoForm.get('email')?.value, phone: value?.toString() });
-    });
+    this.getContactosList();
+
   }
 
   getProviderList(): void {
     this.proveedorService.getProvidersList().subscribe((result: any) => {
+      //console.log(result);
       this.proveedorList = result;
     });
   }
 
+  getContactosList(): void {
+    this.contactoService.getContactoList().subscribe((result: any) => {
+      this.contactoList = result;
+      this.dataSource = new MatTableDataSource(this.contactoList);
+      console.log(result)
+    });
+  }
+
   onSave(): void {
-    const phoneValue = this.contactoForm.get('phone')?.value?.toString();
-    if (this.contactoForm.valid) {
-      const updatedContact = { ...this.contactoForm.value, phone: phoneValue };
-      this.dialogRef.close(updatedContact);
+    if (this.editarContacto.valid) {
+      var contacto = this.editarContacto.value;
+      contacto.contactId = this.data.contactId;
+      
+      this.dialogRef.close(contacto);
     }
   }
 
   validate(input: any): void {
     this.contactoService.validate(input).subscribe(
-      (response) => {
+      response => {
         this.emailError = '';
         this.phoneError = '';
       },
-      (error) => {
+      error => {
         this.emailError = '';
         this.phoneError = '';
+
         if (error.status === 400 && error.error && error.error.errors) {
           const errorResponse = error.error;
+          console.log(errorResponse);
           for (const key in errorResponse.errors) {
             if (errorResponse.errors.hasOwnProperty(key)) {
+              console.table(key);
               const errorMessage = errorResponse.errors[key].errors[0].errorMessage;
               if (key === 'Email') {
                 this.emailError = errorMessage;
@@ -107,16 +170,16 @@ export class EditarContactoComponent implements OnInit  {
       }
     );
   }
+  
+ 
+  get f() {
+    return this.editarContacto.controls;
+  }
 
-  private phoneNumberValidator(): ValidatorFn {
-    return (control: AbstractControl): { [key: string]: any } | null => {
-      const phoneNumber = control.value;
-      const phoneNumberPattern = /^\d{8}$/;
-      if (!phoneNumberPattern.test(phoneNumber)) {
-        return { invalidPhoneNumber: true };
-      }
-      return null;
-    };
+
+
+  checkPhoneLenght(phone: any) {
+    console.log(phone);
   }
 
 }

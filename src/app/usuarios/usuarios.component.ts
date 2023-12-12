@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, Input, ViewChild, ElementRef } from '@angular/core';
 import {
   MAT_DIALOG_DATA,
   MatDialog,
@@ -15,6 +15,11 @@ import Swal from 'sweetalert2';
 import { debug } from 'console';
 import * as _ from 'lodash';
 import { MatTableDataSource } from '@angular/material/table';
+import * as XLSX from 'xlsx'; 
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+
+
+
 
 @Component({
   selector: 'app-usuarios',
@@ -23,11 +28,26 @@ import { MatTableDataSource } from '@angular/material/table';
 })
 export class UsuariosComponent implements OnInit {
   usuario?: UsuarioData;
+  @ViewChild("UsuariosTable") usuariosTable? : ElementRef;
 
   // usuariosList: UsuarioData[] = [];
 
   dataSource: MatTableDataSource<any> = new MatTableDataSource();
   usuariosList: any[] = []; // Asegúrate de que usuariosList contenga tus datos
+  /*name of the excel-file which will be downloaded. */ 
+  fileName= 'Usuarios.xlsx';  
+
+  searchTerm: string = '';
+  filteredUsers: any[] = [];
+
+  //Paginacion
+
+  pageSizeOptions: number[] = [5, 10, 25, 100];
+  pageSize: number = 5;
+  pageIndex: number = 0;
+  @ViewChild(MatPaginator) paginator!: MatPaginator; // <-- Agrega el modificador !
+
+  //
 
   displayedColumns: string[] = [
     'name',
@@ -47,19 +67,65 @@ export class UsuariosComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.aplicarPaginacion();
     this.getUsuariosList();
+     // Llamada inicial para aplicar la paginación
+     
   }
+  ngAfterViewInit(): void {
+    this.dataSource.paginator = this.paginator;
+  }
+
+  
 
   getUsuariosList(): void {
     this.usuarioService.getUserList().subscribe((result: any) => {
       this.usuariosList = result;
+      this.filteredUsers = this.usuariosList;
       this.dataSource = new MatTableDataSource(this.usuariosList);
+      this.dataSource.paginator = this.paginator;
+      this.aplicarPaginacion(); // Aplicar la paginación aquí
     });
   }
 
+  applyFilter(): void {
+    this.filteredUsers = this.usuariosList.filter((user) =>
+      user.name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+      user.identification.toLowerCase().includes(this.searchTerm.toLowerCase()) 
+    );
+    
+  }
+
+  exportTable() {
+    this.dataSource.data.map(x => {
+      console.log(x);
+    })
+  
+    let data = this.dataSource.data.map(x => ({
+      "User Id": x.userId,
+      "Tipo Identificacion": x.identifierType,
+      "Nombre" : x.name,
+      "Primer Apellido": x.lastname,
+      "Segundo Apellido" : x.secondLastname,
+      "Teléfono" : x.phone, 
+      "Identificación" : x.identification,
+      "Correo" : x.email,
+      "Rol" : x.roleId,
+      "Posición" : x.position
+    }))
+    let ws = XLSX.utils.json_to_sheet(data, <XLSX.Table2SheetOpts>{
+      sheet: "usuarios"
+    });
+    let wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'usuarios'); 
+    XLSX.writeFile(wb, 'usuarios.xlsx');
+  }
+
+
+  
   openDialog(): void {
     const dialogRef = this.dialog.open(CrearUsuarioComponent, {
-      width: '100%',
+      
       data: { usuario: this.usuario },
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -96,7 +162,7 @@ export class UsuariosComponent implements OnInit {
     console.log(user);
     const pUser = _.cloneDeep(user);
     const dialogRef = this.dialog.open(EditarUsuarioComponent, {
-      width: '80%',
+
       data: pUser,
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -112,6 +178,7 @@ export class UsuariosComponent implements OnInit {
             this.usuarioService.updateUsuario(result).subscribe({
               next: () => {
                 this.getUsuariosList();
+                console.log(result)
                 Swal.fire('Cambios guardados!', '', 'success');
               },
               error: e => {
@@ -143,20 +210,14 @@ export class UsuariosComponent implements OnInit {
       if (result.value) {
         this.usuarioService.deleteUsuario(user);
         setTimeout(() => {}, 2000);
+      // Agrega un tiempo de espera antes de actualizar la lista
+      setTimeout(() => {
         this.getUsuariosList();
-
-        // let updatedUsers = this.usuariosList.filter(function(u) {
-        //   if (u.userId != user.userId) {
-        //   return u;
-        //   }
-        //   return null;
-        // })
-        // this.usuariosList = updatedUsers;
-        //this.router.navigate([this.router.url]);
         Swal.fire('Eliminado!', 'Usuario eliminado.', 'success');
-      } else if (result.dismiss === Swal.DismissReason.cancel) {
-        Swal.fire('Cancelado', 'El usuario no fue eliminado', 'error');
-      }
+      }, 2000);
+    } else if (result.dismiss === Swal.DismissReason.cancel) {
+      Swal.fire('Cancelado', 'El usuario no fue eliminado', 'error');
+    }
     });
   }
 
@@ -176,4 +237,18 @@ export class UsuariosComponent implements OnInit {
     [3, 'Administrador'],
     // Agrega más pares ID de rol - Nombre de rol según tus necesidades
   ]);
+
+  onPageChange(event: any): void {
+    this.pageSize = event.pageSize;
+    this.pageIndex = event.pageIndex;
+    this.aplicarPaginacion(); // Llamada a la función que aplica la paginación
+  }
+
+  aplicarPaginacion(): void {
+    const startIndex = this.pageIndex * this.pageSize;
+  const endIndex = startIndex + this.pageSize;
+  const paginatedData = this.usuariosList.slice(startIndex, endIndex);
+  this.filteredUsers = paginatedData;
+  console.log(paginatedData)
+  }
 }

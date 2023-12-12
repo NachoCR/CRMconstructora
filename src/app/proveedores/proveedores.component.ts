@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Pipe, PipeTransform, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CrearProveedorComponent } from 'app/crear-proveedor/crear-proveedor.component';
@@ -7,27 +8,30 @@ import { EditarProveedorComponent } from 'app/editar-proveedor/editar-proveedor.
 import { ProveedorData } from 'app/interfaces/proveedor.interface';
 import { ProveedorService } from 'app/services/proveedor.service';
 import * as _ from 'lodash';
+
 import Swal from 'sweetalert2';
-import { Pipe, PipeTransform } from '@angular/core';
+
 
 @Pipe({
-  name: 'filter2'
+  name: 'filter2',
 })
 export class FilterPipe2 implements PipeTransform {
-  transform(itemsProv: any[], filtro: string): any[] {
-    if (!itemsProv || !filtro) {
-      return itemsProv;
+  transform(items2: any[], filtro2: string): any[] {
+    if (!items2 || !filtro2) {
+      return items2;
     }
-    debugger
-    return itemsProv.filter(item => {
+
+    return items2.filter(itemProv => {
       // Implementa tu lógica de filtrado según tus necesidades
       return (
-        item.name.toLowerCase().includes(filtro) || item.details.toLowerCase().includes(filtro)
+        
+        itemProv.name.toLowerCase().includes(filtro2)
         // Agrega más propiedades según sea necesario
       );
     });
   }
 }
+
 
 @Component({
   selector: 'app-proveedores',
@@ -38,16 +42,25 @@ export class ProveedoresComponent {
   proveedor?: ProveedorData;
   dataSource: MatTableDataSource<any> = new MatTableDataSource();
   proveedoresList: any[] = []; // Asegúrate de que usuariosList contenga tus datos
+  filtroNew: string = '';
+  proveedoresPaginados: any[] = []; // Lista que se mostrará en la página actual
+  proveedoresFiltrados: any[] = [];
 
+    //Paginacion
+
+    pageSizeOptions: number[] = [6, 10, 25, 100];
+    pageSize: number = 6;
+    pageIndex: number = 0;
+    @ViewChild(MatPaginator) paginator!: MatPaginator; // <-- Agrega el modificador !
   
-  filtro: string = '';
-  aplicarFiltroProv(filtro: string): void {
-    // console.log('filtroProv:', filtroProv);
-    this.filtro = filtro;
-    // console.log('this.filtroProv:', this.filtroProv);
+    //
+
+  aplicarFiltroProv(filtro2: string): void {
+    // console.log('filtro:', filtro);
+    this.filtroNew = filtro2;
+    // console.log('this.filtro:', this.filtro);
     // ... rest of your logic
   }
-
   constructor(
     public dialog: MatDialog,
     private proveedorService: ProveedorService,
@@ -59,9 +72,15 @@ export class ProveedoresComponent {
     this.getProveedoresList();
   }
 
+  ngAfterViewInit(): void {
+    this.aplicarPaginacion();
+  }
+
+
   getProveedoresList(): void {
     this.proveedorService.getProvidersList().subscribe((result: any) => {
       this.proveedoresList = result;
+      this.aplicarPaginacion(); // Aplicar la paginación aquí
     });
   }
 
@@ -124,7 +143,7 @@ export class ProveedoresComponent {
               },
               error: e => {
                 this.getProveedoresList();
-                debugger;
+                
                 console.log(e);
                 Swal.fire('Error al guardar los cambios', '', 'info');
               },
@@ -141,7 +160,7 @@ export class ProveedoresComponent {
 
   openEliminar(provider: any): void {
     Swal.fire({
-      title: 'Eliminar proyecto?',
+      title: 'Eliminar proveedor?',
       text: 'Está seguro que desea eliminar este proveedor?',
       icon: 'warning',
       showCancelButton: true,
@@ -149,19 +168,29 @@ export class ProveedoresComponent {
       cancelButtonText: 'No',
     }).then(result => {
       if (result.value) {
-        debugger;
         this.proveedorService.deleteProveedor(provider);
-        let updatedProviders = this.proveedoresList.filter(function (u) {
-          if (u.providerId != provider.providerId) {
-            return u;
-          }
-          return null;
-        });
-        this.proveedoresList = updatedProviders;
+        setTimeout(() => {}, 2000);
+      // Agrega un tiempo de espera antes de actualizar la lista
+      setTimeout(() => {
+        this.getProveedoresList();
         Swal.fire('Eliminado!', 'Proveedor eliminado.', 'success');
-      } else if (result.dismiss === Swal.DismissReason.cancel) {
-        Swal.fire('Cancelado', 'El proveedor no fue eliminado', 'error');
-      }
+      }, 2000);
+    } else if (result.dismiss === Swal.DismissReason.cancel) {
+      Swal.fire('Cancelado', 'El proveedor no fue eliminado', 'error');
+    }
     });
+  }
+
+  onPageChange(event: any): void {
+    this.pageSize = event.pageSize;
+    this.pageIndex = event.pageIndex;
+    this.aplicarPaginacion(); // Llamada a la función que aplica la paginación
+  }
+
+  aplicarPaginacion(): void {
+  const startIndex = this.pageIndex * this.pageSize;
+  const endIndex = startIndex + this.pageSize;
+
+  this.proveedoresPaginados = this.proveedoresList.slice(startIndex, endIndex);
   }
 }

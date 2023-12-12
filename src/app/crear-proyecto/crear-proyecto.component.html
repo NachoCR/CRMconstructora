@@ -1,11 +1,12 @@
 <mat-dialog-content class="custom-dialog-content">
   <div class="container">
     <div class="row mt-3">
+      <button mat-icon-button class="close-button" (click)="cerrarModal()">
+        <mat-icon>close</mat-icon>
+      </button>
       <div class="col">
         <form [formGroup]="crearProyectoForm" (ngSubmit)="crear()" novalidate autocomplete="">
           <h3>Creación de Proyectos</h3>
-          <app-file-upload (imagePostedURLEvent)="handleFileUploadUrl($event)"></app-file-upload>
-
           <div class="form-row">
             <!-- Nombre -->
             <div class="form-group col-md-6">
@@ -106,20 +107,22 @@
             <input
               type="text"
               placeholder="Buscar cliente"
-              formControlName="clientId"
+              formControlName="userId"
               [matAutocomplete]="auto"
               [(ngModel)]="data.clientId"
               class="form-control"
             />
             <mat-autocomplete #auto="matAutocomplete">
               <mat-option
-                *ngFor="let cliente of filteredClientesList$ | async"
-                [value]="cliente.clientId"
+                *ngFor="let user of filteredUserList$ | async" (click)="setUserValue(user)"
+                [value]="user.userId"
               >
-                {{ cliente.cedula }} {{ cliente.name }}
+              {{user.name}}
               </mat-option>
             </mat-autocomplete>
           </div>
+
+          <app-file-upload #FileUpload></app-file-upload>
 
           <!-- <div class="form-group">
             <label for="employeeName" class="control-label font-weight-bold">Ingeniero a cargo:</label>
@@ -144,6 +147,7 @@
               [mat-dialog-close]="data"
               cdkFocusInitial
               class="btn btn-success"
+              (click)="saveImageUrl()"
             >
               Guardar
             </button>

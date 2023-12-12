@@ -9,8 +9,16 @@ import { Component, Output, EventEmitter, Input, ViewEncapsulation } from '@angu
 export class SidebarComponent {
   @Input() showToggle = true;
   @Input() showUser = true;
+  @Input() showEmail = true;
   @Input() showHeader = true;
   @Input() toggleChecked = false;
 
-  @Output() toggleCollapsed = new EventEmitter<void>();
+  // @Output() toggleCollapsed = new EventEmitter<void>();
+  @Output() toggleCollapsed = new EventEmitter<boolean>();
+
+  // ... restante del código
+
+  toggleSidebar() {
+    this.toggleCollapsed.emit(!this.toggleChecked);
+  }
 }

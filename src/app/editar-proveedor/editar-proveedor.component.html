@@ -1,13 +1,16 @@
 <mat-dialog-content class="custom-dialog-content">
   <div class="container">
     <div class="row mt-3">
+      <button mat-icon-button class="close-button" (click)="cerrarModal()">
+        <mat-icon>close</mat-icon>
+      </button>
       <div class="col">
         <form [formGroup]="editarProveedorForm" (ngSubmit)="crear()" novalidate autocomplete="">
           <h3>Edición de Proveedores</h3>
 
           <div class="form-row">
             <!-- Nombre -->
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-4">
               <label for="name" class="control-label font-weight-bold">Nombre proveedor</label>
               <input
                 type="text"
@@ -15,79 +18,106 @@
                 placeholder="Nombre proveedor"
                 formControlName="name"
                 [(ngModel)]="data.name"
-              />
-            </div>
-
-            <div class="form-group col-md-6">
-              <label class="control-label font-weight-bold">Tipo de identificación</label>
-              <select
-                formControlName="identifierId"
-                [(ngModel)]="data.identifierId"
-                class="form-select"
-              >
-                <option value="1">Cédula</option>
-                <option value="2">Pasaporte</option>
-                <option value="3">Cédula jurídica</option>
-              </select>
-            </div>
-          </div>
-
-          <!-- Cédula -->
-
-          <!-- Identificación -->
-          <!-- <div class="form-group">
-            <label for="identifier" class="control-label font-weight-bold">Identificación</label>
-            <input type="text" class="form-control" placeholder="Identificación" formControlName="identifier" [(ngModel)]="data.identifier"
-            [ngClass]="{ 'is-valid': (f.identifier.dirty || submitted) && !f.identifier.errors, 'is-invalid': (f.identifier.dirty || submitted) && f.identifier.errors }" maxlength="15" minlength="8" />
-            <div class="invalid-feedback">
-              <span class="text-danger" *ngIf="f.identifier.errors?.required">Es requerida la cedula</span>
-              <span class="text-danger" *ngIf="f.identifier.errors?.maxLengthValid">Debe ser de 8 a 15 caracteres</span>
-              <div [ngClass]="{ 'text-sucess': minLengthValid, 'text-danger': !minLengthValid }">
-                <i [attr.class]="minLengthValid ? 'bi-check-square-fill' : 'bi-x-square'"></i>
-               Debe ser mínimo de 8 caracteres a 15 caracteres
-            </div>
-            </div>
-          </div> -->
-
-          <div class="form-row">
-            <div class="form-group col-md-6">
-              <label for="identifier" class="control-label font-weight-bold">Cédula</label>
-              <input
-                type="text"
-                class="form-control"
-                placeholder="Cédula"
-                formControlName="identifier"
-                [(ngModel)]="data.identifier"
                 [ngClass]="{
-                  'is-valid': (f.identifier.dirty || submitted) && !f.identifier.errors,
-                  'is-invalid': (f.identifier.dirty || submitted) && f.identifier.errors
+                  'is-valid': (f.name.dirty || submitted) && !f.name.errors,
+                  'is-invalid': (f.name.dirty || submitted) && f.name.errors
                 }"
-                (focusout)="checkCedulaExists()"
-                maxlength="15"
-                minlength="8"
               />
               <div class="invalid-feedback">
-                <span class="text-danger" *ngIf="f.identifier.errors?.required"
-                  >La cédula es requerida</span
+                <span class="text-danger" *ngIf="f.name.errors?.required"
+                  >El nombre es requerido</span
                 >
-                <span class="text-danger" *ngIf="f.identifier.errors?.pattern"
-                  >La cédula debe tener 10 dígitos</span
-                >
-                <span class="text-danger" *ngIf="f.identifier.errors?.cedulaExists"
-                  >Esta cédula ya está registrada</span
-                >
-
-                <!-- Validaciones existentes -->
-                <span class="text-danger" *ngIf="f.identifier.errors?.maxLengthValid"
-                  >Debe ser de 8 a 15 caracteres</span
-                >
-                <div [ngClass]="{ 'text-sucess': minLengthValid, 'text-danger': !minLengthValid }">
-                  <i [attr.class]="minLengthValid ? 'bi-check-square-fill' : 'bi-x-square'"></i>
-                  Debe ser mínimo de 8 caracteres a 15 caracteres
-                </div>
               </div>
             </div>
 
+              <!-- Cédula -->
+              <div class="form-group col-md-4">
+                <label class="control-label font-weight-bold">Tipo de identificación</label>
+                <select
+                  formControlName="identifierId"
+                  [(ngModel)]="data.identifierId"
+                  class="form-select"
+                  style="border-radius: 2px"
+                  [ngClass]="{
+                    'is-valid': (f.identifierId.dirty || submitted) && !f.identifierId.errors,
+                    'is-invalid': (f.identifierId.dirty || submitted) && f.identifierId.errors
+                  }"
+                 
+                  
+                >
+                  <option value="1">Cédula</option>
+                  <option value="2">Pasaporte</option>
+                  <option value="3">Cédula jurídica</option>
+                </select>
+                <div class="invalid-feedback">
+                  <span class="text-danger" *ngIf="f.identifierId.errors?.required"
+                    >El tipo de cedula es requerida</span
+                  >
+                </div>
+              </div>
+  
+              <!-- Identificación -->
+              <!-- <div class="form-group col-md-4" >
+                <label for="identifier" class="control-label font-weight-bold">Identificación</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  readonly
+                  placeholder="Cédula"
+                  formControlName="identifier"
+                  [(ngModel)]="data.identifier"
+                  [ngClass]="{
+                    'is-valid': (f.identifier.dirty || submitted) && !f.identifier.errors,
+                    'is-invalid': (f.identifier.dirty || submitted) && f.identifier.errors
+                  }"
+                  (blur)="onCedulaBlur()"
+                  maxlength="9"
+                  minlength="9"
+                />
+                <div class="invalid-feedback">
+                  <span class="text-danger" *ngIf="f.identifier.errors?.required"
+                    >La cédula es requerida</span
+                  >
+                  <span class="text-danger" *ngIf="f.identifier.errors?.pattern"
+                    >La cedula debe tener 9 dígitos y solo contener numeros</span
+                  >
+                  <span class="text-danger" *ngIf="f.identifier.errors?.cedulaExists"
+                    >Esta cédula ya está registrada</span
+                  >
+                </div>
+              </div> -->
+
+              <div class="form-group col-md-4">
+                <label for="identifier" class="control-label font-weight-bold">{{identifierType}}</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder={{identifierType}}
+                  formControlName="identifier"
+                  [(ngModel)]="data.identifier"
+                  [ngClass]="{
+                    'is-valid': (f.identifier.dirty || submitted) && !f.identifier.errors,
+                    'is-invalid': (f.identifier.dirty || submitted) && f.identifier.errors
+                  }"
+                  (focusout)="checkIdentifierExists()"
+                  (ngModelChange) = "test($event)"
+                  maxlength="{{identifierLength}}"
+                  minlength="{{identifierLength}}"
+                />
+                <div class="invalid-feedback">
+                  <span class="text-danger" *ngIf="f.identifier.errors?.required"
+                    > {{identifierType}} es requerida</span
+                  >
+                  <span class="text-danger" *ngIf="f.identifier.errors?.pattern"
+                    > {{identifierType}} debe tener {{identifierLength}} dígitos y solo contener numeros</span
+                  >
+                  <span class="text-danger" *ngIf="f.identifier.errors?.identifierExists"
+                    >{{identifierType}} ya está registrada</span>
+                </div>
+              </div>
+              </div>
+           
+            <div class="form-row">
             <div class="form-group col-md-6">
               <label for="email" class="control-label font-weight-bold">Correo</label>
               <input
@@ -114,43 +144,84 @@
                 >
               </div>
             </div>
-          </div>
-
-          <!-- Correo electrónico -->
-
-          <div class="form-row">
-            <div class="form-group col-md-6">
+ 
+            <div class="form-group col-md-4">
               <label for="phone" class="control-label font-weight-bold">Teléfono</label>
               <input
-                type="tel"
+                type="text"
                 class="form-control"
                 formControlName="phone"
-                placeholder="xxxx-xxxx"
+                placeholder="12345678"
+                maxlength="8"
+                minlength="8"
                 [(ngModel)]="data.phone"
+                [ngClass]="{
+                  'is-valid': (f.phone.dirty || submitted) && !f.phone.errors,
+                  'is-invalid': (f.phone.dirty || submitted) && f.phone.errors
+                }"
               />
+
+              <!-- <div *ngIf="crearUForm.get('phone')?.hasError('invalidPhoneNumber')">
+            <small class="text-danger">Ingrese un número de teléfono válido (8 dígitos).</small>
+          </div> -->
+              <div class="invalid-feedback">
+                <span class="text-danger" *ngIf="f.phone.errors?.required"
+                  >El numero de teléfono es requerido</span
+                >
+                <span class="text-danger" *ngIf="f.phone.errors?.pattern"
+                  >El número debe tener 8 dígitos y solo contener números</span
+                >
+              </div>
             </div>
-            <div class="form-group col-md-6">
+            </div>
+          <!-- Correo electrónico -->
+
+         
+          <div class="form-group">
+           
               <label for="address" class="control-label font-weight-bold">Dirección</label>
-              <input
-                type="text"
+              <textarea
+              matInput
                 class="form-control"
                 formControlName="address"
                 placeholder="Dirección"
                 [(ngModel)]="data.address"
-              />
+                [ngClass]="{
+                  'is-valid': (f.address.dirty || submitted) && !f.address.errors,
+                  'is-invalid': (f.address.dirty || submitted) && f.address.errors
+                }"
+              >
+              </textarea>
+              <div class="invalid-feedback">
+                <span class="text-danger" *ngIf="f.address.errors?.required"
+                  >La dirección es requerida</span
+                >
+              </div>
+            
             </div>
-          </div>
 
-          <div class="form-group">
-            <label for="details" class="control-label font-weight-bold">Detalles</label>
-            <textarea
+
+            <div class="form-group">
+           
+              <label for="details" class="control-label font-weight-bold">Detalles</label>
+              <textarea
               matInput
-              class="form-control"
-              placeholder="Detalles"
-              formControlName="details"
-              [(ngModel)]="data.details"
-            ></textarea>
-          </div>
+                class="form-control"
+                formControlName="details"
+                placeholder="Detalles"
+                [(ngModel)]="data.details"
+                [ngClass]="{
+                  'is-valid': (f.details.dirty || submitted) && !f.details.errors,
+                  'is-invalid': (f.details.dirty || submitted) && f.details.errors
+                }"
+              >
+              </textarea>
+              <div class="invalid-feedback">
+                <span class="text-danger" *ngIf="f.details.errors?.required">
+                  Los detalles son requeridos
+                  </span>
+              </div>
+            </div>  
 
           <mat-dialog-actions class="custom-dialog-actions">
             <button mat-button (click)="onNoClick()" class="btn btn-default">Cancelar</button>

@@ -1,6 +1,11 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { ActivatedRoute, Route, Router, NavigationEnd } from "@angular/router";
+import { Component, OnInit, Inject, ViewChild } from '@angular/core';
+import {
+  MAT_DIALOG_DATA,
+  MatDialog,
+  MatDialogModule,
+  MatDialogRef,
+} from '@angular/material/dialog';
+import { ActivatedRoute, Route, Router, NavigationEnd } from '@angular/router';
 import { ContactosData } from 'app/interfaces/contacto.interface';
 import { ContactoService } from 'app/services/contacto.service';
 import { CrearContactoComponent } from 'app/contactos/crear-contacto/crear-contacto.component';
@@ -9,6 +14,7 @@ import { EditarContactoComponent } from 'app/contactos/editar-contacto/editar-co
 import * as _ from 'lodash';
 import { MatTableDataSource } from '@angular/material/table';
 import { DetallesContactoComponent } from '../detalles-contacto/detalles-contacto.component';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-contactos',
@@ -23,6 +29,13 @@ export class ContactosComponent implements OnInit {
 
   dataSource: MatTableDataSource<any> = new MatTableDataSource();
   contactoList: any[] = []; // Asegúrate de que usuariosList contenga tus datos
+  searchTerm: string = '';
+  filteredContacts: any[] = [];
+
+  pageSizeOptions: number[] = [5, 10, 25, 100];
+  pageSize: number = 5;
+  pageIndex: number = 0;
+  @ViewChild(MatPaginator) paginator!: MatPaginator; // <-- Agrega el modificador !
 
   displayedColumns: string[] = ['name', 'email', 'phone', 'details', 'providerId', 'actions'];
 
@@ -30,15 +43,32 @@ export class ContactosComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.aplicarPaginacion();
     this.getContactoList();
+     // Llamada inicial para aplicar la paginación
   }
+  ngAfterViewInit(): void {
+    this.dataSource.paginator = this.paginator;
+  }
+
 
   getContactoList(): void {
     this.contactoService.getContactoList().subscribe((result: any) => {
       this.contactoList = result;
+      this.filteredContacts = this.contactoList;
       this.dataSource = new MatTableDataSource(this.contactoList);
+      this.dataSource.paginator = this.paginator;
+      this.aplicarPaginacion(); // Aplicar la paginación aquí
     });
   }
+
+  applyFilter(): void {
+    this.filteredContacts = this.contactoList.filter((contact) =>
+      contact.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+      
+    );
+  }
+
 
   openDialog(): void {
 
@@ -71,8 +101,8 @@ export class ContactosComponent implements OnInit {
                 Swal.fire('Registrado!', '', 'success');
               }, error: (e) => {
                 this.getContactoList();
-                debugger;
-                //console.log(e);
+                
+                console.log(e);
                 Swal.fire('Error al registrar contacto', '', 'info');
               }
             });
@@ -87,8 +117,10 @@ export class ContactosComponent implements OnInit {
   };
 
   openDialogEditar(user: any): void {
+    const pUser = _.cloneDeep(user);
+    console.log(pUser);
     const dialogRef = this.dialog.open(EditarContactoComponent, {
-      data: user
+      data: pUser,
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
@@ -106,7 +138,7 @@ export class ContactosComponent implements OnInit {
                 Swal.fire('Guardados!', '', 'success');
               }, error: (e) => {
                 this.getContactoList();
-                debugger;
+                ;
                 //console.log(e);
                 Swal.fire('Error al guardar los cambios', '', 'info');
               }
@@ -134,12 +166,15 @@ export class ContactosComponent implements OnInit {
     }).then((result) => {
       if (result.value) {
         this.contactoService.deleteContacto(contacto);
-        this.contactoList = this.contactoList.filter(u => u.contactId !== contacto.contactId);
-        this.dataSource.data = this.contactoList;
+        setTimeout(() => {}, 2000);
+      // Agrega un tiempo de espera antes de actualizar la lista
+      setTimeout(() => {
+        this.getContactoList();
         Swal.fire('Eliminado!', 'Contacto eliminado.', 'success');
-      } else if (result.dismiss === Swal.DismissReason.cancel) {
-        Swal.fire('Cancelado', 'El Contacto no fue eliminado', 'error');
-      }
+      }, 2000);
+    } else if (result.dismiss === Swal.DismissReason.cancel) {
+      Swal.fire('Cancelado', 'El Contacto no fue eliminado', 'error');
+    }
     });
   }
 
@@ -153,4 +188,17 @@ export class ContactosComponent implements OnInit {
     });
   }
 
+  onPageChange(event: any): void {
+    this.pageSize = event.pageSize;
+    this.pageIndex = event.pageIndex;
+    this.aplicarPaginacion(); // Llamada a la función que aplica la paginación
+  }
+
+  aplicarPaginacion(): void {
+  
+  const startIndex = this.pageIndex * this.pageSize;
+  const endIndex = startIndex + this.pageSize;
+  const paginatedData = this.contactoList.slice(startIndex, endIndex);
+  this.filteredContacts = paginatedData;
+  }
 }

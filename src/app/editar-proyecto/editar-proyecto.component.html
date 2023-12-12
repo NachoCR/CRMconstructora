@@ -1,6 +1,9 @@
 <mat-dialog-content class="custom-dialog-content">
   <div class="container">
     <div class="row mt-3">
+      <button mat-icon-button class="close-button" (click)="cerrarModal()">
+        <mat-icon>close</mat-icon>
+      </button>
       <div class="col">
         <form [formGroup]="editarProyectoForm" (ngSubmit)="crear()" novalidate autocomplete="">
           <h3>Edición de Proyectos</h3>
@@ -114,15 +117,17 @@
               [matAutocomplete]="auto"
               [(ngModel)]="data.clientId"
               class="form-control"
+              
             />
             <mat-autocomplete #auto="matAutocomplete">
               <mat-option
-                *ngFor="let cliente of filteredClientesList$ | async"
-                [value]="cliente.clientId"
+                *ngFor="let user of filteredUserList$ | async" (click)="setUserValue(user)"
+                [value]="user.userId"
               >
-                {{ cliente.name }}
+              {{user.name}}
               </mat-option>
             </mat-autocomplete>
+            
           </div>
 
           <mat-dialog-actions class="custom-dialog-actions">

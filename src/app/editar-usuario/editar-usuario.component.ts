@@ -1,4 +1,4 @@
-import { Component, ElementRef, Inject, Input, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, Inject, Input, OnInit, ViewChild } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -54,6 +54,7 @@ export class EditarUsuarioComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<EditarUsuarioComponent>,
     private usuarioService: UsuarioService,
+    private cdr: ChangeDetectorRef,
 
     @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder,
@@ -69,22 +70,7 @@ export class EditarUsuarioComponent implements OnInit {
       secondLastname: new FormControl(null, [Validators.required]),
       identifierId: new FormControl(null, [Validators.required]),
       identification: new FormControl(null, [
-        Validators.required,
-        Validators.pattern(/^\d{9}$/),
-        Validators.minLength(9),
-        Validators.maxLength(9),
-      ]),
-      passport: new FormControl(null, [
-        Validators.required,
-        Validators.pattern(/^\d{9}$/),
-        Validators.minLength(9),
-        Validators.maxLength(9),
-      ]),
-      juridic: new FormControl(null, [
-        Validators.required,
-        Validators.pattern(/^\d{11}$/),
-        Validators.minLength(11),
-        Validators.maxLength(11),
+        
       ]),
       phone: new FormControl(null, [
         Validators.required,
@@ -104,44 +90,49 @@ export class EditarUsuarioComponent implements OnInit {
 
   proyectosList: any[] = [];
   filteredProyectosList$: Observable<any[]> | undefined;
+  identifierType : string = "";
+  identifierLength? : number;
 
-  private actualizarValidaciones(identifierId: string) {
-    const identificationControl = this.editarUsuarioForm.get('identification');
-    const passportControl = this.editarUsuarioForm.get('passport');
-    const juridicControl = this.editarUsuarioForm.get('juridic');
-
-    identificationControl?.setValidators([]);
-    passportControl?.setValidators([]);
-    juridicControl?.setValidators([]);
-
-    console.log(identifierId);
-    if (identifierId === '1') {
-      identificationControl?.setValidators([
-        Validators.required,
-        Validators.pattern(/^\d{9}$/),
-        Validators.minLength(9),
-        Validators.maxLength(9),
-      ]);
-    } else if (identifierId === '2') {
-      passportControl?.setValidators([
-        Validators.required,
-        Validators.pattern(/^\d{9}$/),
-        Validators.minLength(9),
-        Validators.maxLength(9),
-      ]);
-    } else if (identifierId === '3') {
-      juridicControl?.setValidators([
-        Validators.required,
-        Validators.pattern(/^\d{11}$/),
-        Validators.minLength(11),
-        Validators.maxLength(11),
-      ]);
+  private actualizarValidaciones(identifierId: number) {
+    if (identifierId == 1) {
+      this.setIdentifierValues("Cédula", 9,9);
+    } else if (identifierId == 2) {
+      this.setIdentifierValues("Pasaporte", 9,9);
+    } else if (identifierId == 3) {
+      this.setIdentifierValues("Cédula Jurídica", 11,11);
     }
   
+  }
+
+
+  setIdentifierValues(identifierType : string, identifierMinLength : number, identifierMaxLength : number){
+    const identificationControl = this.editarUsuarioForm.get('identification');
+    identificationControl?.setValidators([]);
+    let pattern : any;
+
+    if(identifierMaxLength == 9){
+      pattern = /^\d{9}$/
+    }
+    if(identifierMaxLength == 11){
+      pattern = /^\d{11}$/
+    }
+
+    identificationControl?.setValidators([
+      Validators.required,
+      Validators.pattern(pattern),
+      Validators.minLength(identifierMinLength),
+      Validators.maxLength(identifierMaxLength),
+    ]);
+    this.identifierType = identifierType;
+    this.identifierLength = identifierMaxLength;
+
 
     identificationControl?.updateValueAndValidity();
-    passportControl?.updateValueAndValidity();
-    juridicControl?.updateValueAndValidity();
+  }
+
+  test(value: any){
+    const identificationControl = this.editarUsuarioForm.get('identification');
+    identificationControl?.setValue(value)
   }
 
   // Agrega una función de validación personalizada
@@ -153,21 +144,22 @@ export class EditarUsuarioComponent implements OnInit {
     return null;
   }
 
-  checkCedulaExists() {
-    const cedulaControl = this.editarUsuarioForm.get('identification');
-    debugger;
-    if (cedulaControl && this.usuariosList.length > 0) {
-      const identification = cedulaControl.value;
 
-      const cedulaExists = this.usuariosList.some(
+  checkIdentificationExists() {
+    const identificationControl = this.editarUsuarioForm.get('identification');
+    
+    if (identificationControl && this.usuariosList.length > 0) {
+      const identification = identificationControl.value;
+
+      const identificationExists = this.usuariosList.some(
         usuario => usuario.identification === identification
       );
-      if (this.cedulaOriginal === identification) {
-        if (cedulaExists) {
-          cedulaControl.setErrors({ cedulaExists: true });
+      if (this.cedulaOriginal != identification) {
+        if (identificationExists) {
+          identificationControl.setErrors({ identificationExists: true });
         } else {
-          cedulaControl.setErrors(null);
-          cedulaControl.updateValueAndValidity();
+          identificationControl.setErrors(null);
+          identificationControl.updateValueAndValidity();
         }
       }
     }
@@ -175,13 +167,13 @@ export class EditarUsuarioComponent implements OnInit {
 
   checkEmailExists() {
     const emailControl = this.editarUsuarioForm.get('email');
-    debugger;
+    
     if (emailControl && this.usuariosList.length > 0) {
       const email = emailControl.value;
 
       const emailExists = this.usuariosList.some(usuario => usuario.email === email);
 
-      if (this.correoOriginal === email) {
+      if (this.correoOriginal != email) {
         if (emailExists) {
           emailControl.setErrors({ emailExists: true });
         } else {
@@ -192,57 +184,20 @@ export class EditarUsuarioComponent implements OnInit {
     }
   }
 
-  checkPassportExists() {
-    const passportControl = this.editarUsuarioForm.get('passport');
-    if (passportControl && this.usuariosList.length > 0) {
-      const passport = passportControl.value;
 
-      const passportExists = this.usuariosList.some(usuario => usuario.identification === passport);
-
-      if (passportExists) {
-        passportControl.setErrors({ passportExists: true });
-      } else {
-        passportControl.setErrors(null);
-        passportControl.updateValueAndValidity();
-      }
-    }
-  }
-
-  checkJuridicExists() {
-    const juridicControl = this.editarUsuarioForm.get('juridic');
-    if (juridicControl && this.usuariosList.length > 0) {
-      const juridic = juridicControl.value;
-
-      const juridicExists = this.usuariosList.some(usuario => usuario.identification === juridic);
-
-      if (juridicExists) {
-        juridicControl.setErrors({ juridicExists: true });
-      } else {
-        juridicControl.setErrors(null);
-        juridicControl.updateValueAndValidity();
-      }
-    }
-  }
 
   onEmailBlur() {
     this.checkEmailExists();
     // this.crearUForm.get('email')?.updateValueAndValidity(); // Actualiza la validación de Angular
   }
 
-  onJuridicaBlur() {
-    this.checkJuridicExists();
-    // this.crearUForm.get('juridic')?.updateValueAndValidity(); // Actualiza la validación de Angular
-  }
-
-  onCedulaBlur() {
-    this.checkCedulaExists();
+  onIdentificationBlur() {
+    this.checkIdentificationExists();
     // this.crearUForm.get('identification')?.updateValueAndValidity(); // Actualiza la validación de Angular
   }
-  onPassportBlur() {
-    debugger;
-    this.checkCedulaExists();
-    // this.crearUForm.get('passport')?.updateValueAndValidity(); // Actualiza la validación de Angular
-  }
+
+
+
 
   get f() {
     return this.editarUsuarioForm.controls;
@@ -311,11 +266,13 @@ export class EditarUsuarioComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    
     this.getUsuariosList();
 
     //Servicio de clientes para cargar la lista
     this.proyectoService.getProyectList().subscribe(data => {
       this.proyectosList = data;
+    
 
       this.filteredProyectosList$ = this.editarUsuarioForm
         .get('assignedProject')
@@ -350,6 +307,9 @@ export class EditarUsuarioComponent implements OnInit {
       // Actualizar la validación
       confirmPasswordControl.updateValueAndValidity();
     }
+  }
+  cerrarModal() {
+    this.dialogRef.close();
   }
 }
 

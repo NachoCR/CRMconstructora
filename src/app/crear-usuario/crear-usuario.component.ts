@@ -393,4 +393,8 @@ export class CrearUsuarioComponent implements OnInit {
       this.dataSource = new MatTableDataSource(this.usuariosList);
     });
   }
+
+  cerrarModal() {
+    this.dialogRef.close();
+  }
 }
