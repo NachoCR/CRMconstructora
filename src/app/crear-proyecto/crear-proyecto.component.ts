@@ -1,5 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { Component, Inject, ViewChild } from '@angular/core';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { DateValidator } from 'app/date-validator';
 import { ProyectoData } from 'app/interfaces/proyecto.interface';
@@ -10,6 +12,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { Observable, debounceTime, map, startWith } from 'rxjs';
 import { UsuarioService } from 'app/services/usuario.service';
 import * as moment from 'moment';
+import { FileUploadComponent } from '@shared/components/file-upload/file-upload.component';
 
 @Component({
   selector: 'app-crear-proyecto',
@@ -17,12 +20,17 @@ import * as moment from 'moment';
   styleUrls: ['./crear-proyecto.component.scss'],
 })
 export class CrearProyectoComponent {
+  saveImageUrl() {
+    this.FileUpload?.uploadFile();
+  }
   // public crearUForm: FormGroup;
 
   crearProyectoForm: FormGroup;
   filteredOptions: Observable<string[]> = new Observable<string[]>(); // Inicialización
   submitted = false;
   isWorking = false;
+  @ViewChild('FileUpload')
+  private FileUpload?: FileUploadComponent;
 
   // Función de validación personalizada
   dateNotInPast(control: AbstractControl): { [key: string]: boolean } | null {
