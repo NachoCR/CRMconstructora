@@ -3,6 +3,23 @@
   overflow-y: auto;
 }
 
+.image-preview {
+  min-height: 130px;
+  min-width: 130px;
+  max-width: 130px;
+  max-height: 130px;
+  img {
+    min-height: 130px;
+    min-width: 130px;
+    max-width: 130px;
+    max-height: 130px;
+    object-fit: cover;
+    border-radius: 30px;
+    border: solid #e3e3e3 3px;
+    box-shadow: darkgray 0px 1px 4px 0px;
+  }
+}
+
 .mat-dialog-container {
   width: auto !important;
   max-width: 90%;
