@@ -62,6 +62,7 @@ import { DetallesProductoComponent } from './productos/detalles-producto/detalle
 import { CrearProductoComponent } from './productos/crear-producto/crear-producto.component';
 import { EditarProductoComponent } from './productos/editar-producto/editar-producto.component';
 import { DetallesSolicitudComponent } from './solicitudes/detalles-solicitud/detalles-solicitud.component';
+import { CalendarioComponent } from './calendario/calendario.component';
 
 
 
@@ -112,7 +113,9 @@ export function TranslateHttpLoaderFactory(http: HttpClient) {
     DetallesProductoComponent,
     CrearProductoComponent,
     DetallesProductoComponent,
-    EditarProductoComponent
+    EditarProductoComponent,
+    CalendarioComponent,
+
   ],
 
   imports: [

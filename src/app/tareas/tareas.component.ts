@@ -24,6 +24,7 @@ import * as XLSX from 'xlsx';
   styleUrls: ['./tareas.component.scss'],
 })
 export class TareaComponent implements OnInit {
+  tarea?: TareaData;
 
   tarea?: TareaData;  
 
@@ -91,12 +92,12 @@ this.getTaskList();
 
 
   applyFilter(): void {
-    this.filteredTasks = this.tareasList.filter((task) =>
-    task.name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-    task.description.toLowerCase().includes(this.searchTerm.toLowerCase())
+    this.filteredTasks = this.tareasList.filter(
+      task =>
+        task.name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+        task.description.toLowerCase().includes(this.searchTerm.toLowerCase())
     );
   }
-
 
   getTaskList(): void {
     this.tareaService.getTaskList().subscribe((result: any) => {
@@ -109,7 +110,6 @@ this.getTaskList();
   }
 
   openDialog(): void {
-    
     const dialogRef = this.dialog.open(CrearTareaComponent, {
    
       data: {tarea: this.tarea}
@@ -138,15 +138,12 @@ this.getTaskList();
           });
             // Realizar cualquier acción adicional después de guardar
           }
-          
-        }
-  )}
-    }
-  )};
-  
+        });
+      }
+    });
+  }
 
   openDialogEditar(Task: any): void {
-    
     console.log(Task);
     const pTask = _.cloneDeep(Task);
     const dialogRef = this.dialog.open(EditarTareaComponent, {
@@ -154,7 +151,6 @@ this.getTaskList();
       data : pTask
     });
     dialogRef.afterClosed().subscribe(result => {
-
       if (result) {
         // Mostrar SweetAlert para confirmar los cambios
         Swal.fire({
@@ -165,30 +161,28 @@ this.getTaskList();
         }).then(swalResult => {
           if (swalResult.isConfirmed) {
             this.tareaService.updateTask(result).subscribe({
-              next : () => {
+              next: () => {
                 this.getTaskList();
                 Swal.fire('Cambios guardados!', '', 'success');
-              }, error:(e)=> {
+              },
+              error: e => {
                 this.getTaskList();
                 ;
                 console.log(e);
                 Swal.fire('Error al guardar los cambios', '', 'info');
-              }
+              },
             });
-              // Realizar cualquier acción adicional después de guardar
-            }
-            else if (swalResult.isDenied) {
-              // Usuario eligió no guardar los cambios
-              Swal.fire('Cambios no guardados', '', 'info');
-            }
+            // Realizar cualquier acción adicional después de guardar
+          } else if (swalResult.isDenied) {
+            // Usuario eligió no guardar los cambios
+            Swal.fire('Cambios no guardados', '', 'info');
           }
-    )}
+        });
       }
-    )};
-
+    });
+  }
 
   openEliminar(Task: any): void {
-    
     Swal.fire({
       title: 'Eliminar tarea?',
       text: 'Está seguro que desea eliminar esta tarea?',
@@ -196,15 +190,15 @@ this.getTaskList();
       showCancelButton: true,
       confirmButtonText: 'Si, continuar',
       cancelButtonText: 'No',
-    }).then((result) => {
+    }).then(result => {
       if (result.value) {
         this.tareaService.deleteTask(Task);
-        let updatedTask = this.tareasList.filter(function(u) {
+        let updatedTask = this.tareasList.filter(function (u) {
           if (u.taskId != Task.taskId) {
-          return u;
+            return u;
           }
           return null;
-        })
+        });
         this.tareasList = updatedTask;
 
         Swal.fire('Eliminada!', 'Tarea eliminada.', 'success');
@@ -212,7 +206,6 @@ this.getTaskList();
         Swal.fire('Cancelado', 'La tarea no fue eliminada', 'error');
       }
     });
-
   }
   onPageChange(event: any): void {
     this.pageSize = event.pageSize;
@@ -229,6 +222,3 @@ this.getTaskList();
   }
 
 }
-
-
-

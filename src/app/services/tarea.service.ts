@@ -28,7 +28,6 @@ export class TareaService {
   addTask(task: any): Observable<any> {
     console.log(task);
     let res;
-    ;
     return this.http.put<any>(this.APIUrl + '/Task/', task).pipe(map((data: any) => data));
   }
 
