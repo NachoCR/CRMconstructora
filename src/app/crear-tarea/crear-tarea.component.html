@@ -39,8 +39,8 @@
               <label for="statusId" class="control-label font-weight-bold">Estado</label>
               <select formControlName="statusId" class="form-select" style="border-radius: 2px;" [(ngModel)]="data.statusId">
                 <option value=1>Nuevo</option>
-                <option value=4>Aprobada</option>
-                <option value=5>Denegada</option>
+                <option value=2>En Progreso</option>
+                <option value=3>Finalizado</option>
               </select>
               <div *ngIf="crearTareaForm.get('statusId')?.invalid && crearTareaForm.get('statusId')?.touched" class="text-danger">
                El estado es requerido
