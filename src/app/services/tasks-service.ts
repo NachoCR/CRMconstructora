@@ -23,10 +23,11 @@ export class TasksService {
         })
       );
   }
-  getTasksByUser(): Observable<any[]> {
+  getTasksByUser(pId: number): Observable<any[]> {
     return this.http
-      .get<any>(this.APIUrl + '/Task', {
+      .get<any>(this.APIUrl + '/Task/GetTasksByUserId', {
         headers: {},
+        params: { pId },
       })
       .pipe(
         map((data: any) => {
