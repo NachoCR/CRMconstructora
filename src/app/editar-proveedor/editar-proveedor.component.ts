@@ -202,9 +202,12 @@ export class EditarProveedorComponent {
   }
 
   async crear() {
+
     try {
-      const url = await this.saveImageUrl();
-      this.handleFileUploadUrl(url);
+      if(this.FileUpload?.isFileSelected()){
+        this.editarProveedorForm.value.imageURL = await this.saveImageUrl();
+      }
+      this.handleFileUploadUrl(this.editarProveedorForm.value.imageURL);
       setTimeout(() => {}, 2000);
       this.submitted = true;
 

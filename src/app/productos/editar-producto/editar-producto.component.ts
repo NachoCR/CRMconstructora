@@ -35,7 +35,7 @@ export class EditarProductoComponent {
     providerId: ['', [Validators.required]],
     unitId: ['', [Validators.required]],
     quantity: [0, [Validators.required]],
-    imageURL: ['', null],
+    imageURL: [''],
   });
 
   constructor(
@@ -69,6 +69,7 @@ export class EditarProductoComponent {
       providerId: this.data.providerId,
       unitId: this.data.unitId.toString(),
       quantity: this.data.quantity,
+      imageURL: this.data.imageURL
     });
   }
 
@@ -104,8 +105,9 @@ export class EditarProductoComponent {
   }
 
   async onSave() {
-    if (this.productoForm.value.imageURL != '')
+    if(this.FileUpload?.isFileSelected()){
       this.productoForm.value.imageURL = await this.saveImageUrl();
+    }
     if (this.productoForm.valid) {
       this.dialogRef.close(this.productoForm.value);
     }

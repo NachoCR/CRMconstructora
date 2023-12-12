@@ -12,7 +12,7 @@
         />
         <button
           mat-mini-fab
-          *ngIf="!isFileSelected() || imageSrc === '' || imageSrc === null "
+          *ngIf="!isFileSelected()"
           (click)="fileInput.click()"
           class="upload-button"
         >

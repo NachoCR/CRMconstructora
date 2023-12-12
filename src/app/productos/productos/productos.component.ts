@@ -131,7 +131,6 @@ export class ProductosComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        debugger;
         //Object.assign(producto, result);
         Swal.fire({
           title: '¿Quiere guardar los cambios?',

@@ -219,7 +219,7 @@
               </span>
             </div>
           </div>
-          <app-file-upload #FileUpload></app-file-upload>
+          <app-file-upload #FileUpload [imageSrc]="this.data.imageURL"></app-file-upload>
 
           <mat-dialog-actions class="custom-dialog-actions">
             <button mat-button (click)="onNoClick()" class="btn btn-default">Cancelar</button>

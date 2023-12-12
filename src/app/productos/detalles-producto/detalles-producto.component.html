@@ -15,7 +15,7 @@
               <li class="list-group-item"><strong>ID del Proveedor:</strong> {{ data.providerId }}</li>
               <li class="list-group-item"><strong>ID de la Unidad:</strong> {{ data.unitId }}</li>
               <li class="list-group-item"><strong>Unidad:</strong> {{ data.unit.unitName }} | {{ data.unit.abbreviation }}</li>
-              <img *ngIf="data.imageURL" class="image-preview" [src]="data.imageURL" alt="Preview" />
+              <img *ngIf="data.imageURL!== '' || data.imageURL!==null || data.imageURL !== undefined" class="image-preview" [src]="data.imageURL" alt="Preview" />
             </ul>
           </div>
         </div>

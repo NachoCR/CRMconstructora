@@ -237,13 +237,14 @@ export class CrearProveedorComponent {
 
   async crear() {
     try {
-      const url = await this.saveImageUrl();
+      if(this.FileUpload?.isFileSelected()){
+        this.crearProveedorForm.value.imageURL = await this.saveImageUrl();
+      }
+      this.handleFileUploadUrl(this.crearProveedorForm.value.imageURL);
       setTimeout(() => {
         this.isWorking = false;
         this.crearProveedorForm.enable();
       }, 2000);
-      this.handleFileUploadUrl(url);
-
       this.submitted = true;
 
       if (this.crearProveedorForm.invalid) {
