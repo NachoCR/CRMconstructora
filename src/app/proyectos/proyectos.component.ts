@@ -72,7 +72,7 @@ export class ProyectosComponent {
   }
 
   filtrarPorFechaInicio(): void {
-    debugger
+    
     this.proyectosFiltradosPorFechaInicio = this.proyectosList.filter(project => {
       const fechaInicioProyecto = new Date(project.startDate).toISOString();
       const fechaSeleccionada = this.fechaInicioFilter ? this.fechaInicioFilter.toISOString() : null;
@@ -129,7 +129,7 @@ export class ProyectosComponent {
 
   openDialog(): void {
     const dialogRef = this.dialog.open(CrearProyectoComponent, {
-      width:'60%',  
+    
       data: { proyecto: this.proyecto },
     });
 
@@ -166,7 +166,6 @@ export class ProyectosComponent {
 
     const pProyecto = _.cloneDeep(project);
     const dialogRef = this.dialog.open(EditarProyectoComponent, {
-      width: '60%',
       data: pProyecto,
     });
 

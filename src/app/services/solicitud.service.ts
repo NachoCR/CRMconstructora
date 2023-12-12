@@ -7,7 +7,12 @@ import { Observable, map } from 'rxjs';
 })
 export class SolicitudService {
   readonly APIUrl;
-
+  public get data(): any {
+    return this._data;
+  }
+  public set data(value: any) {
+    this._data = value;
+  }
   constructor(private http: HttpClient) {
     this.APIUrl = 'http://73.56.189.143:7226/api'; //url de la sln
   }
@@ -34,6 +39,11 @@ export class SolicitudService {
 
   updateSolicitud(leave: any): Observable<any> {
     return this.http.put<any>(this.APIUrl + '/Leave/', leave).pipe(map((data: any) => data));
+  }
+
+  getSolicitudDetails(pId: number): Observable<any> {
+    debugger
+    return this.http.get<any>(this.APIUrl + `/Leave/GetLeaveById/${pId}`);
   }
 
   deleteSolicitud(leave: any) {

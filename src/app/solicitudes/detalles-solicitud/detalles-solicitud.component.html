@@ -1,1 +1,51 @@
-<p>detalles-solicitud works!</p>
+<mat-dialog-content class="custom-dialog-content">
+    <button mat-icon-button class="close-button" (click)="cerrarModal()">
+      <mat-icon>close</mat-icon>
+    </button>
+    <div class="mb-4">
+      <h3 >Detalles de Solicitud</h3>
+      <div class="row d-flex">
+        <div class="col-md-6">
+          <div class="card h-100">
+            <div class="card-body">
+              <h5 class="card-title"><strong>Información de la solicitud</strong></h5>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item"><strong>Fecha de Inicio:</strong> {{ data.startDate | date: 'yyyy-MM-dd' }}</li>
+                <li class="list-group-item"><strong>Fecha de Salida:</strong> {{ data.endDate | date: 'yyyy-MM-dd' }}</li>
+                <li class="list-group-item"><strong>Descripción:</strong> {{ data.description }}</li>
+                <li class="list-group-item"><strong>Comentario Administrativo:</strong> {{ data.managerReason }}</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+  
+        <div class="col-md-6">
+          <div class="card h-100">
+            <div class="card-body">
+              <h5 class="card-title"><strong>Detalles del Usuario</strong></h5>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item"><strong>Nombre del Usuario:</strong> {{ data.userDTO.name }} {{data.userDTO.lastname}} {{data.userDTO.secondLastname}}</li>
+                <li class="list-group-item"><strong>Correo:</strong> {{ data.userDTO.email }}</li>
+                <li class="list-group-item"><strong>Teléfono:</strong> {{ data.userDTO.phone }}</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- <div class="mt-4">
+      <h3 class="h5">Catálogos del Proveedor</h3>
+      <ul class="list-group">
+        <li *ngFor="let catalog of data.provider.providerCatalogs" class="list-group-item">
+          <strong>ID:</strong> {{ catalog.itemId }},
+          <strong>Nombre:</strong> {{ catalog.name }},
+          <strong>Precio:</strong> {{ catalog.price }}
+        </li>
+      </ul>
+    </div> -->
+    <mat-dialog-actions class="custom-dialog-actions mt-4">
+      <button mat-button (click)="onNoClick()" class="btn btn-default">Cerrar</button>
+    </mat-dialog-actions>
+  </mat-dialog-content>
+  

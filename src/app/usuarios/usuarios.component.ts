@@ -70,6 +70,7 @@ export class UsuariosComponent implements OnInit {
     this.aplicarPaginacion();
     this.getUsuariosList();
      // Llamada inicial para aplicar la paginación
+     
   }
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
@@ -91,8 +92,8 @@ export class UsuariosComponent implements OnInit {
     this.filteredUsers = this.usuariosList.filter((user) =>
       user.name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
       user.identification.toLowerCase().includes(this.searchTerm.toLowerCase()) 
-      
     );
+    
   }
 
   exportTable() {
@@ -124,7 +125,7 @@ export class UsuariosComponent implements OnInit {
   
   openDialog(): void {
     const dialogRef = this.dialog.open(CrearUsuarioComponent, {
-      width: '50%',
+      
       data: { usuario: this.usuario },
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -161,7 +162,7 @@ export class UsuariosComponent implements OnInit {
     console.log(user);
     const pUser = _.cloneDeep(user);
     const dialogRef = this.dialog.open(EditarUsuarioComponent, {
-      width: '50%',
+
       data: pUser,
     });
     dialogRef.afterClosed().subscribe(result => {

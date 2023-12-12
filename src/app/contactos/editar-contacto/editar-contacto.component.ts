@@ -1,6 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { CrearContactoComponent } from '../crear-contacto/crear-contacto.component';
 import { ContactosData } from 'app/interfaces/contacto.interface';
 import { ProveedorService } from 'app/services/proveedor.service';
 import { ContactoService } from 'app/services/contacto.service';
@@ -9,10 +10,9 @@ import { MatTableDataSource } from '@angular/material/table';
 @Component({
   selector: 'app-editar-contacto',
   templateUrl: './editar-contacto.component.html',
-  styleUrls: ['./editar-contacto.component.scss']
+  styleUrls: ['./editar-contacto.component.scss'],
 })
-export class EditarContactoComponent implements OnInit  {
-
+export class EditarContactoComponent {
   proveedorList: any[] = [];
   contactoList: any[] = [];
   phoneError: string = '';
@@ -73,7 +73,7 @@ export class EditarContactoComponent implements OnInit  {
   }
 
   checkEmailExists() {
-    debugger
+    
     const emailControl = this.editarContacto.get('email');
     
     if (emailControl && this.contactoList.length > 0) {
@@ -112,6 +112,7 @@ export class EditarContactoComponent implements OnInit  {
     this.dialogRef.close();
   }
   ngOnInit(): void {
+    //console.table(this.data);
     this.getProviderList();
     this.getContactosList();
 
@@ -119,6 +120,7 @@ export class EditarContactoComponent implements OnInit  {
 
   getProviderList(): void {
     this.proveedorService.getProvidersList().subscribe((result: any) => {
+      //console.log(result);
       this.proveedorList = result;
     });
   }
@@ -135,24 +137,27 @@ export class EditarContactoComponent implements OnInit  {
     if (this.editarContacto.valid) {
       var contacto = this.editarContacto.value;
       contacto.contactId = this.data.contactId;
-      debugger
+      
       this.dialogRef.close(contacto);
     }
   }
 
   validate(input: any): void {
     this.contactoService.validate(input).subscribe(
-      (response) => {
+      response => {
         this.emailError = '';
         this.phoneError = '';
       },
-      (error) => {
+      error => {
         this.emailError = '';
         this.phoneError = '';
+
         if (error.status === 400 && error.error && error.error.errors) {
           const errorResponse = error.error;
+          console.log(errorResponse);
           for (const key in errorResponse.errors) {
             if (errorResponse.errors.hasOwnProperty(key)) {
+              console.table(key);
               const errorMessage = errorResponse.errors[key].errors[0].errorMessage;
               if (key === 'Email') {
                 this.emailError = errorMessage;

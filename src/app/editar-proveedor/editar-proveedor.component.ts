@@ -117,7 +117,7 @@ export class EditarProveedorComponent {
 
   checkIdentifierExists() {
     const identifierControl = this.editarProveedorForm.get('identifier');
-    debugger
+    
 
     if (identifierControl && this.proveedoresList.length > 0) {
       const identification = identifierControl.value;

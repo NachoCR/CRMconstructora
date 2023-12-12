@@ -2,6 +2,9 @@
 <mat-dialog-content class="custom-dialog-content" style="height:100% !important">
   <div class="container-fluid">
     <div class="row mt-3">
+      <button mat-icon-button class="close-button" (click)="cerrarModal()">
+        <mat-icon>close</mat-icon>
+      </button>
       <div class="col">
         <form [formGroup]="crearTareaForm" (ngSubmit)="crear()" novalidate autocomplete="">
 
@@ -13,6 +16,9 @@
               <label for="name" class="control-label font-weight-bold">Nombre de la tarea</label>
               <input type="text" class="form-control" placeholder="Nombre de la tarea" formControlName="name"
                 [(ngModel)]="data.name" />
+                <div *ngIf="crearTareaForm.get('name')?.invalid && crearTareaForm.get('name')?.touched" class="text-danger">
+                  Nombre de la tarea es requerido.
+                </div>
             </div>
             <div class="form-group col-md-4">
               <label for="dateDue" class="control-label font-weight-bold">Fecha de Entrega</label>
@@ -23,15 +29,22 @@
                 *ngIf="crearTareaForm.get('dateDue')?.hasError('dateInPast') && crearTareaForm.get('dateDue')?.touched">
                 <small class="text-danger">La fecha no puede ser anterior a la fecha de inicio.</small>
               </div>
+              <div *ngIf="crearTareaForm.get('dateDue')?.invalid && crearTareaForm.get('dateDue')?.touched" class="text-danger">
+                La fecha es requerida
+              </div>
+              
             </div>
             
             <div class="form-group col-md-4">
               <label for="statusId" class="control-label font-weight-bold">Estado</label>
               <select formControlName="statusId" class="form-select" style="border-radius: 2px;" [(ngModel)]="data.statusId">
                 <option value=1>Nuevo</option>
-                <option value=2>En Progreso</option>
-                <option value=3>Finalizado</option>
+                <option value=4>Aprobada</option>
+                <option value=5>Denegada</option>
               </select>
+              <div *ngIf="crearTareaForm.get('statusId')?.invalid && crearTareaForm.get('statusId')?.touched" class="text-danger">
+               El estado es requerido
+              </div>
             </div>
           </div>
 
@@ -44,6 +57,9 @@
                 <option value=2>Media</option>
                 <option value=3>Alta</option>
               </select>
+              <div *ngIf="crearTareaForm.get('priorityId')?.invalid && crearTareaForm.get('priorityId')?.touched" class="text-danger">
+                La prioridad es requerida
+               </div>
             </div> 
 
             <div class="form-group col-md-4">
@@ -59,6 +75,9 @@
                   {{proyecto.name}}
                 </mat-option>
               </mat-autocomplete>
+              <div *ngIf="crearTareaForm.get('projectId')?.invalid && crearTareaForm.get('projectId')?.touched" class="text-danger">
+                El proyecto es requerido
+               </div>
             </div>
 
             <div class="form-group col-md-4">
@@ -74,6 +93,9 @@
               {{user.name}}
               </mat-option>
             </mat-autocomplete>
+            <div *ngIf="crearTareaForm.get('userId')?.invalid && crearTareaForm.get('userId')?.touched" class="text-danger">
+              El usuario es requerido
+             </div>
             </div>
           </div>
 
@@ -83,6 +105,9 @@
               <textarea type="text" class="form-control" placeholder="Descripción" formControlName="description"
                 [(ngModel)]="data.description"></textarea>
             </div>
+            <div *ngIf="crearTareaForm.get('description')?.invalid && crearTareaForm.get('description')?.touched" class="text-danger">
+              La descripcion es requerida
+             </div>
           </div>
 
 

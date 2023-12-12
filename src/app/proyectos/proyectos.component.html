@@ -97,8 +97,8 @@
             <mat-card-content>
               <p style="font-size: small">Descripción del proyecto: {{ project?.description }}</p>
               <p style="font-size: small">Cliente: {{ project?.client?.name }}</p>
-              <p style="font-size: smaller">Fecha Inicio: {{ project?.startDate }}</p>
-              <p style="font-size: smaller">Fecha Entrega: {{ project?.endDate }}</p>
+              <p style="font-size: smaller">Fecha Inicio: {{ project?.startDate | date:'yyyy-MM-dd'  }}</p>
+              <p style="font-size: smaller">Fecha Entrega: {{ project?.endDate | date:'yyyy-MM-dd'  }}</p>
             </mat-card-content>
             <mat-card-actions>
               <button mat-icon-button (click)="openDialogEditar(project)" matTooltip="Editar">

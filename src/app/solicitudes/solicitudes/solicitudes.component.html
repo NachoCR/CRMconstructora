@@ -68,13 +68,13 @@
           <ng-container matColumnDef="startDate">
             <mat-header-cell *matHeaderCellDef>Fecha Inicio</mat-header-cell>
             <mat-cell *matCellDef="let solicitud"
-              >{{ solicitud.startDate }}</mat-cell
+              >{{ solicitud.startDate | date:'yyyy-MM-dd'  }}</mat-cell
             >
           </ng-container>
 
           <ng-container matColumnDef="endDate">
             <mat-header-cell *matHeaderCellDef>Fecha Final</mat-header-cell>
-            <mat-cell *matCellDef="let solicitud">{{ solicitud.endDate }}</mat-cell>
+            <mat-cell *matCellDef="let solicitud">{{ solicitud.endDate | date:'yyyy-MM-dd'  }}</mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="description">
@@ -105,6 +105,13 @@
               <button mat-icon-button (click)="openDialogEditar(solicitud)" matTooltip="Editar">
                 <mat-icon>edit</mat-icon>
               </button>
+              <button
+              mat-icon-button
+              (click)="openDetailsDialog(solicitud)"
+              matTooltip="Ver detalles"
+            >
+              <mat-icon>details</mat-icon>
+            </button>
               <button mat-icon-button (click)="openEliminar(solicitud)" matTooltip="Eliminar">
                 <mat-icon>delete</mat-icon>
               </button>

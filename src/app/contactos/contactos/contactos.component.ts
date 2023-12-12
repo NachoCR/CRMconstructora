@@ -117,8 +117,10 @@ export class ContactosComponent implements OnInit {
   };
 
   openDialogEditar(user: any): void {
+    const pUser = _.cloneDeep(user);
+    console.log(pUser);
     const dialogRef = this.dialog.open(EditarContactoComponent, {
-      data: user
+      data: pUser,
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
@@ -136,7 +138,7 @@ export class ContactosComponent implements OnInit {
                 Swal.fire('Guardados!', '', 'success');
               }, error: (e) => {
                 this.getContactoList();
-                debugger;
+                ;
                 //console.log(e);
                 Swal.fire('Error al guardar los cambios', '', 'info');
               }

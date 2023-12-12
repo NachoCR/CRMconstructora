@@ -63,6 +63,9 @@ $(document).ready(function(){
 
 			<div class="col-sm-6 text-right">
 			  <!-- Botón para crear tareas en la misma fila que el título -->
+			  <button mat-raised-button color="secondary" (click)="exportTable()">
+            <mat-icon>download</mat-icon> Exportar
+          </button>
 			  <button mat-raised-button color="primary" (click)="openDialog()">
 				<mat-icon>add</mat-icon> Crear Tarea
 			  </button>
@@ -79,10 +82,11 @@ $(document).ready(function(){
                 (ngModelChange)="applyFilter()"
               />
             </mat-form-field>
+			
           	</div>
 		  </div>
 			<div class="table-responsive">
-				<mat-table [dataSource]="filteredTasks" matSort >  <!---->
+				<mat-table #TareasTable  [dataSource]="filteredTasks" matSort >  <!---->
 
 					<ng-container *ngFor="let column of ['name']" matColumnDef="name">
 						<mat-header-cell *matHeaderCellDef>Nombre</mat-header-cell>
@@ -96,12 +100,12 @@ $(document).ready(function(){
 
 					<ng-container *ngFor="let column of ['dateDue']" matColumnDef="dateDue">
 						<mat-header-cell *matHeaderCellDef>Fecha Limite</mat-header-cell>
-						<mat-cell *matCellDef="let task">{{ task.dateDue }}</mat-cell>
+						<mat-cell *matCellDef="let task">{{ task.dateDue | date:'yyyy-MM-dd'  }}</mat-cell>
 					</ng-container>
 
 					<ng-container *ngFor="let column of ['statusId'] " matColumnDef="statusId">
 						<mat-header-cell *matHeaderCellDef>Estado</mat-header-cell>
-						<mat-cell *matCellDef="let task">{{ task.statusId }}</mat-cell>
+						<mat-cell *matCellDef="let task">{{ task.status }}</mat-cell>
 					</ng-container>
 
 					<ng-container *ngFor="let column of ['priorityId']" matColumnDef="priorityId">
@@ -137,9 +141,15 @@ $(document).ready(function(){
 
 
 				</mat-table>
+				<mat-paginator
+        [length]="tareasList.length"
+        [pageSize]="pageSize"
+        [pageSizeOptions]="pageSizeOptions"
+        (page)="onPageChange($event)"
+      ></mat-paginator>
 			</div>
 		</div>
 	</div>
-
+</body>
 
 

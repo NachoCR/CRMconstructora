@@ -10,7 +10,6 @@ import { ProveedorService } from 'app/services/proveedor.service';
 import * as _ from 'lodash';
 
 import Swal from 'sweetalert2';
-import { Pipe, PipeTransform } from '@angular/core';
 
 
 @Pipe({
@@ -21,7 +20,7 @@ export class FilterPipe2 implements PipeTransform {
     if (!items2 || !filtro2) {
       return items2;
     }
-debugger
+
     return items2.filter(itemProv => {
       // Implementa tu lógica de filtrado según tus necesidades
       return (
@@ -87,7 +86,6 @@ export class ProveedoresComponent {
 
   openDialog(): void {
     const dialogRef = this.dialog.open(CrearProveedorComponent, {
-      width: '50%',
       data: { proveedor: this.proveedor },
     });
 
@@ -123,7 +121,6 @@ export class ProveedoresComponent {
     console.log(provider);
     const pProveedor = _.cloneDeep(provider);
     const dialogRef = this.dialog.open(EditarProveedorComponent, {
-      width: '50%',
       data: pProveedor,
     });
 

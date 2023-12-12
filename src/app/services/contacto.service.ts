@@ -35,8 +35,7 @@ export class ContactoService {
   }
 
   updateContacto(contacto: any): Observable<any> {
-    debugger;
-    console.log(contacto)
+
     return this.http
       .put<any>(this.APIUrl + '/ProviderContact/', contacto)
       .pipe(map((data: any) => data));

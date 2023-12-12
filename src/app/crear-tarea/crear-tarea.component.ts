@@ -59,7 +59,7 @@ export class CrearTareaComponent {
     // Restar 3 días a la fecha actual
     currentDate.setDate(currentDate.getDate() - 2);
   
-    debugger;
+    ;
     if (selectedDate < currentDate) {
       return { 'dateInPast': true };
     }
@@ -160,6 +160,10 @@ export class CrearTareaComponent {
      const filterValue = value.toLowerCase();
     return this.usuariosList.filter(user => user.name.toLowerCase().includes(filterValue));
    }
+
+   cerrarModal() {
+    this.dialogRef.close();
+  }
 
 
 }

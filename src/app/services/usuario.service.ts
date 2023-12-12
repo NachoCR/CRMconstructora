@@ -33,7 +33,6 @@ export class UsuarioService {
   }
 
   updateUsuario(user: any): Observable<any> {
-    console.log(user);
     return this.http.put<any>(this.APIUrl + '/User/', user).pipe(map((data: any) => data));
   }
 

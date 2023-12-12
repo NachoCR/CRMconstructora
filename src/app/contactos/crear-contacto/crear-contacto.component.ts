@@ -97,7 +97,7 @@ export class CrearContactoComponent implements OnInit {
   }
 
   onInput(controlName: string): void {
-    const control = this.contactoForm.get(controlName);
+    const control = this.crearContacto.get(controlName);
     if (control) {
       control.markAsDirty();
       control.markAsTouched();

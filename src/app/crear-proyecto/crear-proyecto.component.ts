@@ -46,7 +46,7 @@ export class CrearProyectoComponent {
     this.crearProyectoForm.controls["userId"].setValue(this.selectedUser.userId);
   }
   setUserValue(user : any) {
-    debugger
+    
     this.selectedUser = user;
     console.log(user)
     this.data.assignedUser = user.name;

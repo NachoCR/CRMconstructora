@@ -160,30 +160,6 @@
               [(ngModel)]="data.position"
             />
             </div>
-
-            <!-- Proyecto a asignar -->
-            <div class="form-group col-md-4" *ngIf="editarUsuarioForm.get('roleId')?.value === '2'">
-              <label for="assignedProject" class="control-label font-weight-bold"
-                >Proyecto a asignar</label
-              >
-              <input
-                type="text"
-                placeholder="Buscar proyecto"
-                formControlName="assignedProject"
-                [matAutocomplete]="auto"
-                [(ngModel)]="data.assignedProject"
-                class="form-control"
-              />
-              <mat-autocomplete #auto="matAutocomplete">
-                <mat-option
-                  (click)="setProjectValue(proyecto)"
-                  *ngFor="let proyecto of filteredProyectosList$ | async"
-                  [value]="proyecto.projectId"
-                >
-                  {{ proyecto.name }}
-                </mat-option>
-              </mat-autocomplete>
-            </div>
           </div>
 
           <div class="form-row">

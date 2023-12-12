@@ -11,6 +11,8 @@ import * as _ from 'lodash';
 import * as XLSX from 'xlsx'; 
 import { CrearSolicitudComponent } from '../crear-solicitud/crear-solicitud.component';
 import { EditarSolicitudComponent } from '../editar-solicitud/editar-solicitud.component';
+import { UsuarioService } from 'app/services/usuario.service';
+import { DetallesSolicitudComponent } from '../detalles-solicitud/detalles-solicitud.component';
 
 @Component({
   selector: 'app-solicitudes',
@@ -41,6 +43,7 @@ export class SolicitudesComponent {
   constructor(
     public dialog: MatDialog,
     private solicitudService: SolicitudService,
+    private usuarioService: UsuarioService,
     private router: Router,
     private activatedRoute: ActivatedRoute
   ) {}
@@ -54,13 +57,13 @@ export class SolicitudesComponent {
 
 
   getSolicitudesList(): void {
-    debugger;
     this.solicitudService.getSolicitudList().subscribe((result: any) => {
       this.solicitudesList = result;
       console.log(result)
       this.dataSource = new MatTableDataSource(this.solicitudesList);
     });
   }
+
 
 
   exportTable() {
@@ -72,7 +75,7 @@ export class SolicitudesComponent {
       "Fecha Inicio": x.startDate,
       "Fecha Final": x.endDate,
       "Descripción" : x.description,
-      "Usuario": x.userId,
+      "Usuario": x.userDTO.name,
       "Estado" : x.statusId,
       "Razón" : x.managerReason, 
     }))
@@ -88,7 +91,7 @@ export class SolicitudesComponent {
   
   openDialog(): void {
     const dialogRef = this.dialog.open(CrearSolicitudComponent, {
-      width: '50%',
+    
       data: { solicitud: this.solicitud },
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -123,8 +126,9 @@ export class SolicitudesComponent {
 
   openDialogEditar(solicitud: any): void {
     const pSolicitud = _.cloneDeep(solicitud);
+    console.log(pSolicitud)
     const dialogRef = this.dialog.open(EditarSolicitudComponent, {
-      width: '50%',
+      
       data: pSolicitud,
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -188,4 +192,13 @@ export class SolicitudesComponent {
     });
   }
 
+  openDetailsDialog(solicitud: any): void {
+    this.solicitudService.getSolicitudDetails(solicitud.leaveId).subscribe((solicitudDetails: any) => {
+      //console.table(contactDetails);
+      this.dialog.open(DetallesSolicitudComponent, {
+
+        data: solicitudDetails
+      });
+    });
+  }
 }
