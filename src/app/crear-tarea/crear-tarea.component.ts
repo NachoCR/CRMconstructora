@@ -11,37 +11,34 @@ import { Observable, debounceTime, map, startWith } from 'rxjs';
 import { UsuarioService } from 'app/services/usuario.service';
 import { ProyectoService } from 'app/services/proyecto.service';
 
-
 @Component({
   selector: 'app-crear-tarea',
   templateUrl: './crear-tarea.component.html',
   styleUrls: ['./crear-tarea.component.scss'],
 })
 export class CrearTareaComponent {
-
-
   selectedProject: any;
 
   transformData() {
     this.data.assignedProject = this.selectedProject.projectId;
-    this.crearTareaForm.controls["projectId"].setValue(this.selectedProject.projectId);
+    this.crearTareaForm.controls['projectId'].setValue(this.selectedProject.projectId);
   }
-  setProjectValue(proyecto : any) {
+  setProjectValue(proyecto: any) {
     this.selectedProject = proyecto;
     this.data.assignedProject = proyecto.name;
-    this.crearTareaForm.controls["projectId"].setValue(proyecto.name);
+    this.crearTareaForm.controls['projectId'].setValue(proyecto.name);
   }
 
   selectedUser: any;
-  
+
   transformData2() {
     this.data.assignedUser = this.selectedUser.userId;
-    this.crearTareaForm.controls["userId"].setValue(this.selectedUser.userId);
+    this.crearTareaForm.controls['userId'].setValue(this.selectedUser.userId);
   }
-  setUserValue(employee : any) {
+  setUserValue(employee: any) {
     this.selectedUser = employee;
     this.data.assignedUser = employee.name;
-    this.crearTareaForm.controls["userId"].setValue(employee.name);
+    this.crearTareaForm.controls['userId'].setValue(employee.name);
   }
 
   // public crearUForm: FormGroup;
@@ -55,15 +52,14 @@ export class CrearTareaComponent {
   dateNotInPast(control: AbstractControl): { [key: string]: boolean } | null {
     const selectedDate = new Date(control.value);
     const currentDate = new Date();
-  
+
     // Restar 3 días a la fecha actual
     currentDate.setDate(currentDate.getDate() - 2);
-  
-    ;
+
     if (selectedDate < currentDate) {
-      return { 'dateInPast': true };
+      return { dateInPast: true };
     }
-  
+
     return null;
   }
 
@@ -71,22 +67,22 @@ export class CrearTareaComponent {
 
   constructor(
     public dialogRef: MatDialogRef<CrearTareaComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any, private fb: FormBuilder, 
-    private proyectoService: ProyectoService, 
-    private usuarioService: UsuarioService) {
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private fb: FormBuilder,
+    private proyectoService: ProyectoService,
+    private usuarioService: UsuarioService
+  ) {
     // this.crearUForm = this.crearUsuarioForm();
 
-    this.crearTareaForm = new FormGroup(
-      {
+    this.crearTareaForm = new FormGroup({
       name: new FormControl(null, [Validators.required]),
       description: new FormControl(null, [Validators.required]),
-      statusId : new FormControl(null, [Validators.required]),
+      statusId: new FormControl(null, [Validators.required]),
       dateDue: new FormControl(null, [Validators.required, DateValidator.dateNotInPast]),
-      priorityId : new FormControl(null, [Validators.required]),
-      projectId : new FormControl(null, [Validators.required]),
-      userId : new FormControl(null, [Validators.required]),
-    }
-      )
+      priorityId: new FormControl(null, [Validators.required]),
+      projectId: new FormControl(null, [Validators.required]),
+      userId: new FormControl(null, [Validators.required]),
+    });
   }
 
   proyectosList: any[] = []; // Aquí almacenarás la lista de proyectos
@@ -115,15 +111,13 @@ export class CrearTareaComponent {
     }, 1500);
   }
 
-
   onNoClick(): void {
     this.dialogRef.close();
   }
 
   ngOnInit(): void {
-
     //Servicio de clientes para cargar la lista
-    this.proyectoService.getProyectList().subscribe((data) => {
+    this.proyectoService.getProyectList().subscribe(data => {
       this.proyectosList = data;
       this.filteredProyectosList$ = this.crearTareaForm.get('projectId')?.valueChanges.pipe(
         startWith(''),
@@ -133,22 +127,17 @@ export class CrearTareaComponent {
     });
 
     //Servicio de empleados para cargar la lista
-     this.usuarioService.getUserList().subscribe((data) => {
-       this.usuariosList = data;
-       console.log(data)
-       this.usuariosList = this.usuariosList.filter(x => x.roleId == 2); 
-       this.filteredUserList$ = this.crearTareaForm.get('userId')?.valueChanges.pipe(
-         startWith(''),
-         debounceTime(300),
-         map(value => this._filterUser(value))
-       );
-     });
-
-
-    console.log(this.data);
+    this.usuarioService.getUserList().subscribe(data => {
+      this.usuariosList = data;
+      this.usuariosList = this.usuariosList.filter(x => x.roleId == 2);
+      this.filteredUserList$ = this.crearTareaForm.get('userId')?.valueChanges.pipe(
+        startWith(''),
+        debounceTime(300),
+        map(value => this._filterUser(value))
+      );
+    });
   }
-  
-  
+
   //Filtro clientes
   private _filterProyectos(value: string): any[] {
     const filterValue = value.toLowerCase();
@@ -157,14 +146,11 @@ export class CrearTareaComponent {
 
   //Filtro empleados
   private _filterUser(value: string): any[] {
-     const filterValue = value.toLowerCase();
+    const filterValue = value.toLowerCase();
     return this.usuariosList.filter(user => user.name.toLowerCase().includes(filterValue));
-   }
-
-   cerrarModal() {
-    this.dialogRef.close();
   }
 
-
+  cerrarModal() {
+    this.dialogRef.close();
+  }
 }
-

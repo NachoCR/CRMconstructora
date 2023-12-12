@@ -1,6 +1,6 @@
 <!-- image-upload-card.component.html -->
 <div class="card">
-  <mat-card-content class="mat-card-content">
+  <mat-card-content class="mat-card-content" matTooltip="Click para agregar una imagen">
     <div class="upload-container">
       <div class="row mt-4">
         <input
@@ -11,14 +11,14 @@
           #fileInput
         />
         <button
-          *ngIf="this.selectedFile !== null"
           mat-mini-fab
+          *ngIf="!isFileSelected()"
           (click)="fileInput.click()"
           class="upload-button"
         >
           <mat-icon>add_photo_alternate</mat-icon>
         </button>
-        <div (click)="fileInput.click()" *ngIf="selectedFile || imageSrc" class="image-preview">
+        <div (click)="fileInput.click()" *ngIf="isFileSelected() || imageSrc" class="image-preview">
           <img class="image-preview-content" [src]="imageSrc" alt="Preview" />
         </div>
       </div>

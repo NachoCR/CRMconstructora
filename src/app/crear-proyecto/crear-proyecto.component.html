@@ -114,10 +114,11 @@
             />
             <mat-autocomplete #auto="matAutocomplete">
               <mat-option
-                *ngFor="let user of filteredUserList$ | async" (click)="setUserValue(user)"
+                *ngFor="let user of filteredUserList$ | async"
+                (click)="setUserValue(user)"
                 [value]="user.userId"
               >
-              {{user.name}}
+                {{ user.name }}
               </mat-option>
             </mat-autocomplete>
           </div>

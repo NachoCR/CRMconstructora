@@ -23,6 +23,11 @@ export class FileUploadComponent {
     private communicationService: CommunicationService
   ) {}
 
+  isFileSelected() {
+    if (this.selectedFile !== null) return true;
+    if (this.selectedFile == null) return false;
+    return false;
+  }
   onFileSelected(event: any): void {
     const file: File = event.target.files[0];
 
@@ -36,25 +41,28 @@ export class FileUploadComponent {
     }
   }
 
-  onFileUpload(): any {
-    this.uploadFile();
-  }
+  async uploadFile(): Promise<string> {
+    return new Promise((resolve, reject) => {
+      if (this.selectedFile) {
+        const formData = new FormData();
+        formData.append('upload_preset', this.unsignedUploadPreset);
+        formData.append('file', this.selectedFile);
 
-  uploadFile(): void {
-    if (this.selectedFile) {
-      const formData = new FormData();
-      formData.append('file', this.selectedFile);
-      formData.append('upload_preset', this.unsignedUploadPreset);
-
-      this.http.post(this.uploadEndpoint, formData).subscribe({
-        next: (result: any) => {
-          this.communicationService.setResult(result.url);
-        },
-        error: error => {},
-        complete: () => {
-          // // console.log('Request completed');
-        },
-      });
-    }
+        this.http.post(this.uploadEndpoint, formData).subscribe({
+          next: (result: any) => {
+            this.communicationService.setResult(result.url);
+            resolve(result.url);
+          },
+          error: error => {
+            reject(error);
+          },
+          complete: () => {
+            // Puedes realizar acciones adicionales si es necesario
+          },
+        });
+      } else {
+        reject('No se ha seleccionado ningún archivo.');
+      }
+    });
   }
 }

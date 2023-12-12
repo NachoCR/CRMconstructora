@@ -37,7 +37,7 @@ export class CrearProveedorComponent {
 
   proveedor?: ProveedorData;
   forceReload: boolean = false;
-  
+
   constructor(
     public dialogRef: MatDialogRef<CrearProveedorComponent>,
     private proveedorService: ProveedorService,
@@ -91,7 +91,6 @@ export class CrearProveedorComponent {
     passportControl?.setValidators([]);
     juridicControl?.setValidators([]);
 
-    console.log(identifierId);
     if (identifierId === '1') {
       identifierControl?.setValidators([
         Validators.required,
@@ -144,7 +143,9 @@ export class CrearProveedorComponent {
     if (passportControl && this.proveedoresList.length > 0) {
       const passport = passportControl.value;
 
-      const passportExists = this.proveedoresList.some(proveedor => proveedor.identifier === passport);
+      const passportExists = this.proveedoresList.some(
+        proveedor => proveedor.identifier === passport
+      );
 
       if (passportExists) {
         passportControl.setErrors({ passportExists: true });
@@ -160,7 +161,9 @@ export class CrearProveedorComponent {
     if (juridicControl && this.proveedoresList.length > 0) {
       const juridic = juridicControl.value;
 
-      const juridicExists = this.proveedoresList.some(proveedor => proveedor.identifier === juridic);
+      const juridicExists = this.proveedoresList.some(
+        proveedor => proveedor.identifier === juridic
+      );
 
       if (juridicExists) {
         juridicControl.setErrors({ juridicExists: true });
@@ -208,7 +211,6 @@ export class CrearProveedorComponent {
     this.checkCedulaExists();
     // this.crearUForm.get('passport')?.updateValueAndValidity(); // Actualiza la validación de Angular
   }
-
 
   get f() {
     return this.crearProveedorForm.controls;

@@ -25,7 +25,7 @@ export class EditarProyectoComponent {
   editarProyectoForm: FormGroup;
   submitted = false;
   isWorking = false;
-  userList: any[] = []; 
+  userList: any[] = [];
   filteredUserList$: Observable<any[]> | undefined;
 
   dateNotInPast(control: AbstractControl): { [key: string]: boolean } | null {
@@ -60,17 +60,15 @@ export class EditarProyectoComponent {
   }
   selectedUser: any;
   selectedClient: any;
-  
+
   transformData2() {
     this.data.assignedUser = this.selectedUser.employeeId;
-    this.editarProyectoForm.controls["userId"].setValue(this.selectedUser.userId);
+    this.editarProyectoForm.controls['userId'].setValue(this.selectedUser.userId);
   }
-  setUserValue(user : any) {
-    
+  setUserValue(user: any) {
     this.selectedUser = user;
-    console.log(user)
     this.data.assignedUser = user.name;
-    this.editarProyectoForm.controls["userId"].setValue(user.selectedUser.clientId);
+    this.editarProyectoForm.controls['userId'].setValue(user.selectedUser.clientId);
   }
 
   onClientSelectionChange(selectedClient: any): void {
@@ -101,19 +99,19 @@ export class EditarProyectoComponent {
     }, 1500);
   }
 
-  onNoClick(): void { 
+  onNoClick(): void {
     this.dialogRef.close();
   }
 
   ngOnInit(): void {
     this.usuarioService.getUserList().subscribe(data => {
-    this.userList = data.filter(x => x.roleId == 1); 
-    const initialClientId = this.editarProyectoForm.get('clientId')?.value;
-    const initialClient = this.userList.find(user => user.userId === initialClientId);
-    if (initialClient) {
-      this.editarProyectoForm.get('clientId')?.setValue(initialClient.name);
-      this.selectedUser = initialClient.userId; // Mantén el clientId separado
-    }
+      this.userList = data.filter(x => x.roleId == 1);
+      const initialClientId = this.editarProyectoForm.get('clientId')?.value;
+      const initialClient = this.userList.find(user => user.userId === initialClientId);
+      if (initialClient) {
+        this.editarProyectoForm.get('clientId')?.setValue(initialClient.name);
+        this.selectedUser = initialClient.userId; // Mantén el clientId separado
+      }
 
       this.filteredUserList$ = this.editarProyectoForm.get('clientId')?.valueChanges.pipe(
         startWith(''),
@@ -129,7 +127,6 @@ export class EditarProyectoComponent {
   }
 
   handleFileUploadUrl($event: string) {
-    console.log($event);
     this.data.imageURL = $event;
   }
 

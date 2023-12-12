@@ -2,24 +2,28 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ContactosData } from 'app/interfaces/contacto.interface';
 import { ProveedorService } from '../../services/proveedor.service';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  ValidationErrors,
+  Validators,
+} from '@angular/forms';
 import { ContactoService } from '../../services/contacto.service';
 
 @Component({
   selector: 'app-crear-contacto',
   templateUrl: './crear-contacto.component.html',
-  styleUrls: ['./crear-contacto.component.scss']
+  styleUrls: ['./crear-contacto.component.scss'],
 })
 export class CrearContactoComponent implements OnInit {
-
   proveedorList: any[] = [];
   phoneError: string = '';
   emailError: string = '';
   crearContacto: FormGroup;
   submitted = false;
   isWorking = false;
-
-
 
   constructor(
     public dialogRef: MatDialogRef<CrearContactoComponent>,
@@ -28,7 +32,6 @@ export class CrearContactoComponent implements OnInit {
     private contactoService: ContactoService,
     private fb: FormBuilder
   ) {
-
     // this.crearContacto = new FormGroup(
     //   {
     //   name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
@@ -45,39 +48,36 @@ export class CrearContactoComponent implements OnInit {
     //   details: ['', [Validators.required, Validators.minLength(10)]],
     // });
 
-    this.crearContacto = new FormGroup(
-      {
-        name: new FormControl(null, [Validators.required]),
-        lastname: new FormControl(null, [Validators.required]),
-        secondLastname: new FormControl(null, [Validators.required]),
-        email: new FormControl(null, [
-          Validators.required,
-          Validators.email,
-          this.emailValidator,
-          Validators.pattern(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/),
-        ]),
-        
-        phone: new FormControl(null, [
-          Validators.required,
-          Validators.maxLength(8),
-          Validators.minLength(8),
-          Validators.pattern(/^\d{8}$/),
-        ]),
-        providerId: new FormControl(null, [Validators.required]),
-        details: new FormControl(null, [Validators.required, Validators.minLength(10)])
-      },
+    this.crearContacto = new FormGroup({
+      name: new FormControl(null, [Validators.required]),
+      lastname: new FormControl(null, [Validators.required]),
+      secondLastname: new FormControl(null, [Validators.required]),
+      email: new FormControl(null, [
+        Validators.required,
+        Validators.email,
+        this.emailValidator,
+        Validators.pattern(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/),
+      ]),
 
-    );
+      phone: new FormControl(null, [
+        Validators.required,
+        Validators.maxLength(8),
+        Validators.minLength(8),
+        Validators.pattern(/^\d{8}$/),
+      ]),
+      providerId: new FormControl(null, [Validators.required]),
+      details: new FormControl(null, [Validators.required, Validators.minLength(10)]),
+    });
   }
 
-    // Agrega una función de validación personalizada
-    emailValidator(control: AbstractControl): ValidationErrors | null {
-      const email = control.value as string;
-      if (email && email.indexOf('@') === -1) {
-        return { invalidEmail: true };
-      }
-      return null;
+  // Agrega una función de validación personalizada
+  emailValidator(control: AbstractControl): ValidationErrors | null {
+    const email = control.value as string;
+    if (email && email.indexOf('@') === -1) {
+      return { invalidEmail: true };
     }
+    return null;
+  }
 
   onNoClick(): void {
     this.dialogRef.close();
@@ -118,11 +118,11 @@ export class CrearContactoComponent implements OnInit {
 
   validate(input: any): void {
     this.contactoService.validate(input).subscribe(
-      (response) => {
+      response => {
         this.emailError = '';
         this.phoneError = '';
       },
-      (error) => {
+      error => {
         this.emailError = '';
         this.phoneError = '';
         if (error.status === 400 && error.error && error.error.errors) {
@@ -139,18 +139,12 @@ export class CrearContactoComponent implements OnInit {
           }
         }
       }
-    )
+    );
   }
-
 
   get f() {
     return this.crearContacto.controls;
   }
 
-
-
-  checkPhoneLenght(phone: any) {
-    console.log(phone);
-  }
-
+  checkPhoneLenght(phone: any) {}
 }

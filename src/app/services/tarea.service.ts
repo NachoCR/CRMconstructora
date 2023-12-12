@@ -19,14 +19,12 @@ export class TareaService {
       })
       .pipe(
         map((data: any) => {
-          console.log(data);
           return data;
         })
       );
   }
 
   addTask(task: any): Observable<any> {
-    console.log(task);
     let res;
     return this.http.put<any>(this.APIUrl + '/Task/', task).pipe(map((data: any) => data));
   }
@@ -37,7 +35,6 @@ export class TareaService {
 
   deleteTask(task: any) {
     let res;
-    console.log(task);
     return this.http
       .delete<any>(this.APIUrl + '/Task/' + task.taskId)
       .subscribe(data => (res = data));

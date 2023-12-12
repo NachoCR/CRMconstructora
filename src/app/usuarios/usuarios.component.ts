@@ -15,11 +15,8 @@ import Swal from 'sweetalert2';
 import { debug } from 'console';
 import * as _ from 'lodash';
 import { MatTableDataSource } from '@angular/material/table';
-import * as XLSX from 'xlsx'; 
+import * as XLSX from 'xlsx';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-
-
-
 
 @Component({
   selector: 'app-usuarios',
@@ -28,14 +25,14 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 })
 export class UsuariosComponent implements OnInit {
   usuario?: UsuarioData;
-  @ViewChild("UsuariosTable") usuariosTable? : ElementRef;
+  @ViewChild('UsuariosTable') usuariosTable?: ElementRef;
 
   // usuariosList: UsuarioData[] = [];
 
   dataSource: MatTableDataSource<any> = new MatTableDataSource();
   usuariosList: any[] = []; // Asegúrate de que usuariosList contenga tus datos
-  /*name of the excel-file which will be downloaded. */ 
-  fileName= 'Usuarios.xlsx';  
+  /*name of the excel-file which will be downloaded. */
+  fileName = 'Usuarios.xlsx';
 
   searchTerm: string = '';
   filteredUsers: any[] = [];
@@ -69,14 +66,11 @@ export class UsuariosComponent implements OnInit {
   ngOnInit(): void {
     this.aplicarPaginacion();
     this.getUsuariosList();
-     // Llamada inicial para aplicar la paginación
-     
+    // Llamada inicial para aplicar la paginación
   }
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
   }
-
-  
 
   getUsuariosList(): void {
     this.usuarioService.getUserList().subscribe((result: any) => {
@@ -89,43 +83,38 @@ export class UsuariosComponent implements OnInit {
   }
 
   applyFilter(): void {
-    this.filteredUsers = this.usuariosList.filter((user) =>
-      user.name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-      user.identification.toLowerCase().includes(this.searchTerm.toLowerCase()) 
+    this.filteredUsers = this.usuariosList.filter(
+      user =>
+        user.name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+        user.identification.toLowerCase().includes(this.searchTerm.toLowerCase())
     );
-    
   }
 
   exportTable() {
-    this.dataSource.data.map(x => {
-      console.log(x);
-    })
-  
+    this.dataSource.data.map(x => {});
+
     let data = this.dataSource.data.map(x => ({
-      "User Id": x.userId,
-      "Tipo Identificacion": x.identifierType,
-      "Nombre" : x.name,
-      "Primer Apellido": x.lastname,
-      "Segundo Apellido" : x.secondLastname,
-      "Teléfono" : x.phone, 
-      "Identificación" : x.identification,
-      "Correo" : x.email,
-      "Rol" : x.roleId,
-      "Posición" : x.position
-    }))
+      'User Id': x.userId,
+      'Tipo Identificacion': x.identifierType,
+      'Nombre': x.name,
+      'Primer Apellido': x.lastname,
+      'Segundo Apellido': x.secondLastname,
+      'Teléfono': x.phone,
+      'Identificación': x.identification,
+      'Correo': x.email,
+      'Rol': x.roleId,
+      'Posición': x.position,
+    }));
     let ws = XLSX.utils.json_to_sheet(data, <XLSX.Table2SheetOpts>{
-      sheet: "usuarios"
+      sheet: 'usuarios',
     });
     let wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'usuarios'); 
+    XLSX.utils.book_append_sheet(wb, ws, 'usuarios');
     XLSX.writeFile(wb, 'usuarios.xlsx');
   }
 
-
-  
   openDialog(): void {
     const dialogRef = this.dialog.open(CrearUsuarioComponent, {
-      
       data: { usuario: this.usuario },
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -138,7 +127,6 @@ export class UsuariosComponent implements OnInit {
           denyButtonText: `No guardar`,
         }).then(swalResult => {
           if (swalResult.isConfirmed) {
-            console.log(result);
             this.usuarioService.addUsuario(result).subscribe({
               next: () => {
                 this.getUsuariosList();
@@ -147,7 +135,6 @@ export class UsuariosComponent implements OnInit {
               error: e => {
                 this.getUsuariosList();
 
-                console.log(e);
                 Swal.fire('Error al registrar usuario', '', 'info');
               },
             });
@@ -159,10 +146,8 @@ export class UsuariosComponent implements OnInit {
   }
 
   openDialogEditar(user: any): void {
-    console.log(user);
     const pUser = _.cloneDeep(user);
     const dialogRef = this.dialog.open(EditarUsuarioComponent, {
-
       data: pUser,
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -178,13 +163,11 @@ export class UsuariosComponent implements OnInit {
             this.usuarioService.updateUsuario(result).subscribe({
               next: () => {
                 this.getUsuariosList();
-                console.log(result)
                 Swal.fire('Cambios guardados!', '', 'success');
               },
               error: e => {
                 this.getUsuariosList();
 
-                console.log(e);
                 Swal.fire('Error al guardar los cambios', '', 'info');
               },
             });
@@ -210,14 +193,14 @@ export class UsuariosComponent implements OnInit {
       if (result.value) {
         this.usuarioService.deleteUsuario(user);
         setTimeout(() => {}, 2000);
-      // Agrega un tiempo de espera antes de actualizar la lista
-      setTimeout(() => {
-        this.getUsuariosList();
-        Swal.fire('Eliminado!', 'Usuario eliminado.', 'success');
-      }, 2000);
-    } else if (result.dismiss === Swal.DismissReason.cancel) {
-      Swal.fire('Cancelado', 'El usuario no fue eliminado', 'error');
-    }
+        // Agrega un tiempo de espera antes de actualizar la lista
+        setTimeout(() => {
+          this.getUsuariosList();
+          Swal.fire('Eliminado!', 'Usuario eliminado.', 'success');
+        }, 2000);
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire('Cancelado', 'El usuario no fue eliminado', 'error');
+      }
     });
   }
 
@@ -246,9 +229,8 @@ export class UsuariosComponent implements OnInit {
 
   aplicarPaginacion(): void {
     const startIndex = this.pageIndex * this.pageSize;
-  const endIndex = startIndex + this.pageSize;
-  const paginatedData = this.usuariosList.slice(startIndex, endIndex);
-  this.filteredUsers = paginatedData;
-  console.log(paginatedData)
+    const endIndex = startIndex + this.pageSize;
+    const paginatedData = this.usuariosList.slice(startIndex, endIndex);
+    this.filteredUsers = paginatedData;
   }
 }

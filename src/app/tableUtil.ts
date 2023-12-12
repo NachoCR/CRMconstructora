@@ -1,4 +1,4 @@
-import * as XLSX from "xlsx";
+import * as XLSX from 'xlsx';
 
 // const getFileName = (name?: string) => {
 //   let timeSpan = new Date().toISOString();
@@ -11,12 +11,9 @@ import * as XLSX from "xlsx";
 // };
 
 export class TableUtil {
-
-  static exportTableToExcel(table? : any) {
-    
-    console.log(table);
+  static exportTableToExcel(table?: any) {
     let wb = XLSX.utils.table_to_book(table._data, <XLSX.Table2SheetOpts>{
-      sheet: "usuarios"
+      sheet: 'usuarios',
     });
     XLSX.writeFile(wb, `usuarios.xlsx`);
   }

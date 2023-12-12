@@ -8,12 +8,10 @@ import { SolicitudService } from 'app/services/solicitud.service';
 import { UsuarioService } from 'app/services/usuario.service';
 import { Observable, debounceTime, map, startWith } from 'rxjs';
 
-
-
 @Component({
   selector: 'app-crear-solicitud',
   templateUrl: './crear-solicitud.component.html',
-  styleUrls: ['./crear-solicitud.component.scss']
+  styleUrls: ['./crear-solicitud.component.scss'],
 })
 export class CrearSolicitudComponent {
   selectedProject: any;
@@ -46,38 +44,29 @@ export class CrearSolicitudComponent {
 
   transformData2() {
     this.data.assignedUser = this.selectedUser.userId;
-    this.crearSolicitudForm.controls["userId"].setValue(this.selectedUser.userId);
+    this.crearSolicitudForm.controls['userId'].setValue(this.selectedUser.userId);
   }
-  setUserValue(user : any) {
-    
+  setUserValue(user: any) {
     this.selectedUser = user;
-    console.log(user)
     this.data.assignedUser = user.name;
-    this.crearSolicitudForm.controls["userId"].setValue(user.userId);
+    this.crearSolicitudForm.controls['userId'].setValue(user.userId);
   }
-  
+
   constructor(
     public dialogRef: MatDialogRef<CrearSolicitudComponent>,
     private solicitudService: SolicitudService,
     private usuarioService: UsuarioService,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private fb: FormBuilder,
-  ) 
-  
-  {
-
-    this.crearSolicitudForm = new FormGroup(
-      {
-
-        startDate: new FormControl(null, [Validators.required, DateValidator.dateNotInPast]),
-        endDate: new FormControl(null, [Validators.required, DateValidator.dateNotInPast]),
-        description: new FormControl(null, [Validators.required]),
-        userId: new FormControl(null, [Validators.required]),
-        statusId: new FormControl(null, [Validators.required]),
-        managerReason: new FormControl(null),
-
-      }
-    );
+    private fb: FormBuilder
+  ) {
+    this.crearSolicitudForm = new FormGroup({
+      startDate: new FormControl(null, [Validators.required, DateValidator.dateNotInPast]),
+      endDate: new FormControl(null, [Validators.required, DateValidator.dateNotInPast]),
+      description: new FormControl(null, [Validators.required]),
+      userId: new FormControl(null, [Validators.required]),
+      statusId: new FormControl(null, [Validators.required]),
+      managerReason: new FormControl(null),
+    });
   }
 
   userList: any[] = []; // Aquí almacenarás la lista de clientes
@@ -85,7 +74,6 @@ export class CrearSolicitudComponent {
 
   filteredUserList$: Observable<any[]> | undefined;
   // filteredEmpleadosList$: Observable<any[]> | undefined;
-
 
   get f() {
     return this.crearSolicitudForm.controls;
@@ -113,10 +101,9 @@ export class CrearSolicitudComponent {
 
   ngOnInit(): void {
     //Servicio de clientes para cargar la lista
-    this.usuarioService.getUserList().subscribe((data) => {
-      this.userList = data.filter(x => x.roleId == 2); 
-      
-      console.log(data)
+    this.usuarioService.getUserList().subscribe(data => {
+      this.userList = data.filter(x => x.roleId == 2);
+
       this.filteredUserList$ = this.crearSolicitudForm.get('userId')?.valueChanges.pipe(
         startWith(''),
         debounceTime(300),
@@ -124,7 +111,6 @@ export class CrearSolicitudComponent {
       );
     });
     // this.crearProyectoForm.setControl('endDate', new FormControl(null, [Validators.required, DateValidator.dateFactory(new Date (this.crearProyectoForm.get('startDate')?.value))]));
-    console.log(this.data);
   }
 
   //Filtro clientes
@@ -142,8 +128,4 @@ export class CrearSolicitudComponent {
   cerrarModal() {
     this.dialogRef.close();
   }
-
-    
-  }
-
-
+}
