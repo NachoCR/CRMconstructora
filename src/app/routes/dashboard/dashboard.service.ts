@@ -1,5 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { ProyectoService } from 'app/services/proyecto.service';
+import { Observable, map } from 'rxjs';
+import { ProductoService } from 'app/services/producto.service';
+import { TareaService } from 'app/services/tarea.service';
+import { UsuarioService } from 'app/services/usuario.service';
+import { UsuarioData } from 'app/interfaces/usuario.interface';
+import { CatalogoProveedorComponent } from 'app/catalogo-proveedor/catalogo-proveedor.component';
+import { catalogoProveedorData } from '../../interfaces/catalogoProveedor.interface';
+import { ProveedorData } from '../../interfaces/proveedor.interface';
+import { ProyectoData } from 'app/interfaces/proyecto.interface';
 
 export interface ConstruccionItems {
   proveedor: string;
@@ -82,34 +92,37 @@ const MESSAGES = [
 
 @Injectable()
 export class DashboardService {
+
+  ELEMENT_DATA2: catalogoProveedorData[] = [];
+
   stats = [
     {
-      title: 'Facturas de esta semana',
-      amount: '4.452.000',
+      title: 'Cantidad de Proyectos en Progreso',
+      amount: 0,
       progress: {
         value: 100,
       },
       color: 'bg-indigo-500',
     },
     {
-      title: 'Entradas',
-      amount: '9.142.200',
+      title: 'Precio Total del Inventario Actual',
+      amount: 0,
       progress: {
         value: 100,
       },
       color: 'bg-blue-500',
     },
     {
-      title: 'Salario semanales',
-      amount: '1,291,922',
+      title: 'Cantidad de Tareas',
+      amount: '',
       progress: {
         value: 100,
       },
       color: 'bg-green-500',
     },
     {
-      title: 'Gastos Transporte',
-      amount: '40.000',
+      title: 'Clientes Registrados',
+      amount: 0,
       progress: {
         value: 100,
       },
@@ -212,7 +225,79 @@ export class DashboardService {
     },
   ];
 
-  constructor(private http: HttpClient) {}
+  getCantProyectos(): Observable<number> {
+    return this.proyectosService.getProyectList().pipe(
+      map(proyectosList => proyectosList.filter(proyecto => proyecto.statusId === 2).length)
+    );
+  }
+
+  getCantClientes(): Observable<number> {
+    return this.usuarioService.getUserList().pipe(
+      map(usuarioList => usuarioList.filter(usuario => usuario.roleId === 2).length)
+    );
+  }
+
+  getTareasCant(): Observable<string> {
+    return this.tareasService.getTaskList().pipe(
+      map(tareasList => {
+        const tareasNuevas = tareasList.filter(tarea => tarea.status === 'Nuevo').length;
+        const tareasAprobadas = tareasList.filter(tarea => tarea.status === 'Aprobada').length;
+        const tareasDenegadas = tareasList.filter(tarea => tarea.status === 'Denegada').length;
+        const tareas = `Nuevo: ${tareasNuevas} | Aprobada: ${tareasAprobadas} |‎ ‎  Denegada: ${tareasDenegadas}`;
+        return tareas;
+      })
+    );
+  }
+
+  getPrecioTotalInventario(): Observable<number> {
+    return this.productosService.getProductoList().pipe(
+      map(productosList => {
+        const precios = productosList.map(producto => producto.price || 0);
+        const precioTotal = precios.reduce((total, precio) => total + precio, 0);
+        return precioTotal;
+      })
+    );
+  }
+
+  getClientes(): Observable<UsuarioData[]> {
+    return this.usuarioService.getUserList().pipe(
+      map(usuarioList => usuarioList.filter(usuario => usuario.roleId === 2).slice(0, 3))
+    );
+  }
+
+  getProductos(): Observable<CatalogoProveedorComponent[]> {
+    return this.productosService.getProductoList().pipe(
+      map(productoList => productoList.slice(0, 7))
+    );
+  }
+
+  getProyectos(): Observable<ProyectoData[]> {
+    return this.proyectoService.getProyectList().pipe(
+      map(proyectoList => proyectoList.slice(0, 3))
+    );
+  }
+
+  constructor(
+    private http: HttpClient,
+    private proyectosService: ProyectoService,
+    private productosService: ProductoService,
+    private tareasService: TareaService,
+    private usuarioService: UsuarioService,
+    private proyectoService: ProyectoService
+  ) {
+    this.getCantProyectos().subscribe(cantidadProyectos => {
+      this.stats[0].amount = cantidadProyectos;
+    });
+    this.getPrecioTotalInventario().subscribe(precioTotal => {
+      this.stats[1].amount = precioTotal;
+    });
+    this.getTareasCant().subscribe(tareas => {
+      this.stats[2].amount = tareas;
+    });
+    this.getCantClientes().subscribe(clientes => {
+      this.stats[3].amount = clientes;
+    });
+  }
 
   getData() {
     return ELEMENT_DATA;

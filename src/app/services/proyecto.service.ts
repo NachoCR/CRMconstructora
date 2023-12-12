@@ -19,7 +19,7 @@ export class ProyectoService {
       })
       .pipe(
         map((data: any) => {
-          
+
           return data;
         })
       );
@@ -36,9 +36,13 @@ export class ProyectoService {
 
   deleteProyecto(project: any) {
     let res;
- 
+
     return this.http
       .delete<any>(this.APIUrl + '/Project/' + project.projectId)
       .subscribe(data => (res = data));
+  }
+
+  getProyectoDetails(pId: number): Observable<any> {
+    return this.http.get<any>(this.APIUrl + `/Project/GetProjectById?pId=${pId}`);
   }
 }

@@ -1,3 +1,5 @@
+import { ProveedorData } from "./proveedor.interface";
+
 export interface catalogoProveedorData {
   imageURL?: any;
   itemId?: number;
@@ -7,4 +9,5 @@ export interface catalogoProveedorData {
   providerId?: string;
   unitId: number;
   quantity: number;
+  provider?: ProveedorData
 }

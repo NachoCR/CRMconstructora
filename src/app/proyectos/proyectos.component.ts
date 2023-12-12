@@ -55,10 +55,12 @@ export class ProyectosComponent {
 
   //Paginacion
 
-  pageSizeOptions: number[] = [6, 10, 25, 100];
-  pageSize: number = 6;
-  pageIndex: number = 0;
-  @ViewChild(MatPaginator) paginator!: MatPaginator; // <-- Agrega el modificador !
+    pageSizeOptions: number[] = [6, 10, 25, 100];
+    pageSize: number = 6;
+    pageIndex: number = 0;
+    @ViewChild(MatPaginator) paginator!: MatPaginator; // <-- Agrega el modificador !
+
+    //
 
   //
 
@@ -67,6 +69,7 @@ export class ProyectosComponent {
   }
 
   filtrarPorFechaInicio(): void {
+
     this.proyectosFiltradosPorFechaInicio = this.proyectosList.filter(project => {
       const fechaInicioProyecto = new Date(project.startDate).toISOString();
       const fechaSeleccionada = this.fechaInicioFilter
@@ -125,6 +128,7 @@ export class ProyectosComponent {
 
   openDialog(): void {
     const dialogRef = this.dialog.open(CrearProyectoComponent, {
+
       data: { proyecto: this.proyecto },
     });
     dialogRef.beforeClosed().subscribe(result => {
@@ -164,6 +168,8 @@ export class ProyectosComponent {
     });
 
     dialogRef.afterClosed().subscribe(result => {
+
+
       if (result) {
         // Mostrar SweetAlert para confirmar los cambios
         Swal.fire({
@@ -181,6 +187,8 @@ export class ProyectosComponent {
               },
               error: e => {
                 this.getProyectosList();
+
+                // console.log(e);
                 Swal.fire('Error al guardar los cambios', '', 'info');
               },
             });
@@ -235,4 +243,10 @@ export class ProyectosComponent {
 
     this.proyectosPaginados = this.proyectosList.slice(startIndex, endIndex);
   }
+
+  openGestionProyectos(project: any): void {
+    console.log(project.projectId)
+    this.router.navigateByUrl('/admin/detalles-proyecto/' + project.projectId);
+  }
+
 }

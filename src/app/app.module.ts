@@ -63,6 +63,7 @@ import { CrearProductoComponent } from './productos/crear-producto/crear-product
 import { EditarProductoComponent } from './productos/editar-producto/editar-producto.component';
 import { DetallesSolicitudComponent } from './solicitudes/detalles-solicitud/detalles-solicitud.component';
 import { CalendarioComponent } from './calendario/calendario.component';
+import { DetallesProyectoComponent } from './detalles-proyecto/detalles-proyecto.component';
 
 
 
@@ -103,7 +104,7 @@ export function TranslateHttpLoaderFactory(http: HttpClient) {
     TareaComponent,
     CrearTareaComponent,
 
-    SolicitudesComponent, 
+    SolicitudesComponent,
     CrearSolicitudComponent,
     EditarSolicitudComponent,
     EditarTareaComponent,
@@ -115,6 +116,7 @@ export function TranslateHttpLoaderFactory(http: HttpClient) {
     DetallesProductoComponent,
     EditarProductoComponent,
     CalendarioComponent,
+    DetallesProyectoComponent
 
   ],
 
