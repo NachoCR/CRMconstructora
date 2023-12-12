@@ -19,14 +19,14 @@ export class UsuarioService {
       })
       .pipe(
         map((data: any) => {
-       
+
           return data;
         })
       );
   }
 
   addUsuario(user: any): Observable<any> {
-  
+
     let res;
     user.phone = user.phone.toString();
     return this.http.put<any>(this.APIUrl + '/User/', user).pipe(map((data: any) => data));
@@ -36,11 +36,15 @@ export class UsuarioService {
     return this.http.put<any>(this.APIUrl + '/User/', user).pipe(map((data: any) => data));
   }
 
-  deleteUsuario(user: any) {
-    let res;
-  
-    return this.http
-      .delete<any>(this.APIUrl + '/User/' + user.userId)
-      .subscribe(data => (res = data));
+  async deleteUsuario(user: any): Promise<any> {
+    try {
+      const data = await this.http
+        .delete<any>(this.APIUrl + '/User/' + user.userId)
+        .toPromise();
+
+      return data;
+    } catch (error) {
+       // You might want to handle or rethrow the error based on your needs
+    }
   }
 }

@@ -189,15 +189,19 @@ export class UsuariosComponent implements OnInit {
       showCancelButton: true,
       confirmButtonText: 'Si, continuar',
       cancelButtonText: 'No',
-    }).then(result => {
+    }).then(async(result) => {
       if (result.value) {
-        this.usuarioService.deleteUsuario(user);
-        setTimeout(() => {}, 2000);
-        // Agrega un tiempo de espera antes de actualizar la lista
-        setTimeout(() => {
-          this.getUsuariosList();
-          Swal.fire('Eliminado!', 'Usuario eliminado.', 'success');
-        }, 2000);
+        const deleteResult = await this.usuarioService.deleteUsuario(user);
+        if(deleteResult === -1){
+          Swal.fire('Cancelado', 'El usuario está asignado a algún proyecto o tarea.', 'error');
+        }else if(await this.usuarioService.deleteUsuario(user) === 1){
+          // Agrega un tiempo de espera antes de actualizar la lista
+          setTimeout(() => {
+            this.getUsuariosList();
+            Swal.fire('Eliminado!', 'Usuario eliminado.', 'success');
+          }, 2000);
+        }
+
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         Swal.fire('Cancelado', 'El usuario no fue eliminado', 'error');
       }
