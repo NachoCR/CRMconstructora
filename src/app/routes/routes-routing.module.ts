@@ -32,6 +32,7 @@ import { CalendarioComponent } from 'app/calendario/calendario.component';
 import { SolicitudesComponent } from 'app/solicitudes/solicitudes/solicitudes.component';
 import { DetallesContactoComponent } from 'app/contactos/detalles-contacto/detalles-contacto.component';
 import { DetallesProyectoComponent } from 'app/detalles-proyecto/detalles-proyecto.component';
+import { LeaveCalendarComponent } from '@shared/components/leave-calendar/leave-calendar.component';
 
 const routes: Routes = [
   { path: '#', component: DashboardComponent },
@@ -45,7 +46,7 @@ const routes: Routes = [
   { path: 'ordenesCompra', component: OrdenesCompraComponent },
   { path: 'contactos', component: ContactosComponent },
   { path: 'uploadImage', component: FileUploadComponent },
-  {path: 'calendar' , component: TaskCalendarComponent},
+  { path: 'calendar', component: LeaveCalendarComponent },
   { path: 'productos', component: ProductosComponent },
 
   {

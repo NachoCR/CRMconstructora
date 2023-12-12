@@ -27,7 +27,8 @@ import { FileUploadComponent } from './components/file-upload/file-upload.compon
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { TaskCalendarComponent } from './components/task-calendar/task-calendar.component';
 import { EventDetailsDialogComponent } from './components/event-details-dialog-component/event-details-dialog-component';
-
+import { LeaveDetailsDialogComponent } from './components/leave-details-dialog-component/leave-details-dialog-component';
+import { LeaveCalendarComponent } from './components/leave-calendar/leave-calendar.component';
 const MODULES: any[] = [
   CommonModule,
   RouterModule,
@@ -52,7 +53,9 @@ const COMPONENTS: any[] = [
   ErrorCodeComponent,
   FileUploadComponent,
   TaskCalendarComponent,
+  LeaveCalendarComponent,
   EventDetailsDialogComponent,
+  LeaveDetailsDialogComponent,
 ];
 const COMPONENTS_DYNAMIC: any[] = [];
 const DIRECTIVES: any[] = [DisableControlDirective];
@@ -68,6 +71,7 @@ const PIPES: any[] = [SafeUrlPipe, ToObservablePipe];
     ...PIPES,
     FileUploadComponent,
     TaskCalendarComponent,
+    LeaveCalendarComponent,
   ],
 })
 export class SharedModule {}
