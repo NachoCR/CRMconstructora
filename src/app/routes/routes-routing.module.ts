@@ -27,6 +27,7 @@ import { ContactosComponent } from 'app/contactos/contactos/contactos.component'
 import { RecoverComponent } from './sessions/recover/recover.component';
 import { FileUploadComponent } from '@shared/components/file-upload/file-upload.component';
 import { ProductosComponent } from 'app/productos/productos/productos.component';
+import { CalendarioComponent } from 'app/calendario/calendario.component';
 
 const routes: Routes = [
   { path: '#', component: DashboardComponent },
@@ -68,6 +69,7 @@ const routes: Routes = [
       { path: 'ordenesCompra', component: OrdenesCompraComponent },
       { path: 'contactos', component: ContactosComponent },
       { path: 'productos', component: ProductosComponent },
+      { path: 'calendario', component: CalendarioComponent },
     ],
   },
   {
