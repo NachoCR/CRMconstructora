@@ -199,13 +199,16 @@
       </div>
     </div> -->
 
+
     <div class="form-group col-md-6 col-sm-6">
-      <label for="providerId">Proveedor</label>
-      <select class="form-control" id="providerId" formControlName="providerId">
-        <mat-option value="" selected>{{ 'Seleccionar Proveedor' | translate }}</mat-option>
-        <option *ngFor="let provider of proveedorList" [value]="provider.providerId">
-          {{ provider.name }}
-        </option>
+      <label for="providerId" class="control-label font-weight-bold">Proveedor</label>
+      <select class="form-control" id="providerId" formControlName="providerId"
+      [ngClass]="{
+        'is-valid': contactoForm.get('providerId')?.valid && (contactoForm.get('providerId')?.touched),
+        'is-invalid': contactoForm.get('providerId')?.invalid && (contactoForm.get('providerId')?.touched)
+        }" (input)="onInput('providerId')">
+        <option value="" selected disabled>{{ 'Seleccionar Proveedor' | translate }}</option>
+        <option *ngFor="let provider of proveedorList" [value]="provider.providerId">{{ provider.name }}</option>
       </select>
       <div
         *ngIf="

@@ -19,9 +19,10 @@ import { MatPaginator } from '@angular/material/paginator';
 @Component({
   selector: 'app-contactos',
   templateUrl: './contactos.component.html',
-  styleUrls: ['./contactos.component.scss'],
+  styleUrls: ['./contactos.component.scss']
 })
 export class ContactosComponent implements OnInit {
+
   contacto?: ContactosData;
 
   // usuariosList: UsuarioData[] = [];
@@ -38,12 +39,8 @@ export class ContactosComponent implements OnInit {
 
   displayedColumns: string[] = ['name', 'email', 'phone', 'details', 'providerId', 'actions'];
 
-  constructor(
-    public dialog: MatDialog,
-    private contactoService: ContactoService,
-    private router: Router,
-    private activatedRoute: ActivatedRoute
-  ) {}
+  constructor(public dialog: MatDialog, private contactoService: ContactoService, private router: Router, private activatedRoute: ActivatedRoute) {
+  }
 
   ngOnInit(): void {
     this.aplicarPaginacion();
@@ -74,11 +71,14 @@ export class ContactosComponent implements OnInit {
 
 
   openDialog(): void {
+
+
     const dialogRef = this.dialog.open(CrearContactoComponent, {
       // width: '50%',
-      data: { contacto: this.contacto },
+      data: { contacto: this.contacto }
     });
     dialogRef.afterClosed().subscribe(result => {
+
       //   console.log('The dialog was closed');
       //   console.log(this.usuario);
       //   this.usuarioService.addUsuario(result);
@@ -86,6 +86,7 @@ export class ContactosComponent implements OnInit {
       // });
 
       if (result) {
+        //console.log(result);
         // Mostrar SweetAlert para confirmar los cambios
         Swal.fire({
           title: '¿Quiere registar al contacto?',
@@ -98,30 +99,30 @@ export class ContactosComponent implements OnInit {
               next: () => {
                 this.getContactoList();
                 Swal.fire('Registrado!', '', 'success');
-              },
-              error: e => {
+              }, error: (e) => {
                 this.getContactoList();
                 
                 console.log(e);
                 Swal.fire('Error al registrar contacto', '', 'info');
-              },
+              }
             });
             // Realizar cualquier acción adicional después de guardar
           }
-        });
+
+        }
+        )
       }
-    });
-  }
+    }
+    )
+  };
 
   openDialogEditar(user: any): void {
-    console.log(user);
-    const pUser = _.cloneDeep(user);
     const dialogRef = this.dialog.open(EditarContactoComponent, {
-      data: pUser,
+      data: user
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        // Mostrar SweetAlert para confirmar los cambios
+        //Object.assign(user, result);
         Swal.fire({
           title: '¿Quiere guardar los cambios?',
           showDenyButton: true,
@@ -133,26 +134,26 @@ export class ContactosComponent implements OnInit {
               next: () => {
                 this.getContactoList();
                 Swal.fire('Guardados!', '', 'success');
-              },
-              error: e => {
+              }, error: (e) => {
                 this.getContactoList();
-
-                console.log(e);
+                debugger;
+                //console.log(e);
                 Swal.fire('Error al guardar los cambios', '', 'info');
-              },
+              }
             });
-            // Realizar cualquier acción adicional después de guardar
-          } else if (swalResult.isDenied) {
-            // Usuario eligió no guardar los cambios
+          }
+          else if (swalResult.isDenied) {
             Swal.fire('Cambios no guardados', '', 'info');
           }
-        });
+        }
+        )
       }
-    });
-  }
+    }
+    )
+  };
 
   openEliminar(contacto: any): void {
-    console.table(contacto);
+    //console.table(contacto);
     Swal.fire({
       title: 'Eliminar contacto?',
       text: 'Está seguro que desea eliminar este contacto?',
@@ -160,7 +161,7 @@ export class ContactosComponent implements OnInit {
       showCancelButton: true,
       confirmButtonText: 'Si, continuar',
       cancelButtonText: 'No',
-    }).then(result => {
+    }).then((result) => {
       if (result.value) {
         this.contactoService.deleteContacto(contacto);
         setTimeout(() => {}, 2000);
@@ -177,9 +178,10 @@ export class ContactosComponent implements OnInit {
 
   openDetailsDialog(contacto: any): void {
     this.contactoService.getContactDetails(contacto.contactId).subscribe((contactDetails: any) => {
-      console.table(contactDetails);
+      //console.table(contactDetails);
       const dialogRef = this.dialog.open(DetallesContactoComponent, {
-        data: contactDetails,
+
+        data: contactDetails
       });
     });
   }

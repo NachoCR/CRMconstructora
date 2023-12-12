@@ -10,6 +10,7 @@ import { ProveedorService } from 'app/services/proveedor.service';
 import * as _ from 'lodash';
 
 import Swal from 'sweetalert2';
+import { Pipe, PipeTransform } from '@angular/core';
 
 
 @Pipe({

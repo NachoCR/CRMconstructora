@@ -9,7 +9,7 @@
           <h3>Edición de Contacto</h3>
 
           <div class="form-row">
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-6 col-sm-6">
               <label for="name" class="control-label font-weight-bold">Nombre</label>
               <input
                 type="text"
@@ -47,7 +47,7 @@
               </div>
             </div>
 
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-6 col-sm-6">
               <label for="lastname" class="control-label font-weight-bold">Primer Apellido</label>
               <input
                 type="text"
@@ -192,17 +192,15 @@
               </div>
             </div>
 
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-6 col-sm-6">
               <label for="providerId" class="control-label font-weight-bold">Proveedor</label>
-              <select
-                class="form-control"
-                formControlName="providerId"
-                [(ngModel)]="data.providerId"
-              >
-                <option value="" selected>Seleccionar Proveedor</option>
-                <option *ngFor="let provider of proveedorList" [value]="provider.providerId">
-                  {{ provider.name }}
-                </option>
+              <select class="form-control" id="providerId" formControlName="providerId" formControlName="providerId"
+              [ngClass]="{
+                'is-valid': contactoForm.get('providerId')?.valid && (contactoForm.get('providerId')?.touched),
+                'is-invalid': contactoForm.get('providerId')?.invalid && (contactoForm.get('providerId')?.touched)
+                }" (input)="onInput('providerId')">
+                <option value="" selected disabled>{{ 'Seleccionar Proveedor' | translate }}</option>
+                <option *ngFor="let provider of proveedorList" [value]="provider.providerId">{{ provider.name }}</option>
               </select>
               <div
                 *ngIf="

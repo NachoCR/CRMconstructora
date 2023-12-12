@@ -8,11 +8,11 @@ import { ContactoService } from '../../services/contacto.service';
 @Component({
   selector: 'app-crear-contacto',
   templateUrl: './crear-contacto.component.html',
-  styleUrls: ['./crear-contacto.component.scss'],
+  styleUrls: ['./crear-contacto.component.scss']
 })
 export class CrearContactoComponent implements OnInit {
-  proveedorList: any[] = [];
 
+  proveedorList: any[] = [];
   phoneError: string = '';
   emailError: string = '';
   crearContacto: FormGroup;
@@ -96,9 +96,16 @@ export class CrearContactoComponent implements OnInit {
     // });
   }
 
+  onInput(controlName: string): void {
+    const control = this.contactoForm.get(controlName);
+    if (control) {
+      control.markAsDirty();
+      control.markAsTouched();
+    }
+  }
+
   getProviderList(): void {
     this.proveedorService.getProvidersList().subscribe((result: any) => {
-      //console.log(result);
       this.proveedorList = result;
     });
   }
@@ -111,19 +118,17 @@ export class CrearContactoComponent implements OnInit {
 
   validate(input: any): void {
     this.contactoService.validate(input).subscribe(
-      response => {
+      (response) => {
         this.emailError = '';
         this.phoneError = '';
       },
-      error => {
+      (error) => {
         this.emailError = '';
         this.phoneError = '';
-
         if (error.status === 400 && error.error && error.error.errors) {
           const errorResponse = error.error;
           for (const key in errorResponse.errors) {
             if (errorResponse.errors.hasOwnProperty(key)) {
-              //console.table(key);
               const errorMessage = errorResponse.errors[key].errors[0].errorMessage;
               if (key === 'Email') {
                 this.emailError = errorMessage;

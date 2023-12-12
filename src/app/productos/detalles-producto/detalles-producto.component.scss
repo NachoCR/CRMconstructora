@@ -1,35 +1,11 @@
 .custom-dialog-content {
-  max-height: 90vh;
+  max-height: 93vh;
   overflow-y: auto;
 }
 
 .mat-dialog-container {
   width: auto !important;
   max-width: 90%;
-}
-.close-button {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  cursor: pointer;
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-}
-body {
-  color: #566787;
-  background: #f5f5f5;
-  font-family: 'Varela Round', sans-serif;
-  font-size: 13px;
-}
-.close-button {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  cursor: pointer;
-  background: none;
-  border: none;
-  font-size: 1.5rem;
 }
 
  /* Modal styles */

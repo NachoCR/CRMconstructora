@@ -1,0 +1,112 @@
+<mat-dialog-content class="custom-dialog-content">
+  <div class="container">
+    <div class="row mt-3">
+      <div class="col">
+        <form [formGroup]="productoForm" novalidate autocomplete="">
+          <h3>Editar Producto</h3>
+          <div class="form-row">
+            <div class="form-group col-md-6 col-sm-6">
+              <label for="name" class="control-label font-weight-bold">Nombre</label>
+              <input type="text" class="form-control" id="name" placeholder="Nombre" formControlName="name"
+                [ngClass]="{
+                  'is-valid': productoForm.get('name')?.valid && (productoForm.get('name')?.touched || productoForm.get('name')?.dirty),
+                  'is-invalid': productoForm.get('name')?.invalid && (productoForm.get('name')?.touched || productoForm.get('name')?.dirty)
+                }" (input)="onInput('name')">
+              <div class="invalid-feedback">
+                <span *ngIf="productoForm.get('name')?.hasError('required') && (productoForm.get('name')?.touched || productoForm.get('name')?.dirty)" class="text-danger">
+                  El nombre es obligatorio.
+                </span>
+                <span *ngIf="productoForm.get('name')?.hasError('minlength') && (productoForm.get('name')?.touched || productoForm.get('name')?.dirty)" class="text-danger">
+                  El nombre debe tener al menos 3 caracteres.
+                </span>
+                <span *ngIf="productoForm.get('name')?.hasError('maxlength') && (productoForm.get('name')?.touched || productoForm.get('name')?.dirty)" class="text-danger">
+                  El nombre no debe tener más de 20 caracteres.
+                </span>
+              </div>
+            </div>
+
+            <div class="form-group col-md-6 col-sm-6">
+              <label for="price" class="control-label font-weight-bold">Precio</label>
+              <input type="number" class="form-control" id="price" formControlName="price"
+                [ngClass]="{
+                  'is-valid': productoForm.get('price')?.valid && (productoForm.get('price')?.touched),
+                  'is-invalid': (productoForm.get('price')?.invalid || productoForm.hasError('noCeroNiNegativo')) && (productoForm.get('price')?.touched)
+                }" (input)="onInput('price')">
+              <div class="invalid-feedback">
+                <span *ngIf="productoForm.get('price')?.hasError('required') && productoForm.get('price')?.touched" class="text-danger">
+                  El precio es obligatorio.
+                </span>
+                <span *ngIf="productoForm.get('price')?.hasError('noCeroNiNegativo') && productoForm.get('price')?.touched" class="text-danger">
+                  El precio no puede ser cero ni negativo.
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group col-md-6 col-sm-6">
+              <label for="providerId" class="control-label font-weight-bold">Proveedor</label>
+              <select class="form-control" id="providerId" formControlName="providerId"
+              [ngClass]="{
+                'is-valid': productoForm.get('providerId')?.valid && (productoForm.get('providerId')?.touched),
+                'is-invalid': productoForm.get('providerId')?.invalid && (productoForm.get('providerId')?.touched)
+                }" (input)="onInput('providerId')">
+                <option value="" selected disabled>{{ 'Seleccionar Proveedor' | translate }}</option>
+                <option *ngFor="let provider of proveedorList" [value]="provider.providerId">{{ provider.name }}</option>
+              </select>
+              <div class="invalid-feedback">
+                <span *ngIf="productoForm.get('providerId')?.hasError('required') && productoForm.get('providerId')?.touched" class="text-danger">
+                  Debes seleccionar un proveedor.
+                </span>
+              </div>
+            </div>
+
+            <div class="form-group col-md-6 col-sm-6">
+              <label for="providerId" class="control-label font-weight-bold">Unidad</label>
+              <select class="form-control" id="unitId" formControlName="unitId"
+              [ngClass]="{
+                'is-valid': productoForm.get('unitId')?.valid && (productoForm.get('unitId')?.touched),
+                'is-invalid': productoForm.get('unitId')?.invalid && (productoForm.get('unitId')?.touched)
+                }" (input)="onInput('unitId')">
+                <option value="" selected disabled>{{ 'Seleccionar unidad' | translate }}</option>
+                <option *ngFor="let unidad of unitList" [value]="unidad.unitId">{{ unidad.unitName }} | {{unidad.abbreviation}}</option>
+              </select>
+              <div class="invalid-feedback">
+                <span *ngIf="productoForm.get('unitId')?.hasError('required') && productoForm.get('unitId')?.touched" class="text-danger">
+                  Debes seleccionar una unidad.
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6 col-sm-6">
+              <label for="price" class="control-label font-weight-bold">Cantidad</label>
+              <input type="number" class="form-control" id="quantity" formControlName="quantity">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="details" class="control-label font-weight-bold">Detalles</label>
+            <textarea class="form-control" id="details" placeholder="Detalles" formControlName="details" rows="4"
+            [ngClass]="{
+              'is-valid': productoForm.get('details')?.valid && (productoForm.get('details')?.touched),
+              'is-invalid': productoForm.get('details')?.invalid && (productoForm.get('details')?.touched)
+              }" (input)="onInput('details')"></textarea>
+            <div class="invalid-feedback">
+              <span *ngIf="productoForm.get('details')?.hasError('required') && productoForm.get('details')?.touched" class="text-danger">
+                Los detalles es obligatorio.
+              </span>
+              <span *ngIf="productoForm.get('details')?.hasError('minlength') && productoForm.get('details')?.touched" class="text-danger">
+                Los detalles deben tener al menos 10 caracteres.
+              </span>
+            </div>
+          </div>
+          <mat-dialog-actions class="custom-dialog-actions">
+            <button mat-button (click)="onNoClick()" class="btn btn-default">Cancelar</button>
+            <button mat-button [disabled]="!productoForm.valid" cdkFocusInitial class="btn btn-success" (click)="onSave()">Guardar</button>
+          </mat-dialog-actions>
+        </form>
+      </div>
+    </div>
+  </div>
+</mat-dialog-content>
