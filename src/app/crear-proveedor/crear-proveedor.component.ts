@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
@@ -16,6 +16,7 @@ import { PasswordValidators } from 'app/password-validator';
 import { ProveedorData } from 'app/interfaces/proveedor.interface';
 import { MatTableDataSource } from '@angular/material/table';
 import { ProveedorService } from 'app/services/proveedor.service';
+import { FileUploadComponent } from '@shared/components/file-upload/file-upload.component';
 // import { matchpassword } from 'app/confirmed.validator';
 // import { CustomValidators } from 'app/custom-validator';
 
@@ -37,6 +38,9 @@ export class CrearProveedorComponent {
 
   proveedor?: ProveedorData;
   forceReload: boolean = false;
+
+  @ViewChild('FileUpload')
+  private FileUpload?: FileUploadComponent;
 
   constructor(
     public dialogRef: MatDialogRef<CrearProveedorComponent>,
@@ -216,20 +220,51 @@ export class CrearProveedorComponent {
     return this.crearProveedorForm.controls;
   }
 
-  crear() {
-    this.submitted = true;
-
-    if (this.crearProveedorForm.invalid) {
-      return;
+  async saveImageUrl() {
+    try {
+      const result = await this.FileUpload?.uploadFile();
+      if (result) {
+        this.handleFileUploadUrl(result);
+        return result;
+      } else {
+        throw new Error('La URL de la imagen es undefined.');
+      }
+    } catch (error) {
+      console.error('Error al cargar la URL:', error);
+      throw error;
     }
+  }
 
-    this.isWorking = true;
-    this.crearProveedorForm.disable();
+  async crear() {
+    try {
+      const url = await this.saveImageUrl();
+      setTimeout(() => {
+        this.isWorking = false;
+        this.crearProveedorForm.enable();
+      }, 2000);
+      this.handleFileUploadUrl(url);
 
-    setTimeout(() => {
-      this.isWorking = false;
-      this.crearProveedorForm.enable();
-    }, 1500);
+      this.submitted = true;
+
+      if (this.crearProveedorForm.invalid) {
+        return;
+      }
+
+      this.isWorking = true;
+      this.crearProveedorForm.disable();
+
+      setTimeout(() => {
+        this.isWorking = false;
+        this.crearProveedorForm.enable();
+      }, 1500);
+    } catch (error) {
+      console.error('Error al crear:', error);
+    }
+  }
+
+  handleFileUploadUrl(url: string) {
+    this.data.imageURL = url;
+    if (this.proveedor) this.proveedor.imageURL = url;
   }
 
   onNoClick(): void {

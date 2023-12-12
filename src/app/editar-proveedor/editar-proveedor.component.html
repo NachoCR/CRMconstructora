@@ -30,34 +30,32 @@
               </div>
             </div>
 
-              <!-- Cédula -->
-              <div class="form-group col-md-4">
-                <label class="control-label font-weight-bold">Tipo de identificación</label>
-                <select
-                  formControlName="identifierId"
-                  [(ngModel)]="data.identifierId"
-                  class="form-select"
-                  style="border-radius: 2px"
-                  [ngClass]="{
-                    'is-valid': (f.identifierId.dirty || submitted) && !f.identifierId.errors,
-                    'is-invalid': (f.identifierId.dirty || submitted) && f.identifierId.errors
-                  }"
-                 
-                  
+            <!-- Cédula -->
+            <div class="form-group col-md-4">
+              <label class="control-label font-weight-bold">Tipo de identificación</label>
+              <select
+                formControlName="identifierId"
+                [(ngModel)]="data.identifierId"
+                class="form-select"
+                style="border-radius: 2px"
+                [ngClass]="{
+                  'is-valid': (f.identifierId.dirty || submitted) && !f.identifierId.errors,
+                  'is-invalid': (f.identifierId.dirty || submitted) && f.identifierId.errors
+                }"
+              >
+                <option value="1">Cédula</option>
+                <option value="2">Pasaporte</option>
+                <option value="3">Cédula jurídica</option>
+              </select>
+              <div class="invalid-feedback">
+                <span class="text-danger" *ngIf="f.identifierId.errors?.required"
+                  >El tipo de cedula es requerida</span
                 >
-                  <option value="1">Cédula</option>
-                  <option value="2">Pasaporte</option>
-                  <option value="3">Cédula jurídica</option>
-                </select>
-                <div class="invalid-feedback">
-                  <span class="text-danger" *ngIf="f.identifierId.errors?.required"
-                    >El tipo de cedula es requerida</span
-                  >
-                </div>
               </div>
-  
-              <!-- Identificación -->
-              <!-- <div class="form-group col-md-4" >
+            </div>
+
+            <!-- Identificación -->
+            <!-- <div class="form-group col-md-4" >
                 <label for="identifier" class="control-label font-weight-bold">Identificación</label>
                 <input
                   type="text"
@@ -87,37 +85,41 @@
                 </div>
               </div> -->
 
-              <div class="form-group col-md-4">
-                <label for="identifier" class="control-label font-weight-bold">{{identifierType}}</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder={{identifierType}}
-                  formControlName="identifier"
-                  [(ngModel)]="data.identifier"
-                  [ngClass]="{
-                    'is-valid': (f.identifier.dirty || submitted) && !f.identifier.errors,
-                    'is-invalid': (f.identifier.dirty || submitted) && f.identifier.errors
-                  }"
-                  (focusout)="checkIdentifierExists()"
-                  (ngModelChange) = "test($event)"
-                  maxlength="{{identifierLength}}"
-                  minlength="{{identifierLength}}"
-                />
-                <div class="invalid-feedback">
-                  <span class="text-danger" *ngIf="f.identifier.errors?.required"
-                    > {{identifierType}} es requerida</span
-                  >
-                  <span class="text-danger" *ngIf="f.identifier.errors?.pattern"
-                    > {{identifierType}} debe tener {{identifierLength}} dígitos y solo contener numeros</span
-                  >
-                  <span class="text-danger" *ngIf="f.identifier.errors?.identifierExists"
-                    >{{identifierType}} ya está registrada</span>
-                </div>
+            <div class="form-group col-md-4">
+              <label for="identifier" class="control-label font-weight-bold">{{
+                identifierType
+              }}</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="{{ identifierType }}"
+                formControlName="identifier"
+                [(ngModel)]="data.identifier"
+                [ngClass]="{
+                  'is-valid': (f.identifier.dirty || submitted) && !f.identifier.errors,
+                  'is-invalid': (f.identifier.dirty || submitted) && f.identifier.errors
+                }"
+                (focusout)="checkIdentifierExists()"
+                (ngModelChange)="test($event)"
+                maxlength="{{ identifierLength }}"
+                minlength="{{ identifierLength }}"
+              />
+              <div class="invalid-feedback">
+                <span class="text-danger" *ngIf="f.identifier.errors?.required">
+                  {{ identifierType }} es requerida</span
+                >
+                <span class="text-danger" *ngIf="f.identifier.errors?.pattern">
+                  {{ identifierType }} debe tener {{ identifierLength }} dígitos y solo contener
+                  numeros</span
+                >
+                <span class="text-danger" *ngIf="f.identifier.errors?.identifierExists"
+                  >{{ identifierType }} ya está registrada</span
+                >
               </div>
-              </div>
-           
-            <div class="form-row">
+            </div>
+          </div>
+
+          <div class="form-row">
             <div class="form-group col-md-6">
               <label for="email" class="control-label font-weight-bold">Correo</label>
               <input
@@ -144,7 +146,7 @@
                 >
               </div>
             </div>
- 
+
             <div class="form-group col-md-4">
               <label for="phone" class="control-label font-weight-bold">Teléfono</label>
               <input
@@ -173,55 +175,51 @@
                 >
               </div>
             </div>
-            </div>
+          </div>
           <!-- Correo electrónico -->
 
-         
           <div class="form-group">
-           
-              <label for="address" class="control-label font-weight-bold">Dirección</label>
-              <textarea
+            <label for="address" class="control-label font-weight-bold">Dirección</label>
+            <textarea
               matInput
-                class="form-control"
-                formControlName="address"
-                placeholder="Dirección"
-                [(ngModel)]="data.address"
-                [ngClass]="{
-                  'is-valid': (f.address.dirty || submitted) && !f.address.errors,
-                  'is-invalid': (f.address.dirty || submitted) && f.address.errors
-                }"
+              class="form-control"
+              formControlName="address"
+              placeholder="Dirección"
+              [(ngModel)]="data.address"
+              [ngClass]="{
+                'is-valid': (f.address.dirty || submitted) && !f.address.errors,
+                'is-invalid': (f.address.dirty || submitted) && f.address.errors
+              }"
+            >
+            </textarea>
+            <div class="invalid-feedback">
+              <span class="text-danger" *ngIf="f.address.errors?.required"
+                >La dirección es requerida</span
               >
-              </textarea>
-              <div class="invalid-feedback">
-                <span class="text-danger" *ngIf="f.address.errors?.required"
-                  >La dirección es requerida</span
-                >
-              </div>
-            
             </div>
+          </div>
 
-
-            <div class="form-group">
-           
-              <label for="details" class="control-label font-weight-bold">Detalles</label>
-              <textarea
+          <div class="form-group">
+            <label for="details" class="control-label font-weight-bold">Detalles</label>
+            <textarea
               matInput
-                class="form-control"
-                formControlName="details"
-                placeholder="Detalles"
-                [(ngModel)]="data.details"
-                [ngClass]="{
-                  'is-valid': (f.details.dirty || submitted) && !f.details.errors,
-                  'is-invalid': (f.details.dirty || submitted) && f.details.errors
-                }"
-              >
-              </textarea>
-              <div class="invalid-feedback">
-                <span class="text-danger" *ngIf="f.details.errors?.required">
-                  Los detalles son requeridos
-                  </span>
-              </div>
-            </div>  
+              class="form-control"
+              formControlName="details"
+              placeholder="Detalles"
+              [(ngModel)]="data.details"
+              [ngClass]="{
+                'is-valid': (f.details.dirty || submitted) && !f.details.errors,
+                'is-invalid': (f.details.dirty || submitted) && f.details.errors
+              }"
+            >
+            </textarea>
+            <div class="invalid-feedback">
+              <span class="text-danger" *ngIf="f.details.errors?.required">
+                Los detalles son requeridos
+              </span>
+            </div>
+          </div>
+          <app-file-upload #FileUpload></app-file-upload>
 
           <mat-dialog-actions class="custom-dialog-actions">
             <button mat-button (click)="onNoClick()" class="btn btn-default">Cancelar</button>
@@ -231,6 +229,7 @@
               [mat-dialog-close]="data"
               cdkFocusInitial
               class="btn btn-success"
+              (click)="saveImageUrl()"
             >
               Guardar
             </button>

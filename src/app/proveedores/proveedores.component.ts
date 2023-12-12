@@ -145,6 +145,13 @@ export class ProveedoresComponent {
     });
   }
 
+  checkProveedorImage(url?: string): string {
+    if (url) {
+      return url ?? '';
+    }
+    return '../../assets/images/epaLoog.webp';
+  }
+
   openEliminar(provider: any): void {
     Swal.fire({
       title: 'Eliminar proveedor?',
