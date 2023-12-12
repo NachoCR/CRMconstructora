@@ -7,12 +7,7 @@ import { Observable, map } from 'rxjs';
 })
 export class SolicitudService {
   readonly APIUrl;
-  public get data(): any {
-    return this._data;
-  }
-  public set data(value: any) {
-    this._data = value;
-  }
+
   constructor(private http: HttpClient) {
     this.APIUrl = 'http://73.56.189.143:7226/api'; //url de la sln
   }
@@ -50,7 +45,7 @@ export class SolicitudService {
     let res;
   
     return this.http
-      .delete<any>(this.APIUrl + '/Leave/' + leave.userId)
+      .delete<any>(this.APIUrl + '/Leave/' + leave.leaveId)
       .subscribe(data => (res = data));
   }
 }

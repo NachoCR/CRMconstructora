@@ -26,7 +26,7 @@ import * as XLSX from 'xlsx';
 export class TareaComponent implements OnInit {
   tarea?: TareaData;
 
-  tarea?: TareaData;  
+
 
   items: any[] = []; // Ajusta el tipo según tus datos reales
 
@@ -71,7 +71,7 @@ export class TareaComponent implements OnInit {
       "Estado": x.status,
       "Usuario": x.userId,
       "Proyecto" : x.projectId,
-      "Prioridad" : x.priority, 
+      "Prioridad" : x.priorityId, 
     }))
     let ws = XLSX.utils.json_to_sheet(data, <XLSX.Table2SheetOpts>{
       sheet: "tareas"
@@ -193,18 +193,15 @@ this.getTaskList();
     }).then(result => {
       if (result.value) {
         this.tareaService.deleteTask(Task);
-        let updatedTask = this.tareasList.filter(function (u) {
-          if (u.taskId != Task.taskId) {
-            return u;
-          }
-          return null;
-        });
-        this.tareasList = updatedTask;
-
-        Swal.fire('Eliminada!', 'Tarea eliminada.', 'success');
-      } else if (result.dismiss === Swal.DismissReason.cancel) {
-        Swal.fire('Cancelado', 'La tarea no fue eliminada', 'error');
-      }
+        setTimeout(() => {}, 2000);
+      // Agrega un tiempo de espera antes de actualizar la lista
+      setTimeout(() => {
+        this.getTaskList();
+        Swal.fire('Eliminado!', 'Tarea eliminada.', 'success');
+      }, 2000);
+    } else if (result.dismiss === Swal.DismissReason.cancel) {
+      Swal.fire('Cancelado', 'La tarea no fue eliminada', 'error');
+    }
     });
   }
   onPageChange(event: any): void {

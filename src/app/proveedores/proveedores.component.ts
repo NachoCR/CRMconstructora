@@ -86,6 +86,7 @@ export class ProveedoresComponent {
 
   openDialog(): void {
     const dialogRef = this.dialog.open(CrearProveedorComponent, {
+      width: '50%',
       data: { proveedor: this.proveedor },
     });
 
@@ -121,6 +122,7 @@ export class ProveedoresComponent {
     console.log(provider);
     const pProveedor = _.cloneDeep(provider);
     const dialogRef = this.dialog.open(EditarProveedorComponent, {
+      width: '50%',
       data: pProveedor,
     });
 
@@ -158,7 +160,7 @@ export class ProveedoresComponent {
 
   openEliminar(provider: any): void {
     Swal.fire({
-      title: 'Eliminar proyecto?',
+      title: 'Eliminar proveedor?',
       text: 'Está seguro que desea eliminar este proveedor?',
       icon: 'warning',
       showCancelButton: true,
@@ -166,19 +168,16 @@ export class ProveedoresComponent {
       cancelButtonText: 'No',
     }).then(result => {
       if (result.value) {
-        
         this.proveedorService.deleteProveedor(provider);
-        let updatedProviders = this.proveedoresList.filter(function (u) {
-          if (u.providerId != provider.providerId) {
-            return u;
-          }
-          return null;
-        });
-        this.proveedoresList = updatedProviders;
+        setTimeout(() => {}, 2000);
+      // Agrega un tiempo de espera antes de actualizar la lista
+      setTimeout(() => {
+        this.getProveedoresList();
         Swal.fire('Eliminado!', 'Proveedor eliminado.', 'success');
-      } else if (result.dismiss === Swal.DismissReason.cancel) {
-        Swal.fire('Cancelado', 'El proveedor no fue eliminado', 'error');
-      }
+      }, 2000);
+    } else if (result.dismiss === Swal.DismissReason.cancel) {
+      Swal.fire('Cancelado', 'El proveedor no fue eliminado', 'error');
+    }
     });
   }
 

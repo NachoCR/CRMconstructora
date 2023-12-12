@@ -91,7 +91,7 @@ export class SolicitudesComponent {
   
   openDialog(): void {
     const dialogRef = this.dialog.open(CrearSolicitudComponent, {
-    
+      width: '60%',
       data: { solicitud: this.solicitud },
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -128,7 +128,7 @@ export class SolicitudesComponent {
     const pSolicitud = _.cloneDeep(solicitud);
     console.log(pSolicitud)
     const dialogRef = this.dialog.open(EditarSolicitudComponent, {
-      
+      width: '60%',
       data: pSolicitud,
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -174,21 +174,16 @@ export class SolicitudesComponent {
     }).then(result => {
       if (result.value) {
         this.solicitudService.deleteSolicitud(solicitud);
-        setTimeout(() => {}, 2000);
+        console.log(solicitud)
+        setTimeout(() => {}, 4000);
+      // Agrega un tiempo de espera antes de actualizar la lista
+      setTimeout(() => {
         this.getSolicitudesList();
-
-        // let updatedUsers = this.usuariosList.filter(function(u) {
-        //   if (u.userId != user.userId) {
-        //   return u;
-        //   }
-        //   return null;
-        // })
-        // this.usuariosList = updatedUsers;
-        //this.router.navigate([this.router.url]);
         Swal.fire('Eliminado!', 'Solicitud eliminada.', 'success');
-      } else if (result.dismiss === Swal.DismissReason.cancel) {
-        Swal.fire('Cancelado', 'La solicitud no fue eliminada', 'error');
-      }
+      }, 2000);
+    } else if (result.dismiss === Swal.DismissReason.cancel) {
+      Swal.fire('Cancelado', 'La solicitud no fue eliminada', 'error');
+    }
     });
   }
 

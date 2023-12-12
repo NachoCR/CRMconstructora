@@ -169,12 +169,15 @@ export class ProductosComponent implements OnInit{
     }).then((result) => {
       if (result.value) {
         this.productoService.deleteProducto(producto);
-        this.productoList = this.productoList.filter(u => u.itemId !== producto.itemId);
-        this.dataSource.data = this.productoList;
+        setTimeout(() => {}, 2000);
+      // Agrega un tiempo de espera antes de actualizar la lista
+      setTimeout(() => {
+        this.getProductoList();
         Swal.fire('Eliminado!', 'Producto eliminado.', 'success');
-      } else if (result.dismiss === Swal.DismissReason.cancel) {
-        Swal.fire('Cancelado', 'El Producto no fue eliminado', 'error');
-      }
+      }, 2000);
+    } else if (result.dismiss === Swal.DismissReason.cancel) {
+      Swal.fire('Cancelado', 'El Producto no fue eliminado', 'error');
+    }
     });
   }
 

@@ -210,20 +210,14 @@ export class UsuariosComponent implements OnInit {
       if (result.value) {
         this.usuarioService.deleteUsuario(user);
         setTimeout(() => {}, 2000);
+      // Agrega un tiempo de espera antes de actualizar la lista
+      setTimeout(() => {
         this.getUsuariosList();
-
-        // let updatedUsers = this.usuariosList.filter(function(u) {
-        //   if (u.userId != user.userId) {
-        //   return u;
-        //   }
-        //   return null;
-        // })
-        // this.usuariosList = updatedUsers;
-        //this.router.navigate([this.router.url]);
         Swal.fire('Eliminado!', 'Usuario eliminado.', 'success');
-      } else if (result.dismiss === Swal.DismissReason.cancel) {
-        Swal.fire('Cancelado', 'El usuario no fue eliminado', 'error');
-      }
+      }, 2000);
+    } else if (result.dismiss === Swal.DismissReason.cancel) {
+      Swal.fire('Cancelado', 'El usuario no fue eliminado', 'error');
+    }
     });
   }
 

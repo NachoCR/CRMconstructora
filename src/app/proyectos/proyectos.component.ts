@@ -213,19 +213,16 @@ export class ProyectosComponent {
       cancelButtonText: 'No',
     }).then(result => {
       if (result.value) {
-        
         this.proyectoService.deleteProyecto(project);
-        let updatedProjects = this.proyectosList.filter(function (u) {
-          if (u.projectId != project.projectId) {
-            return u;
-          }
-          return null;
-        });
-        this.proyectosList = updatedProjects;
+        setTimeout(() => {}, 2000);
+      // Agrega un tiempo de espera antes de actualizar la lista
+      setTimeout(() => {
+        this.getProyectosList();
         Swal.fire('Eliminado!', 'Proyecto eliminado.', 'success');
-      } else if (result.dismiss === Swal.DismissReason.cancel) {
-        Swal.fire('Cancelado', 'El proyecto no fue eliminado', 'error');
-      }
+      }, 2000);
+    } else if (result.dismiss === Swal.DismissReason.cancel) {
+      Swal.fire('Cancelado', 'El proyecto no fue eliminado', 'error');
+    }
     });
   }
   checkProjectImage(url?: string): string {
