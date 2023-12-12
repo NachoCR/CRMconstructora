@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { DateValidator } from 'app/date-validator';
@@ -8,6 +8,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { Observable, debounceTime, map, startWith } from 'rxjs';
+import { FileUploadComponent } from '@shared/components/file-upload/file-upload.component';
 
 @Component({
   selector: 'app-editar-proyecto',
@@ -27,6 +28,9 @@ export class EditarProyectoComponent {
   isWorking = false;
   userList: any[] = [];
   filteredUserList$: Observable<any[]> | undefined;
+
+  @ViewChild('FileUpload')
+  private FileUpload?: FileUploadComponent;
 
   dateNotInPast(control: AbstractControl): { [key: string]: boolean } | null {
     const selectedDate = new Date(control.value);
@@ -83,20 +87,46 @@ export class EditarProyectoComponent {
     return this.editarProyectoForm.controls;
   }
 
-  crear() {
-    this.submitted = true;
-
-    if (this.editarProyectoForm.invalid) {
-      return;
+  async saveImageUrl() {
+    try {
+      const result = await this.FileUpload?.uploadFile();
+      if (result) {
+        this.handleFileUploadUrl(result);
+        return result;
+      } else {
+        throw new Error('La URL de la imagen es undefined.');
+      }
+    } catch (error) {
+      console.error('Error al cargar la URL:', error);
+      throw error;
     }
+  }
 
-    this.isWorking = true;
-    this.editarProyectoForm.disable();
+  async crear() {
+    try {
+      const url = await this.saveImageUrl();
+      setTimeout(() => {
+        this.isWorking = false;
+        this.editarProyectoForm.enable();
+      }, 2000);
+      this.handleFileUploadUrl(url);
 
-    setTimeout(() => {
-      this.isWorking = false;
-      this.editarProyectoForm.enable();
-    }, 1500);
+      this.submitted = true;
+
+      if (this.editarProyectoForm.invalid) {
+        return;
+      }
+
+      this.isWorking = true;
+      this.editarProyectoForm.disable();
+
+      setTimeout(() => {
+        this.isWorking = false;
+        this.editarProyectoForm.enable();
+      }, 1500);
+    } catch (error) {
+      console.error('Error al Editar:', error);
+    }
   }
 
   onNoClick(): void {
@@ -110,7 +140,8 @@ export class EditarProyectoComponent {
       const initialClient = this.userList.find(user => user.userId === initialClientId);
       if (initialClient) {
         this.editarProyectoForm.get('clientId')?.setValue(initialClient.name);
-        this.selectedUser = initialClient.userId; // Mantén el clientId separado
+        this.selectedUser = initialClient.userId;
+        console.log(initialClient);
       }
 
       this.filteredUserList$ = this.editarProyectoForm.get('clientId')?.valueChanges.pipe(

@@ -8,10 +8,6 @@
         <form [formGroup]="editarProyectoForm" (ngSubmit)="crear()" novalidate autocomplete="">
           <h3>Edición de Proyectos</h3>
 
-          <app-file-upload
-            (imagePostedURLEvent)="handleFileUploadUrl($event)"
-            [imageSrc]="data.imageURL ?? ''"
-          ></app-file-upload>
           <div class="form-row">
             <!-- Nombre -->
             <div class="form-group col-md-6">
@@ -117,18 +113,19 @@
               [matAutocomplete]="auto"
               [(ngModel)]="data.clientId"
               class="form-control"
-              
             />
+            {{ data.client.clientId }}
             <mat-autocomplete #auto="matAutocomplete">
               <mat-option
-                *ngFor="let user of filteredUserList$ | async" (click)="setUserValue(user)"
+                *ngFor="let user of filteredUserList$ | async"
+                (click)="setUserValue(user)"
                 [value]="user.userId"
               >
-              {{user.name}}
+                {{ user.name }}
               </mat-option>
             </mat-autocomplete>
-            
           </div>
+          <app-file-upload #FileUpload [imageSrc]="data.imageURL ?? null"></app-file-upload>
 
           <mat-dialog-actions class="custom-dialog-actions">
             <button mat-button (click)="onNoClick()" class="btn btn-default">Cancelar</button>
@@ -138,6 +135,7 @@
               [mat-dialog-close]="data"
               cdkFocusInitial
               class="btn btn-success"
+              (click)="saveImageUrl()"
             >
               Guardar
             </button>

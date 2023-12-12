@@ -173,6 +173,7 @@ export class ProyectosComponent {
           denyButtonText: `No guardar`,
         }).then(swalResult => {
           if (swalResult.isConfirmed) {
+            delete result.client;
             this.proyectoService.updateProyecto(result).subscribe({
               next: () => {
                 this.getProyectosList();
