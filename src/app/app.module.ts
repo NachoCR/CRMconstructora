@@ -60,6 +60,7 @@ import { ProductosComponent } from './productos/productos/productos.component';
 import { DetallesProductoComponent } from './productos/detalles-producto/detalles-producto.component';
 import { CrearProductoComponent } from './productos/crear-producto/crear-producto.component';
 import { EditarProductoComponent } from './productos/editar-producto/editar-producto.component';
+import { CalendarioComponent } from './calendario/calendario.component';
 
 
 
@@ -101,7 +102,8 @@ export function TranslateHttpLoaderFactory(http: HttpClient) {
     DetallesProductoComponent,
     CrearProductoComponent,
     DetallesProductoComponent,
-    EditarProductoComponent
+    EditarProductoComponent,
+    CalendarioComponent,
 
   ],
 
