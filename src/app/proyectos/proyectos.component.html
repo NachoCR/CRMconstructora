@@ -104,6 +104,9 @@
               <button mat-icon-button (click)="openDialogEditar(project)" matTooltip="Editar">
                 <mat-icon>edit</mat-icon>
               </button>
+              <button mat-icon-button (click)="openGestionProyectos(project)" matTooltip="Detalles De Proyecto">
+                <mat-icon>details</mat-icon>
+              </button>
               <button mat-icon-button (click)="openEliminar(project)" matTooltip="Eliminar">
                 <mat-icon>delete</mat-icon>
               </button>
@@ -111,12 +114,12 @@
           </mat-card>
         </div>
         <mat-paginator
-        
+
         [length]="proyectosList.length"
         [pageSize]="pageSize"
         [pageSizeOptions]="pageSizeOptions"
         (page)="onPageChange($event)"
-        showFirstLastButtons 
+        showFirstLastButtons
       ></mat-paginator>
       </div>
     </div>

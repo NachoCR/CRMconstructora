@@ -30,6 +30,8 @@ import { ProductosComponent } from 'app/productos/productos/productos.component'
 import { TaskCalendarComponent } from '@shared/components/task-calendar/task-calendar.component';
 import { CalendarioComponent } from 'app/calendario/calendario.component';
 import { SolicitudesComponent } from 'app/solicitudes/solicitudes/solicitudes.component';
+import { DetallesContactoComponent } from 'app/contactos/detalles-contacto/detalles-contacto.component';
+import { DetallesProyectoComponent } from 'app/detalles-proyecto/detalles-proyecto.component';
 
 const routes: Routes = [
   { path: '#', component: DashboardComponent },
@@ -75,6 +77,7 @@ const routes: Routes = [
       { path: 'productos', component: ProductosComponent },
       { path: 'solicitudes', component: SolicitudesComponent },
       { path: 'calendario', component: CalendarioComponent },
+      { path: 'detalles-proyecto/:projectId', component: DetallesProyectoComponent },
     ],
   },
   {

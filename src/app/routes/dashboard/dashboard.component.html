@@ -1,14 +1,14 @@
 <breadcrumb></breadcrumb>
 
-<div class="row">
+<div class="row d-flex align-items-stretch">
   <!-- Statistics -->
-  <div class="col-sm-6 col-md-3" *ngFor="let stat of stats">
-    <mat-card [ngClass]="['text-white', stat.color]">
+  <div class="col-sm-6 col-md-3" *ngFor="let stat of stats; let i = index">
+    <mat-card [ngClass]="['text-white card ', stat.color]">
       <mat-card-header>
         <mat-card-subtitle class="text-white">{{ stat.title }}</mat-card-subtitle>
       </mat-card-header>
       <mat-card-content>
-        <h2 class="m-y-8">{{ stat.amount }}</h2>
+        <h2 class="m-y-8" [ngClass]="{'smaller-amount': i === 2}">{{ stat.amount }}</h2>
         <mtx-progress
           [value]="stat.progress.value"
           height="2px"
@@ -25,7 +25,8 @@
 
   <!-- Others -->
   <div class="col-md-6">
-    <mat-card>
+
+    <!-- <mat-card>
       <mat-tab-group>
         <mat-tab label="Santa Ana">
           <div class="m-16">
@@ -49,8 +50,23 @@
           </div>
         </mat-tab>
       </mat-tab-group>
+    </mat-card>  -->
+
+    <mat-card *ngIf="proyectosData && proyectosData.length > 0">
+      <mat-tab-group>
+        <mat-tab *ngFor="let proyecto of proyectosData" [label]="proyecto.name">
+          <div class="m-16">
+            <img class="d-block w-full" [src]="proyecto.imageURL || 'assets/images/casas/house-default.png'" alt="" />
+            <h3>{{ proyecto.name }}</h3>
+            <p>{{ proyecto.description }}</p>
+            <p>Fecha de Inicio: {{ proyecto.startDate | date }}</p>
+            <p>Fecha de Finalización: {{ proyecto.endDate | date }}</p>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
     </mat-card>
-    <mat-card>
+
+    <!-- <mat-card>
       <mat-card-header>
         <mat-card-title>Inspecciones de la semana</mat-card-title>
         <mat-card-subtitle>Imagenes</mat-card-subtitle>
@@ -71,28 +87,42 @@
           </mat-grid-tile>
         </mat-grid-list>
       </mat-card-content>
-    </mat-card>
+    </mat-card> -->
+
   </div>
 
   <div class="col-md-6">
+
     <mat-card>
       <mat-card-header>
         <mat-card-title>Clientes</mat-card-title>
       </mat-card-header>
       <mat-card-content>
         <mat-list>
-          <mat-list-item *ngFor="let message of messages">
-            <img matListItemAvatar [src]="message.img" alt="Avatar" />
-            <h3 matListItemTitle>{{ message.subject }}</h3>
+          <mat-list-item *ngFor="let usuario of usuarioData">
+            <img matListItemAvatar src="assets/images/avatars/user-icon.webp" alt="Avatar" />
+            <h3 matListItemTitle>{{ usuario.name }} {{ usuario.lastname }}</h3>
             <p matListItemLine>
-              <span>{{ message.content }} </span>
+              <span>Email: {{ usuario.email }} | Teléfono: {{usuario.phone}} </span>
             </p>
           </mat-list-item>
         </mat-list>
       </mat-card-content>
     </mat-card>
 
-    <mat-card>
+    <!-- Opcion 2 -->
+    <!-- <mat-card *ngFor="let usuario of usuarioData">
+      <mat-card-header>
+        <img mat-card-avatar src="assets/images/avatars/user-icon.webp" alt="Avatar" />
+        <mat-card-title>{{ usuario.name }} {{ usuario.lastname }}</mat-card-title>
+        <mat-card-subtitle>{{ usuario.email }}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p>Número de teléfono: {{ usuario.phone }}</p>
+      </mat-card-content>
+    </mat-card> -->
+
+    <!-- <mat-card>
       <mat-card-header>
         <mat-card-title>Compras realizadas</mat-card-title>
       </mat-card-header>
@@ -127,7 +157,42 @@
           <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
         </table>
       </mat-card-content>
+    </mat-card> -->
+
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Inventario</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <table class="w-full" mat-table [dataSource]="dataSource2">
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef>Nombre</th>
+            <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+          </ng-container>
+          <ng-container matColumnDef="details">
+            <th mat-header-cell *matHeaderCellDef>Detalles</th>
+            <td mat-cell *matCellDef="let element">{{ element.details }}</td>
+          </ng-container>
+          <ng-container matColumnDef="price">
+            <th mat-header-cell *matHeaderCellDef>Precio</th>
+            <td mat-cell *matCellDef="let element">{{ element.price }}</td>
+          </ng-container>
+          <ng-container matColumnDef="quantity">
+            <th mat-header-cell *matHeaderCellDef>Cantidad</th>
+            <td mat-cell *matCellDef="let element">{{ element.quantity }}</td>
+          </ng-container>
+          <ng-container matColumnDef="provider">
+            <th mat-header-cell *matHeaderCellDef>Proveedor</th>
+            <td mat-cell *matCellDef="let element">{{ element.provider.name }}</td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns2"></tr>
+        </table>
+      </mat-card-content>
     </mat-card>
+
+
 
     <!-- <mat-card>
       <mat-card-header>
