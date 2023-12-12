@@ -24,7 +24,10 @@ export class PageHeaderComponent implements OnInit {
   }
   private _hideBreadCrumb = false;
 
-  constructor(private router: Router, private menu: MenuService) {}
+  constructor(
+    private router: Router,
+    private menu: MenuService
+  ) {}
 
   ngOnInit() {
     this.nav = Array.isArray(this.nav) ? this.nav : [];

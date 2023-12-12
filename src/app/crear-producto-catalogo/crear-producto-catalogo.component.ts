@@ -6,12 +6,13 @@ import { ProveedorData } from 'app/interfaces/proveedor.interface';
 @Component({
   selector: 'app-crear-producto-catalogo',
   templateUrl: './crear-producto-catalogo.component.html',
-  styleUrls: ['./crear-producto-catalogo.component.scss']
+  styleUrls: ['./crear-producto-catalogo.component.scss'],
 })
 export class CrearProductoCatalogoComponent {
   constructor(
     public dialogRef: MatDialogRef<CrearProductoCatalogoComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: catalogoProveedorData) {}
+    @Inject(MAT_DIALOG_DATA) public data: catalogoProveedorData
+  ) {}
 
   onNoClick(): void {
     this.dialogRef.close();

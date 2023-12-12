@@ -33,10 +33,7 @@
       "x-user-analytics": 17
     },
     "routingScope": {
-      "enum": [
-        "Child",
-        "Root"
-      ],
+      "enum": ["Child", "Root"],
       "type": "string",
       "description": "The scope for the new routing module.",
       "default": "Child"
@@ -68,7 +65,5 @@
       "x-user-analytics": 15
     }
   },
-  "required": [
-    "name"
-  ]
+  "required": ["name"]
 }

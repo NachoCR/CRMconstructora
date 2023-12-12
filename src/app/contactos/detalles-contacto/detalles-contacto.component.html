@@ -1,12 +1,12 @@
 <mat-dialog-content class="custom-dialog-content">
 
   <div class="mb-4">
-    <h2 mat-dialog-title class="display-4">Detalles de Contacto</h2>
+    <h3 >Detalles de Contacto</h3>
     <div class="row d-flex">
       <div class="col-md-6">
         <div class="card h-100">
           <div class="card-body">
-            <h5 class="card-title">Información de Contacto</h5>
+            <h5 class="card-title"><strong>Información de Contacto</strong></h5>
             <ul class="list-group list-group-flush">
               <li class="list-group-item"><strong>ID del Contacto:</strong> {{ data.contactId }}</li>
               <li class="list-group-item"><strong>Nombre:</strong> {{ data.name }} {{ data.lastname }} {{ data.secondLastname }}</li>
@@ -21,7 +21,7 @@
       <div class="col-md-6">
         <div class="card h-100">
           <div class="card-body">
-            <h5 class="card-title">Detalles del Proveedor</h5>
+            <h5 class="card-title"><strong>Detalles del Proveedor</strong></h5>
             <ul class="list-group list-group-flush">
               <li class="list-group-item"><strong>ID del Proveedor:</strong> {{ data.provider.providerId }}</li>
               <li class="list-group-item"><strong>Nombre del Proveedor:</strong> {{ data.provider.name }}</li>
@@ -29,7 +29,7 @@
               <li class="list-group-item"><strong>Dirección:</strong> {{ data.provider.address }}</li>
               <li class="list-group-item"><strong>Teléfono:</strong> {{ data.provider.phone }}</li>
               <li class="list-group-item"><strong>Detalles:</strong> {{ data.provider.details }}</li>
-              <li class="list-group-item"><strong>Cantidad de Catálogos:</strong> {{ data.provider.catalogCount }}</li>
+              <li class="list-group-item"><strong>Cantidad de Catálogos:</strong> {{ data.provider.catalogsCount !== undefined ? data.provider.catalogsCount : 0 }}</li>
             </ul>
           </div>
         </div>
@@ -48,6 +48,6 @@
     </ul>
   </div> -->
   <mat-dialog-actions class="custom-dialog-actions mt-4">
-    <button mat-button (click)="onNoClick()" class="btn btn-danger">Cerrar</button>
+    <button mat-button (click)="onNoClick()" class="btn btn-default">Cerrar</button>
   </mat-dialog-actions>
 </mat-dialog-content>

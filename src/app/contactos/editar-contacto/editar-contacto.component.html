@@ -2,105 +2,148 @@
   <div class="container">
     <div class="row mt-3">
       <div class="col">
-        <form [formGroup]="contactoForm" (ngSubmit)="onSave()" novalidate autocomplete="">
-
-          <h3>Creación de Contacto</h3>
-
+        <form [formGroup]="contactoForm" novalidate autocomplete="">
+          <h3>Editar Contacto</h3>
           <div class="form-row">
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-6 col-sm-6">
               <label for="name" class="control-label font-weight-bold">Nombre</label>
-              <input type="text" class="form-control" placeholder="Nombre" formControlName="name" [(ngModel)]="data.name"/>
-              <div *ngIf="contactoForm.get('name')?.hasError('required') && contactoForm.get('name')?.touched" class="text-danger">
-                El nombre es obligatorio.
-              </div>
-              <div *ngIf="contactoForm.get('name')?.hasError('minlength') && contactoForm.get('name')?.touched" class="text-danger">
-                El nombre debe tener al menos 3 caracteres.
-              </div>
-              <div *ngIf="contactoForm.get('name')?.hasError('maxlength') && contactoForm.get('name')?.touched" class="text-danger">
-                El nombre no debe tener más de 20 caracteres.
+              <input type="text" class="form-control" id="name" placeholder="Nombre" formControlName="name" formControlName="name"
+                [ngClass]="{
+                  'is-valid': contactoForm.get('name')?.valid && (contactoForm.get('name')?.touched || contactoForm.get('name')?.dirty),
+                  'is-invalid': contactoForm.get('name')?.invalid && (contactoForm.get('name')?.touched || contactoForm.get('name')?.dirty)
+                }" (input)="onInput('name')">
+              <div class="invalid-feedback">
+                <span *ngIf="contactoForm.get('name')?.hasError('required') && (contactoForm.get('name')?.touched || contactoForm.get('name')?.dirty)" class="text-danger">
+                  El nombre es obligatorio.
+                </span>
+                <span *ngIf="contactoForm.get('name')?.hasError('minlength') && (contactoForm.get('name')?.touched || contactoForm.get('name')?.dirty)" class="text-danger">
+                  El nombre debe tener al menos 3 caracteres.
+                </span>
+                <span *ngIf="contactoForm.get('name')?.hasError('maxlength') && (contactoForm.get('name')?.touched || contactoForm.get('name')?.dirty)" class="text-danger">
+                  El nombre no debe tener más de 20 caracteres.
+                </span>
               </div>
             </div>
 
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-6 col-sm-6">
               <label for="lastname" class="control-label font-weight-bold">Primer Apellido</label>
-              <input type="text" class="form-control" placeholder="Apellido" formControlName="lastname" [(ngModel)]="data.lastname"/>
-              <div *ngIf="contactoForm.get('lastname')?.hasError('required') && contactoForm.get('lastname')?.touched" class="text-danger">
-                El apellido es obligatorio.
-              </div>
-              <div *ngIf="contactoForm.get('lastname')?.hasError('minlength') && contactoForm.get('lastname')?.touched" class="text-danger">
-                El apellido debe tener al menos 3 caracteres.
-              </div>
-              <div *ngIf="contactoForm.get('lastname')?.hasError('maxlength') && contactoForm.get('lastname')?.touched" class="text-danger">
-                El apellido no debe tener más de 20 caracteres.
+              <input type="text" class="form-control" id="lastname" placeholder="Apellido" formControlName="lastname" formControlName="lastname"
+              [ngClass]="{
+                'is-valid': contactoForm.get('lastname')?.valid && (contactoForm.get('lastname')?.touched),
+                'is-invalid': contactoForm.get('lastname')?.invalid && (contactoForm.get('lastname')?.touched)
+                }" (input)="onInput('lastname')">
+              <div class="invalid-feedback">
+                <span *ngIf="contactoForm.get('lastname')?.hasError('required') && contactoForm.get('lastname')?.touched" class="text-danger">
+                  El apellido es obligatorio.
+                </span>
+                <span *ngIf="contactoForm.get('lastname')?.hasError('minlength') && contactoForm.get('lastname')?.touched" class="text-danger">
+                  El apellido debe tener al menos 3 caracteres.
+                </span>
+                <span *ngIf="contactoForm.get('lastname')?.hasError('maxlength') && contactoForm.get('lastname')?.touched" class="text-danger">
+                  El apellido no debe tener más de 20 caracteres.
+                </span>
               </div>
             </div>
           </div>
 
           <div class="form-row">
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-6 col-sm-6">
               <label for="secondLastname" class="control-label font-weight-bold">Segundo Apellido</label>
-              <input type="text" class="form-control" placeholder="Segundo Apellido" formControlName="secondLastname" [(ngModel)]="data.secondLastname"/>
-              <div *ngIf="contactoForm.get('secondLastname')?.hasError('required') && contactoForm.get('secondLastname')?.touched" class="text-danger">
-                El apellido es obligatorio.
-              </div>
-              <div *ngIf="contactoForm.get('secondLastname')?.hasError('minlength') && contactoForm.get('secondLastname')?.touched" class="text-danger">
-                El apellido debe tener al menos 3 caracteres.
-              </div>
-              <div *ngIf="contactoForm.get('secondLastname')?.hasError('maxlength') && contactoForm.get('secondLastname')?.touched" class="text-danger">
-                El apellido no debe tener más de 20 caracteres.
+              <input type="text" class="form-control" id="secondLastname" placeholder="Segundo Apellido" formControlName="secondLastname" formControlName="secondLastname"
+              [ngClass]="{
+                'is-valid': contactoForm.get('secondLastname')?.valid && (contactoForm.get('secondLastname')?.touched),
+                'is-invalid': contactoForm.get('secondLastname')?.invalid && (contactoForm.get('secondLastname')?.touched)
+                }" (input)="onInput('secondLastname')">
+              <div class="invalid-feedback">
+                <span *ngIf="contactoForm.get('secondLastname')?.hasError('required') && contactoForm.get('secondLastname')?.touched" class="text-danger">
+                  El apellido es obligatorio.
+                </span>
+                <span *ngIf="contactoForm.get('secondLastname')?.hasError('minlength') && contactoForm.get('secondLastname')?.touched" class="text-danger">
+                  El apellido debe tener al menos 3 caracteres.
+                </span>
+                <span *ngIf="contactoForm.get('secondLastname')?.hasError('maxlength') && contactoForm.get('secondLastname')?.touched" class="text-danger">
+                  El apellido no debe tener más de 20 caracteres.
+                </span>
               </div>
             </div>
 
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-6 col-sm-6">
               <label for="email" class="control-label font-weight-bold">Correo Electrónico</label>
-              <input type="text" class="form-control" placeholder="Correo Electrónico" formControlName="email" [(ngModel)]="data.email"/>
-              <div *ngIf="contactoForm.get('email')?.hasError('required') && contactoForm.get('email')?.touched" class="text-danger">
-                El Correo Electrónico es obligatorio.
-              </div>
-              <div *ngIf="emailError" class="text-danger">
-                {{ emailError }}
+              <input type="text" class="form-control" id="email" placeholder="Correo Electrónico" formControlName="email" formControlName="email"
+              [ngClass]="{
+                'is-valid': contactoForm.get('email')?.valid && contactoForm.get('email')?.touched && !emailError,
+                'is-invalid': (contactoForm.get('email')?.invalid || emailError) && contactoForm.get('email')?.touched
+              }" (input)="onInput('email')">
+              <div class="invalid-feedback">
+                <span *ngIf="contactoForm.get('email')?.hasError('required') && contactoForm.get('email')?.touched" class="text-danger">
+                  El Correo Electrónico es obligatorio.
+                </span>
+                <span *ngIf="contactoForm.get('email')?.hasError('email') && contactoForm.get('email')?.touched" class="text-danger">
+                  El Correo Electrónico no es válido.
+                </span>
+                <span *ngIf="emailError" class="text-danger">
+                  {{ emailError }}
+                </span>
               </div>
             </div>
           </div>
 
           <div class="form-row">
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-6 col-sm-6">
               <label for="phone" class="control-label font-weight-bold">Teléfono</label>
-              <input type="text" class="form-control" placeholder="Teléfono" formControlName="phone" [(ngModel)]="data.phone"/>
-              <div *ngIf="contactoForm.get('phone')?.hasError('required') && contactoForm.get('phone')?.touched" class="text-danger">
-                El Teléfono es obligatorio.
-              </div>
-              <div *ngIf="phoneError" class="text-danger">
-                {{ phoneError }}
+              <input type="number" class="form-control" id="phone" placeholder="Teléfono" formControlName="phone" [maxlength]="8" formControlName="phone"
+                [ngClass]="{
+                  'is-valid': contactoForm.get('phone')?.valid && contactoForm.get('phone')?.touched && !phoneError,
+                  'is-invalid': (contactoForm.get('phone')?.invalid || phoneError) && contactoForm.get('phone')?.touched
+                }" (input)="onInput('phone')">
+              <div class="invalid-feedback">
+                <span *ngIf="contactoForm.get('phone')?.hasError('invalidPhoneNumber') && contactoForm.get('phone')?.touched" class="text-danger">
+                  Ingrese un número de teléfono válido (8 dígitos)
+                </span>
+                <span *ngIf="phoneError" class="text-danger">
+                  {{ phoneError }}
+                </span>
               </div>
             </div>
 
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-6 col-sm-6">
               <label for="providerId" class="control-label font-weight-bold">Proveedor</label>
-              <select class="form-control" formControlName="providerId" [(ngModel)]="data.providerId">
-                <option value="" selected>Seleccionar Proveedor</option>
+              <select class="form-control" id="providerId" formControlName="providerId" formControlName="providerId"
+              [ngClass]="{
+                'is-valid': contactoForm.get('providerId')?.valid && (contactoForm.get('providerId')?.touched),
+                'is-invalid': contactoForm.get('providerId')?.invalid && (contactoForm.get('providerId')?.touched)
+                }" (input)="onInput('providerId')">
+                <option value="" selected disabled>{{ 'Seleccionar Proveedor' | translate }}</option>
                 <option *ngFor="let provider of proveedorList" [value]="provider.providerId">{{ provider.name }}</option>
               </select>
-              <div *ngIf="contactoForm.get('providerId')?.hasError('required') && contactoForm.get('providerId')?.touched" class="text-danger">
-                Debes seleccionar un proveedor.
+              <div class="invalid-feedback">
+                <span *ngIf="contactoForm.get('providerId')?.hasError('required') && contactoForm.get('providerId')?.touched" class="text-danger">
+                  Debes seleccionar un proveedor.
+                </span>
               </div>
             </div>
           </div>
 
           <div class="form-group">
             <label for="details" class="control-label font-weight-bold">Detalles</label>
-            <textarea class="form-control" placeholder="Detalles" formControlName="details" rows="4" [(ngModel)]="data.details"></textarea>
-            <div *ngIf="contactoForm.get('details')?.hasError('required') && contactoForm.get('details')?.touched" class="text-danger">
-              Los detalles son obligatorios.
-            </div>
-            <div *ngIf="contactoForm.get('details')?.hasError('minlength') && contactoForm.get('details')?.touched" class="text-danger">
-              Los detalles deben tener al menos 10 caracteres.
+            <textarea class="form-control" id="details" placeholder="Detalles" formControlName="details" rows="4" formControlName="details"
+            [ngClass]="{
+              'is-valid': contactoForm.get('details')?.valid && (contactoForm.get('details')?.touched),
+              'is-invalid': contactoForm.get('details')?.invalid && (contactoForm.get('details')?.touched)
+              }" (input)="onInput('details')"></textarea>
+            <div class="invalid-feedback">
+              <span *ngIf="contactoForm.get('details')?.hasError('required') && contactoForm.get('details')?.touched" class="text-danger">
+                Los detalles es obligatorio.
+              </span>
+              <span *ngIf="contactoForm.get('details')?.hasError('minlength') && contactoForm.get('details')?.touched" class="text-danger">
+                Los detalles deben tener al menos 10 caracteres.
+              </span>
             </div>
           </div>
 
           <mat-dialog-actions class="custom-dialog-actions">
-            <button mat-button (click)="onNoClick()" class="btn btn-secondary">Cancelar</button>
-            <button mat-button [disabled]="!contactoForm.valid || emailError !== '' || phoneError !== ''" [mat-dialog-close]="data" cdkFocusInitial class="btn btn-success">Guardar</button>
+            <button mat-button (click)="onNoClick()" class="btn btn-default">Cancelar</button>
+            <button mat-button [disabled]="!contactoForm.valid || emailError !== '' || phoneError !== ''" cdkFocusInitial class="btn btn-success" (click)="onSave()">Guardar</button>
           </mat-dialog-actions>
         </form>
       </div>

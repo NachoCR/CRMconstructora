@@ -37,10 +37,10 @@
   <h2>Exclusive selection button toggle group</h2>
   <mat-button-toggle-group name="pies" [(ngModel)]="favoritePie" aria-label="Pies">
     <mat-button-toggle *ngFor="let pie of pieOptions" [value]="pie">
-      {{pie}}
+      {{ pie }}
     </mat-button-toggle>
   </mat-button-toggle-group>
-  <p>Your favorite type of pie is: {{favoritePie}}</p>
+  <p>Your favorite type of pie is: {{ favoritePie }}</p>
 </section>
 
 <section>

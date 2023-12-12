@@ -1,35 +1,105 @@
-<mat-dialog-content class="custom-dialog-content">
-    <h1 mat-dialog-title>Creación tareas</h1>
-  
-    <div class="input-container">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.18.0/font/bootstrap-icons.css" integrity="sha384-GLhlTQ8iKt6iOpTJMLlGzNqibZiJxz5F3J1qIjK7pNEy" crossorigin="anonymous">
+<mat-dialog-content class="custom-dialog-content" style="height:100% !important">
+  <div class="container-fluid">
+    <div class="row mt-3">
+      <div class="col">
+        <form [formGroup]="crearTareaForm" (ngSubmit)="crear()" novalidate autocomplete="">
 
-        <mat-form-field class="input-field">
-            <input matInput placeholder="ID Tarea" [(ngModel)]="data.TaskId">
-          </mat-form-field>
-      <mat-form-field class="input-field">
-        <input matInput placeholder="Descripción" [(ngModel)]="data.Description">
-      </mat-form-field>
-      <mat-form-field class="input-field">
-        <input matInput placeholder="Fecha estimada" [(ngModel)]="data.Date_Due">
-      </mat-form-field>
-      <mat-form-field class="input-field">
-        <input matInput placeholder="Prioridad" [(ngModel)]="data.PriorityId">
-      </mat-form-field>
-      <mat-form-field class="input-field">
-        <input matInput placeholder="Estado" [(ngModel)]="data.StatusId">
-      </mat-form-field>
-      <mat-form-field class="input-field">
-        <input matInput placeholder="ID Proyecto" [(ngModel)]="data.ProjectId">
-      </mat-form-field>
-      <mat-form-field class="input-field">
-        <input matInput type="text" placeholder="ID Empleado" [(ngModel)]="data.EmployeeId">
-      </mat-form-field>
+          <h3>Creación de Tareas</h3>
+
+          <div class="form-row">
+            <!-- Nombre -->
+            <div class="form-group col-md-4">
+              <label for="name" class="control-label font-weight-bold">Nombre de la tarea</label>
+              <input type="text" class="form-control" placeholder="Nombre de la tarea" formControlName="name"
+                [(ngModel)]="data.name" />
+            </div>
+            <div class="form-group col-md-4">
+              <label for="dateDue" class="control-label font-weight-bold">Fecha de Entrega</label>
+              <input type="date" class="form-control" placeholder="Fecha de entrega" formControlName="dateDue"
+                [(ngModel)]="data.dateDue" />
+              <!-- Muestra un mensaje de error si la fecha está en el pasado -->
+              <div
+                *ngIf="crearTareaForm.get('dateDue')?.hasError('dateInPast') && crearTareaForm.get('dateDue')?.touched">
+                <small class="text-danger">La fecha no puede ser anterior a la fecha de inicio.</small>
+              </div>
+            </div>
+            
+            <div class="form-group col-md-4">
+              <label for="statusId" class="control-label font-weight-bold">Estado</label>
+              <select formControlName="statusId" class="form-select" style="border-radius: 2px;" [(ngModel)]="data.statusId">
+                <option value=1>Nuevo</option>
+                <option value=2>En Progreso</option>
+                <option value=3>Finalizado</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group col-md-4">
+              <label for="priority" class="control-label font-weight-bold">Prioridad</label>
+              <select formControlName="priorityId" type="number" class="form-select" style="border-radius: 2px;"
+                [(ngModel)]="data.priorityId">
+                <option value=1>Baja</option>
+                <option value=2>Media</option>
+                <option value=3>Alta</option>
+              </select>
+            </div> 
+
+            <div class="form-group col-md-4">
+              <label for="projectId" class="control-label font-weight-bold">Projecto</label>
+              <input type="text"
+                     placeholder="Buscar Projecto"
+                     formControlName="projectId"
+                     [matAutocomplete]="auto"
+                     [(ngModel)]="data.projectId"
+                     class="form-control">
+              <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let proyecto of filteredProyectosList$ | async" [value]="proyecto.projectId" (click)="setProjectValue(proyecto)">
+                  {{proyecto.name}}
+                </mat-option>
+              </mat-autocomplete>
+            </div>
+
+            <div class="form-group col-md-4">
+            <label for="userId" class="control-label font-weight-bold">Ingeniero a cargo:</label>
+            <input type="text"
+                   placeholder="Buscar empleado"
+                   formControlName="userId"
+                   [matAutocomplete]="autousuario"
+                   [(ngModel)]="data.userId"
+                   class="form-control">
+            <mat-autocomplete #autousuario="matAutocomplete">
+              <mat-option *ngFor="let user of filteredUserList$ | async" [value]="user.userId" (click)="setUserValue(user)">
+              {{user.name}}
+              </mat-option>
+            </mat-autocomplete>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <label for="description" class="control-label font-weight-bold">Descripción</label>
+              <textarea type="text" class="form-control" placeholder="Descripción" formControlName="description"
+                [(ngModel)]="data.description"></textarea>
+            </div>
+          </div>
+
+
+          
+          <mat-dialog-actions class="custom-dialog-actions">
+            <button mat-button (click)="onNoClick()" class="btn btn-default">Cancelar</button>
+            <button mat-button [disabled]="crearTareaForm.invalid" (click)="transformData()" (click)="transformData2()"  [mat-dialog-close]="data" cdkFocusInitial
+              class="btn btn-success">Guardar</button>
+          </mat-dialog-actions>
+          
+
+
+
+
+        </form>
+      </div>
     </div>
-  </mat-dialog-content>
-  
-  <mat-dialog-actions class="custom-dialog-actions">
-    
-    <button mat-button (click)="onNoClick()" class="btn btn-primary">Cancelar</button>
-    <button mat-button [mat-dialog-close]="data" cdkFocusInitial class="btn btn-success">Guardar</button>
-  </mat-dialog-actions>
-  
+  </div>
+
+</mat-dialog-content>

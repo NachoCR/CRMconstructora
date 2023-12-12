@@ -56,6 +56,7 @@ export class ContactosComponent implements OnInit {
       // });
 
       if (result) {
+        //console.log(result);
         // Mostrar SweetAlert para confirmar los cambios
         Swal.fire({
           title: '¿Quiere registar al contacto?',
@@ -71,7 +72,7 @@ export class ContactosComponent implements OnInit {
               }, error: (e) => {
                 this.getContactoList();
                 debugger;
-                console.log(e);
+                //console.log(e);
                 Swal.fire('Error al registrar contacto', '', 'info');
               }
             });
@@ -86,16 +87,12 @@ export class ContactosComponent implements OnInit {
   };
 
   openDialogEditar(user: any): void {
-
-    console.log(user);
-    const pUser = _.cloneDeep(user);
     const dialogRef = this.dialog.open(EditarContactoComponent, {
-      data: pUser
+      data: user
     });
     dialogRef.afterClosed().subscribe(result => {
-
       if (result) {
-        // Mostrar SweetAlert para confirmar los cambios
+        //Object.assign(user, result);
         Swal.fire({
           title: '¿Quiere guardar los cambios?',
           showDenyButton: true,
@@ -110,14 +107,12 @@ export class ContactosComponent implements OnInit {
               }, error: (e) => {
                 this.getContactoList();
                 debugger;
-                console.log(e);
+                //console.log(e);
                 Swal.fire('Error al guardar los cambios', '', 'info');
               }
             });
-            // Realizar cualquier acción adicional después de guardar
           }
           else if (swalResult.isDenied) {
-            // Usuario eligió no guardar los cambios
             Swal.fire('Cambios no guardados', '', 'info');
           }
         }
@@ -128,7 +123,7 @@ export class ContactosComponent implements OnInit {
   };
 
   openEliminar(contacto: any): void {
-    console.table(contacto);
+    //console.table(contacto);
     Swal.fire({
       title: 'Eliminar contacto?',
       text: 'Está seguro que desea eliminar este contacto?',
@@ -150,7 +145,7 @@ export class ContactosComponent implements OnInit {
 
   openDetailsDialog(contacto: any): void {
     this.contactoService.getContactDetails(contacto.contactId).subscribe((contactDetails: any) => {
-      console.table(contactDetails);
+      //console.table(contactDetails);
       const dialogRef = this.dialog.open(DetallesContactoComponent, {
 
         data: contactDetails

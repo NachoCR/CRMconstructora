@@ -39,7 +39,10 @@ export class ErrorInterceptor implements HttpInterceptor {
     return `${error.status} ${error.statusText}`;
   };
 
-  constructor(private router: Router, private toast: ToastrService) {}
+  constructor(
+    private router: Router,
+    private toast: ToastrService
+  ) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     return next

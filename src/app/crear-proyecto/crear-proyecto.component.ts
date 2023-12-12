@@ -31,7 +31,6 @@ export class CrearProyectoComponent {
     // Restar 3 días a la fecha actual
     currentDate.setDate(currentDate.getDate() - 2);
 
-    debugger;
     if (selectedDate < currentDate) {
       return { dateInPast: true };
     }
@@ -110,7 +109,7 @@ export class CrearProyectoComponent {
     //   );
     // });
 
-    // console.log(this.data);
+    console.log(this.data);
   }
 
   //Filtro clientes

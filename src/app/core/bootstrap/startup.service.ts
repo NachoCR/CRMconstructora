@@ -39,7 +39,7 @@ export class StartupService {
     this.menuService.addNamespace(menu, 'menu');
     this.menuService.set(menu);
   }
-/*
+  /*
   private setPermissions(user: User) {
     // In a real app, you should get permissions and roles from the user information.
     const permissions = ['canAdd', 'canDelete', 'canEdit', 'canRead'];
@@ -53,9 +53,9 @@ export class StartupService {
 
   private setPermissions(user: User) {
     const roleMapping: { [key: string]: string } = {
-      'ADMIN': 'ADMIN',
-      'USER': 'Empleado',
-      'GUEST': 'Cliente'
+      ADMIN: 'ADMIN',
+      USER: 'Empleado',
+      GUEST: 'Cliente',
     };
 
     const userRole = user.roles as string;
@@ -67,5 +67,5 @@ export class StartupService {
       this.rolesService.flushRoles();
       this.rolesService.addRoles({ [systemRole]: permissions });
     }
-  }  
+  }
 }

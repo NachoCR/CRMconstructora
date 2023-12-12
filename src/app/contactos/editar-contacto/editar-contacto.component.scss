@@ -1,9 +1,69 @@
 .custom-dialog-content {
-  max-height: 95vh;
+  max-height: 90vh;
   overflow-y: auto;
 }
 
 .mat-dialog-container {
   width: auto !important;
-  max-width: 80%;
+  max-width: 90%;
+}
+
+ /* Modal styles */
+  .modal .modal-dialog {
+  max-width: 400px;
+}
+
+.modal .modal-header,
+.modal .modal-body,
+.modal .modal-footer {
+  padding: 20px 30px;
+}
+
+.modal .modal-content {
+  border-radius: 3px;
+  font-size: 14px;
+}
+
+.modal .modal-footer {
+  background: #ecf0f1;
+  border-radius: 0 0 3px 3px;
+}
+
+.modal .modal-title {
+  display: inline-block;
+}
+
+.modal .form-control {
+  border-radius: 2px;
+  box-shadow: none;
+  border-color: #dddddd;
+}
+
+.modal textarea.form-control {
+  resize: vertical;
+}
+
+.modal .btn {
+  border-radius: 2px;
+  min-width: 100px;
+}
+
+.modal form label {
+  font-weight: normal;
+}
+
+.input-field {
+  margin-bottom: 12px;
+}
+
+.custom-dialog-actions {
+  justify-content: flex-end;
+}
+.error-message {
+  color:
+red;
+}
+input.ng-touched.ng-invalid {
+  border: 1px solid
+red;
 }

@@ -1,1 +1,7 @@
-<p>buscar-proveedor works!</p>
+<mat-form-field appearance="fill">
+    <mat-label>Buscar Proveedor </mat-label>
+    <mat-icon matPrefix>search</mat-icon>
+    <!-- Icono de búsqueda -->
+    <input matInput (input)="filtrarProveedor($event)"/>
+  </mat-form-field>
+  

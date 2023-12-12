@@ -16,12 +16,12 @@
               required
               class="form-control"
             />
-            <div *ngIf="loginForm.get('username')?.errors && isSubmitting">
-              <mat-error *ngIf="loginForm.get('username')?.errors?.required">
+            <div *ngIf="loginForm.get('username')?.invalid && loginForm.get('username')?.touched">
+              <mat-error *ngIf="loginForm.get('username')?.hasError('required')">
                 {{ 'Ingrese su email o identificación' | translate }}
               </mat-error>
-              <span *ngIf="loginForm.get('username')?.errors?.remote">{{
-                loginForm.get('username')?.errors?.remote
+              <span *ngIf="loginForm.get('username')?.hasError('remote')">{{
+                loginForm.get('username')?.hasError('remote')
               }}</span>
             </div>
           </div>
@@ -37,12 +37,12 @@
               required
               class="form-control"
             />
-            <div *ngIf="loginForm.get('password')?.errors && isSubmitted">
-              <mat-error *ngIf="loginForm.get('password')?.errors?.required">
+            <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('username')?.touched">
+              <mat-error *ngIf="loginForm.get('password')?.hasError('required')">
                 {{ 'Ingrese su contraseña' | translate }}
               </mat-error>
-              <span *ngIf="loginForm.get('password')?.errors?.remote">{{
-                loginForm.get('password')?.errors?.remote
+              <span *ngIf="loginForm.get('password')?.hasError('remote')">{{
+                loginForm.get('password')?.hasError('remote')
               }}</span>
             </div>
           </div>
@@ -62,10 +62,7 @@
         >
           {{ 'Iniciar sesión' | translate }}
         </button>
-        <div>
-          {{ 'No tengo cuenta' | translate }}?
-          <a routerLink="/auth/register">{{ 'Crear una cuenta' | translate }}</a>
-        </div>
+
         <div>
           <a routerLink="/auth/recover">{{ '¿Olvidaste tu contraseña?' | translate }}</a>
         </div>

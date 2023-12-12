@@ -23,7 +23,10 @@ export class TranslateComponent {
     'zh-TW': '中文繁体',
   };
 
-  constructor(private translate: TranslateService, private settings: SettingsService) {
+  constructor(
+    private translate: TranslateService,
+    private settings: SettingsService
+  ) {
     translate.addLangs(['en-US', 'zh-CN', 'zh-TW']);
   }
 

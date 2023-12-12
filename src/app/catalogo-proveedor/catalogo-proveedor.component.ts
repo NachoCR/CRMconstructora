@@ -10,17 +10,17 @@ import { ProveedorData } from 'app/interfaces/proveedor.interface';
 @Component({
   selector: 'app-catalogo-proveedor',
   templateUrl: './catalogo-proveedor.component.html',
-  styleUrls: ['./catalogo-proveedor.component.scss']
+  styleUrls: ['./catalogo-proveedor.component.scss'],
 })
 export class CatalogoProveedorComponent {
-  catalogo?: catalogoProveedorData;  
+  catalogo?: catalogoProveedorData;
 
   constructor(public dialog: MatDialog) {}
 
   openDialog(): void {
     const dialogRef = this.dialog.open(CrearProductoCatalogoComponent, {
       width: '500 px',
-      data: {catalogo: this.catalogo}
+      data: { catalogo: this.catalogo },
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -32,7 +32,7 @@ export class CatalogoProveedorComponent {
   openDialogEditar(): void {
     const dialogRef = this.dialog.open(EditarProductoCatalogoComponent, {
       width: '500 px',
-      data: {catalogo: this.catalogo}
+      data: { catalogo: this.catalogo },
     });
 
     dialogRef.afterClosed().subscribe(result => {

@@ -1,9 +1,12 @@
 <div class="matero-sidebar-header" *ngIf="showHeader">
   <app-branding></app-branding>
 
-  <mat-slide-toggle *ngIf="showToggle" hideIcon
-                    [checked]="toggleChecked"
-                    (change)="toggleCollapsed.emit()">
+  <mat-slide-toggle
+    *ngIf="showToggle"
+    hideIcon
+    [checked]="toggleChecked"
+    (change)="toggleCollapsed.emit()"
+  >
   </mat-slide-toggle>
 </div>
 

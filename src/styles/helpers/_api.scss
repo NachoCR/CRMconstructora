@@ -30,7 +30,7 @@ $utilities: functions.map-collect(
   alignment.$utilities,
   overflow.$utilities,
   interaction.$utilities,
-  object.$utilities,
+  object.$utilities
 );
 
 @each $key, $utility in $utilities {

@@ -10,7 +10,10 @@ import { NavAccordionItemDirective } from './nav-accordion-item.directive';
 export class NavAccordionDirective {
   protected navLinks: NavAccordionItemDirective[] = [];
 
-  constructor(private router: Router, private menu: MenuService) {
+  constructor(
+    private router: Router,
+    private menu: MenuService
+  ) {
     this.router.events
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe(() => this.checkOpenLinks());
