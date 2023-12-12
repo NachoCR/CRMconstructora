@@ -10,17 +10,21 @@ import multiMonthPlugin from '@fullcalendar/multimonth';
 import { DatePipe } from '@angular/common';
 import { MatDialog, MatDialogContent } from '@angular/material/dialog';
 import { EventDetailsDialogComponent } from '../event-details-dialog-component/event-details-dialog-component';
+import esLocale from '@fullcalendar/core/locales/es';
 
 @Component({
   selector: 'app-task-calendar',
   templateUrl: './task-calendar.component.html',
   styleUrls: ['./task-calendar.component.scss'],
 })
-export class TaskCalendarComponent {
+export class TaskCalendarComponent implements OnInit {
   @Input() taskData: any;
-  @Input() userId?: number;
+  @Input() userId?: any;
   eventsData: any[] = [];
   calendarOptions: CalendarOptions = {
+    locale: esLocale,
+    titleFormat: { year: 'numeric', month: 'long' },
+    titleRangeSeparator: '-',
     plugins: [multiMonthPlugin, dayGridMonth],
     initialView: 'dayGridMonth',
     // views: {
@@ -33,10 +37,13 @@ export class TaskCalendarComponent {
     eventMinHeight: 1000,
     weekends: false,
     events: this.eventsData,
-    eventClick: event => {
-      const dialogRef = this.dialog
-        .open(EventDetailsDialogComponent)
-        .componentInstance.eventData(event);
+    eventClick: info => {
+      info.jsEvent.preventDefault();
+      const data = info.event;
+      const dialogRef = this.dialog.open(EventDetailsDialogComponent, {
+        width: '100%',
+        data: { data },
+      });
 
       dialogRef.afterClosed().subscribe();
     },
@@ -46,11 +53,13 @@ export class TaskCalendarComponent {
   constructor(
     private taskService: TasksService,
     private dialog: MatDialog // Inject ModalService
-  ) {
-    if (this.userId) {
-      this.getTareasByUser(this.userId);
+  ) {}
+  ngOnInit(): void {
+    if (Number.parseInt(this.userId)) {
+      this.getTareasByUser(Number.parseInt(this.userId));
     }
   }
+
   getTareasByUser(pId: number): void {
     const eventList: any[] = [];
 
@@ -63,11 +72,12 @@ export class TaskCalendarComponent {
             eventList.push({
               title: task.name,
               start: this.datepipe.transform(task.startDate, 'YYYY-MM-dd'),
-              end: this.datepipe.transform(task.dueDate, 'YYYY-MM-dd'),
+              end: this.datepipe.transform(task.dateDue, 'YYYY-MM-dd'),
               extendedProps: {
                 description: task.description,
-                status: task.statusstring,
+                status: task.status,
               },
+              color: this.getEventColor(task.statusId),
             });
           }
           this.calendarOptions.events = eventList;
@@ -79,6 +89,13 @@ export class TaskCalendarComponent {
           subscription.unsubscribe();
         },
       });
+  }
+
+  getEventColor(status: number) {
+    if (status == 1) return '#7851a9';
+    if (status == 2) return '#c40233 ';
+    if (status == 3) return '#2e8b57';
+    return '';
   }
 
   // getTareasList(): void {

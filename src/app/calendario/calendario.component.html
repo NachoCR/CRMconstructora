@@ -1,2 +1,2 @@
-<h1>Calendario de Tareas</h1>
-<app-task-calendar (userId)="(user?.id)"></app-task-calendar>
+<h1>Calendario de Tareas de {{ user?.name }}</h1>
+<app-task-calendar *ngIf="!loading && user" [userId]="user.id"></app-task-calendar>

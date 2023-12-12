@@ -1,12 +1,13 @@
 <mat-dialog-content>
   <h2>{{ eventData.title }}</h2>
   <div class="event-details">
-    <p>Start Date: {{ eventData.start }}</p>
-    <p>End Date: {{ eventData.end }}</p>
+    <p>Status: {{ eventData.extendedProps.status }}</p>
+    <p>Start Date: {{ eventData.start | date }}</p>
+    <p>End Date: {{ eventData.end | date }}</p>
     <p>Description: {{ eventData.extendedProps.description }}</p>
   </div>
 </mat-dialog-content>
 
-<mat-dialog-actions>
+<mat-dialog-actions style="justify-content: flex-end">
   <button mat-button (click)="dialogRef.close()">Close</button>
 </mat-dialog-actions>
