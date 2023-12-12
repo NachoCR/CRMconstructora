@@ -67,3 +67,12 @@ input.ng-touched.ng-invalid {
   border: 1px solid
 red;
 }
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+}

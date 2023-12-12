@@ -11,6 +11,8 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { ProveedorData } from 'app/interfaces/proveedor.interface';
 import { ProveedorService } from 'app/services/proveedor.service';
+import { delay, of } from 'rxjs';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-editar-proveedor',
@@ -31,16 +33,24 @@ export class EditarProveedorComponent {
   proveedor?: ProveedorData;
   correoOriginal: any;
   cedulaOriginal: any;
+  tipoOriginal: any;
+  identifierId: any;
+  identifier: any;
+  forceReload: boolean = false;
+  identifierType : string = "";
+  identifierLength? : number;
 
   constructor(
     public dialogRef: MatDialogRef<EditarProveedorComponent>,
     private proveedorService: ProveedorService,
+    private cdr: ChangeDetectorRef,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder
   ) {
     // this.crearUForm = this.crearUsuarioForm();
 
     this.cedulaOriginal = data.identifier;
+    this.tipoOriginal = data.identifierId;
     this.correoOriginal = data.email;
 
     this.editarProveedorForm = new FormGroup({
@@ -48,42 +58,95 @@ export class EditarProveedorComponent {
       name: new FormControl(null, [Validators.required]),
       identifierId: new FormControl(null, [Validators.required]),
       identifier: new FormControl(null, [
-        Validators.required,
-        Validators.minLength(8),
-        Validators.maxLength(15),
       ]),
+
       phone: new FormControl(null, [
         Validators.required,
         Validators.maxLength(8),
-        this.phoneNumberValidator(),
+        Validators.minLength(8),
+        Validators.pattern(/^\d{8}$/),
       ]),
       address: new FormControl(null, [Validators.required]),
-      details: new FormControl(null),
+      details: new FormControl(null, [Validators.required]),
+    });
+    this.editarProveedorForm.get('identifierId')?.valueChanges.subscribe(value => {
+      this.actualizarValidaciones(value);
     });
   }
 
-  checkCedulaExists() {
-    const cedulaControl = this.editarProveedorForm.get('identifier');
+  private actualizarValidaciones(identifierId: number) {
+    if (identifierId == 1) {
+      this.setIdentifierValues("Cédula", 9,9);
+    } else if (identifierId == 2) {
+      this.setIdentifierValues("Pasaporte", 9,9);
+    } else if (identifierId == 3) {
+      this.setIdentifierValues("Cédula Jurídica", 11,11);
+    }
+  
+  }
 
-    if (cedulaControl && this.proveedoresList.length > 0) {
-      const identifier = cedulaControl.value;
+  setIdentifierValues(identifierType : string, identifierMinLength : number, identifierMaxLength : number){
+    const identifierControl = this.editarProveedorForm.get('identifier');
+    identifierControl?.setValidators([]);
+    let pattern : any;
 
-      const cedulaExists = this.proveedoresList.some(
-        proveedor => proveedor.identifier === identifier
+    if(identifierMaxLength == 9){
+      pattern = /^\d{9}$/
+    }
+    if(identifierMaxLength == 11){
+      pattern = /^\d{11}$/
+    }
+
+    identifierControl?.setValidators([
+      Validators.required,
+      Validators.pattern(pattern),
+      Validators.minLength(identifierMinLength),
+      Validators.maxLength(identifierMaxLength),
+    ]);
+    this.identifierType = identifierType;
+    this.identifierLength = identifierMaxLength;
+
+
+    identifierControl?.updateValueAndValidity();
+  }
+
+  test(value: any){
+    const identifierControl = this.editarProveedorForm.get('identification');
+    identifierControl?.setValue(value)
+  }
+
+  checkIdentifierExists() {
+    const identifierControl = this.editarProveedorForm.get('identifier');
+    
+
+    if (identifierControl && this.proveedoresList.length > 0) {
+      const identification = identifierControl.value;
+
+      const identifierExists = this.proveedoresList.some(
+        proveedor => proveedor.identifier === identification
       );
-      if (this.cedulaOriginal != identifier) {
-        if (cedulaExists) {
-          cedulaControl.setErrors({ cedulaExists: true });
+
+      if (this.cedulaOriginal != identifierControl) {
+        if (identifierExists) {
+          identifierControl.setErrors({ identifierExists: true });
         } else {
-          cedulaControl.setErrors(null);
+          identifierControl.setErrors(null);
+          identifierControl.updateValueAndValidity();
         }
       }
     }
   }
 
+  private onIdentifierIdChange() {
+    const identifierId = this.editarProveedorForm.get('identifierId')?.value;
+    this.actualizarValidaciones(identifierId);
+  }
+
+
+
   checkEmailExists() {
     const emailControl = this.editarProveedorForm.get('email');
-
+    
     if (emailControl && this.proveedoresList.length > 0) {
       const email = emailControl.value;
 
@@ -94,13 +157,8 @@ export class EditarProveedorComponent {
           emailControl.setErrors({ emailExists: true });
         } else {
           emailControl.setErrors(null);
+          emailControl.updateValueAndValidity();
         }
-
-        // if (emailExists) {
-        //   emailControl.setErrors({ 'emailExists': true });
-        // } else {
-        //   emailControl.setErrors(null);
-        // }
       }
     }
   }
@@ -121,6 +179,12 @@ export class EditarProveedorComponent {
   get f() {
     return this.editarProveedorForm.controls;
   }
+  onEmailBlur() {
+    this.checkEmailExists();
+    // this.crearUForm.get('email')?.updateValueAndValidity(); // Actualiza la validación de Angular
+  }
+
+
 
   crear() {
     this.submitted = true;
@@ -142,14 +206,30 @@ export class EditarProveedorComponent {
     this.dialogRef.close();
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.getProveedoresList();
   }
+
+
 
   getProveedoresList(): void {
     this.proveedorService.getProvidersList().subscribe((result: any) => {
       this.proveedoresList = result;
       this.dataSource = new MatTableDataSource(this.proveedoresList);
+      this.identifierId = result.identifierId.value;
     });
+  }
+
+  forceIdentifierValidation(): void {
+    const identifierControl = this.editarProveedorForm.get('identifier');
+    if (identifierControl) {
+      identifierControl.markAsTouched();
+      identifierControl.updateValueAndValidity();
+    }
+  }
+
+
+  cerrarModal() {
+    this.dialogRef.close();
   }
 }

@@ -39,7 +39,7 @@ export class ProductoService {
 
   addProducto(producto: any): Observable<any> {
     let res;
-    debugger;
+    ;
     return this.http
       .put<any>(this.APIUrl + '/ProviderCatalog/', producto)
       .pipe(map((data: any) => data));

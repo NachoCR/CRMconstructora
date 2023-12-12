@@ -19,7 +19,7 @@ export class ProveedorService {
       })
       .pipe(
         map((data: any) => {
-          console.log(data);
+        
           return data;
         })
       );
@@ -27,9 +27,9 @@ export class ProveedorService {
 
   addProveedor(provider: any): Observable<any> {
     provider.contacts = [];
-    console.log(provider);
+   
     let res;
-    debugger;
+    
 
     return this.http.put<any>(this.APIUrl + '/Provider/', provider).pipe(map((data: any) => data));
   }
@@ -40,7 +40,7 @@ export class ProveedorService {
 
   deleteProveedor(provider: any) {
     let res;
-    console.log(provider);
+    
     return this.http
       .delete<any>(this.APIUrl + '/Provider/' + provider.providerId)
       .subscribe(data => (res = data));

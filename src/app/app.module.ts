@@ -27,8 +27,6 @@ import { BASE_URL, httpInterceptorProviders, appInitializerProviders } from '@co
 
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemDataService } from '@shared/in-mem/in-mem-data.service';
-
-
 import { CatalogoProveedorComponent } from './catalogo-proveedor/catalogo-proveedor.component';
 import { LandingComponent } from './landing/landing.component';
 import { LoginComponent } from './auth/login/login.component';
@@ -55,13 +53,16 @@ import { BuscarProveedorComponent } from './buscar-proveedor/buscar-proveedor.co
 import { MatSelectModule } from '@angular/material/select';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { DetallesContactoComponent } from './contactos/detalles-contacto/detalles-contacto.component';
+import { SolicitudesComponent } from './solicitudes/solicitudes/solicitudes.component';
+import { CrearSolicitudComponent } from './solicitudes/crear-solicitud/crear-solicitud.component';
+import { EditarSolicitudComponent } from './solicitudes/editar-solicitud/editar-solicitud.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { ProductosComponent } from './productos/productos/productos.component';
 import { DetallesProductoComponent } from './productos/detalles-producto/detalles-producto.component';
 import { CrearProductoComponent } from './productos/crear-producto/crear-producto.component';
 import { EditarProductoComponent } from './productos/editar-producto/editar-producto.component';
+import { DetallesSolicitudComponent } from './solicitudes/detalles-solicitud/detalles-solicitud.component';
 import { CalendarioComponent } from './calendario/calendario.component';
-
 
 
 
@@ -75,28 +76,38 @@ export function TranslateHttpLoaderFactory(http: HttpClient) {
     AppComponent,
     FilterPipe,
     FilterPipe2,
+
     ContactosComponent,
     CrearContactoComponent,
     EditarContactoComponent,
+
     BuscarProyectoComponent,
+
+    ProveedoresComponent,
     BuscarProveedorComponent,
+    CrearProveedorComponent,
+    EditarProveedorComponent,
+
     UsuariosComponent,
     CrearUsuarioComponent,
     EditarUsuarioComponent,
-    CrearProveedorComponent,
-    EditarProveedorComponent,
+
+
     CrearProductoCatalogoComponent,
     EditarProductoCatalogoComponent,
+
     ProyectosComponent,
     CrearProyectoComponent,
     EditarProyectoComponent,
-    EditarProyectoComponent,
+
     TareaComponent,
     CrearTareaComponent,
-    ProveedoresComponent,
-    CrearProveedorComponent,
-    EditarProveedorComponent,
+
+    SolicitudesComponent, 
+    CrearSolicitudComponent,
+    EditarSolicitudComponent,
     EditarTareaComponent,
+    DetallesSolicitudComponent,
     DetallesContactoComponent,
     ProductosComponent,
     DetallesProductoComponent,

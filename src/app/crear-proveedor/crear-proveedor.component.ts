@@ -36,6 +36,8 @@ export class CrearProveedorComponent {
   dataSource: MatTableDataSource<any> = new MatTableDataSource();
 
   proveedor?: ProveedorData;
+  forceReload: boolean = false;
+  
   constructor(
     public dialogRef: MatDialogRef<CrearProveedorComponent>,
     private proveedorService: ProveedorService,
@@ -50,33 +52,121 @@ export class CrearProveedorComponent {
       identifierId: new FormControl(null, [Validators.required]),
       identifier: new FormControl(null, [
         Validators.required,
-        Validators.minLength(8),
-        Validators.maxLength(15),
+        Validators.pattern(/^\d{9}$/),
+        Validators.minLength(9),
+        Validators.maxLength(9),
+      ]),
+      passport: new FormControl(null, [
+        Validators.required,
+        Validators.pattern(/^\d{9}$/),
+        Validators.minLength(9),
+        Validators.maxLength(9),
+      ]),
+      juridic: new FormControl(null, [
+        Validators.required,
+        Validators.pattern(/^\d{11}$/),
+        Validators.minLength(11),
+        Validators.maxLength(11),
       ]),
       phone: new FormControl(null, [
         Validators.required,
         Validators.maxLength(8),
-        this.phoneNumberValidator(),
+        Validators.minLength(8),
+        Validators.pattern(/^\d{8}$/),
       ]),
       address: new FormControl(null, [Validators.required]),
-      details: new FormControl(null),
+      details: new FormControl(null, [Validators.required]),
     });
+    this.crearProveedorForm.get('identifierId')?.valueChanges.subscribe(value => {
+      this.actualizarValidaciones(value);
+    });
+  }
+
+  private actualizarValidaciones(identifierId: string) {
+    const identifierControl = this.crearProveedorForm.get('identifier');
+    const passportControl = this.crearProveedorForm.get('passport');
+    const juridicControl = this.crearProveedorForm.get('juridic');
+
+    identifierControl?.setValidators([]);
+    passportControl?.setValidators([]);
+    juridicControl?.setValidators([]);
+
+    console.log(identifierId);
+    if (identifierId === '1') {
+      identifierControl?.setValidators([
+        Validators.required,
+        Validators.pattern(/^\d{9}$/),
+        Validators.minLength(9),
+        Validators.maxLength(9),
+      ]);
+    } else if (identifierId === '2') {
+      passportControl?.setValidators([
+        Validators.required,
+        Validators.pattern(/^\d{9}$/),
+        Validators.minLength(9),
+        Validators.maxLength(9),
+      ]);
+    } else if (identifierId === '3') {
+      juridicControl?.setValidators([
+        Validators.required,
+        Validators.pattern(/^\d{11}$/),
+        Validators.minLength(11),
+        Validators.maxLength(11),
+      ]);
+    }
+
+    identifierControl?.updateValueAndValidity();
+    passportControl?.updateValueAndValidity();
+    juridicControl?.updateValueAndValidity();
   }
 
   checkCedulaExists() {
     const cedulaControl = this.crearProveedorForm.get('identifier');
 
     if (cedulaControl && this.proveedoresList.length > 0) {
-      const identifier = cedulaControl.value;
+      const identification = cedulaControl.value;
 
       const cedulaExists = this.proveedoresList.some(
-        proveedor => proveedor.identifier === identifier
+        proveedor => proveedor.identifier === identification
       );
 
       if (cedulaExists) {
         cedulaControl.setErrors({ cedulaExists: true });
       } else {
         cedulaControl.setErrors(null);
+        cedulaControl.updateValueAndValidity();
+      }
+    }
+  }
+
+  checkPassportExists() {
+    const passportControl = this.crearProveedorForm.get('passport');
+    if (passportControl && this.proveedoresList.length > 0) {
+      const passport = passportControl.value;
+
+      const passportExists = this.proveedoresList.some(proveedor => proveedor.identifier === passport);
+
+      if (passportExists) {
+        passportControl.setErrors({ passportExists: true });
+      } else {
+        passportControl.setErrors(null);
+        passportControl.updateValueAndValidity();
+      }
+    }
+  }
+
+  checkJuridicExists() {
+    const juridicControl = this.crearProveedorForm.get('juridic');
+    if (juridicControl && this.proveedoresList.length > 0) {
+      const juridic = juridicControl.value;
+
+      const juridicExists = this.proveedoresList.some(proveedor => proveedor.identifier === juridic);
+
+      if (juridicExists) {
+        juridicControl.setErrors({ juridicExists: true });
+      } else {
+        juridicControl.setErrors(null);
+        juridicControl.updateValueAndValidity();
       }
     }
   }
@@ -84,7 +174,8 @@ export class CrearProveedorComponent {
   checkEmailExists() {
     const emailControl = this.crearProveedorForm.get('email');
 
-    if (emailControl && this.proveedoresList.length > 0) {
+    if (emailControl) {
+      // Verificar que el control no sea nulo
       const email = emailControl.value;
 
       const emailExists = this.proveedoresList.some(proveedor => proveedor.email === email);
@@ -92,10 +183,32 @@ export class CrearProveedorComponent {
       if (emailExists) {
         emailControl.setErrors({ emailExists: true });
       } else {
+        // Limpiar el error si el correo no existe (puedes ajustar esto según tus necesidades)
         emailControl.setErrors(null);
+        emailControl.updateValueAndValidity();
       }
     }
   }
+
+  onEmailBlur() {
+    this.checkEmailExists();
+    // this.crearUForm.get('email')?.updateValueAndValidity(); // Actualiza la validación de Angular
+  }
+
+  onJuridicaBlur() {
+    this.checkJuridicExists();
+    // this.crearUForm.get('juridic')?.updateValueAndValidity(); // Actualiza la validación de Angular
+  }
+
+  onCedulaBlur() {
+    this.checkCedulaExists();
+    // this.crearUForm.get('identification')?.updateValueAndValidity(); // Actualiza la validación de Angular
+  }
+  onPassportBlur() {
+    this.checkCedulaExists();
+    // this.crearUForm.get('passport')?.updateValueAndValidity(); // Actualiza la validación de Angular
+  }
+
 
   get f() {
     return this.crearProveedorForm.controls;
@@ -145,5 +258,9 @@ export class CrearProveedorComponent {
       this.proveedoresList = result;
       this.dataSource = new MatTableDataSource(this.proveedoresList);
     });
+  }
+
+  cerrarModal() {
+    this.dialogRef.close();
   }
 }

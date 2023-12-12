@@ -9,8 +9,8 @@ export interface UsuarioData {
   email: string;
   password: string;
   employeeId?: number;
-  position: string;
+  position?: string;
   assignedProject?: number;
   clientId?: number;
-  roleId: number;
+  roleId?: number;
 }

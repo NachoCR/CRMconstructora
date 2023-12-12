@@ -17,6 +17,7 @@
 }
 
 .matero-user-panel-name,
+.matero-user-panel-email-long,
 .matero-user-panel-email {
   margin-top: 0;
   margin-bottom: 4px;
@@ -25,6 +26,7 @@
 
 .matero-user-panel-name,
 .matero-user-panel-email,
+.matero-user-panel-email-long,
 .matero-user-panel-icons {
   opacity: 1;
   transition: transitions.swift-ease-out(opacity);
@@ -45,4 +47,22 @@
     justify-content: center;
     padding: 0;
   }
+
+  .matero-user-panel-email {
+    font-size: 50px; // Tamaño de fuente predeterminado
+  
+    // Truncar el texto si es muy largo
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .matero-user-panel-email-long {
+    font-size: 8px; /* Tamaño de fuente más pequeño para correos electrónicos largos */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+
 }

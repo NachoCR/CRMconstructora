@@ -29,12 +29,14 @@ import { FileUploadComponent } from '@shared/components/file-upload/file-upload.
 import { ProductosComponent } from 'app/productos/productos/productos.component';
 import { TaskCalendarComponent } from '@shared/components/task-calendar/task-calendar.component';
 import { CalendarioComponent } from 'app/calendario/calendario.component';
+import { SolicitudesComponent } from 'app/solicitudes/solicitudes/solicitudes.component';
 
 const routes: Routes = [
   { path: '#', component: DashboardComponent },
   { path: '', component: LandingComponent },
   { path: 'usuarios', component: UsuariosComponent },
   { path: 'proyectos', component: ProyectosComponent },
+  { path: 'solicitudes', component: SolicitudesComponent },
   { path: 'proveedores', component: ProveedoresComponent },
   { path: 'tareas', component: TareaComponent },
   { path: 'catalogoProveedor', component: CatalogoProveedorComponent },
@@ -71,6 +73,7 @@ const routes: Routes = [
       { path: 'ordenesCompra', component: OrdenesCompraComponent },
       { path: 'contactos', component: ContactosComponent },
       { path: 'productos', component: ProductosComponent },
+      { path: 'solicitudes', component: SolicitudesComponent },
       { path: 'calendario', component: CalendarioComponent },
     ],
   },
