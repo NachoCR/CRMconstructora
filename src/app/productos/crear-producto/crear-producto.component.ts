@@ -1,6 +1,7 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, ValidatorFn, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { FileUploadComponent } from '@shared/components/file-upload/file-upload.component';
 import { catalogoProveedorData } from 'app/interfaces/catalogoProveedor.interface';
 import { ProductoService } from 'app/services/producto.service';
 import { ProveedorService } from 'app/services/proveedor.service';
@@ -8,18 +9,19 @@ import { ProveedorService } from 'app/services/proveedor.service';
 @Component({
   selector: 'app-crear-producto',
   templateUrl: './crear-producto.component.html',
-  styleUrls: ['./crear-producto.component.scss']
+  styleUrls: ['./crear-producto.component.scss'],
 })
 export class CrearProductoComponent {
-
   proveedorList: any[] = [];
   unitList: any[] = [];
+  @ViewChild('FileUpload')
+  private FileUpload?: FileUploadComponent;
 
   validadorNoCeroNiNegativo(): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } | null => {
       const valor = control.value;
       if (valor !== null && (isNaN(valor) || valor <= 0)) {
-        return { 'noCeroNiNegativo': true };
+        return { noCeroNiNegativo: true };
       }
       return null;
     };
@@ -32,6 +34,7 @@ export class CrearProductoComponent {
     providerId: ['', [Validators.required]],
     unitId: ['', [Validators.required]],
     quantity: [0, [Validators.required]],
+    imageURL: ['', null],
   });
 
   constructor(
@@ -68,14 +71,32 @@ export class CrearProductoComponent {
   getUnitList(): void {
     this.productoService.getUnidadList().subscribe((result: any) => {
       this.unitList = result;
-      console.table(this.unitList)
     });
   }
 
-  onSave(): void {
+  async saveImageUrl() {
+    try {
+      const result = await this.FileUpload?.uploadFile();
+      if (result) {
+        this.handleFileUploadUrl(result);
+        return result;
+      } else {
+        throw new Error('La URL de la imagen es undefined.');
+      }
+    } catch (error) {
+      console.error('Error al cargar la URL:', error);
+      throw error;
+    }
+  }
+  handleFileUploadUrl($event: string) {
+    this.data.imageURL = $event;
+  }
+
+  async onSave() {
+    if (this.productoForm.value.imageURL != '')
+      this.productoForm.value.imageURL = await this.saveImageUrl();
     if (this.productoForm.valid) {
       this.dialogRef.close(this.productoForm.value);
     }
   }
-
 }

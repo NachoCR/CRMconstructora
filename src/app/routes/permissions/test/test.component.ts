@@ -29,26 +29,19 @@ export class PermissionsTestComponent {
     this.permissionsSrv.removePermission('admin');
   }
 
-  unAuthorized() {
-    console.log('unAuthorized');
-  }
+  unAuthorized() {}
 
-  authorized() {
-    console.log('authorizes');
-  }
+  authorized() {}
 
   changeToAdmin() {
     this.comparedPermission = ['admin'];
-    console.log(this.comparedPermission);
   }
 
   changeToAnotherPermission() {
     this.comparedPermission = ['awesome'];
-    console.log(this.comparedPermission);
   }
 
   changeToGuest() {
     this.comparedPermission = ['guest'];
-    console.log(this.comparedPermission);
   }
 }

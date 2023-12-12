@@ -125,7 +125,6 @@ export class MenuService {
   /** Get the menu level. */
   getLevel(routeArr: string[]): string[] {
     let tmpArr: any[] = [];
-    //console.log('Valor del menu: ', this.menu$.value);
     this.menu$.value.forEach(item => {
       // Breadth-first traverse
       let unhandledLayer = [{ item, parentNamePathList: [], realRouteArr: [] }];

@@ -24,7 +24,6 @@ export class CatalogoProveedorComponent {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
       this.catalogo = result;
     });
   }
@@ -36,7 +35,6 @@ export class CatalogoProveedorComponent {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
       this.catalogo = result;
     });
   }

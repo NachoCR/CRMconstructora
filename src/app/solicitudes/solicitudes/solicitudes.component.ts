@@ -8,7 +8,7 @@ import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
 import Swal from 'sweetalert2';
 import { debug } from 'console';
 import * as _ from 'lodash';
-import * as XLSX from 'xlsx'; 
+import * as XLSX from 'xlsx';
 import { CrearSolicitudComponent } from '../crear-solicitud/crear-solicitud.component';
 import { EditarSolicitudComponent } from '../editar-solicitud/editar-solicitud.component';
 import { UsuarioService } from 'app/services/usuario.service';
@@ -17,27 +17,26 @@ import { DetallesSolicitudComponent } from '../detalles-solicitud/detalles-solic
 @Component({
   selector: 'app-solicitudes',
   templateUrl: './solicitudes.component.html',
-  styleUrls: ['./solicitudes.component.scss']
+  styleUrls: ['./solicitudes.component.scss'],
 })
 export class SolicitudesComponent {
   solicitud?: SolicitudData;
-  @ViewChild("SolicitudesTable") solicitudesTable? : ElementRef;
+  @ViewChild('SolicitudesTable') solicitudesTable?: ElementRef;
 
   // usuariosList: UsuarioData[] = [];
 
   dataSource: MatTableDataSource<any> = new MatTableDataSource();
-  solicitudesList: any[] = []; 
-  fileName= 'Solicitudes.xlsx';  
+  solicitudesList: any[] = [];
+  fileName = 'Solicitudes.xlsx';
 
   displayedColumns: string[] = [
-  
     'startDate',
     'endDate',
     'description',
     'userId',
     'statusId',
     'managerReason',
-    'actions'
+    'actions',
   ];
 
   constructor(
@@ -49,46 +48,35 @@ export class SolicitudesComponent {
   ) {}
 
   ngOnInit(): void {
-    
     this.getSolicitudesList();
-
-    
   }
-
 
   getSolicitudesList(): void {
     this.solicitudService.getSolicitudList().subscribe((result: any) => {
       this.solicitudesList = result;
-      console.log(result)
       this.dataSource = new MatTableDataSource(this.solicitudesList);
     });
   }
 
-
-
   exportTable() {
-    this.dataSource.data.map(x => {
-      console.log(x);
-    })
-  
+    this.dataSource.data.map(x => {});
+
     let data = this.dataSource.data.map(x => ({
-      "Fecha Inicio": x.startDate,
-      "Fecha Final": x.endDate,
-      "Descripción" : x.description,
-      "Usuario": x.userDTO.name,
-      "Estado" : x.statusId,
-      "Razón" : x.managerReason, 
-    }))
+      'Fecha Inicio': x.startDate,
+      'Fecha Final': x.endDate,
+      'Descripción': x.description,
+      'Usuario': x.userDTO.name,
+      'Estado': x.statusId,
+      'Razón': x.managerReason,
+    }));
     let ws = XLSX.utils.json_to_sheet(data, <XLSX.Table2SheetOpts>{
-      sheet: "solicitudes"
+      sheet: 'solicitudes',
     });
     let wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'solicitudes'); 
+    XLSX.utils.book_append_sheet(wb, ws, 'solicitudes');
     XLSX.writeFile(wb, 'solicitudes.xlsx');
   }
 
-
-  
   openDialog(): void {
     const dialogRef = this.dialog.open(CrearSolicitudComponent, {
       width: '60%',
@@ -104,7 +92,6 @@ export class SolicitudesComponent {
           denyButtonText: `No guardar`,
         }).then(swalResult => {
           if (swalResult.isConfirmed) {
-            console.log(result);
             this.solicitudService.addSolicitud(result).subscribe({
               next: () => {
                 this.getSolicitudesList();
@@ -113,7 +100,6 @@ export class SolicitudesComponent {
               error: e => {
                 this.getSolicitudesList();
 
-                console.log(e);
                 Swal.fire('Error al registrar solicitud', '', 'info');
               },
             });
@@ -126,7 +112,6 @@ export class SolicitudesComponent {
 
   openDialogEditar(solicitud: any): void {
     const pSolicitud = _.cloneDeep(solicitud);
-    console.log(pSolicitud)
     const dialogRef = this.dialog.open(EditarSolicitudComponent, {
       width: '60%',
       data: pSolicitud,
@@ -149,7 +134,6 @@ export class SolicitudesComponent {
               error: e => {
                 this.getSolicitudesList();
 
-                console.log(e);
                 Swal.fire('Error al guardar los cambios', '', 'info');
               },
             });
@@ -174,26 +158,26 @@ export class SolicitudesComponent {
     }).then(result => {
       if (result.value) {
         this.solicitudService.deleteSolicitud(solicitud);
-        console.log(solicitud)
         setTimeout(() => {}, 4000);
-      // Agrega un tiempo de espera antes de actualizar la lista
-      setTimeout(() => {
-        this.getSolicitudesList();
-        Swal.fire('Eliminado!', 'Solicitud eliminada.', 'success');
-      }, 2000);
-    } else if (result.dismiss === Swal.DismissReason.cancel) {
-      Swal.fire('Cancelado', 'La solicitud no fue eliminada', 'error');
-    }
+        // Agrega un tiempo de espera antes de actualizar la lista
+        setTimeout(() => {
+          this.getSolicitudesList();
+          Swal.fire('Eliminado!', 'Solicitud eliminada.', 'success');
+        }, 2000);
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire('Cancelado', 'La solicitud no fue eliminada', 'error');
+      }
     });
   }
 
   openDetailsDialog(solicitud: any): void {
-    this.solicitudService.getSolicitudDetails(solicitud.leaveId).subscribe((solicitudDetails: any) => {
-      //console.table(contactDetails);
-      this.dialog.open(DetallesSolicitudComponent, {
-
-        data: solicitudDetails
+    this.solicitudService
+      .getSolicitudDetails(solicitud.leaveId)
+      .subscribe((solicitudDetails: any) => {
+        //console.table(contactDetails);
+        this.dialog.open(DetallesSolicitudComponent, {
+          data: solicitudDetails,
+        });
       });
-    });
   }
 }

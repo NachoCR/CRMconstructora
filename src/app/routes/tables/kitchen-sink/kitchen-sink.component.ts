@@ -148,20 +148,16 @@ export class TablesKitchenSinkComponent implements OnInit {
       data: { record: value },
     });
 
-    dialogRef.afterClosed().subscribe(() => console.log('The dialog was closed'));
+    // dialogRef.afterClosed().subscribe(() => console.log('The dialog was closed'));
   }
 
   delete(value: any) {
     this.dialog.alert(`You have deleted ${value.position}!`);
   }
 
-  changeSelect(e: any) {
-    console.log(e);
-  }
+  changeSelect(e: any) {}
 
-  changeSort(e: any) {
-    console.log(e);
-  }
+  changeSort(e: any) {}
 
   enableRowExpandable() {
     this.columns[0].showExpand = this.expandable;

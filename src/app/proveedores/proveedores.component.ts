@@ -11,7 +11,6 @@ import * as _ from 'lodash';
 
 import Swal from 'sweetalert2';
 
-
 @Pipe({
   name: 'filter2',
 })
@@ -23,15 +22,11 @@ export class FilterPipe2 implements PipeTransform {
 
     return items2.filter(itemProv => {
       // Implementa tu lógica de filtrado según tus necesidades
-      return (
-        
-        itemProv.name.toLowerCase().includes(filtro2)
-        // Agrega más propiedades según sea necesario
-      );
+      return itemProv.name.toLowerCase().includes(filtro2);
+      // Agrega más propiedades según sea necesario
     });
   }
 }
-
 
 @Component({
   selector: 'app-proveedores',
@@ -46,20 +41,17 @@ export class ProveedoresComponent {
   proveedoresPaginados: any[] = []; // Lista que se mostrará en la página actual
   proveedoresFiltrados: any[] = [];
 
-    //Paginacion
+  //Paginacion
 
-    pageSizeOptions: number[] = [6, 10, 25, 100];
-    pageSize: number = 6;
-    pageIndex: number = 0;
-    @ViewChild(MatPaginator) paginator!: MatPaginator; // <-- Agrega el modificador !
-  
-    //
+  pageSizeOptions: number[] = [6, 10, 25, 100];
+  pageSize: number = 6;
+  pageIndex: number = 0;
+  @ViewChild(MatPaginator) paginator!: MatPaginator; // <-- Agrega el modificador !
+
+  //
 
   aplicarFiltroProv(filtro2: string): void {
-    // console.log('filtro:', filtro);
     this.filtroNew = filtro2;
-    // console.log('this.filtro:', this.filtro);
-    // ... rest of your logic
   }
   constructor(
     public dialog: MatDialog,
@@ -75,7 +67,6 @@ export class ProveedoresComponent {
   ngAfterViewInit(): void {
     this.aplicarPaginacion();
   }
-
 
   getProveedoresList(): void {
     this.proveedorService.getProvidersList().subscribe((result: any) => {
@@ -107,7 +98,6 @@ export class ProveedoresComponent {
               },
               error: e => {
                 this.getProveedoresList();
-                console.log(e);
                 Swal.fire('Error al registrar proveedor', '', 'info');
               },
             });
@@ -119,7 +109,6 @@ export class ProveedoresComponent {
   }
 
   openDialogEditar(provider: any): void {
-    console.log(provider);
     const pProveedor = _.cloneDeep(provider);
     const dialogRef = this.dialog.open(EditarProveedorComponent, {
       width: '50%',
@@ -143,8 +132,6 @@ export class ProveedoresComponent {
               },
               error: e => {
                 this.getProveedoresList();
-                
-                console.log(e);
                 Swal.fire('Error al guardar los cambios', '', 'info');
               },
             });
@@ -156,6 +143,13 @@ export class ProveedoresComponent {
         });
       }
     });
+  }
+
+  checkProveedorImage(url?: string): string {
+    if (url) {
+      return url ?? '';
+    }
+    return '../../assets/images/epaLoog.webp';
   }
 
   openEliminar(provider: any): void {
@@ -170,14 +164,14 @@ export class ProveedoresComponent {
       if (result.value) {
         this.proveedorService.deleteProveedor(provider);
         setTimeout(() => {}, 2000);
-      // Agrega un tiempo de espera antes de actualizar la lista
-      setTimeout(() => {
-        this.getProveedoresList();
-        Swal.fire('Eliminado!', 'Proveedor eliminado.', 'success');
-      }, 2000);
-    } else if (result.dismiss === Swal.DismissReason.cancel) {
-      Swal.fire('Cancelado', 'El proveedor no fue eliminado', 'error');
-    }
+        // Agrega un tiempo de espera antes de actualizar la lista
+        setTimeout(() => {
+          this.getProveedoresList();
+          Swal.fire('Eliminado!', 'Proveedor eliminado.', 'success');
+        }, 2000);
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire('Cancelado', 'El proveedor no fue eliminado', 'error');
+      }
     });
   }
 
@@ -188,9 +182,9 @@ export class ProveedoresComponent {
   }
 
   aplicarPaginacion(): void {
-  const startIndex = this.pageIndex * this.pageSize;
-  const endIndex = startIndex + this.pageSize;
+    const startIndex = this.pageIndex * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
 
-  this.proveedoresPaginados = this.proveedoresList.slice(startIndex, endIndex);
+    this.proveedoresPaginados = this.proveedoresList.slice(startIndex, endIndex);
   }
 }

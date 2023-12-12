@@ -1,6 +1,7 @@
 import { ContactosData } from './contacto.interface';
 
 export interface ProveedorData {
+  imageURL?: string;
   providerId?: number;
   identifierId: number;
   identifier: number;

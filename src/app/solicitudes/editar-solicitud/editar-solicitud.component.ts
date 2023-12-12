@@ -11,7 +11,7 @@ import { Observable, debounceTime, map, startWith } from 'rxjs';
 @Component({
   selector: 'app-editar-solicitud',
   templateUrl: './editar-solicitud.component.html',
-  styleUrls: ['./editar-solicitud.component.scss']
+  styleUrls: ['./editar-solicitud.component.scss'],
 })
 export class EditarSolicitudComponent {
   selectedProject: any;
@@ -45,17 +45,13 @@ export class EditarSolicitudComponent {
 
   transformData2() {
     this.data.assignedUser = this.selectedUser.userId;
-    this.editarSolicitudForm.controls["userId"].setValue(this.selectedUser.userId);
+    this.editarSolicitudForm.controls['userId'].setValue(this.selectedUser.userId);
   }
-  setUserValue(user : any) {
-    
+  setUserValue(user: any) {
     this.selectedUser = user;
-    console.log(user)
     this.data.assignedUser = user?.name; // Usar el operador de opción ? para manejar valores nulos
-    this.editarSolicitudForm.controls["userId"].setValue(user?.userId); // Usar el operador de opción ?
-  
+    this.editarSolicitudForm.controls['userId'].setValue(user?.userId); // Usar el operador de opción ?
   }
-
 
   onEmployeeSelectionChange(selectedEmployee: any): void {
     this.selectedEmployee = selectedEmployee;
@@ -65,29 +61,22 @@ export class EditarSolicitudComponent {
 
     // También puedes hacer otras acciones necesarias aquí
   }
-  
+
   constructor(
     public dialogRef: MatDialogRef<EditarSolicitudComponent>,
     private solicitudService: SolicitudService,
     private usuarioService: UsuarioService,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private fb: FormBuilder,
-  ) 
-  
-  {
-
-    this.editarSolicitudForm = new FormGroup(
-      {
-
-        startDate: new FormControl(null, [Validators.required, DateValidator.dateNotInPast]),
-        endDate: new FormControl(null, [Validators.required, DateValidator.dateNotInPast]),
-        description: new FormControl(null, [Validators.required]),
-        userId: new FormControl(null, [Validators.required]),
-        statusId: new FormControl(null, [Validators.required]),
-        managerReason: new FormControl(null),
-
-      }
-    );
+    private fb: FormBuilder
+  ) {
+    this.editarSolicitudForm = new FormGroup({
+      startDate: new FormControl(null, [Validators.required, DateValidator.dateNotInPast]),
+      endDate: new FormControl(null, [Validators.required, DateValidator.dateNotInPast]),
+      description: new FormControl(null, [Validators.required]),
+      userId: new FormControl(null, [Validators.required]),
+      statusId: new FormControl(null, [Validators.required]),
+      managerReason: new FormControl(null),
+    });
   }
 
   userList: any[] = []; // Aquí almacenarás la lista de clientes
@@ -96,14 +85,12 @@ export class EditarSolicitudComponent {
   filteredUserList$: Observable<any[]> | undefined;
   // filteredEmpleadosList$: Observable<any[]> | undefined;
 
-
   get f() {
     return this.editarSolicitudForm.controls;
   }
 
   crear() {
     this.submitted = true;
-    
 
     if (this.editarSolicitudForm.invalid) {
       return;
@@ -116,8 +103,6 @@ export class EditarSolicitudComponent {
       this.isWorking = false;
       this.editarSolicitudForm.enable();
     }, 1500);
-
-
   }
 
   onNoClick(): void {
@@ -126,15 +111,14 @@ export class EditarSolicitudComponent {
 
   ngOnInit(): void {
     //Servicio de clientes para cargar la lista
-    this.usuarioService.getUserList().subscribe((data) => {
-      this.userList = data.filter(x => x.roleId == 2); 
+    this.usuarioService.getUserList().subscribe(data => {
+      this.userList = data.filter(x => x.roleId == 2);
       const initialClientId = this.editarSolicitudForm.get('userId')?.value;
       const initialClient = this.userList.find(user => user.userId === initialClientId);
       if (initialClient) {
         this.editarSolicitudForm.get('userId')?.setValue(initialClient.name);
         this.selectedUser = initialClient.userId; // Mantén el clientId separado
       }
-      console.log(data)
       this.filteredUserList$ = this.editarSolicitudForm.get('userId')?.valueChanges.pipe(
         startWith(''),
         debounceTime(300),
@@ -142,7 +126,6 @@ export class EditarSolicitudComponent {
       );
     });
     // this.crearProyectoForm.setControl('endDate', new FormControl(null, [Validators.required, DateValidator.dateFactory(new Date (this.crearProyectoForm.get('startDate')?.value))]));
-    console.log(this.data);
   }
 
   //Filtro clientes
@@ -158,9 +141,7 @@ export class EditarSolicitudComponent {
   // }
 
   cerrarModal() {
-    this.selectedUser
+    this.selectedUser;
     this.dialogRef.close();
   }
-
-    
-  }
+}

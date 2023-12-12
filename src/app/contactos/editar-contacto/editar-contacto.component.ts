@@ -1,5 +1,13 @@
 import { Component, Inject } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  ValidationErrors,
+  ValidatorFn,
+  Validators,
+} from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { CrearContactoComponent } from '../crear-contacto/crear-contacto.component';
 import { ContactosData } from 'app/interfaces/contacto.interface';
@@ -22,8 +30,6 @@ export class EditarContactoComponent {
   dataSource: MatTableDataSource<any> = new MatTableDataSource();
   correoOriginal: any;
 
-
-
   constructor(
     public dialogRef: MatDialogRef<EditarContactoComponent>,
     @Inject(MAT_DIALOG_DATA) public data: ContactosData,
@@ -31,34 +37,28 @@ export class EditarContactoComponent {
     private contactoService: ContactoService,
     private fb: FormBuilder
   ) {
-    this.editarContacto = new FormGroup(
-      {
-        name: new FormControl(null, [Validators.required]),
-        lastname: new FormControl(null, [Validators.required]),
-        secondLastname: new FormControl(null, [Validators.required]),
-        email: new FormControl(null, [
-          Validators.required,
-          Validators.email,
-          this.emailValidator,
-          Validators.pattern(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/),
-        ]),
-        
-        phone: new FormControl(null, [
-          Validators.required,
-          Validators.maxLength(8),
-          Validators.minLength(8),
-          Validators.pattern(/^\d{8}$/),
-        ]),
-        providerId: new FormControl(null, [Validators.required]),
-        details: new FormControl(null, [Validators.required, Validators.minLength(10)])
-      },
+    this.editarContacto = new FormGroup({
+      name: new FormControl(null, [Validators.required]),
+      lastname: new FormControl(null, [Validators.required]),
+      secondLastname: new FormControl(null, [Validators.required]),
+      email: new FormControl(null, [
+        Validators.required,
+        Validators.email,
+        this.emailValidator,
+        Validators.pattern(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/),
+      ]),
 
-    );
-
-
-
+      phone: new FormControl(null, [
+        Validators.required,
+        Validators.maxLength(8),
+        Validators.minLength(8),
+        Validators.pattern(/^\d{8}$/),
+      ]),
+      providerId: new FormControl(null, [Validators.required]),
+      details: new FormControl(null, [Validators.required, Validators.minLength(10)]),
+    });
   }
-  
+
   emailValidator(control: AbstractControl): ValidationErrors | null {
     const email = control.value as string;
     if (email && email.indexOf('@') === -1) {
@@ -73,9 +73,8 @@ export class EditarContactoComponent {
   }
 
   checkEmailExists() {
-    
     const emailControl = this.editarContacto.get('email');
-    
+
     if (emailControl && this.contactoList.length > 0) {
       const email = emailControl.value;
 
@@ -115,12 +114,10 @@ export class EditarContactoComponent {
     //console.table(this.data);
     this.getProviderList();
     this.getContactosList();
-
   }
 
   getProviderList(): void {
     this.proveedorService.getProvidersList().subscribe((result: any) => {
-      //console.log(result);
       this.proveedorList = result;
     });
   }
@@ -129,7 +126,6 @@ export class EditarContactoComponent {
     this.contactoService.getContactoList().subscribe((result: any) => {
       this.contactoList = result;
       this.dataSource = new MatTableDataSource(this.contactoList);
-      console.log(result)
     });
   }
 
@@ -137,7 +133,7 @@ export class EditarContactoComponent {
     if (this.editarContacto.valid) {
       var contacto = this.editarContacto.value;
       contacto.contactId = this.data.contactId;
-      
+
       this.dialogRef.close(contacto);
     }
   }
@@ -154,7 +150,6 @@ export class EditarContactoComponent {
 
         if (error.status === 400 && error.error && error.error.errors) {
           const errorResponse = error.error;
-          console.log(errorResponse);
           for (const key in errorResponse.errors) {
             if (errorResponse.errors.hasOwnProperty(key)) {
               console.table(key);
@@ -170,16 +165,10 @@ export class EditarContactoComponent {
       }
     );
   }
-  
- 
+
   get f() {
     return this.editarContacto.controls;
   }
 
-
-
-  checkPhoneLenght(phone: any) {
-    console.log(phone);
-  }
-
+  checkPhoneLenght(phone: any) {}
 }

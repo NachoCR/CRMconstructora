@@ -9,22 +9,27 @@ import Swal from 'sweetalert2';
 import { DetallesProductoComponent } from '../detalles-producto/detalles-producto.component';
 import { EditarProductoComponent } from '../editar-producto/editar-producto.component';
 import { MatPaginator } from '@angular/material/paginator';
-import * as XLSX from 'xlsx'; 
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-productos',
   templateUrl: './productos.component.html',
-  styleUrls: ['./productos.component.scss']
+  styleUrls: ['./productos.component.scss'],
 })
-export class ProductosComponent implements OnInit{
-
-  producto? : catalogoProveedorData;
+export class ProductosComponent implements OnInit {
+  producto?: catalogoProveedorData;
 
   dataSource: MatTableDataSource<any> = new MatTableDataSource();
   productoList: any[] = [];
-  displayedColumns: string[] = ['name', 'details', 'price', 'providerId', 'unitId', 'quantity', 'actions'];
-
-
+  displayedColumns: string[] = [
+    'name',
+    'details',
+    'price',
+    'providerId',
+    'unitId',
+    'quantity',
+    'actions',
+  ];
 
   searchTerm: string = '';
   filteredProductos: any[] = [];
@@ -34,14 +39,18 @@ export class ProductosComponent implements OnInit{
   pageSize: number = 5;
   pageIndex: number = 0;
   @ViewChild(MatPaginator) paginator!: MatPaginator; // <-- Agrega el modificador !
-  @ViewChild("productosTable") productosTable? : ElementRef;
+  @ViewChild('productosTable') productosTable?: ElementRef;
 
   //
-  fileName= 'tareas.xlsx'; 
+  fileName = 'tareas.xlsx';
 
   //
-  constructor(public dialog: MatDialog, private productoService: ProductoService, private router: Router, private activatedRoute: ActivatedRoute) {
-  }
+  constructor(
+    public dialog: MatDialog,
+    private productoService: ProductoService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
     this.aplicarPaginacion();
@@ -64,36 +73,32 @@ export class ProductosComponent implements OnInit{
   }
 
   exportTable() {
-    this.dataSource.data.map(x => {
-      console.log(x);
-    })
-  
     let data = this.dataSource.data.map(x => ({
-      "Nombre": x.name,
-      "Detalles" : x.details,
-      "Precio": x.price,
-      "Proveedor": x.provider.name,
-      "Cantidad": x.quantity
-    }))
+      Nombre: x.name,
+      Detalles: x.details,
+      Precio: x.price,
+      Proveedor: x.provider.name,
+      Cantidad: x.quantity,
+    }));
     let ws = XLSX.utils.json_to_sheet(data, <XLSX.Table2SheetOpts>{
-      sheet: "productos"
+      sheet: 'productos',
     });
     let wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'productos'); 
+    XLSX.utils.book_append_sheet(wb, ws, 'productos');
     XLSX.writeFile(wb, 'productos.xlsx');
   }
 
   applyFilter(): void {
-    this.filteredProductos = this.productoList.filter((producto) =>
-      producto.name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-      producto.details.toLowerCase().includes(this.searchTerm.toLowerCase())
+    this.filteredProductos = this.productoList.filter(
+      producto =>
+        producto.name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+        producto.details.toLowerCase().includes(this.searchTerm.toLowerCase())
     );
-    
   }
 
   openDialog(): void {
     const dialogRef = this.dialog.open(CrearProductoComponent, {
-      data: { producto: this.producto }
+      data: { producto: this.producto },
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
@@ -108,27 +113,25 @@ export class ProductosComponent implements OnInit{
               next: () => {
                 this.getProductoList();
                 Swal.fire('Registrado!', '', 'success');
-              }, error: (e) => {
+              },
+              error: e => {
                 this.getProductoList();
-                ;
                 Swal.fire('Error al registrar contacto', '', 'info');
-              }
+              },
             });
           }
-
-        }
-        )
+        });
       }
-    }
-    )
-  };
+    });
+  }
 
   openDialogEditar(producto: any): void {
     const dialogRef = this.dialog.open(EditarProductoComponent, {
-      data: producto
+      data: producto,
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        debugger;
         //Object.assign(producto, result);
         Swal.fire({
           title: '¿Quiere guardar los cambios?',
@@ -141,22 +144,19 @@ export class ProductosComponent implements OnInit{
               next: () => {
                 this.getProductoList();
                 Swal.fire('Guardados!', '', 'success');
-              }, error: (e) => {
+              },
+              error: e => {
                 this.getProductoList();
-                ;
                 Swal.fire('Error al guardar los cambios', '', 'info');
-              }
+              },
             });
-          }
-          else if (swalResult.isDenied) {
+          } else if (swalResult.isDenied) {
             Swal.fire('Cambios no guardados', '', 'info');
           }
-        }
-        )
+        });
       }
-    }
-    )
-  };
+    });
+  }
 
   openEliminar(producto: any): void {
     Swal.fire({
@@ -166,29 +166,29 @@ export class ProductosComponent implements OnInit{
       showCancelButton: true,
       confirmButtonText: 'Si, continuar',
       cancelButtonText: 'No',
-    }).then((result) => {
+    }).then(result => {
       if (result.value) {
         this.productoService.deleteProducto(producto);
         setTimeout(() => {}, 2000);
-      // Agrega un tiempo de espera antes de actualizar la lista
-      setTimeout(() => {
-        this.getProductoList();
-        Swal.fire('Eliminado!', 'Producto eliminado.', 'success');
-      }, 2000);
-    } else if (result.dismiss === Swal.DismissReason.cancel) {
-      Swal.fire('Cancelado', 'El Producto no fue eliminado', 'error');
-    }
+        // Agrega un tiempo de espera antes de actualizar la lista
+        setTimeout(() => {
+          this.getProductoList();
+          Swal.fire('Eliminado!', 'Producto eliminado.', 'success');
+        }, 2000);
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire('Cancelado', 'El Producto no fue eliminado', 'error');
+      }
     });
   }
 
   openDetailsDialog(producto: any): void {
     this.productoService.getProductoDetails(producto.itemId).subscribe((productoDetails: any) => {
       const dialogRef = this.dialog.open(DetallesProductoComponent, {
-        data: productoDetails
+        data: productoDetails,
       });
     });
   }
-  
+
   onPageChange(event: any): void {
     this.pageSize = event.pageSize;
     this.pageIndex = event.pageIndex;
@@ -197,10 +197,8 @@ export class ProductosComponent implements OnInit{
 
   aplicarPaginacion(): void {
     const startIndex = this.pageIndex * this.pageSize;
-  const endIndex = startIndex + this.pageSize;
-  const paginatedData = this.productoList.slice(startIndex, endIndex);
-  this.filteredProductos = paginatedData;
-  console.log(paginatedData)
+    const endIndex = startIndex + this.pageSize;
+    const paginatedData = this.productoList.slice(startIndex, endIndex);
+    this.filteredProductos = paginatedData;
   }
-
 }

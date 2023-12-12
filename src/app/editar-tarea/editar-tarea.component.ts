@@ -17,30 +17,28 @@ import { ProyectoService } from 'app/services/proyecto.service';
   styleUrls: ['./editar-tarea.component.scss'],
 })
 export class EditarTareaComponent {
-
-
   selectedProject: any;
 
   transformData() {
     this.data.assignedProject = this.selectedProject.projectId;
-    this.editarTareaForm.controls["projectId"].setValue(this.selectedProject.projectId);
+    this.editarTareaForm.controls['projectId'].setValue(this.selectedProject.projectId);
   }
-  setProjectValue(proyecto : any) {
+  setProjectValue(proyecto: any) {
     this.selectedProject = proyecto;
     this.data.assignedProject = proyecto.name;
-    this.editarTareaForm.controls["projectId"].setValue(proyecto.name);
+    this.editarTareaForm.controls['projectId'].setValue(proyecto.name);
   }
 
   selectedUser: any;
-  
+
   transformData2() {
     this.data.assignedUser = this.selectedUser.userId;
-    this.editarTareaForm.controls["userId"].setValue(this.selectedUser.userId);
+    this.editarTareaForm.controls['userId'].setValue(this.selectedUser.userId);
   }
-  setUserValue(employee : any) {
+  setUserValue(employee: any) {
     this.selectedUser = employee;
     this.data.assignedUser = employee.name;
-    this.editarTareaForm.controls["userId"].setValue(employee.name);
+    this.editarTareaForm.controls['userId'].setValue(employee.name);
   }
 
   // public editarUForm: FormGroup;
@@ -54,15 +52,14 @@ export class EditarTareaComponent {
   dateNotInPast(control: AbstractControl): { [key: string]: boolean } | null {
     const selectedDate = new Date(control.value);
     const currentDate = new Date();
-  
+
     // Restar 3 días a la fecha actual
     currentDate.setDate(currentDate.getDate() - 2);
-  
-    ;
+
     if (selectedDate < currentDate) {
-      return { 'dateInPast': true };
+      return { dateInPast: true };
     }
-  
+
     return null;
   }
 
@@ -70,22 +67,22 @@ export class EditarTareaComponent {
 
   constructor(
     public dialogRef: MatDialogRef<EditarTareaComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any, private fb: FormBuilder, 
-    private proyectoService: ProyectoService, 
-    private usuarioService: UsuarioService) {
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private fb: FormBuilder,
+    private proyectoService: ProyectoService,
+    private usuarioService: UsuarioService
+  ) {
     // this.editarUForm = this.editarUsuarioForm();
 
-    this.editarTareaForm = new FormGroup(
-      {
+    this.editarTareaForm = new FormGroup({
       name: new FormControl(null, [Validators.required]),
       description: new FormControl(null, [Validators.required]),
-      statusId : new FormControl(null, [Validators.required]),
+      statusId: new FormControl(null, [Validators.required]),
       dateDue: new FormControl(null, [Validators.required, DateValidator.dateNotInPast]),
-      priorityId : new FormControl(null, [Validators.required]),
-      projectId : new FormControl(null, [Validators.required]),
-      userId : new FormControl(null, [Validators.required]),
-    }
-      )
+      priorityId: new FormControl(null, [Validators.required]),
+      projectId: new FormControl(null, [Validators.required]),
+      userId: new FormControl(null, [Validators.required]),
+    });
   }
 
   proyectosList: any[] = []; // Aquí almacenarás la lista de proyectos
@@ -114,15 +111,13 @@ export class EditarTareaComponent {
     }, 1500);
   }
 
-
   onNoClick(): void {
     this.dialogRef.close();
   }
 
   ngOnInit(): void {
-
     //Servicio de clientes para cargar la lista
-    this.proyectoService.getProyectList().subscribe((data) => {
+    this.proyectoService.getProyectList().subscribe(data => {
       this.proyectosList = data;
       this.filteredProyectosList$ = this.editarTareaForm.get('projectId')?.valueChanges.pipe(
         startWith(''),
@@ -132,22 +127,17 @@ export class EditarTareaComponent {
     });
 
     //Servicio de empleados para cargar la lista
-     this.usuarioService.getUserList().subscribe((data) => {
-       this.usuariosList = data;
-       console.log(data)
-       this.usuariosList = this.usuariosList.filter(x => x.roleId == 2); 
-       this.filteredUserList$ = this.editarTareaForm.get('userId')?.valueChanges.pipe(
-         startWith(''),
-         debounceTime(300),
-         map(value => this._filterUser(value))
-       );
-     });
-
-
-    console.log(this.data);
+    this.usuarioService.getUserList().subscribe(data => {
+      this.usuariosList = data;
+      this.usuariosList = this.usuariosList.filter(x => x.roleId == 2);
+      this.filteredUserList$ = this.editarTareaForm.get('userId')?.valueChanges.pipe(
+        startWith(''),
+        debounceTime(300),
+        map(value => this._filterUser(value))
+      );
+    });
   }
-  
-  
+
   //Filtro clientes
   private _filterProyectos(value: string): any[] {
     const filterValue = value.toLowerCase();
@@ -156,12 +146,10 @@ export class EditarTareaComponent {
 
   //Filtro empleados
   private _filterUser(value: string): any[] {
-     const filterValue = value.toLowerCase();
+    const filterValue = value.toLowerCase();
     return this.usuariosList.filter(user => user.name.toLowerCase().includes(filterValue));
-   }
-   cerrarModal() {
+  }
+  cerrarModal() {
     this.dialogRef.close();
   }
-
-
 }

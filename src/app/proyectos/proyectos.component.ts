@@ -19,7 +19,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { debug } from 'console';
 import { MatPaginator } from '@angular/material/paginator';
 
-
 @Pipe({
   name: 'filter',
 })
@@ -32,7 +31,6 @@ export class FilterPipe implements PipeTransform {
       // Implementa tu lógica de filtrado según tus necesidades
       return (
         item.name.toLowerCase().includes(filtro) || item.description.toLowerCase().includes(filtro)
-
       );
     });
   }
@@ -55,29 +53,29 @@ export class ProyectosComponent {
 
   proyectosFiltrados: any[] = [];
 
-    //Paginacion
+  //Paginacion
 
-    pageSizeOptions: number[] = [6, 10, 25, 100];
-    pageSize: number = 6;
-    pageIndex: number = 0;
-    @ViewChild(MatPaginator) paginator!: MatPaginator; // <-- Agrega el modificador !
-  
-    //
+  pageSizeOptions: number[] = [6, 10, 25, 100];
+  pageSize: number = 6;
+  pageIndex: number = 0;
+  @ViewChild(MatPaginator) paginator!: MatPaginator; // <-- Agrega el modificador !
+
+  //
 
   aplicarFiltro(filtro: string): void {
-    // console.log('filtro:', filtro);
     this.filtro = filtro;
-    // console.log('this.filtro:', this.filtro);
-    // ... rest of your logic
   }
 
   filtrarPorFechaInicio(): void {
-    
     this.proyectosFiltradosPorFechaInicio = this.proyectosList.filter(project => {
       const fechaInicioProyecto = new Date(project.startDate).toISOString();
-      const fechaSeleccionada = this.fechaInicioFilter ? this.fechaInicioFilter.toISOString() : null;
+      const fechaSeleccionada = this.fechaInicioFilter
+        ? this.fechaInicioFilter.toISOString()
+        : null;
 
-      const fechaInicioCoincide = fechaSeleccionada ? fechaInicioProyecto >= fechaSeleccionada : true;
+      const fechaInicioCoincide = fechaSeleccionada
+        ? fechaInicioProyecto >= fechaSeleccionada
+        : true;
 
       return fechaInicioCoincide;
     });
@@ -90,15 +88,14 @@ export class ProyectosComponent {
       (this.pageIndex + 1) * this.pageSize
     );
 
-
-  this.aplicarPaginacion();
-  this.paginator.firstPage();
-  this.proyectosList = this.proyectosPaginados;
-  this.dataSource.paginator = this.paginator;
+    this.aplicarPaginacion();
+    this.paginator.firstPage();
+    this.proyectosList = this.proyectosPaginados;
+    this.dataSource.paginator = this.paginator;
   }
   limpiarFiltros(): void {
     // Limpiar filtros
-    this.filtro = ''; 
+    this.filtro = '';
     this.fechaInicioFilter = null;
     this.filtrarPorFechaInicio(); // Aplicar filtrado
     this.getProyectosList();
@@ -108,7 +105,7 @@ export class ProyectosComponent {
     public dialog: MatDialog,
     private proyectoService: ProyectoService,
     private router: Router,
-    private activatedRoute: ActivatedRoute,
+    private activatedRoute: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
@@ -119,7 +116,6 @@ export class ProyectosComponent {
     this.aplicarPaginacion();
   }
 
-
   getProyectosList(): void {
     this.proyectoService.getProyectList().subscribe((result: any) => {
       this.proyectosList = result;
@@ -129,10 +125,11 @@ export class ProyectosComponent {
 
   openDialog(): void {
     const dialogRef = this.dialog.open(CrearProyectoComponent, {
-    
       data: { proyecto: this.proyecto },
     });
-
+    dialogRef.beforeClosed().subscribe(result => {
+      console.log(result);
+    });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         // Mostrar SweetAlert para confirmar los cambios
@@ -150,7 +147,6 @@ export class ProyectosComponent {
               },
               error: e => {
                 this.getProyectosList();
-                // console.log(e);
                 Swal.fire('Error al registrar proyecto', '', 'info');
               },
             });
@@ -162,16 +158,12 @@ export class ProyectosComponent {
   }
 
   openDialogEditar(project: any): void {
-    // console.log(project);
-
     const pProyecto = _.cloneDeep(project);
     const dialogRef = this.dialog.open(EditarProyectoComponent, {
       data: pProyecto,
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      
-
       if (result) {
         // Mostrar SweetAlert para confirmar los cambios
         Swal.fire({
@@ -181,6 +173,7 @@ export class ProyectosComponent {
           denyButtonText: `No guardar`,
         }).then(swalResult => {
           if (swalResult.isConfirmed) {
+            delete result.client;
             this.proyectoService.updateProyecto(result).subscribe({
               next: () => {
                 this.getProyectosList();
@@ -188,8 +181,6 @@ export class ProyectosComponent {
               },
               error: e => {
                 this.getProyectosList();
-                
-                // console.log(e);
                 Swal.fire('Error al guardar los cambios', '', 'info');
               },
             });
@@ -215,14 +206,14 @@ export class ProyectosComponent {
       if (result.value) {
         this.proyectoService.deleteProyecto(project);
         setTimeout(() => {}, 2000);
-      // Agrega un tiempo de espera antes de actualizar la lista
-      setTimeout(() => {
-        this.getProyectosList();
-        Swal.fire('Eliminado!', 'Proyecto eliminado.', 'success');
-      }, 2000);
-    } else if (result.dismiss === Swal.DismissReason.cancel) {
-      Swal.fire('Cancelado', 'El proyecto no fue eliminado', 'error');
-    }
+        // Agrega un tiempo de espera antes de actualizar la lista
+        setTimeout(() => {
+          this.getProyectosList();
+          Swal.fire('Eliminado!', 'Proyecto eliminado.', 'success');
+        }, 2000);
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire('Cancelado', 'El proyecto no fue eliminado', 'error');
+      }
     });
   }
   checkProjectImage(url?: string): string {
@@ -239,9 +230,9 @@ export class ProyectosComponent {
   }
 
   aplicarPaginacion(): void {
-  const startIndex = this.pageIndex * this.pageSize;
-  const endIndex = startIndex + this.pageSize;
+    const startIndex = this.pageIndex * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
 
-  this.proyectosPaginados = this.proyectosList.slice(startIndex, endIndex);
+    this.proyectosPaginados = this.proyectosList.slice(startIndex, endIndex);
   }
 }

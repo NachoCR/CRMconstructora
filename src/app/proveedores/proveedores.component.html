@@ -62,9 +62,16 @@
 
       <div class="row">
         <app-buscar-proveedor (filtroChangeProv)="aplicarFiltroProv($event)"></app-buscar-proveedor>
-        <div class="col-12 col-md-4" *ngFor="let provider of proveedoresPaginados | filter2: filtroNew">
+        <div
+          class="col-12 col-md-4"
+          *ngFor="let provider of proveedoresPaginados | filter2: filtroNew"
+        >
           <mat-card>
-            <img mat-card-image src="../../assets/images/epaLoog.webp" alt="Project 1" />
+            <img
+              mat-card-image
+              [src]="this.checkProveedorImage(provider?.imageURL)"
+              alt="Project 1"
+            />
             <mat-card-header>
               <mat-card-title>{{ provider.name }}</mat-card-title>
               <mat-card-subtitle>Dirección: {{ provider.address }}</mat-card-subtitle>
@@ -84,16 +91,14 @@
               </button>
             </mat-card-actions>
           </mat-card>
-         
         </div>
         <mat-paginator
-        
-        [length]="proveedoresList.length"
-        [pageSize]="pageSize"
-        [pageSizeOptions]="pageSizeOptions"
-        (page)="onPageChange($event)"
-        showFirstLastButtons 
-      ></mat-paginator>
+          [length]="proveedoresList.length"
+          [pageSize]="pageSize"
+          [pageSizeOptions]="pageSizeOptions"
+          (page)="onPageChange($event)"
+          showFirstLastButtons
+        ></mat-paginator>
       </div>
     </div>
   </div>

@@ -39,9 +39,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.notifySubscription = this.settings.notify.subscribe(res => {
-      console.log(res);
-    });
+    this.notifySubscription = this.settings.notify.subscribe(res => {});
   }
 
   ngAfterViewInit() {

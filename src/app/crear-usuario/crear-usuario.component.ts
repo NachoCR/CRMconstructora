@@ -152,7 +152,6 @@ export class CrearUsuarioComponent implements OnInit {
     passportControl?.setValidators([]);
     juridicControl?.setValidators([]);
 
-    console.log(identifierId);
     if (identifierId === '1') {
       identificationControl?.setValidators([
         Validators.required,
@@ -338,9 +337,7 @@ export class CrearUsuarioComponent implements OnInit {
     return !this.crearUForm.controls['password'].hasError('requiresSpecialChars');
   }
 
-  checkPhoneLenght(phone: any) {
-    console.log(phone);
-  }
+  checkPhoneLenght(phone: any) {}
 
   crear() {
     this.submitted = true;
@@ -352,7 +349,6 @@ export class CrearUsuarioComponent implements OnInit {
     let selectedProjectId = this.proyectosList.find(
       x => x.name == this.crearUForm.controls['assignedProject'].value
     ).projectId;
-    console.log(selectedProjectId);
 
     this.isWorking = true;
     this.crearUForm.disable();
