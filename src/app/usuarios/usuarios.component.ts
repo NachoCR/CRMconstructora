@@ -215,8 +215,8 @@ export class UsuariosComponent implements OnInit {
   }
 
   rolesMap = new Map<number, string>([
-    [1, 'Cliente'],
-    [2, 'Empleado'],
+    [2, 'Cliente'],
+    [1, 'Empleado'],
     [3, 'Administrador'],
     // Agrega más pares ID de rol - Nombre de rol según tus necesidades
   ]);
