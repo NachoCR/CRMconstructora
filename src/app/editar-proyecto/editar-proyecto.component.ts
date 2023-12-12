@@ -135,7 +135,7 @@ export class EditarProyectoComponent {
 
   ngOnInit(): void {
     this.usuarioService.getUserList().subscribe(data => {
-      this.userList = data.filter(x => x.roleId == 1);
+      this.userList = data.filter(x => x.roleId == 2);
       const initialClientId = this.editarProyectoForm.get('clientId')?.value;
       const initialClient = this.userList.find(user => user.userId === initialClientId);
       if (initialClient) {

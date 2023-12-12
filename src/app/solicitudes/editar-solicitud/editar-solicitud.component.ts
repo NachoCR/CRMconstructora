@@ -112,7 +112,7 @@ export class EditarSolicitudComponent {
   ngOnInit(): void {
     //Servicio de clientes para cargar la lista
     this.usuarioService.getUserList().subscribe(data => {
-      this.userList = data.filter(x => x.roleId == 2);
+      this.userList = data.filter(x => x.roleId == 1);
       const initialClientId = this.editarSolicitudForm.get('userId')?.value;
       const initialClient = this.userList.find(user => user.userId === initialClientId);
       if (initialClient) {

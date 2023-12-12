@@ -102,7 +102,7 @@ export class CrearSolicitudComponent {
   ngOnInit(): void {
     //Servicio de clientes para cargar la lista
     this.usuarioService.getUserList().subscribe(data => {
-      this.userList = data.filter(x => x.roleId == 2);
+      this.userList = data.filter(x => x.roleId == 1);
 
       this.filteredUserList$ = this.crearSolicitudForm.get('userId')?.valueChanges.pipe(
         startWith(''),

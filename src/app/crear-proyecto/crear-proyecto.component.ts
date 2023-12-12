@@ -140,7 +140,7 @@ export class CrearProyectoComponent {
 
   ngOnInit(): void {
     this.usuarioService.getUserList().subscribe(data => {
-      this.userList = data.filter(x => x.roleId == 1);
+      this.userList = data.filter(x => x.roleId == 2);
       this.filteredUserList$ = this.crearProyectoForm.get('userId')?.valueChanges.pipe(
         startWith(''),
         debounceTime(300),
