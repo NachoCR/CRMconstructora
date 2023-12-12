@@ -104,7 +104,8 @@ export class EditarProductoComponent {
   }
 
   async onSave() {
-    this.productoForm.value.imageURL = await this.saveImageUrl();
+    if (this.productoForm.value.imageURL != '')
+      this.productoForm.value.imageURL = await this.saveImageUrl();
     if (this.productoForm.valid) {
       this.dialogRef.close(this.productoForm.value);
     }

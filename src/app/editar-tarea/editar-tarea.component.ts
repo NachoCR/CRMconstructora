@@ -129,7 +129,7 @@ export class EditarTareaComponent {
     //Servicio de empleados para cargar la lista
     this.usuarioService.getUserList().subscribe(data => {
       this.usuariosList = data;
-      this.usuariosList = this.usuariosList.filter(x => x.roleId == 2);
+      this.usuariosList = this.usuariosList.filter(x => x.roleId == 1);
       this.filteredUserList$ = this.editarTareaForm.get('userId')?.valueChanges.pipe(
         startWith(''),
         debounceTime(300),
