@@ -240,10 +240,10 @@ export class DashboardService {
   getTareasCant(): Observable<string> {
     return this.tareasService.getTaskList().pipe(
       map(tareasList => {
-        const tareasNuevas = tareasList.filter(tarea => tarea.status === 'Nuevo').length;
-        const tareasAprobadas = tareasList.filter(tarea => tarea.status === 'Aprobada').length;
-        const tareasDenegadas = tareasList.filter(tarea => tarea.status === 'Denegada').length;
-        const tareas = `Nuevo: ${tareasNuevas} | Aprobada: ${tareasAprobadas} |‎ ‎  Denegada: ${tareasDenegadas}`;
+        const tareasNuevas = tareasList.filter(tarea => tarea.statusId === 1).length;
+        const tareasAprobadas = tareasList.filter(tarea => tarea.statusId === 2).length;
+        const tareasDenegadas = tareasList.filter(tarea => tarea.statusId === 3).length;
+        const tareas = `Nuevo: ${tareasNuevas} | En progreso: ${tareasAprobadas} |‎ ‎  Completado: ${tareasDenegadas}`;
         return tareas;
       })
     );
