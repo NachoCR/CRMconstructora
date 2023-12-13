@@ -180,6 +180,7 @@ export class ProyectosComponent {
         }).then(swalResult => {
           if (swalResult.isConfirmed) {
             delete result.client;
+            delete result.employees;
             this.proyectoService.updateProyecto(result).subscribe({
               next: () => {
                 this.getProyectosList();
