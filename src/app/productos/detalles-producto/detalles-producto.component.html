@@ -8,12 +8,9 @@
           <div class="card-body">
             <h5 class="card-title"><strong>Información del Producto</strong></h5>
             <ul class="list-group list-group-flush">
-              <li class="list-group-item"><strong>ID del Producto:</strong> {{ data.itemId }}</li>
               <li class="list-group-item"><strong>Nombre:</strong> {{ data.name }}</li>
               <li class="list-group-item"><strong>Detalles:</strong> {{ data.details }}</li>
               <li class="list-group-item"><strong>Cantidad:</strong> {{ data.quantity }}</li>
-              <li class="list-group-item"><strong>ID del Proveedor:</strong> {{ data.providerId }}</li>
-              <li class="list-group-item"><strong>ID de la Unidad:</strong> {{ data.unitId }}</li>
               <li class="list-group-item"><strong>Unidad:</strong> {{ data.unit.unitName }} | {{ data.unit.abbreviation }}</li>
               <img *ngIf="data.imageURL!== '' || data.imageURL!==null || data.imageURL !== undefined" class="image-preview" [src]="data.imageURL" alt="Preview" />
             </ul>
@@ -26,7 +23,6 @@
           <div class="card-body">
             <h5 class="card-title"><strong>Detalles del Proveedor</strong></h5>
             <ul class="list-group list-group-flush">
-              <li class="list-group-item"><strong>ID del Proveedor:</strong> {{ data.provider.providerId }}</li>
               <li class="list-group-item"><strong>Nombre del Proveedor:</strong> {{ data.provider.name }}</li>
               <li class="list-group-item"><strong>Correo Electrónico:</strong> {{ data.provider.email }}</li>
               <li class="list-group-item"><strong>Dirección:</strong> {{ data.provider.address }}</li>
