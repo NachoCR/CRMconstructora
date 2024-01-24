@@ -17,6 +17,7 @@ import { ActivatedRoute, Route, Router, NavigationEnd } from '@angular/router';
 import { CrearTareaComponent } from 'app/crear-tarea/crear-tarea.component';
 import { EditarTareaComponent } from 'app/editar-tarea/editar-tarea.component';
 import { TareaData } from 'app/interfaces/tarea.interface';
+import { ProyectoData } from 'app/interfaces/proyecto.interface';
 import { TareaService } from 'app/services/tarea.service';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';

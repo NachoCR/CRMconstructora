@@ -90,7 +90,7 @@
                    class="form-control">
             <mat-autocomplete #autousuario="matAutocomplete">
               <mat-option *ngFor="let user of filteredUserList$ | async" [value]="user.userId" (click)="setUserValue(user)">
-              {{user.name}}
+                {{ user.identification }} / {{user.name}} {{ user.lastname }}
               </mat-option>
             </mat-autocomplete>
             <div *ngIf="crearTareaForm.get('userId')?.invalid && crearTareaForm.get('userId')?.touched" class="text-danger">
