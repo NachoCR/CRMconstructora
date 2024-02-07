@@ -1,0 +1,145 @@
+<mat-dialog-content class="custom-dialog-content">
+  <div class="container">
+    <div class="row mt-3">
+      <button mat-icon-button class="close-button" (click)="cerrarModal()">
+        <mat-icon>close</mat-icon>
+      </button>
+      <div class="col">
+        <form [formGroup]="crearSolicitudForm" (ngSubmit)="crear()" novalidate autocomplete="">
+          <h3>Creación de Solicitudes</h3>
+
+
+          <div class="form-row">
+
+
+            <div class="form-group col-md-6">
+              <label for="startDate" class="control-label font-weight-bold">Fecha de salida</label>
+              <input
+                type="date"
+                class="form-control"
+                placeholder="Fecha de inicio"
+                formControlName="startDate"
+                [(ngModel)]="data.startDate"
+              />
+              <!-- Muestra un mensaje de error si la fecha está en el pasado -->
+              <div
+                *ngIf="
+                  crearSolicitudForm.get('startDate')?.hasError('dateInPast') &&
+                  crearSolicitudForm.get('startDate')?.touched
+                "
+              >
+                <small class="text-danger">La fecha no puede ser anterior a la fecha de hoy.</small>
+              </div>
+              <div *ngIf="crearSolicitudForm.get('startDate')?.hasError('required') && crearSolicitudForm.get('startDate')?.touched">
+                <small class="text-danger">La fecha de salida es requerida.</small>
+              </div>
+            </div>
+            <!-- Nombre -->
+            <div class="form-group col-md-6">
+              <label for="endDate" class="control-label font-weight-bold">Fecha de llegada</label>
+              <input
+                type="date"
+                class="form-control"
+                placeholder="Fecha de entrega"
+                formControlName="endDate"
+                [(ngModel)]="data.endDate"
+              />
+              <!-- Muestra un mensaje de error si la fecha está en el pasado -->
+              <div
+                *ngIf="
+                  crearSolicitudForm.get('endDate')?.hasError('dateInPast') &&
+                  crearSolicitudForm.get('endDate')?.touched
+                "
+              >
+                <small class="text-danger"
+                  >La fecha no puede ser anterior a la fecha de inicio.</small
+                >
+              </div>
+              <div *ngIf="crearSolicitudForm.get('endDate')?.hasError('required') && crearSolicitudForm.get('endDate')?.touched">
+                <small class="text-danger">La fecha de llegada   es requerida.</small>
+              </div>
+            </div>
+
+            <!-- Primer apellido -->
+
+          </div>
+
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="statusId" class="control-label font-weight-bold">Estado</label>
+              <select
+                formControlName="statusId"
+                type="number"
+                class="form-select"
+                style="border-radius: 2px"
+                [(ngModel)]="data.statusId"
+              >
+                <option selected value=1>Nueva</option>
+
+              </select>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="userId" class="control-label font-weight-bold">Empleado</label>
+              <input
+                type="text"
+                [readonly]="true"
+                formControlName="userId"
+                class="form-control"
+              />
+            </div>
+
+          </div>
+
+          <div class="form-group">
+            <label for="description" class="control-label font-weight-bold">Descripción</label>
+            <textarea
+              matInput
+              class="form-control"
+              placeholder="Descripción"
+              formControlName="description"
+              [(ngModel)]="data.description"
+            ></textarea>
+          </div>
+
+
+          <div class="form-group">
+            <label for="managerReason" class="control-label font-weight-bold">Comentarios Administrativos</label>
+            <textarea
+              matInput
+              class="form-control"
+              placeholder="Comentarios"
+              formControlName="managerReason"
+              [(ngModel)]="data.managerReason"
+            ></textarea>
+          </div>
+
+          <!-- <div class="form-group">
+            <label for="clientId" class="control-label font-weight-bold">Cliente</label>
+            <mat-select formControlName="clientId" >
+              <mat-option *ngFor="let client of clientesList" [value]="client.clientId">
+                {{ client.name }}
+              </mat-option>
+            </mat-select>
+          </div> -->
+
+
+
+
+
+          <mat-dialog-actions class="custom-dialog-actions">
+            <button mat-button (click)="onNoClick()" class="btn btn-default">Cancelar</button>
+            <button
+              mat-button
+              [disabled]="crearSolicitudForm.invalid"
+              [mat-dialog-close]="data"
+              cdkFocusInitial
+              class="btn btn-success"
+            >
+              Guardar
+            </button>
+          </mat-dialog-actions>
+        </form>
+      </div>
+    </div>
+  </div>
+</mat-dialog-content>

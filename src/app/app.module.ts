@@ -64,6 +64,10 @@ import { EditarProductoComponent } from './productos/editar-producto/editar-prod
 import { DetallesSolicitudComponent } from './solicitudes/detalles-solicitud/detalles-solicitud.component';
 import { CalendarioComponent } from './calendario/calendario.component';
 import { DetallesProyectoComponent } from './detalles-proyecto/detalles-proyecto.component';
+import { ProyectosEmpComponent } from './empleado/proyectos-emp/proyectos-emp.component';
+import { TareasEmpComponent } from './empleado/tareas-emp/tareas-emp.component';
+import { SolicitudesEmpComponent } from './empleado/solicitudes-emp/solicitudes-emp.component';
+import { CrearSolicitudEmpComponent } from './empleado/crear-solicitud-emp/crear-solicitud-emp.component';
 
 
 
@@ -116,7 +120,11 @@ export function TranslateHttpLoaderFactory(http: HttpClient) {
     DetallesProductoComponent,
     EditarProductoComponent,
     CalendarioComponent,
-    DetallesProyectoComponent
+    DetallesProyectoComponent,
+    ProyectosEmpComponent,
+    TareasEmpComponent,
+    SolicitudesEmpComponent,
+    CrearSolicitudEmpComponent
 
   ],
 

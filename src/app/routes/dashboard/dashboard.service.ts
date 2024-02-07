@@ -10,6 +10,8 @@ import { CatalogoProveedorComponent } from 'app/catalogo-proveedor/catalogo-prov
 import { catalogoProveedorData } from '../../interfaces/catalogoProveedor.interface';
 import { ProveedorData } from '../../interfaces/proveedor.interface';
 import { ProyectoData } from 'app/interfaces/proyecto.interface';
+import { AuthService, User } from '@core';
+import { SolicitudService } from 'app/services/solicitud.service';
 
 export interface ConstruccionItems {
   proveedor: string;
@@ -92,6 +94,8 @@ const MESSAGES = [
 
 @Injectable()
 export class DashboardService {
+
+  user?: User;
 
   ELEMENT_DATA2: catalogoProveedorData[] = [];
 
@@ -226,8 +230,33 @@ export class DashboardService {
   ];
 
   getCantProyectos(): Observable<number> {
+    if (this.user && this.user.roles && this.user.roles.includes('Empleado')) {
+      const userId = this.user.id;
+      return this.proyectosService.getProyectList().pipe(
+        map(proyectosList => {
+          const proyectosFiltrados = proyectosList.filter(proyecto =>
+            proyecto.statusId === 2 && proyecto.tasks.some((tarea: { userId: number }) => tarea.userId === userId)
+          );
+          return proyectosFiltrados.length;
+        })
+      );
+    } else {
+      return this.proyectosService.getProyectList().pipe(
+        map(proyectosList => proyectosList.filter(proyecto => proyecto.statusId === 2).length)
+      );
+    }
+  }
+
+  getParticipacionProyectos(): Observable<number> {
+    const userId = this.user?.id;
+
     return this.proyectosService.getProyectList().pipe(
-      map(proyectosList => proyectosList.filter(proyecto => proyecto.statusId === 2).length)
+      map(proyectosList => {
+        const proyectosFiltrados = proyectosList.filter(proyecto =>
+          proyecto.tasks.some((tarea: { userId: number }) => tarea.userId === userId)
+        );
+        return proyectosFiltrados.length;
+      })
     );
   }
 
@@ -237,16 +266,40 @@ export class DashboardService {
     );
   }
 
-  getTareasCant(): Observable<string> {
-    return this.tareasService.getTaskList().pipe(
-      map(tareasList => {
-        const tareasNuevas = tareasList.filter(tarea => tarea.statusId === 1).length;
-        const tareasAprobadas = tareasList.filter(tarea => tarea.statusId === 2).length;
-        const tareasDenegadas = tareasList.filter(tarea => tarea.statusId === 3).length;
-        const tareas = `Nuevo: ${tareasNuevas} | En progreso: ${tareasAprobadas} |‎ ‎  Completado: ${tareasDenegadas}`;
-        return tareas;
-      })
+  getCantSolicitudes(): Observable<number> {
+    const userId = this.user?.id;
+    return this.solicitudService.getSolicitudList().pipe(
+      map(solicitudesList => solicitudesList.filter(solicitud => solicitud.userId === userId).length)
     );
+  }
+
+  getTareasCant(): Observable<string> {
+    if (this.user && this.user.roles && this.user.roles.includes('Empleado')) {
+      return this.tareasService.getTaskList().pipe(
+        map(tareasList => {
+          const userId = this.user?.id;
+          const tareasUsuario = tareasList.filter(tarea => tarea.userId === userId);
+
+          const tareasNuevas = tareasUsuario.filter(tarea => tarea.statusId === 1).length;
+          const tareasAprobadas = tareasUsuario.filter(tarea => tarea.statusId === 2).length;
+          const tareasDenegadas = tareasUsuario.filter(tarea => tarea.statusId === 3).length;
+
+          const tareas = `Nuevo: ${tareasNuevas} | En progreso: ${tareasAprobadas} | Completado: ${tareasDenegadas}`;
+          return tareas;
+        })
+      );
+    } else {
+      return this.tareasService.getTaskList().pipe(
+        map(tareasList => {
+          const tareasNuevas = tareasList.filter(tarea => tarea.statusId === 1).length;
+          const tareasAprobadas = tareasList.filter(tarea => tarea.statusId === 2).length;
+          const tareasDenegadas = tareasList.filter(tarea => tarea.statusId === 3).length;
+
+          const tareas = `Nuevo: ${tareasNuevas} | En progreso: ${tareasAprobadas} | Completado: ${tareasDenegadas}`;
+          return tareas;
+        })
+      );
+    }
   }
 
   getPrecioTotalInventario(): Observable<number> {
@@ -272,8 +325,35 @@ export class DashboardService {
   }
 
   getProyectos(): Observable<ProyectoData[]> {
-    return this.proyectoService.getProyectList().pipe(
-      map(proyectoList => proyectoList.slice(0, 3))
+    if (this.user && this.user.roles && this.user.roles.includes('Empleado')) {
+      const userId = this.user.id;
+      return this.proyectosService.getProyectList().pipe(
+        map(proyectosList => proyectosList.filter(
+          proyecto => proyecto.tasks.some((tarea: { userId: number }) => tarea.userId === userId)).slice(0, 3)
+        )
+      );
+    } else {
+      return this.proyectoService.getProyectList().pipe(
+        map(proyectoList => proyectoList.slice(0, 3))
+      );
+    }
+  }
+
+  getTareas(): Observable<ProyectoData[]> {
+    const userId = this.user?.id;
+    return this.tareasService.getTaskList().pipe(
+      map(tareasList => tareasList.filter(
+        tarea => tarea.userId === userId).slice(0, 3)
+      )
+    );
+  }
+
+  getSolicitudes(): Observable<ProyectoData[]> {
+    const userId = this.user?.id;
+    return this.solicitudService.getSolicitudList().pipe(
+      map(solicitudesList => solicitudesList.filter(
+        solicitud => solicitud.userId === userId).slice(0, 3)
+      )
     );
   }
 
@@ -283,19 +363,37 @@ export class DashboardService {
     private productosService: ProductoService,
     private tareasService: TareaService,
     private usuarioService: UsuarioService,
-    private proyectoService: ProyectoService
+    private proyectoService: ProyectoService,
+    private solicitudService: SolicitudService,
+    private authService: AuthService
   ) {
-    this.getCantProyectos().subscribe(cantidadProyectos => {
-      this.stats[0].amount = cantidadProyectos;
-    });
-    this.getPrecioTotalInventario().subscribe(precioTotal => {
-      this.stats[1].amount = precioTotal;
-    });
+    this.getUser();
+
+    if (this.user && this.user.roles && this.user.roles.includes('Empleado')) {
+      this.getCantProyectos().subscribe(cantidadProyectos => {
+        this.stats[0].amount = cantidadProyectos;
+      });
+      this.getParticipacionProyectos().subscribe(participacion => {
+        this.stats[1].title = "Participación en Proyectos";
+        this.stats[1].amount = participacion;
+      });
+      this.getCantSolicitudes().subscribe(solitudes => {
+        this.stats[3].title = "Cantidad de Solicitudes";
+        this.stats[3].amount = solitudes;
+      });
+    } else{
+      this.getCantProyectos().subscribe(cantidadProyectos => {
+        this.stats[0].amount = cantidadProyectos;
+      });
+      this.getPrecioTotalInventario().subscribe(precioTotal => {
+        this.stats[1].amount = precioTotal;
+      });
+      this.getCantClientes().subscribe(clientes => {
+        this.stats[3].amount = clientes;
+      });
+    }
     this.getTareasCant().subscribe(tareas => {
       this.stats[2].amount = tareas;
-    });
-    this.getCantClientes().subscribe(clientes => {
-      this.stats[3].amount = clientes;
     });
   }
 
@@ -313,5 +411,11 @@ export class DashboardService {
 
   getStats() {
     return this.stats;
+  }
+
+  getUser(): void {
+    const subscription = this.authService.user().subscribe(user => {
+      this.user = user;
+    });
   }
 }

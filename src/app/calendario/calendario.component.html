@@ -1,6 +1,6 @@
 <h1>Calendario de Tareas de {{ user?.name }}</h1>
 <app-task-calendar *ngIf="!loading && user" [userId]="user.id"></app-task-calendar>
 
-<h1>Calendario de Permisos de los Empleados</h1>
-<app-leave-calendar *ngIf="!loading && user"></app-leave-calendar>
+<h1 *ngIf="!loading && user && user.roles && user.roles.includes('ADMIN')">Calendario de Permisos de los Empleados</h1>
+<app-leave-calendar *ngIf="!loading && user && user.roles && user.roles.includes('ADMIN')"></app-leave-calendar>
 

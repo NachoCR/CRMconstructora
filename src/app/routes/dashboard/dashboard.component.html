@@ -93,7 +93,7 @@
 
   <div class="col-md-6">
 
-    <mat-card>
+    <mat-card *ngIf="user && user.roles && user.roles.includes('ADMIN')">
       <mat-card-header>
         <mat-card-title>Clientes</mat-card-title>
       </mat-card-header>
@@ -104,6 +104,23 @@
             <h3 matListItemTitle>{{ usuario.name }} {{ usuario.lastname }}</h3>
             <p matListItemLine>
               <span>Email: {{ usuario.email }} | Teléfono: {{usuario.phone}} </span>
+            </p>
+          </mat-list-item>
+        </mat-list>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card *ngIf="user && user.roles && user.roles.includes('Empleado')">
+      <mat-card-header>
+        <mat-card-title>Solicitudes</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-list>
+          <mat-list-item *ngFor="let solicitud of solicitudesData">
+            <img matListItemAvatar src="assets/images/tarea.png" alt="Avatar" />
+            <h3 matListItemTitle>{{ solicitud.description }}</h3>
+            <p matListItemLine>
+              <span>Fecha: {{ solicitud.startDate | date:'dd/MM/yyyy' }} | {{ solicitud.endDate | date:'dd/MM/yyyy' }} </span>
             </p>
           </mat-list-item>
         </mat-list>
@@ -159,7 +176,7 @@
       </mat-card-content>
     </mat-card> -->
 
-    <mat-card>
+    <mat-card *ngIf="user && user.roles && user.roles.includes('ADMIN')">
       <mat-card-header>
         <mat-card-title>Inventario</mat-card-title>
       </mat-card-header>
@@ -192,7 +209,38 @@
       </mat-card-content>
     </mat-card>
 
+    <mat-card *ngIf="user && user.roles && user.roles.includes('Empleado')">
+      <mat-card-header>
+        <mat-card-title>Tareas</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <table class="w-full" mat-table [dataSource]="dataSource2">
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef>Nombre</th>
+            <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+          </ng-container>
+          <ng-container matColumnDef="description">
+            <th mat-header-cell *matHeaderCellDef>Descripcion</th>
+            <td mat-cell *matCellDef="let element">{{ element.description }}</td>
+          </ng-container>
+          <ng-container matColumnDef="startDate">
+            <th mat-header-cell *matHeaderCellDef>Inicio</th>
+            <td mat-cell *matCellDef="let element">{{ element.startDate | date:'dd/MM/yyyy' }}</td>
+          </ng-container>
+          <ng-container matColumnDef="dateDue">
+            <th mat-header-cell *matHeaderCellDef>Fin</th>
+            <td mat-cell *matCellDef="let element">{{ element.dateDue | date:'dd/MM/yyyy' }}</td>
+          </ng-container>
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef>Estado</th>
+            <td mat-cell *matCellDef="let element">{{ element.status }}</td>
+          </ng-container>
 
+          <tr mat-header-row *matHeaderRowDef="displayedColumns3"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns3"></tr>
+        </table>
+      </mat-card-content>
+    </mat-card>
 
     <!-- <mat-card>
       <mat-card-header>

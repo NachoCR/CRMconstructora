@@ -33,6 +33,9 @@ import { SolicitudesComponent } from 'app/solicitudes/solicitudes/solicitudes.co
 import { DetallesContactoComponent } from 'app/contactos/detalles-contacto/detalles-contacto.component';
 import { DetallesProyectoComponent } from 'app/detalles-proyecto/detalles-proyecto.component';
 import { LeaveCalendarComponent } from '@shared/components/leave-calendar/leave-calendar.component';
+import { ProyectosEmpComponent } from 'app/empleado/proyectos-emp/proyectos-emp.component';
+import { TareasEmpComponent } from 'app/empleado/tareas-emp/tareas-emp.component';
+import { SolicitudesEmpComponent } from 'app/empleado/solicitudes-emp/solicitudes-emp.component';
 
 const routes: Routes = [
   { path: '#', component: DashboardComponent },
@@ -79,6 +82,19 @@ const routes: Routes = [
       { path: 'solicitudes', component: SolicitudesComponent },
       { path: 'calendario', component: CalendarioComponent },
       { path: 'detalles-proyecto/:projectId', component: DetallesProyectoComponent },
+    ],
+  },
+  {
+    path: 'employee',
+    component: AdminLayoutComponent,
+    canActivate: [authGuard],
+    canActivateChild: [authGuard],
+    children: [
+      { path: '', component: DashboardComponent },
+      { path: 'proyectos-emp', component: ProyectosEmpComponent },
+      { path: 'tareas-emp', component: TareasEmpComponent },
+      { path: 'solicitudes-emp', component: SolicitudesEmpComponent },
+      { path: 'calendario', component: CalendarioComponent },
     ],
   },
   {
