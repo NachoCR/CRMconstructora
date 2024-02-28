@@ -27,6 +27,16 @@ export class EditarProductoComponent {
     };
   }
 
+  noNegativosValidador(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: boolean } | null => {
+      const value = control.value;
+      if (value !== null && value < 0) {
+        return { negative: true };
+      }
+      return null;
+    };
+  }
+
   productoForm = this.fb.group({
     itemId: this.data.itemId,
     name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
@@ -34,7 +44,7 @@ export class EditarProductoComponent {
     price: [1, [Validators.required, this.validadorNoCeroNiNegativo()]],
     providerId: ['', [Validators.required]],
     unitId: ['', [Validators.required]],
-    quantity: [0, [Validators.required]],
+    quantity: [0, [Validators.min(0), this.noNegativosValidador()]],
     imageURL: [''],
   });
 

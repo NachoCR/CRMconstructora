@@ -69,6 +69,7 @@
                 placeholder="Fecha de inicio"
                 formControlName="endDate"
                 [ngModel]="data.endDate | date: 'yyyy-MM-dd'"
+                (change)="setEndDate($event)"
               />
               <!-- Muestra un mensaje de error si la fecha está en el pasado -->
               <div
@@ -111,15 +112,14 @@
               placeholder="Buscar cliente"
               formControlName="clientId"
               [matAutocomplete]="auto"
-              [(ngModel)]="data.clientId"
+              [(ngModel)]="data.client"
               class="form-control"
             />
-            {{ data.client.clientId }}
             <mat-autocomplete #auto="matAutocomplete">
               <mat-option
                 *ngFor="let user of filteredUserList$ | async"
                 (click)="setUserValue(user)"
-                [value]="user.userId"
+                [value]="user"
               >
                 {{ user.name }}
               </mat-option>

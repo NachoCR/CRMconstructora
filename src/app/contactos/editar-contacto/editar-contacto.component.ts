@@ -38,9 +38,9 @@ export class EditarContactoComponent {
     private fb: FormBuilder
   ) {
     this.editarContacto = new FormGroup({
-      name: new FormControl(null, [Validators.required]),
-      lastname: new FormControl(null, [Validators.required]),
-      secondLastname: new FormControl(null, [Validators.required]),
+      name: new FormControl(null, [Validators.required, Validators.pattern(/^[a-zA-Z]+$/)]),
+      lastname: new FormControl(null, [Validators.required, Validators.pattern(/^[a-zA-Z]+$/)]),
+      secondLastname: new FormControl(null, [Validators.required, Validators.pattern(/^[a-zA-Z]+$/)]),
       email: new FormControl(null, [
         Validators.required,
         Validators.email,

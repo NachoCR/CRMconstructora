@@ -4,6 +4,7 @@ import { start } from 'repl';
 
 export class DateValidator {
   static dateNotInPast(control: AbstractControl): { [key: string]: boolean } | null {
+    if(control.touched == false){ return null };
     if (control.value) {
       const selectedDate = new Date(control.value);
       const currentDate = moment();
@@ -17,6 +18,7 @@ export class DateValidator {
     }
     return null;
   }
+  
 
   static dateFactory(startDate: any): ValidatorFn {
     return (control: AbstractControl): { [key: string]: boolean } | null => {

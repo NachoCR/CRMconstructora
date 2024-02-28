@@ -8,6 +8,6 @@ export interface catalogoProveedorData {
   price: number;
   providerId?: string;
   unitId: number;
-  quantity: number;
+  quantity: number | null;
   provider?: ProveedorData
 }

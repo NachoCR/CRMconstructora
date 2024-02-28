@@ -163,6 +163,7 @@ export class ProyectosComponent {
 
   openDialogEditar(project: any): void {
     const pProyecto = _.cloneDeep(project);
+    console.log(pProyecto);
     const dialogRef = this.dialog.open(EditarProyectoComponent, {
       data: pProyecto,
     });

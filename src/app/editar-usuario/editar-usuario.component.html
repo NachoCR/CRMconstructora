@@ -26,15 +26,13 @@
                 [(ngModel)]="data.name"
                 [ngClass]="{
                   'is-valid': (f.name.dirty || submitted) && !f.name.errors,
-                  'is-invalid': (f.name.dirty || submitted) && f.name.errors
+                  'is-invalid': (f.name.dirty || submitted) && (f.name.errors?.required || f.name.errors?.pattern)
                 }"
               />
               <div class="invalid-feedback">
-                <span class="text-danger" *ngIf="f.name.errors?.required"
-                  >El nombre es requerido</span
-                >
-
-            </div>
+                <span class="text-danger" *ngIf="f.name.errors?.required">El nombre es requerido</span>
+                <span class="text-danger" *ngIf="f.name.errors?.pattern">El nombre no debe contener números</span>
+              </div>
             </div>
 
             <!-- Primer apellido -->
@@ -48,12 +46,13 @@
                 [(ngModel)]="data.lastname"
                 [ngClass]="{
                   'is-valid': (f.lastname.dirty || submitted) && !f.lastname.errors,
-                  'is-invalid': (f.lastname.dirty || submitted) && f.lastname.errors
+                  'is-invalid': (f.lastname.dirty || submitted) && (f.lastname.errors?.required || f.lastname.errors?.pattern)
                 }"
               />
               <div class="invalid-feedback">
                 <span class="text-danger" *ngIf="f.lastname.errors?.required">El primer apellido es requerido</span>
-            </div>
+                <span class="text-danger" *ngIf="f.lastname.errors?.pattern">El primer apellido no debe contener números</span>
+              </div>
             </div>
 
             <!-- Segundo apellido -->
@@ -67,14 +66,16 @@
                 placeholder="Segundo apellido"
                 formControlName="secondLastname"
                 [(ngModel)]="data.secondLastname"
+                [(ngModel)]="data.secondLastname"
                 [ngClass]="{
                   'is-valid': (f.secondLastname.dirty || submitted) && !f.secondLastname.errors,
-                  'is-invalid': (f.secondLastname.dirty || submitted) && f.secondLastname.errors
+                  'is-invalid': (f.secondLastname.dirty || submitted) && (f.secondLastname.errors?.required || f.secondLastname.errors?.pattern)
                 }"
               />
               <div class="invalid-feedback">
-                <span class="text-danger" *ngIf="f.lastname.errors?.required">El segundo apellido es requerido</span>
-            </div>
+                <span class="text-danger" *ngIf="f.secondLastname.errors?.required">El segundo apellido es requerido</span>
+                <span class="text-danger" *ngIf="f.secondLastname.errors?.pattern">El segundo apellido no debe contener números</span>
+              </div>
             </div>
 
       </div>

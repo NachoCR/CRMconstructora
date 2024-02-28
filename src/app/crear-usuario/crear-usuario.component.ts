@@ -97,9 +97,9 @@ export class CrearUsuarioComponent implements OnInit {
           ])
         ),
         confirmPassword: new FormControl(null, [Validators.required, Validators.minLength(8)]),
-        name: new FormControl(null, [Validators.required]),
-        lastname: new FormControl(null, [Validators.required]),
-        secondLastname: new FormControl(null, [Validators.required]),
+        name: new FormControl(null, [Validators.required, Validators.pattern(/^[a-zA-Z]+$/)]),
+        lastname: new FormControl(null, [Validators.required, Validators.pattern(/^[a-zA-Z]+$/)]),
+        secondLastname: new FormControl(null, [Validators.required, Validators.pattern(/^[a-zA-Z]+$/)]),
         identifierId: new FormControl(null, [Validators.required]),
         identification: new FormControl(null, [
           Validators.required,

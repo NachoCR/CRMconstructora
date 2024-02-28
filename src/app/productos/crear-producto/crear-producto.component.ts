@@ -27,13 +27,23 @@ export class CrearProductoComponent {
     };
   }
 
+  noNegativosValidador(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: boolean } | null => {
+      const value = control.value;
+      if (value !== null && value < 0) {
+        return { negative: true };
+      }
+      return null;
+    };
+  }
+
   productoForm = this.fb.group({
     name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
     details: ['', [Validators.required, Validators.minLength(5)]],
     price: [1, [Validators.required, this.validadorNoCeroNiNegativo()]],
     providerId: ['', [Validators.required]],
     unitId: ['', [Validators.required]],
-    quantity: [0, [Validators.required]],
+    quantity: [null, [Validators.min(0), this.noNegativosValidador()]],
     imageURL: [''],
   });
 

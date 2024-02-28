@@ -9,6 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { Observable, debounceTime, map, startWith } from 'rxjs';
 import { FileUploadComponent } from '@shared/components/file-upload/file-upload.component';
+import { UsuarioData } from 'app/interfaces/usuario.interface';
 
 @Component({
   selector: 'app-editar-proyecto',
@@ -44,6 +45,7 @@ export class EditarProyectoComponent {
   }
 
   proyecto?: ProyectoData;
+
   constructor(
     public dialogRef: MatDialogRef<EditarProyectoComponent>,
     @Inject(MAT_DIALOG_DATA)
@@ -56,7 +58,7 @@ export class EditarProyectoComponent {
     this.editarProyectoForm = new FormGroup({
       name: new FormControl(null, [Validators.required]),
       description: new FormControl(null, [Validators.required]),
-      startDate: new FormControl(null, [Validators.required, DateValidator.dateNotInPast]),
+      startDate: new FormControl(null),
       endDate: new FormControl(null, [Validators.required, DateValidator.dateNotInPast]),
       statusId: new FormControl(null, [Validators.required]),
       clientId: new FormControl(null),
@@ -64,25 +66,27 @@ export class EditarProyectoComponent {
   }
   selectedUser: any;
   selectedClient: any;
+  selectedClientName: any;
 
-  transformData2() {
-    this.data.assignedUser = this.selectedUser.employeeId;
-    this.editarProyectoForm.controls['userId'].setValue(this.selectedUser.userId);
-  }
+ 
   setUserValue(user: any) {
     this.selectedUser = user;
     this.data.assignedUser = user.name;
-    this.editarProyectoForm.controls['userId'].setValue(user.selectedUser.clientId);
+    this.data.clientId = user.userId;
+    this.data.client.userId = user.userId;
+    this.editarProyectoForm.controls['clientId'].setValue(user);
   }
 
   onClientSelectionChange(selectedClient: any): void {
     this.selectedClient = selectedClient;
-
-    // Asegúrate de establecer el valor correcto en el formulario
     this.editarProyectoForm.get('clientId')?.setValue(selectedClient);
-
-    // También puedes hacer otras acciones necesarias aquí
   }
+
+  setEndDate(date: any){
+    this.data.endDate = this.editarProyectoForm.controls["endDate"].value;
+  }
+
+
   get f() {
     return this.editarProyectoForm.controls;
   }
@@ -136,12 +140,14 @@ export class EditarProyectoComponent {
   ngOnInit(): void {
     this.usuarioService.getUserList().subscribe(data => {
       this.userList = data.filter(x => x.roleId == 2);
-      const initialClientId = this.editarProyectoForm.get('clientId')?.value;
-      const initialClient = this.userList.find(user => user.userId === initialClientId);
+
+      const initialClientId = this.data.client.userId;
+      const initialClient = this.data.client;
       if (initialClient) {
         this.editarProyectoForm.get('clientId')?.setValue(initialClient.name);
         this.selectedUser = initialClient.userId;
         console.log(initialClient);
+        console.log(this.data);
       }
 
       this.filteredUserList$ = this.editarProyectoForm.get('clientId')?.valueChanges.pipe(

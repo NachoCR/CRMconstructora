@@ -10,122 +10,73 @@
 
           <div class="form-row">
             <div class="form-group col-md-6">
-              <label for="name" class="control-label font-weight-bold">Nombre</label>
+              <label for="name">Nombre</label>
               <input
                 type="text"
                 class="form-control"
+                id="name"
                 placeholder="Nombre"
                 formControlName="name"
                 [(ngModel)]="data.name"
+                [ngClass]="{
+                  'is-valid': (editarContacto.get('name')?.dirty || submitted) && !editarContacto.get('name')?.errors,
+                  'is-invalid': (editarContacto.get('name')?.dirty || submitted) && (editarContacto.get('name')?.errors?.required || editarContacto.get('name')?.errors?.pattern)
+                }"
               />
-              <div
-                *ngIf="
-                  editarContacto.get('name')?.hasError('required') &&
-                  editarContacto.get('name')?.touched
-                "
-                class="text-danger"
-              >
-                El nombre es obligatorio.
-              </div>
-              <div
-                *ngIf="
-                  editarContacto.get('name')?.hasError('minlength') &&
-                  editarContacto.get('name')?.touched
-                "
-                class="text-danger"
-              >
-                El nombre debe tener al menos 3 caracteres.
-              </div>
-              <div
-                *ngIf="
-                  editarContacto.get('name')?.hasError('maxlength') &&
-                  editarContacto.get('name')?.touched
-                "
-                class="text-danger"
-              >
-                El nombre no debe tener más de 20 caracteres.
+              <div class="invalid-feedback">
+                <span class="text-danger" *ngIf="editarContacto.get('name')?.errors?.required">El nombre es obligatorio.</span>
+                <span class="text-danger" *ngIf="editarContacto.get('name')?.errors?.pattern">El nombre no debe contener números.</span>
+                <span class="text-danger" *ngIf="editarContacto.get('name')?.errors?.minlength">El nombre debe tener al menos 3 caracteres.</span>
+                <span class="text-danger" *ngIf="editarContacto.get('name')?.errors?.maxlength">El nombre no debe tener más de 20 caracteres.</span>
               </div>
             </div>
 
             <div class="form-group col-md-6">
-              <label for="lastname" class="control-label font-weight-bold">Primer Apellido</label>
+              <label for="lastname">Primer Apellido</label>
               <input
                 type="text"
                 class="form-control"
+                id="lastname"
                 placeholder="Apellido"
                 formControlName="lastname"
                 [(ngModel)]="data.lastname"
+                [ngClass]="{
+                  'is-valid': (editarContacto.get('lastname')?.dirty || submitted) && !editarContacto.get('lastname')?.errors,
+                  'is-invalid': (editarContacto.get('lastname')?.dirty || submitted) && (editarContacto.get('lastname')?.errors?.required || editarContacto.get('lastname')?.errors?.pattern)
+                }"
               />
-              <div
-                *ngIf="
-                  editarContacto.get('lastname')?.hasError('required') &&
-                  editarContacto.get('lastname')?.touched
-                "
-                class="text-danger"
-              >
-                El apellido es obligatorio.
-              </div>
-              <div
-                *ngIf="
-                  editarContacto.get('lastname')?.hasError('minlength') &&
-                  editarContacto.get('lastname')?.touched
-                "
-                class="text-danger"
-              >
-                El apellido debe tener al menos 3 caracteres.
-              </div>
-              <div
-                *ngIf="
-                  editarContacto.get('lastname')?.hasError('maxlength') &&
-                  editarContacto.get('lastname')?.touched
-                "
-                class="text-danger"
-              >
-                El apellido no debe tener más de 20 caracteres.
+              <div class="invalid-feedback">
+                <span class="text-danger" *ngIf="editarContacto.get('lastname')?.errors?.required">El primer apellido es obligatorio.</span>
+                <span class="text-danger" *ngIf="editarContacto.get('lastname')?.errors?.pattern">El primer apellido no debe contener números.</span>
+                <span class="text-danger" *ngIf="editarContacto.get('lastname')?.errors?.minlength">El primer apellido debe tener al menos 3 caracteres.</span>
+                <span class="text-danger" *ngIf="editarContacto.get('lastname')?.errors?.maxlength">El primer apellido no debe tener más de 20 caracteres.</span>
               </div>
             </div>
           </div>
 
           <div class="form-row">
             <div class="form-group col-md-6">
-              <label for="secondLastname" class="control-label font-weight-bold"
-                >Segundo Apellido</label
-              >
+              <label for="secondLastname">Segundo Apellido</label>
               <input
                 type="text"
                 class="form-control"
+                id="secondLastname"
                 placeholder="Segundo Apellido"
                 formControlName="secondLastname"
                 [(ngModel)]="data.secondLastname"
+                [ngClass]="{
+                  'is-valid': (editarContacto.get('secondLastname')?.dirty || submitted) && !editarContacto.get('lastname')?.errors,
+                  'is-invalid': (editarContacto.get('secondLastname')?.dirty || submitted) && (editarContacto.get('secondLastname')?.errors?.required || editarContacto.get('secondLastname')?.errors?.pattern)
+                }"
               />
-              <div
-                *ngIf="
-                  editarContacto.get('secondLastname')?.hasError('required') &&
-                  editarContacto.get('secondLastname')?.touched
-                "
-                class="text-danger"
-              >
-                El apellido es obligatorio.
-              </div>
-              <div
-                *ngIf="
-                  editarContacto.get('secondLastname')?.hasError('minlength') &&
-                  editarContacto.get('secondLastname')?.touched
-                "
-                class="text-danger"
-              >
-                El apellido debe tener al menos 3 caracteres.
-              </div>
-              <div
-                *ngIf="
-                  editarContacto.get('secondLastname')?.hasError('maxlength') &&
-                  editarContacto.get('secondLastname')?.touched
-                "
-                class="text-danger"
-              >
-                El apellido no debe tener más de 20 caracteres.
+              <div class="invalid-feedback">
+                <span class="text-danger" *ngIf="editarContacto.get('secondLastname')?.errors?.required">El segundo apellido es obligatorio.</span>
+                <span class="text-danger" *ngIf="editarContacto.get('secondLastname')?.errors?.pattern">El segundo apellido no debe contener números.</span>
+                <span class="text-danger" *ngIf="editarContacto.get('secondLastname')?.errors?.minlength">El segundo apellido debe tener al menos 3 caracteres.</span>
+                <span class="text-danger" *ngIf="editarContacto.get('secondLastname')?.errors?.maxlength">El segundo apellido no debe tener más de 20 caracteres.</span>
               </div>
             </div>
+          
 
             <div class="form-group col-md-6">
               <label for="email" class="control-label font-weight-bold">Correo</label>
